@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.scif</groupId>
+    <artifactId>pom-ome-formats</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>bf-formats</artifactId>
+
+  <name>SCIFIO Proprietary Formats Extension</name>
+  <description>Provides SCIFIO Format conversions of all proprietary
+  Bio-Formats readers and metadata.</description>
+
+  <properties>
+    <project.rootdir>${project.parent.basedir}</project.rootdir>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <configuration>
+          <licenseName>gpl_v2</licenseName>
+          <projectName>SCIFIO Proprietary Formats</projectName>
+          <organizationName>Open Microscopy Environment:
+  - Board of Regents of the University of Wisconsin-Madison
+  - Glencoe Software, Inc.
+  - University of Dundee</organizationName>
+          <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
+          <canUpdateDescription>true</canUpdateDescription>
+          <canUpdateCopyright>true</canUpdateCopyright>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <!-- NB: for parent project -->
+  <repositories>
+    <repository>
+      <id>imagej.releases</id>
+      <url>http://maven.imagej.net/content/repositories/releases</url>
+    </repository>
+    <repository>
+      <id>imagej.snapshots</id>
+      <url>http://maven.imagej.net/content/repositories/snapshots</url>
+    </repository>
+  </repositories>
+
+</project>

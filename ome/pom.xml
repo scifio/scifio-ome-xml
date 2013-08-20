@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.scif</groupId>
+    <artifactId>pom-ome-formats</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>ome-formats</artifactId>
+
+  <name>OME-XML Formats Extension</name>
+  <description>Provides SCIFIO-based support for OME-XML readers
+  and metadata.</description>
+
+  <properties>
+    <project.rootdir>${project.parent.basedir}</project.rootdir>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>${scifio.groupId}</groupId>
+      <artifactId>scifio</artifactId>
+      <version>${scifio.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${bio-formats.groupId}</groupId>
+      <artifactId>scifio</artifactId>
+      <version>${bio-formats.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${bio-formats.groupId}</groupId>
+      <artifactId>ome-xml</artifactId>
+      <version>${bio-formats.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.5.10</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <configuration>
+          <licenseName>bsd</licenseName>
+          <organizationName>Open Microscopy Environment:
+  - Massachusetts Institute of Technology
+  - National Institutes of Health
+  - University of Dundee
+  - Board of Regents of the University of Wisconsin-Madison
+  - Glencoe Software, Inc.</organizationName>
+          <projectName>SCIFIO OME-XML Formats.</projectName>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <!-- NB: for parent project -->
+  <repositories>
+    <repository>
+      <id>imagej.releases</id>
+      <url>http://maven.imagej.net/content/repositories/releases</url>
+    </repository>
+    <repository>
+      <id>imagej.snapshots</id>
+      <url>http://maven.imagej.net/content/repositories/snapshots</url>
+    </repository>
+  </repositories>
+
+</project>
