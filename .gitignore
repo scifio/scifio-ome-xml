@@ -1,0 +1,11 @@
+.classpath
+.project
+.settings
+.DS_Store
+build
+emailable-report.html
+index.html
+target
+test-output
+*.log
+bin/
