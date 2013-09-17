@@ -100,6 +100,7 @@ public class OMEXMLFormat extends AbstractFormat {
 	private static boolean noOME = false;
 
 	static {
+		// FIXME: Class.forName causes fatal ClassLoader woes.
 		try {
 			Class.forName("ome.xml.OMEXMLNode");
 		}
