@@ -41,13 +41,14 @@ package io.scif.ome.xml.translation;
 import io.scif.AbstractTranslator;
 import io.scif.Metadata;
 import io.scif.Translator;
+import io.scif.ome.xml.meta.OMEMetadata;
 
 /**
  * Abstract base class for all {@link io.scif.Translator} implementations that
- * operate on {@link ome.xml.meta.OMEMetadata}.
+ * operate on {@link OMEMetadata}.
  * 
  * @see io.scif.Translator
- * @see ome.xml.meta.OMEMetadata
+ * @see OMEMetadata
  * @author Mark Hiner
  */
 public abstract class OMETranslator<M extends Metadata, N extends Metadata>

@@ -61,7 +61,7 @@ public class TIFFTranslator {
 
 	/**
 	 * Translator class from {@link io.scif.formats.TIFFFormat.Metadata} to
-	 * {@link ome.xml.meta.OMEMetadata}
+	 * {@link OMEMetadata}
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -81,9 +81,6 @@ public class TIFFTranslator {
 
 		// -- Translator API Methods --
 
-		/*
-		 * @see OMETranslator#typedTranslate(io.scif.Metadata, io.scif.Metadata)
-		 */
 		@Override
 		protected void typedTranslate(final TIFFFormat.Metadata source,
 			final OMEMetadata dest)
@@ -115,7 +112,7 @@ public class TIFFTranslator {
 
 	/**
 	 * Translator class from {@link io.scif.formats.TIFFFormat.Metadata} to
-	 * {@link ome.xml.meta.OMEMetadata}.
+	 * {@link OMEMetadata}.
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -131,9 +128,6 @@ public class TIFFTranslator {
 		FromOMETranslator<TIFFFormat.Metadata>
 	{
 
-		/*
-		 * @see OMETranslator#typedTranslate(io.scif.Metadata, io.scif.Metadata)
-		 */
 		@Override
 		protected void typedTranslate(final OMEMetadata source,
 			final TIFFFormat.Metadata dest)

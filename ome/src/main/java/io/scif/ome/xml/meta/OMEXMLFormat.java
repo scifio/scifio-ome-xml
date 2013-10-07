@@ -67,6 +67,7 @@ import io.scif.ome.xml.translation.FromOMETranslator;
 import io.scif.services.ServiceException;
 import io.scif.util.FormatTools;
 import io.scif.util.ImageTools;
+import io.scif.util.SCIFIOMetadataTools;
 import io.scif.xml.BaseHandler;
 import io.scif.xml.XMLService;
 
@@ -115,16 +116,12 @@ public class OMEXMLFormat extends AbstractFormat {
 
 	// -- Format API Methods --
 
-	/*
-	 * @see io.scif.Format#getFormatName()
-	 */
+	@Override
 	public String getFormatName() {
 		return "OME-XML";
 	}
 
-	/*
-	 * @see io.scif.Format#getSuffixes()
-	 */
+	@Override
 	public String[] getSuffixes() {
 		return new String[] { "ome" };
 	}
@@ -134,7 +131,7 @@ public class OMEXMLFormat extends AbstractFormat {
 	/**
 	 * io.scif.Metadata class wrapping an OME-XML root.
 	 * 
-	 * @see ome.xml.meta.OMEXMLMetadata
+	 * @see OMEXMLMetadata
 	 * @see io.scif.Metadata
 	 * @author Mark Hiner
 	 */
@@ -142,7 +139,6 @@ public class OMEXMLFormat extends AbstractFormat {
 
 		// -- Constants --
 
-		public static final String FORMAT_NAME = "OME-XML";
 		public static final String CNAME =
 			"io.scif.ome.xml.meta.OMEXMLFormat$Metadata";
 
@@ -211,28 +207,15 @@ public class OMEXMLFormat extends AbstractFormat {
 
 		// -- Metadata API Methods --
 
-		/*
-		 * @see io.scif.AbstractMetadata#getFormatName()
-		 */
-		public String getFormatName() {
-			return FORMAT_NAME;
-		}
-
-		/*
-		 * @see io.scif.AbstractMetadata#populateImageMetadata()
-		 */
+		@Override
 		public void populateImageMetadata() {
 			getContext().getService(OMEXMLMetadataService.class).populateMetadata(
 				getOMEMeta().getRoot(), this);
 
 			for (int i = 0; i < getImageCount(); i++) {
-				setRGB(i, false);
-				setInterleaved(i, false);
 				setIndexed(i, false);
 				setFalseColor(i, true);
-				get(i).setPlaneCount(
-					getAxisLength(i, Axes.CHANNEL) * getAxisLength(i, Axes.Z) *
-						getAxisLength(i, Axes.TIME));
+				setPlanarAxisCount(i, 2);
 			}
 		}
 
@@ -367,20 +350,18 @@ public class OMEXMLFormat extends AbstractFormat {
 
 		// -- Reader API Methods --
 
-		/*
-		 * @see io.scif.TypedReader#openPlane(int, int, io.scif.DataPlane, int, int, int, int)
-		 */
-		public ByteArrayPlane openPlane(final int imageIndex, final int planeIndex,
-			final ByteArrayPlane plane, final int x, final int y, final int w,
-			final int h) throws FormatException, IOException
+		@Override
+		public ByteArrayPlane openPlane(final int imageIndex, final long planeIndex,
+			final ByteArrayPlane plane, final long[] offsets, final long[] lengths)
+			throws FormatException, IOException
 		{
 			final byte[] buf = plane.getBytes();
 			final Metadata meta = getMetadata();
 
-			FormatTools.checkPlaneParameters(this, imageIndex, planeIndex,
-				buf.length, x, y, w, h);
+			FormatTools.checkPlaneParameters(meta, imageIndex, planeIndex,
+				buf.length, offsets, lengths);
 
-			int index = planeIndex;
+			int index = (int)planeIndex;
 
 			for (int i = 0; i < imageIndex; i++) {
 				index += meta.getPlaneCount(i);
@@ -397,17 +378,19 @@ public class OMEXMLFormat extends AbstractFormat {
 			final int depth =
 				FormatTools.getBytesPerPixel(meta.getPixelType(imageIndex));
 			final int planeSize =
-				meta.getAxisLength(imageIndex, Axes.X) *
-					meta.getAxisLength(imageIndex, Axes.Y) * depth;
+				(int) (meta.getAxisLength(imageIndex, Axes.X) *
+				meta.getAxisLength(imageIndex, Axes.Y) * depth);
 
 			final CodecOptions options = new CodecOptions();
-			options.width = meta.getAxisLength(imageIndex, Axes.X);
-			options.height = meta.getAxisLength(imageIndex, Axes.Y);
+			options.width = (int) meta.getAxisLength(imageIndex, Axes.X);
+			options.height = (int) meta.getAxisLength(imageIndex, Axes.Y);
 			options.bitsPerSample = depth * 8;
-			options.channels = meta.getRGBChannelCount(imageIndex);
+			options.channels =
+				(int) (meta.isMultichannel(imageIndex) ? meta.getAxisLength(imageIndex,
+					Axes.CHANNEL) : 1);
 			options.maxBytes = planeSize;
 			options.littleEndian = meta.isLittleEndian(imageIndex);
-			options.interleaved = meta.isInterleaved(imageIndex);
+			options.interleaved = meta.getInterleavedAxisCount(imageIndex) > 0;
 
 			byte[] pixels = new Base64Codec().decompress(getStream(), options);
 
@@ -443,10 +426,16 @@ public class OMEXMLFormat extends AbstractFormat {
 				pixels = new JPEGCodec().decompress(pixels, options);
 			}
 
+			final int xIndex = meta.getAxisIndex(imageIndex, Axes.X),
+								yIndex = meta.getAxisIndex(imageIndex, Axes.Y);
+			final int x = (int) offsets[xIndex],
+								y = (int) offsets[yIndex],
+								w = (int) lengths[xIndex],
+								h = (int) lengths[yIndex];
 			for (int row = 0; row < h; row++) {
 				final int off =
-					(row + y) * meta.getAxisLength(imageIndex, Axes.X) * depth + x *
-						depth;
+					(int) ((row + y) * meta.getAxisLength(imageIndex, Axes.X) * depth + x *
+						depth);
 				System.arraycopy(pixels, off, buf, row * w * depth, w * depth);
 			}
 
@@ -488,18 +477,16 @@ public class OMEXMLFormat extends AbstractFormat {
 
 		// -- Writer API Methods --
 
-		/*
-		 * @see io.scif.Writer#savePlane(int, int, io.scif.Plane, int, int, int, int)
-		 */
-		public void savePlane(final int imageIndex, final int planeIndex,
-			final Plane plane, final int x, final int y, final int w, final int h)
+		@Override
+		public void savePlane(final int imageIndex, final long planeIndex,
+			final Plane plane, final long[] offsets, final long[] lengths)
 			throws FormatException, IOException
 		{
 			final Metadata meta = getMetadata();
 			final byte[] buf = plane.getBytes();
 
-			checkParams(imageIndex, planeIndex, buf, x, y, w, h);
-			if (!isFullPlane(imageIndex, x, y, w, h)) {
+			checkParams(imageIndex, planeIndex, buf, offsets, lengths);
+			if (!SCIFIOMetadataTools.wholePlane(imageIndex, meta, offsets, lengths)) {
 				throw new FormatException(
 					"OMEXMLWriter does not yet support saving image tiles.");
 			}
@@ -512,7 +499,9 @@ public class OMEXMLFormat extends AbstractFormat {
 			final String type = retrieve.getPixelsType(imageIndex).toString();
 			final int pixelType = FormatTools.pixelTypeFromString(type);
 			final int bytes = FormatTools.getBytesPerPixel(pixelType);
-			final int nChannels = meta.getRGBChannelCount(imageIndex);
+			final int nChannels =
+				(int) (meta.isMultichannel(imageIndex) ? meta.getAxisLength(imageIndex,
+					Axes.CHANNEL) : 1);
 			final int sizeX =
 				retrieve.getPixelsSizeX(imageIndex).getValue().intValue();
 			final int sizeY =
@@ -527,8 +516,8 @@ public class OMEXMLFormat extends AbstractFormat {
 
 			for (int i = 0; i < nChannels; i++) {
 				final byte[] b =
-					ImageTools
-						.splitChannels(buf, i, nChannels, bytes, false, interleaved);
+					ImageTools.splitChannels(buf, new long[] { i },
+						new long[] { nChannels }, bytes, false, interleaved);
 				final byte[] encodedPix = compress(b, imageIndex);
 
 				final StringBuffer omePlane = new StringBuffer("\n<BinData ");
@@ -615,7 +604,7 @@ public class OMEXMLFormat extends AbstractFormat {
 		 * data is then base64-encoded.
 		 */
 		private byte[] compress(byte[] b, final int imageIndex)
-			throws FormatException, IOException
+			throws FormatException
 		{
 			final MetadataRetrieve r = getMetadata().getOMEMeta().getRoot();
 			final String type = r.getPixelsType(imageIndex).toString();

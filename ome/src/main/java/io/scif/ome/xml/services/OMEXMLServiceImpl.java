@@ -157,12 +157,12 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 	private static final String SCHEMA_PATH =
 		"http://www.openmicroscopy.org/Schemas/OME/";
 
-	/** @see OMEXMLService#getLatestVersion() */
+	@Override
 	public String getLatestVersion() {
 		return OMEXMLFactory.LATEST_VERSION;
 	}
 
-	/** @see OMEXMLService#transformToLatestVersion(String) */
+	@Override
 	public String transformToLatestVersion(String xml) {
 		final String version = getOMEXMLVersion(xml);
 		if (version.equals(getLatestVersion())) return xml;
@@ -291,28 +291,19 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 		return null;
 	}
 
-	/**
-	 * @throws ServiceException
-	 * @see OMEXMLService#createOMEXMLMetadata()
-	 */
+	@Override
 	public OMEXMLMetadata createOMEXMLMetadata() throws ServiceException {
 		return createOMEXMLMetadata(null);
 	}
 
-	/**
-	 * @throws ServiceException
-	 * @see OMEXMLService#createOMEXMLMetadata(java.lang.String)
-	 */
+	@Override
 	public OMEXMLMetadata createOMEXMLMetadata(final String xml)
 		throws ServiceException
 	{
 		return createOMEXMLMetadata(xml, null);
 	}
 
-	/**
-	 * @throws ServiceException
-	 * @see OMEXMLService#createOMEXMLMetadata(java.lang.String, java.lang.String)
-	 */
+	@Override
 	public OMEXMLMetadata createOMEXMLMetadata(String xml, final String version)
 		throws ServiceException
 	{
@@ -327,51 +318,22 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 		return meta;
 	}
 
-	/**
-	 * @throws ServiceException
-	 * @see OMEXMLService#createOMEXMLRoot(java.lang.String)
-	 */
+	@Override
 	public Object createOMEXMLRoot(final String xml) throws ServiceException {
 		return createRoot(transformToLatestVersion(xml));
 	}
 
-	/** @see OMEXMLService#isOMEXMLMetadata(java.lang.Object) */
+	@Override
 	public boolean isOMEXMLMetadata(final Object o) {
 		return o instanceof OMEXMLMetadata;
 	}
 
-	/** @see OMEXMLService#isOMEXMLRoot(java.lang.Object) */
+	@Override
 	public boolean isOMEXMLRoot(final Object o) {
 		return o instanceof OMEModelObject;
 	}
 
-	/**
-	 * Constructs an OME root node. <b>NOTE:</b> This method is mostly here to
-	 * ensure type safety of return values as instances of service dependency
-	 * classes should not leak out of the interface.
-	 * 
-	 * @param xml String of XML to create the root node from.
-	 * @return An ome.xml.model.OMEModelObject subclass root node.
-	 * @throws ServiceException
-	 * @throws IOException If there is an error reading from the string.
-	 * @throws SAXException If there is an error parsing the XML.
-	 * @throws ParserConfigurationException If there is an error preparing the
-	 *           parsing infrastructure.
-	 */
-	private OMEModelObject createRoot(final String xml) throws ServiceException {
-		final OMEModel model = new OMEModelImpl();
-		OME ome = null;
-		try {
-			ome = new OME(xmlService.parseDOM(xml).getDocumentElement(), model);
-		}
-		catch (final Exception e) {
-			throw new ServiceException(e);
-		}
-		model.resolveReferences();
-		return ome;
-	}
-
-	/** @see OMEXMLService#getOMEXMLVersion(java.lang.Object) */
+	@Override
 	public String getOMEXMLVersion(final Object o) {
 		if (o == null) return null;
 		if (o instanceof OMEXMLMetadata || o instanceof OMEModelObject) {
@@ -399,10 +361,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 		return null;
 	}
 
-	/**
-	 * @throws ServiceException
-	 * @see OMEXMLService#getOMEMetadata(loci.formats.meta.MetadataRetrieve)
-	 */
+	@Override
 	public OMEXMLMetadata getOMEMetadata(final MetadataRetrieve src)
 		throws ServiceException
 	{
@@ -416,10 +375,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 		return omexmlMeta;
 	}
 
-	/**
-	 * @throws ServiceException
-	 * @see OMEXMLService#getOMEXML(loci.formats.meta.MetadataRetrieve)
-	 */
+	@Override
 	public String getOMEXML(final MetadataRetrieve src) throws ServiceException {
 		final OMEXMLMetadata omexmlMeta = getOMEMetadata(src);
 		String xml = omexmlMeta.dumpXML();
@@ -467,12 +423,12 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 		return xml;
 	}
 
-	/** @see OMEXMLService#validateOMEXML(java.lang.String) */
+	@Override
 	public boolean validateOMEXML(final String xml) {
 		return validateOMEXML(xml, false);
 	}
 
-	/** @see OMEXMLService#validateOMEXML(java.lang.String, boolean) */
+	@Override
 	public boolean validateOMEXML(String xml, final boolean pixelsHack) {
 		// HACK: Inject a TiffData element beneath any childless Pixels elements.
 		if (pixelsHack) {
@@ -535,10 +491,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 		return xmlService.validateXML(xml, "OME-XML");
 	}
 
-	/**
-	 * @see OMEXMLService#populateOriginalMetadata(loci.formats.ome.OMEXMLMetadata,
-	 *      Hashtable)
-	 */
+	@Override
 	public void populateOriginalMetadata(final OMEMetadata omeMeta,
 		final Hashtable<String, Object> metadata)
 	{
@@ -564,10 +517,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 		omexmlMeta.setRoot(root);
 	}
 
-	/**
-	 * @see OMEXMLService#populateOriginalMetadata(loci.formats.ome.OMEXMLMetadata,
-	 *      java.lang.String, java.lang.String)
-	 */
+	@Override
 	public void populateOriginalMetadata(final OMEMetadata omeMeta,
 		final String key, final String value)
 	{
@@ -590,9 +540,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 		omexmlMeta.setRoot(root);
 	}
 
-	/*
-	 * @see ome.xml.services.OMEXMLService#getOriginalMetadata(ome.xml.meta.OMEXMLMetadata)
-	 */
+	@Override
 	public Hashtable<String, Object> getOriginalMetadata(
 		final OMEXMLMetadata omexmlMeta)
 	{
@@ -655,11 +603,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 		return metadata;
 	}
 
-	/**
-	 * @throws ServiceException
-	 * @see OMEXMLService#convertMetadata(java.lang.String,
-	 *      loci.formats.meta.MetadataStore)
-	 */
+	@Override
 	public void convertMetadata(final String xml, final MetadataStore dest)
 		throws ServiceException
 	{
@@ -683,17 +627,14 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 		}
 	}
 
-	/**
-	 * @see OMEXMLService#convertMetadata(loci.formats.meta.MetadataRetrieve,
-	 *      loci.formats.meta.MetadataStore)
-	 */
+	@Override
 	public void convertMetadata(final MetadataRetrieve src,
 		final MetadataStore dest)
 	{
 		MetadataConverter.convertMetadata(src, dest);
 	}
 
-	/** @see OMEXMLService#removeBinData(OMEXMLMetadata) */
+	@Override
 	public void removeBinData(final OMEXMLMetadata omexmlMeta) {
 		((OMEXMLMetadataImpl) omexmlMeta).resolveReferences();
 		final OME root = (OME) omexmlMeta.getRoot();
@@ -708,7 +649,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 		omexmlMeta.setRoot(root);
 	}
 
-	/** @see OMEXMLService#removeChannels(OMEXMLMetadata, int, int) */
+	@Override
 	public void removeChannels(final OMEXMLMetadata omexmlMeta, final int image,
 		final int sizeC)
 	{
@@ -726,7 +667,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 		omexmlMeta.setRoot(root);
 	}
 
-	/** @see OMEXMLService#addMetadataOnly(OMEXMLMetadata, int) */
+	@Override
 	public void addMetadataOnly(final OMEXMLMetadata omexmlMeta, final int image)
 	{
 		((OMEXMLMetadataImpl) omexmlMeta).resolveReferences();
@@ -737,7 +678,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 		omexmlMeta.setRoot(root);
 	}
 
-	/** @see OMEXMLService#isEqual(OMEXMLMetadata, OMEXMLMetadata) */
+	@Override
 	public boolean isEqual(final OMEXMLMetadata src1, final OMEXMLMetadata src2) {
 		((OMEXMLMetadataImpl) src1).resolveReferences();
 		((OMEXMLMetadataImpl) src2).resolveReferences();
@@ -764,17 +705,43 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 
 	// -- Utility methods - casting --
 
-	/** @see OMEXMLService#asStore(loci.formats.meta.MetadataRetrieve) */
+	@Override
 	public MetadataStore asStore(final MetadataRetrieve meta) {
 		return meta instanceof MetadataStore ? (MetadataStore) meta : null;
 	}
 
-	/** @see OMEXMLService#asRetrieve(loci.formats.meta.MetadataStore) */
+	@Override
 	public MetadataRetrieve asRetrieve(final MetadataStore meta) {
 		return meta instanceof MetadataRetrieve ? (MetadataRetrieve) meta : null;
 	}
 
 	// -- Helper methods --
+
+	/**
+	 * Constructs an OME root node. <b>NOTE:</b> This method is mostly here to
+	 * ensure type safety of return values as instances of service dependency
+	 * classes should not leak out of the interface.
+	 * 
+	 * @param xml String of XML to create the root node from.
+	 * @return An ome.xml.model.OMEModelObject subclass root node.
+	 * @throws ServiceException
+	 * @throws IOException If there is an error reading from the string.
+	 * @throws SAXException If there is an error parsing the XML.
+	 * @throws ParserConfigurationException If there is an error preparing the
+	 *           parsing infrastructure.
+	 */
+	private OMEModelObject createRoot(final String xml) throws ServiceException {
+		final OMEModel model = new OMEModelImpl();
+		OME ome = null;
+		try {
+			ome = new OME(xmlService.parseDOM(xml).getDocumentElement(), model);
+		}
+		catch (final Exception e) {
+			throw new ServiceException(e);
+		}
+		model.resolveReferences();
+		return ome;
+	}
 
 	/** Ensures that an xmlns:ome element exists. */
 	private String verifyOMENamespace(final String xml) {

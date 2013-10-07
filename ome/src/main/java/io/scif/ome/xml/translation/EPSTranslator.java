@@ -56,7 +56,7 @@ public class EPSTranslator {
 
 	/**
 	 * Translator class from {@link io.scif.formats.EPSFormat.Metadata} to
-	 * {@link ome.xml.meta.OMEMetadata}.
+	 * {@link OMEMetadata}.
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -71,9 +71,6 @@ public class EPSTranslator {
 		FromOMETranslator<EPSFormat.Metadata>
 	{
 
-		/*
-		 * @see OMETranslator#typedTranslate(io.scif.Metadata, io.scif.Metadata)
-		 */
 		@Override
 		protected void typedTranslate(final OMEMetadata source,
 			final EPSFormat.Metadata dest)

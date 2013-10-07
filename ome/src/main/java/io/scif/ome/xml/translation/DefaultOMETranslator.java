@@ -1,14 +1,3 @@
-
-package io.scif.ome.xml.translation;
-
-import io.scif.Metadata;
-import io.scif.ome.xml.meta.OMEMetadata;
-import io.scif.ome.xml.services.OMEXMLMetadataService;
-
-import org.scijava.Priority;
-import org.scijava.plugin.Attr;
-import org.scijava.plugin.Plugin;
-
 /*
  * #%L
  * SCIFIO OME-XML Formats.
@@ -46,6 +35,15 @@ import org.scijava.plugin.Plugin;
  * policies, either expressed or implied, of any organization.
  * #L%
  */
+package io.scif.ome.xml.translation;
+
+import io.scif.Metadata;
+import io.scif.ome.xml.meta.OMEMetadata;
+import io.scif.ome.xml.services.OMEXMLMetadataService;
+
+import org.scijava.Priority;
+import org.scijava.plugin.Attr;
+import org.scijava.plugin.Plugin;
 
 /**
  * Basic translator for OME Metadata. Uses ImageMetadata to populate a
@@ -60,9 +58,6 @@ public class DefaultOMETranslator extends ToOMETranslator<Metadata> {
 
 	// -- Translator API Methods --
 
-	/*
-	 * @see OMETranslator#typedTranslate(io.scif.Metadata, io.scif.Metadata)
-	 */
 	@Override
 	protected void typedTranslate(final Metadata source, final OMEMetadata dest) {
 		for (int i = 0; i < source.getImageCount(); i++) {

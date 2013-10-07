@@ -46,6 +46,7 @@ import io.scif.SCIFIOService;
 import loci.formats.IFormatWriter;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.meta.MetadataStore;
+import net.imglib2.meta.AxisType;
 import ome.xml.model.enums.Binning;
 import ome.xml.model.enums.Correction;
 import ome.xml.model.enums.DetectorType;
@@ -56,10 +57,9 @@ import ome.xml.model.enums.LaserType;
 
 /**
  * A utility class for working with metadata objects, including
- * {@link ome.xml.meta.MetadataStore}, {@link ome.xml.meta.MetadataRetrieve},
- * and OME-XML strings. Most of the methods require the optional
- * {@link loci.formats.ome} package, and optional ome-xml.jar library, to be
- * present at runtime.
+ * {@link MetadataStore}, {@link MetadataRetrieve}, and OME-XML strings. Most of
+ * the methods require the optional {@link loci.formats.ome} package, and
+ * optional ome-xml.jar library, to be present at runtime.
  * <dl>
  * <dt><b>Source code:</b></dt>
  * <dd><a href=
@@ -177,6 +177,24 @@ public interface OMEXMLMetadataService extends SCIFIOService {
 		throws FormatException;
 
 	/**
+	 * Extracts a standard 5-D dimension order from an N-dimensional
+	 * ImageMetadata object.
+	 */
+	String findDimensionOrder(Metadata meta, int imageIndex);
+
+	/**
+	 * Converts the given String to a list of AxisTypes suitable for Metadata
+	 * construction.
+	 */
+	AxisType[] findDimensionList(String dimensionOrder);
+
+	/**
+	 * Given a String dimension order, places the given z, c and t indices
+	 * in the correct relative positions in a long array, which is returned.
+	 */
+	long[] zctToArray(String order, int z, int c, int t);
+
+	/**
 	 * Adjusts the given dimension order as needed so that it contains exactly one
 	 * of each of the following characters: 'X', 'Y', 'Z', 'C', 'T'.
 	 */
@@ -192,8 +210,7 @@ public interface OMEXMLMetadataService extends SCIFIOService {
 	 * Retrieves an {@link ome.xml.model.enums.ExperimentType} enumeration value
 	 * for the given String.
 	 * 
-	 * @throws ome.xml.model.enums.EnumerationException if an appropriate
-	 *           enumeration value is not found.
+	 * @throws FormatException if an appropriate enumeration value is not found.
 	 */
 	ExperimentType getExperimentType(String value) throws FormatException;
 
@@ -201,7 +218,7 @@ public interface OMEXMLMetadataService extends SCIFIOService {
 	 * Retrieves an {@link ome.xml.model.enums.LaserType} enumeration value for
 	 * the given String.
 	 * 
-	 * @throws ome.xml.model.enums.EnumerationException if an appropriate
+	 * @throws FormatException if an appropriate
 	 *           enumeration value is not found.
 	 */
 	LaserType getLaserType(String value) throws FormatException;
@@ -210,8 +227,7 @@ public interface OMEXMLMetadataService extends SCIFIOService {
 	 * Retrieves an {@link ome.xml.model.enums.LaserMedium} enumeration value for
 	 * the given String.
 	 * 
-	 * @throws ome.xml.model.enums.EnumerationException if an appropriate
-	 *           enumeration value is not found.
+	 * @throws FormatException if an appropriate enumeration value is not found.
 	 */
 	LaserMedium getLaserMedium(String value) throws FormatException;
 
@@ -219,8 +235,7 @@ public interface OMEXMLMetadataService extends SCIFIOService {
 	 * Retrieves an {@link ome.xml.model.enums.Immersion} enumeration value for
 	 * the given String.
 	 * 
-	 * @throws ome.xml.model.enums.EnumerationException if an appropriate
-	 *           enumeration value is not found.
+	 * @throws FormatException if an appropriate enumeration value is not found.
 	 */
 	Immersion getImmersion(String value) throws FormatException;
 
@@ -228,8 +243,7 @@ public interface OMEXMLMetadataService extends SCIFIOService {
 	 * Retrieves an {@link ome.xml.model.enums.Correction} enumeration value for
 	 * the given String.
 	 * 
-	 * @throws ome.xml.model.enums.EnumerationException if an appropriate
-	 *           enumeration value is not found.
+	 * @throws FormatException if an appropriate enumeration value is not found.
 	 */
 	Correction getCorrection(String value) throws FormatException;
 
@@ -237,8 +251,7 @@ public interface OMEXMLMetadataService extends SCIFIOService {
 	 * Retrieves an {@link ome.xml.model.enums.DetectorType} enumeration value for
 	 * the given String.
 	 * 
-	 * @throws ome.xml.model.enums.EnumerationException if an appropriate
-	 *           enumeration value is not found.
+	 * @throws FormatException if an appropriate enumeration value is not found.
 	 */
 	DetectorType getDetectorType(String value) throws FormatException;
 
@@ -246,8 +259,7 @@ public interface OMEXMLMetadataService extends SCIFIOService {
 	 * Retrieves an {@link ome.xml.model.enums.Binning} enumeration value for the
 	 * given String.
 	 * 
-	 * @throws ome.xml.model.enums.EnumerationException if an appropriate
-	 *           enumeration value is not found.
+	 * @throws FormatException if an appropriate enumeration value is not found.
 	 */
 	Binning getBinning(String value) throws FormatException;
 
@@ -263,4 +275,5 @@ public interface OMEXMLMetadataService extends SCIFIOService {
 	 */
 	void populateImageMetadata(MetadataRetrieve retrieve, int imageIndex,
 		ImageMetadata iMeta);
+
 }

@@ -48,7 +48,7 @@ import org.scijava.Context;
 /**
  * io.scif.Metadata class wrapping an OME-XML root.
  * 
- * @see ome.xml.meta.OMEXMLMetadata
+ * @see OMEXMLMetadata
  * @see io.scif.Metadata
  * @author Mark Hiner
  */
@@ -56,7 +56,6 @@ public class OMEMetadata extends AbstractMetadata {
 
 	// -- Constants --
 
-	public static final String FORMAT_NAME = "OME-XML";
 	public static final String CNAME = "io.scif.ome.xml.meta.OMEMetadata";
 
 	// -- Fields --
@@ -77,16 +76,7 @@ public class OMEMetadata extends AbstractMetadata {
 
 	// -- Metadata API Methods --
 
-	/*
-	 * @see io.scif.AbstractMetadata#getFormatName()
-	 */
-	public String getFormatName() {
-		return FORMAT_NAME;
-	}
-
-	/*
-	 * @see io.scif.AbstractMetadata#populateImageMetadata()
-	 */
+	@Override
 	public void populateImageMetadata() {
 		getContext().getService(OMEXMLMetadataService.class).populateMetadata(
 			getRoot(), this);

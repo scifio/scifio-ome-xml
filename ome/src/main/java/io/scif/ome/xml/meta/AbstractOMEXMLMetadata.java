@@ -104,11 +104,7 @@ public abstract class AbstractOMEXMLMetadata extends AbstractSCIFIOComponent
 
 	// -- OMEXMLMetadata API methods --
 
-	/**
-	 * Dumps the given OME-XML DOM tree to a string.
-	 * 
-	 * @return OME-XML as a string.
-	 */
+	@Override
 	public String dumpXML() {
 		if (root == null) {
 			root = (OMEModelObject) getRoot();
@@ -135,7 +131,7 @@ public abstract class AbstractOMEXMLMetadata extends AbstractSCIFIOComponent
 
 	// -- MetadataRetrieve API methods --
 
-	/* @see loci.formats.meta.MetadataRetrieve#getUUID() */
+	@Override
 	public String getUUID() {
 		final Element ome = getRootElement();
 		return DOMUtil.getAttribute("UUID", ome);
@@ -143,15 +139,15 @@ public abstract class AbstractOMEXMLMetadata extends AbstractSCIFIOComponent
 
 	// -- MetadataStore API methods --
 
-	/* @see loci.formats.meta.MetadataStore#setRoot(Object) */
+	@Override
 	public void setRoot(final Object root) {}
 
-	/* @see loci.formats.meta.MetadataStore#getRoot() */
+	@Override
 	public Object getRoot() {
 		return root;
 	}
 
-	/* @see loci.formats.meta.MetadataRetrieve#setUUID(String) */
+	@Override
 	public void setUUID(final String uuid) {
 		final Element ome = getRootElement();
 		DOMUtil.setAttribute("UUID", uuid, ome);

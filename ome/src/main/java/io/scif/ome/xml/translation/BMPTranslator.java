@@ -56,7 +56,7 @@ public class BMPTranslator {
 
 	/**
 	 * Translator class from {@link io.scif.formats.BMPFormat.Metadata} to
-	 * {@link ome.xml.meta.OMEMetadata}
+	 * {@link OMEMetadata}
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -74,9 +74,6 @@ public class BMPTranslator {
 
 		// -- Translator API Methods --
 
-		/*
-		 * @see OMETranslator#typedTranslate(io.scif.Metadata, io.scif.Metadata)
-		 */
 		@Override
 		protected void typedTranslate(final BMPFormat.Metadata source,
 			final OMEMetadata dest)

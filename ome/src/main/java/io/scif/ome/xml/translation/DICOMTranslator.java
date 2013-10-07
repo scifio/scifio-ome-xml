@@ -59,7 +59,7 @@ public class DICOMTranslator {
 
 	/**
 	 * Translator class from {@link io.scif.formats.DICOMFormat.Metadata} to
-	 * {@link ome.xml.meta.OMEMetadata}
+	 * {@link OMEMetadata}
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -78,9 +78,6 @@ public class DICOMTranslator {
 
 		// -- Translator API Methods --
 
-		/*
-		 * @see OMETranslator#typedTranslate(io.scif.Metadata, io.scif.Metadata)
-		 */
 		@Override
 		protected void typedTranslate(final DICOMFormat.Metadata source,
 			final OMEMetadata dest)

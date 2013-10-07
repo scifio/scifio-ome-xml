@@ -56,7 +56,7 @@ public class NRRDTranslator {
 
 	/**
 	 * Translator class from {@link io.scif.formats.NRRDFormat.Metadata} to
-	 * {@link ome.xml.meta.OMEMetadata}
+	 * {@link OMEMetadata}
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.

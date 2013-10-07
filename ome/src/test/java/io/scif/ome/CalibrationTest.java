@@ -59,7 +59,8 @@ import org.junit.Test;
 public class CalibrationTest {
 
 	private final SCIFIO scifio = new SCIFIO();
-	private String id = "testImg&sizeX=512&sizeY=512.fake";
+	private String id =
+		"testImg&lengths=512,512,2,3,4&axes=X,Y,Z,Time,Channel.fake";
 
 	// Try setting calibration values, translate to OMEMetadata and
 	// verify they persisted

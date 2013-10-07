@@ -52,8 +52,8 @@ import org.scijava.plugin.Plugin;
 public class OMETIFFTranslator {
 
 	/**
-	 * Translator class from {@link io.scif.formats.OMETIFFFormat.Metadata} to
-	 * {@link ome.xml.meta.OMEMetadata}
+	 * Translator class from {@link io.scif.ome.xml.meta.OMETIFFFormat.Metadata} to
+	 * {@link OMEMetadata}
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -72,9 +72,6 @@ public class OMETIFFTranslator {
 
 		// -- Translator API Methods --
 
-		/*
-		 * @see OMETranslator#typedTranslate(io.scif.Metadata, io.scif.Metadata)
-		 */
 		@Override
 		protected void typedTranslate(final OMETIFFFormat.Metadata source,
 			final OMEMetadata dest)
@@ -85,8 +82,8 @@ public class OMETIFFTranslator {
 	}
 
 	/**
-	 * Translator class from {@link io.scif.formats.OMETIFFFormat.Metadata} to
-	 * {@link ome.xml.meta.OMEMetadata}.
+	 * Translator class from {@link io.scif.ome.xml.meta.OMETIFFFormat.Metadata} to
+	 * {@link OMEMetadata}.
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.

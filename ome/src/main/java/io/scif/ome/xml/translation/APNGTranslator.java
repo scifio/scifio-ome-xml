@@ -57,7 +57,7 @@ public class APNGTranslator {
 
 	/**
 	 * Translator class from {@link io.scif.formats.APNGFormat.Metadata} to
-	 * {@link ome.xml.meta.OMEMetadata}.
+	 * {@link OMEMetadata}.
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -73,9 +73,6 @@ public class APNGTranslator {
 		FromOMETranslator<APNGFormat.Metadata>
 	{
 
-		/*
-		 * @see OMETranslator#typedTranslate(io.scif.Metadata, io.scif.Metadata)
-		 */
 		@Override
 		protected void typedTranslate(final OMEMetadata source,
 			final APNGFormat.Metadata dest)
@@ -99,7 +96,7 @@ public class APNGTranslator {
 
 	/**
 	 * Translator class from {@link io.scif.formats.APNGFormat.Metadata} to
-	 * {@link ome.xml.meta.OMEMetadata}
+	 * {@link OMEMetadata}
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -119,9 +116,6 @@ public class APNGTranslator {
 
 		// -- Translator API Methods --
 
-		/*
-		 * @see OMETranslator#typedTranslate(io.scif.Metadata, io.scif.Metadata)
-		 */
 		@Override
 		protected void typedTranslate(final APNGFormat.Metadata source,
 			final OMEMetadata dest)

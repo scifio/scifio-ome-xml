@@ -49,7 +49,6 @@ import io.scif.ome.xml.meta.OMEMetadata;
 import io.scif.ome.xml.meta.OMEXMLMetadata;
 import io.scif.ome.xml.services.OMEXMLMetadataService;
 
-import java.io.IOException;
 import java.util.Vector;
 
 import ome.xml.model.primitives.PositiveFloat;
@@ -67,7 +66,7 @@ import org.scijava.plugin.Plugin;
 public class MicromanagerTranslator {
 
 	/**
-	 * Translator class from {@link ome.xml.meta.OMEMetadata} to
+	 * Translator class from {@link OMEMetadata} to
 	 * {@link io.scif.formats.MicromanagerFormat.Metadata}.
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
@@ -85,9 +84,6 @@ public class MicromanagerTranslator {
 		ToOMETranslator<MicromanagerFormat.Metadata>
 	{
 
-		/*
-		 * @see OMETranslator#typedTranslate(io.scif.Metadata, io.scif.Metadata)
-		 */
 		@Override
 		protected void typedTranslate(final MicromanagerFormat.Metadata source,
 			final OMEMetadata dest)
@@ -101,14 +97,10 @@ public class MicromanagerTranslator {
 				log().error(
 					"Error populating Metadata store with Micromanager metadata", e);
 			}
-			catch (final IOException e) {
-				log().error(
-					"Error populating Metadata store with Micromanager metadata", e);
-			}
 		}
 
 		private void populateMetadata(final Metadata meta,
-			final OMEXMLMetadata store) throws FormatException, IOException
+			final OMEXMLMetadata store) throws FormatException
 		{
 			final OMEXMLMetadataService service =
 				scifio().get(OMEXMLMetadataService.class);

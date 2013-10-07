@@ -222,6 +222,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		createRoot();
 	}
 
+	@Override
 	public void createRoot() {
 		root = new OME();
 		model = new OMEModelImpl();
@@ -247,16 +248,19 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return super.dumpXML();
 	}
 
+	@Override
 	public int resolveReferences() {
 		return model.resolveReferences();
 	}
 
 	// -- Entity counting (manual definitions) --
 
+	@Override
 	public int getPixelsBinDataCount(final int imageIndex) {
 		return root.getImage(imageIndex).getPixels().sizeOfBinDataList();
 	}
 
+	@Override
 	public int getBooleanAnnotationAnnotationCount(
 		final int booleanAnnotationIndex)
 	{
@@ -264,6 +268,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			booleanAnnotationIndex).sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getCommentAnnotationAnnotationCount(
 		final int commentAnnotationIndex)
 	{
@@ -271,6 +276,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			commentAnnotationIndex).sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int
 		getDoubleAnnotationAnnotationCount(final int doubleAnnotationIndex)
 	{
@@ -278,31 +284,37 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			doubleAnnotationIndex).sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getFileAnnotationAnnotationCount(final int fileAnnotationIndex) {
 		return root.getStructuredAnnotations().getFileAnnotation(
 			fileAnnotationIndex).sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getListAnnotationAnnotationCount(final int listAnnotationIndex) {
 		return root.getStructuredAnnotations().getListAnnotation(
 			listAnnotationIndex).sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getLongAnnotationAnnotationCount(final int longAnnotationIndex) {
 		return root.getStructuredAnnotations().getLongAnnotation(
 			longAnnotationIndex).sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getTagAnnotationAnnotationCount(final int tagAnnotationIndex) {
 		return root.getStructuredAnnotations().getTagAnnotation(tagAnnotationIndex)
 			.sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getTermAnnotationAnnotationCount(final int termAnnotationIndex) {
 		return root.getStructuredAnnotations().getTermAnnotation(
 			termAnnotationIndex).sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getTimestampAnnotationAnnotationCount(
 		final int timestampAnnotationIndex)
 	{
@@ -310,11 +322,13 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			timestampAnnotationIndex).sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getXMLAnnotationAnnotationCount(final int xmlAnnotationIndex) {
 		return root.getStructuredAnnotations().getXMLAnnotation(xmlAnnotationIndex)
 			.sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public String getLightSourceType(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -325,6 +339,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.length());
 	}
 
+	@Override
 	public String getShapeType(final int roiIndex, final int shapeIndex) {
 		final Shape o = root.getROI(roiIndex).getUnion().getShape(shapeIndex);
 		final String className = o.getClass().getName();
@@ -335,6 +350,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// -- Entity counting (code generated definitions) --
 
 	// AnnotationRef entity counting
+	@Override
 	public int getROIAnnotationRefCount(final int ROIIndex) {
 		// Parents: {u'ROI': {u'OME': None}, u'PlateAcquisition': {u'Plate':
 		// {u'OME': None}}, u'Plate': {u'OME': None}, u'ExperimenterGroup': {u'OME':
@@ -349,6 +365,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return root.getROI(ROIIndex).sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getPlateAcquisitionAnnotationRefCount(final int plateIndex,
 		final int plateAcquisitionIndex)
 	{
@@ -366,6 +383,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getPlateAnnotationRefCount(final int plateIndex) {
 		// Parents: {u'ROI': {u'OME': None}, u'PlateAcquisition': {u'Plate':
 		// {u'OME': None}}, u'Plate': {u'OME': None}, u'ExperimenterGroup': {u'OME':
@@ -380,6 +398,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return root.getPlate(plateIndex).sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getExperimenterGroupAnnotationRefCount(
 		final int experimenterGroupIndex)
 	{
@@ -397,6 +416,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getImageAnnotationRefCount(final int imageIndex) {
 		// Parents: {u'ROI': {u'OME': None}, u'PlateAcquisition': {u'Plate':
 		// {u'OME': None}}, u'Plate': {u'OME': None}, u'ExperimenterGroup': {u'OME':
@@ -411,6 +431,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return root.getImage(imageIndex).sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getScreenAnnotationRefCount(final int screenIndex) {
 		// Parents: {u'ROI': {u'OME': None}, u'PlateAcquisition': {u'Plate':
 		// {u'OME': None}}, u'Plate': {u'OME': None}, u'ExperimenterGroup': {u'OME':
@@ -425,6 +446,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return root.getScreen(screenIndex).sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int
 		getWellAnnotationRefCount(final int plateIndex, final int wellIndex)
 	{
@@ -442,6 +464,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getDatasetAnnotationRefCount(final int datasetIndex) {
 		// Parents: {u'ROI': {u'OME': None}, u'PlateAcquisition': {u'Plate':
 		// {u'OME': None}}, u'Plate': {u'OME': None}, u'ExperimenterGroup': {u'OME':
@@ -456,6 +479,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return root.getDataset(datasetIndex).sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getProjectAnnotationRefCount(final int projectIndex) {
 		// Parents: {u'ROI': {u'OME': None}, u'PlateAcquisition': {u'Plate':
 		// {u'OME': None}}, u'Plate': {u'OME': None}, u'ExperimenterGroup': {u'OME':
@@ -470,6 +494,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return root.getProject(projectIndex).sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getReagentAnnotationRefCount(final int screenIndex,
 		final int reagentIndex)
 	{
@@ -487,6 +512,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getPlaneAnnotationRefCount(final int imageIndex,
 		final int planeIndex)
 	{
@@ -504,6 +530,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getExperimenterAnnotationRefCount(final int experimenterIndex) {
 		// Parents: {u'ROI': {u'OME': None}, u'PlateAcquisition': {u'Plate':
 		// {u'OME': None}}, u'Plate': {u'OME': None}, u'ExperimenterGroup': {u'OME':
@@ -518,6 +545,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return root.getExperimenter(experimenterIndex).sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getWellSampleAnnotationRefCount(final int plateIndex,
 		final int wellIndex, final int wellSampleIndex)
 	{
@@ -535,6 +563,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			wellSampleIndex).sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getPixelsAnnotationRefCount(final int imageIndex) {
 		// Parents: {u'ROI': {u'OME': None}, u'PlateAcquisition': {u'Plate':
 		// {u'OME': None}}, u'Plate': {u'OME': None}, u'ExperimenterGroup': {u'OME':
@@ -549,6 +578,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return root.getImage(imageIndex).getPixels().sizeOfLinkedAnnotationList();
 	}
 
+	@Override
 	public int getChannelAnnotationRefCount(final int imageIndex,
 		final int channelIndex)
 	{
@@ -570,6 +600,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// BinaryFile entity counting
 	// BinaryOnly entity counting
 	// BooleanAnnotation entity counting
+	@Override
 	public int getBooleanAnnotationCount() {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// BooleanAnnotation is not a reference
@@ -577,6 +608,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Channel entity counting
+	@Override
 	public int getChannelCount(final int imageIndex) {
 		// Parents: {u'Pixels': {u'Image': {u'OME': None}}}
 		// Channel is not a reference
@@ -584,6 +616,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// CommentAnnotation entity counting
+	@Override
 	public int getCommentAnnotationCount() {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// CommentAnnotation is not a reference
@@ -591,6 +624,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Dataset entity counting
+	@Override
 	public int getDatasetCount() {
 		// Parents: {u'OME': None}
 		// Dataset is not a reference
@@ -598,6 +632,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// DatasetRef entity counting
+	@Override
 	public int getDatasetRefCount(final int projectIndex) {
 		// Parents: {u'Project': {u'OME': None}}
 		// DatasetRef is a reference
@@ -605,6 +640,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Detector entity counting
+	@Override
 	public int getDetectorCount(final int instrumentIndex) {
 		// Parents: {u'Instrument': {u'OME': None}}
 		// Detector is not a reference
@@ -613,6 +649,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// DetectorSettings entity counting
 	// Dichroic entity counting
+	@Override
 	public int getDichroicCount(final int instrumentIndex) {
 		// Parents: {u'Instrument': {u'OME': None}}
 		// Dichroic is not a reference
@@ -621,6 +658,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// DichroicRef entity counting
 	// DoubleAnnotation entity counting
+	@Override
 	public int getDoubleAnnotationCount() {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// DoubleAnnotation is not a reference
@@ -629,6 +667,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ellipse entity counting
 	// EmissionFilterRef entity counting
+	@Override
 	public int getLightPathEmissionFilterRefCount(final int imageIndex,
 		final int channelIndex)
 	{
@@ -639,6 +678,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLightPath().sizeOfLinkedEmissionFilterList();
 	}
 
+	@Override
 	public int getFilterSetEmissionFilterRefCount(final int instrumentIndex,
 		final int filterSetIndex)
 	{
@@ -650,6 +690,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ExcitationFilterRef entity counting
+	@Override
 	public int getLightPathExcitationFilterRefCount(final int imageIndex,
 		final int channelIndex)
 	{
@@ -660,6 +701,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLightPath().sizeOfLinkedExcitationFilterList();
 	}
 
+	@Override
 	public int getFilterSetExcitationFilterRefCount(final int instrumentIndex,
 		final int filterSetIndex)
 	{
@@ -671,6 +713,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Experiment entity counting
+	@Override
 	public int getExperimentCount() {
 		// Parents: {u'OME': None}
 		// Experiment is not a reference
@@ -679,6 +722,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// ExperimentRef entity counting
 	// Experimenter entity counting
+	@Override
 	public int getExperimenterCount() {
 		// Parents: {u'OME': None}
 		// Experimenter is not a reference
@@ -686,6 +730,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ExperimenterGroup entity counting
+	@Override
 	public int getExperimenterGroupCount() {
 		// Parents: {u'OME': None}
 		// ExperimenterGroup is not a reference
@@ -694,6 +739,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// ExperimenterGroupRef entity counting
 	// ExperimenterRef entity counting
+	@Override
 	public int getExperimenterGroupExperimenterRefCount(
 		final int experimenterGroupIndex)
 	{
@@ -708,6 +754,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Filament entity counting
 	// FileAnnotation entity counting
+	@Override
 	public int getFileAnnotationCount() {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// FileAnnotation is not a reference
@@ -715,6 +762,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Filter entity counting
+	@Override
 	public int getFilterCount(final int instrumentIndex) {
 		// Parents: {u'Instrument': {u'OME': None}}
 		// Filter is not a reference
@@ -722,6 +770,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FilterSet entity counting
+	@Override
 	public int getFilterSetCount(final int instrumentIndex) {
 		// Parents: {u'Instrument': {u'OME': None}}
 		// FilterSet is not a reference
@@ -730,6 +779,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// FilterSetRef entity counting
 	// Image entity counting
+	@Override
 	public int getImageCount() {
 		// Parents: {u'OME': None}
 		// Image is not a reference
@@ -737,6 +787,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ImageRef entity counting
+	@Override
 	public int getDatasetImageRefCount(final int datasetIndex) {
 		// Parents: {u'WellSample': {u'Well': {u'Plate': {u'OME': None}}},
 		// u'Dataset': {u'OME': None}}
@@ -746,6 +797,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// ImagingEnvironment entity counting
 	// Instrument entity counting
+	@Override
 	public int getInstrumentCount() {
 		// Parents: {u'OME': None}
 		// Instrument is not a reference
@@ -756,6 +808,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Label entity counting
 	// Laser entity counting
 	// Leader entity counting
+	@Override
 	public int getLeaderCount(final int experimenterGroupIndex) {
 		// Parents: {u'ExperimenterGroup': {u'OME': None}}
 		// Leader is a reference
@@ -766,6 +819,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// LightEmittingDiode entity counting
 	// LightPath entity counting
 	// LightSource entity counting
+	@Override
 	public int getLightSourceCount(final int instrumentIndex) {
 		// Parents: {u'Instrument': {u'OME': None}}
 		// LightSource is not a reference
@@ -773,6 +827,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// LightSourceSettings entity counting
+	@Override
 	public int getMicrobeamManipulationLightSourceSettingsCount(
 		final int experimentIndex, final int microbeamManipulationIndex)
 	{
@@ -785,6 +840,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Line entity counting
 	// ListAnnotation entity counting
+	@Override
 	public int getListAnnotationCount() {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// ListAnnotation is not a reference
@@ -792,6 +848,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// LongAnnotation entity counting
+	@Override
 	public int getLongAnnotationCount() {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// LongAnnotation is not a reference
@@ -801,6 +858,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Mask entity counting
 	// MetadataOnly entity counting
 	// MicrobeamManipulation entity counting
+	@Override
 	public int getMicrobeamManipulationCount(final int experimentIndex) {
 		// Parents: {u'Experiment': {u'OME': None}}
 		// MicrobeamManipulation is not a reference
@@ -809,6 +867,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// MicrobeamManipulationRef entity counting
+	@Override
 	public int getMicrobeamManipulationRefCount(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// MicrobeamManipulationRef is a reference
@@ -817,6 +876,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Microscope entity counting
 	// Objective entity counting
+	@Override
 	public int getObjectiveCount(final int instrumentIndex) {
 		// Parents: {u'Instrument': {u'OME': None}}
 		// Objective is not a reference
@@ -826,6 +886,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// ObjectiveSettings entity counting
 	// Pixels entity counting
 	// Plane entity counting
+	@Override
 	public int getPlaneCount(final int imageIndex) {
 		// Parents: {u'Pixels': {u'Image': {u'OME': None}}}
 		// Plane is not a reference
@@ -833,6 +894,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Plate entity counting
+	@Override
 	public int getPlateCount() {
 		// Parents: {u'OME': None}
 		// Plate is not a reference
@@ -840,6 +902,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// PlateAcquisition entity counting
+	@Override
 	public int getPlateAcquisitionCount(final int plateIndex) {
 		// Parents: {u'Plate': {u'OME': None}}
 		// PlateAcquisition is not a reference
@@ -847,6 +910,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// PlateRef entity counting
+	@Override
 	public int getPlateRefCount(final int screenIndex) {
 		// Parents: {u'Screen': {u'OME': None}}
 		// PlateRef is a reference
@@ -857,6 +921,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Polygon entity counting
 	// Polyline entity counting
 	// Project entity counting
+	@Override
 	public int getProjectCount() {
 		// Parents: {u'OME': None}
 		// Project is not a reference
@@ -865,6 +930,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Pump entity counting
 	// ROI entity counting
+	@Override
 	public int getROICount() {
 		// Parents: {u'OME': None}
 		// ROI is not a reference
@@ -872,6 +938,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ROIRef entity counting
+	@Override
 	public int getImageROIRefCount(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}, u'MicrobeamManipulation':
 		// {u'Experiment': {u'OME': None}}}
@@ -879,6 +946,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return root.getImage(imageIndex).sizeOfLinkedROIList();
 	}
 
+	@Override
 	public int getMicrobeamManipulationROIRefCount(final int experimentIndex,
 		final int microbeamManipulationIndex)
 	{
@@ -890,6 +958,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Reagent entity counting
+	@Override
 	public int getReagentCount(final int screenIndex) {
 		// Parents: {u'Screen': {u'OME': None}}
 		// Reagent is not a reference
@@ -899,6 +968,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// ReagentRef entity counting
 	// Rectangle entity counting
 	// Screen entity counting
+	@Override
 	public int getScreenCount() {
 		// Parents: {u'OME': None}
 		// Screen is not a reference
@@ -906,6 +976,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Shape entity counting
+	@Override
 	public int getShapeCount(final int ROIIndex) {
 		// Parents: {u'Union': {u'ROI': {u'OME': None}}}
 		// Shape is not a reference
@@ -915,6 +986,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// StageLabel entity counting
 	// StructuredAnnotations entity counting
 	// TagAnnotation entity counting
+	@Override
 	public int getTagAnnotationCount() {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// TagAnnotation is not a reference
@@ -922,6 +994,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TermAnnotation entity counting
+	@Override
 	public int getTermAnnotationCount() {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// TermAnnotation is not a reference
@@ -929,6 +1002,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TiffData entity counting
+	@Override
 	public int getTiffDataCount(final int imageIndex) {
 		// Parents: {u'Pixels': {u'Image': {u'OME': None}}}
 		// TiffData is not a reference
@@ -936,6 +1010,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TimestampAnnotation entity counting
+	@Override
 	public int getTimestampAnnotationCount() {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// TimestampAnnotation is not a reference
@@ -945,6 +1020,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// TransmittanceRange entity counting
 	// Element's text data
 	// {u'TiffData': [u'int imageIndex', u'int tiffDataIndex']}
+	@Override
 	public void setUUIDValue(final String value, final int imageIndex,
 		final int tiffDataIndex)
 	{
@@ -968,6 +1044,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o4.setValue(value);
 	}
 
+	@Override
 	public String getUUIDValue(final int imageIndex, final int tiffDataIndex) {
 		return root.getImage(imageIndex).getPixels().getTiffData(tiffDataIndex)
 			.getUUID().getValue();
@@ -976,6 +1053,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// UUID entity counting
 	// Union entity counting
 	// Well entity counting
+	@Override
 	public int getWellCount(final int plateIndex) {
 		// Parents: {u'Plate': {u'OME': None}}
 		// Well is not a reference
@@ -983,6 +1061,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// WellSample entity counting
+	@Override
 	public int getWellSampleCount(final int plateIndex, final int wellIndex) {
 		// Parents: {u'Well': {u'Plate': {u'OME': None}}}
 		// WellSample is not a reference
@@ -990,6 +1069,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// WellSampleRef entity counting
+	@Override
 	public int getWellSampleRefCount(final int plateIndex,
 		final int plateAcquisitionIndex)
 	{
@@ -1000,6 +1080,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// XMLAnnotation entity counting
+	@Override
 	public int getXMLAnnotationCount() {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// XMLAnnotation is not a reference
@@ -1008,6 +1089,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// -- Entity retrieval (manual definitions) --
 
+	@Override
 	public Boolean getPixelsBinDataBigEndian(final int imageIndex,
 		final int binDataIndex)
 	{
@@ -1069,6 +1151,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Arc of parent abstract type
 	// Ignoring Filament of parent abstract type
 	// ID accessor from parent LightSource
+	@Override
 	public String getArcID(final int instrumentIndex, final int lightSourceIndex)
 	{
 		// Parents: {u'LightSource': {u'Instrument': {u'OME': None}}}
@@ -1082,6 +1165,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Laser of parent abstract type
 	// Ignoring LightEmittingDiode of parent abstract type
 	// LotNumber accessor from parent LightSource
+	@Override
 	public String getArcLotNumber(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -1094,6 +1178,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Manufacturer accessor from parent LightSource
+	@Override
 	public String getArcManufacturer(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -1106,6 +1191,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Model accessor from parent LightSource
+	@Override
 	public String getArcModel(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -1118,6 +1204,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Power accessor from parent LightSource
+	@Override
 	public Double getArcPower(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -1130,6 +1217,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// SerialNumber accessor from parent LightSource
+	@Override
 	public String getArcSerialNumber(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -1141,6 +1229,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getSerialNumber();
 	}
 
+	@Override
 	public ArcType getArcType(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -1161,6 +1250,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring BinData element, complex property
 	// Ignoring External element, complex property
+	@Override
 	public String getBinaryFileFileName(final int fileAnnotationIndex) {
 		// Parents: {u'FileAnnotation': {u'StructuredAnnotations': {u'OME': None}}}
 		// FileName is not a reference
@@ -1168,6 +1258,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			fileAnnotationIndex).getBinaryFile().getFileName();
 	}
 
+	@Override
 	public String getBinaryFileMIMEType(final int fileAnnotationIndex) {
 		// Parents: {u'FileAnnotation': {u'StructuredAnnotations': {u'OME': None}}}
 		// MIMEType is not a reference
@@ -1175,6 +1266,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			fileAnnotationIndex).getBinaryFile().getMIMEType();
 	}
 
+	@Override
 	public NonNegativeLong getBinaryFileSize(final int fileAnnotationIndex) {
 		// Parents: {u'FileAnnotation': {u'StructuredAnnotations': {u'OME': None}}}
 		// Size is not a reference
@@ -1189,12 +1281,14 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public String getBinaryOnlyMetadataFile(final int metadataFileIndex) {
 		// Parents: {u'OME': None}
 		// MetadataFile is not a reference
 		return root.getBinaryOnly().getMetadataFile();
 	}
 
+	@Override
 	public String getBinaryOnlyUUID(final int UUIDIndex) {
 		// Parents: {u'OME': None}
 		// UUID is not a reference
@@ -1208,6 +1302,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public String getBooleanAnnotationAnnotationRef(
 		final int booleanAnnotationIndex, final int annotationRefIndex)
 	{
@@ -1219,6 +1314,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public String
 		getBooleanAnnotationDescription(final int booleanAnnotationIndex)
 	{
@@ -1230,6 +1326,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public String getBooleanAnnotationID(final int booleanAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// ID is not a reference
@@ -1238,6 +1335,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public String getBooleanAnnotationNamespace(final int booleanAnnotationIndex)
 	{
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
@@ -1255,6 +1353,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Reagent_BackReference back reference
 	// Ignoring Screen_BackReference back reference
 	// Ignoring StructuredAnnotations_BackReference back reference
+	@Override
 	public Boolean getBooleanAnnotationValue(final int booleanAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Value is not a reference
@@ -1271,6 +1370,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Pixels': {u'Image': {u'OME': None}}}
 	// Is multi path? False
 
+	@Override
 	public AcquisitionMode getChannelAcquisitionMode(final int imageIndex,
 		final int channelIndex)
 	{
@@ -1280,6 +1380,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getAcquisitionMode();
 	}
 
+	@Override
 	public String getChannelAnnotationRef(final int imageIndex,
 		final int channelIndex, final int annotationRefIndex)
 	{
@@ -1289,6 +1390,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLinkedAnnotation(annotationRefIndex).getID();
 	}
 
+	@Override
 	public Color getChannelColor(final int imageIndex, final int channelIndex) {
 		// Parents: {u'Pixels': {u'Image': {u'OME': None}}}
 		// Color is not a reference
@@ -1296,6 +1398,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getColor();
 	}
 
+	@Override
 	public ContrastMethod getChannelContrastMethod(final int imageIndex,
 		final int channelIndex)
 	{
@@ -1306,6 +1409,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring DetectorSettings element, complex property
+	@Override
 	public PositiveInteger getChannelEmissionWavelength(final int imageIndex,
 		final int channelIndex)
 	{
@@ -1315,6 +1419,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getEmissionWavelength();
 	}
 
+	@Override
 	public PositiveInteger getChannelExcitationWavelength(final int imageIndex,
 		final int channelIndex)
 	{
@@ -1324,6 +1429,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getExcitationWavelength();
 	}
 
+	@Override
 	public String getChannelFilterSetRef(final int imageIndex,
 		final int channelIndex)
 	{
@@ -1333,6 +1439,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLinkedFilterSet().getID();
 	}
 
+	@Override
 	public String getChannelFluor(final int imageIndex, final int channelIndex) {
 		// Parents: {u'Pixels': {u'Image': {u'OME': None}}}
 		// Fluor is not a reference
@@ -1340,6 +1447,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getFluor();
 	}
 
+	@Override
 	public String getChannelID(final int imageIndex, final int channelIndex) {
 		// Parents: {u'Pixels': {u'Image': {u'OME': None}}}
 		// ID is not a reference
@@ -1347,6 +1455,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getID();
 	}
 
+	@Override
 	public IlluminationType getChannelIlluminationType(final int imageIndex,
 		final int channelIndex)
 	{
@@ -1358,6 +1467,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring LightPath element, complex property
 	// Ignoring LightSourceSettings element, complex property
+	@Override
 	public Double
 		getChannelNDFilter(final int imageIndex, final int channelIndex)
 	{
@@ -1367,6 +1477,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getNDFilter();
 	}
 
+	@Override
 	public String getChannelName(final int imageIndex, final int channelIndex) {
 		// Parents: {u'Pixels': {u'Image': {u'OME': None}}}
 		// Name is not a reference
@@ -1374,6 +1485,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getName();
 	}
 
+	@Override
 	public Double getChannelPinholeSize(final int imageIndex,
 		final int channelIndex)
 	{
@@ -1384,6 +1496,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Pixels_BackReference back reference
+	@Override
 	public Integer getChannelPockelCellSetting(final int imageIndex,
 		final int channelIndex)
 	{
@@ -1393,6 +1506,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getPockelCellSetting();
 	}
 
+	@Override
 	public PositiveInteger getChannelSamplesPerPixel(final int imageIndex,
 		final int channelIndex)
 	{
@@ -1409,6 +1523,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public String getCommentAnnotationAnnotationRef(
 		final int commentAnnotationIndex, final int annotationRefIndex)
 	{
@@ -1420,6 +1535,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public String
 		getCommentAnnotationDescription(final int commentAnnotationIndex)
 	{
@@ -1431,6 +1547,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public String getCommentAnnotationID(final int commentAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// ID is not a reference
@@ -1439,6 +1556,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public String getCommentAnnotationNamespace(final int commentAnnotationIndex)
 	{
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
@@ -1456,6 +1574,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Reagent_BackReference back reference
 	// Ignoring Screen_BackReference back reference
 	// Ignoring StructuredAnnotations_BackReference back reference
+	@Override
 	public String getCommentAnnotationValue(final int commentAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Value is not a reference
@@ -1472,6 +1591,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public String getDatasetAnnotationRef(final int datasetIndex,
 		final int annotationRefIndex)
 	{
@@ -1481,30 +1601,35 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLinkedAnnotation(annotationRefIndex).getID();
 	}
 
+	@Override
 	public String getDatasetDescription(final int datasetIndex) {
 		// Parents: {u'OME': None}
 		// Description is not a reference
 		return root.getDataset(datasetIndex).getDescription();
 	}
 
+	@Override
 	public String getDatasetExperimenterGroupRef(final int datasetIndex) {
 		// Parents: {u'OME': None}
 		// ExperimenterGroupRef is reference and occurs only once
 		return root.getDataset(datasetIndex).getLinkedExperimenterGroup().getID();
 	}
 
+	@Override
 	public String getDatasetExperimenterRef(final int datasetIndex) {
 		// Parents: {u'OME': None}
 		// ExperimenterRef is reference and occurs only once
 		return root.getDataset(datasetIndex).getLinkedExperimenter().getID();
 	}
 
+	@Override
 	public String getDatasetID(final int datasetIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
 		return root.getDataset(datasetIndex).getID();
 	}
 
+	@Override
 	public String getDatasetImageRef(final int datasetIndex,
 		final int imageRefIndex)
 	{
@@ -1513,6 +1638,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return root.getDataset(datasetIndex).getLinkedImage(imageRefIndex).getID();
 	}
 
+	@Override
 	public String getDatasetName(final int datasetIndex) {
 		// Parents: {u'OME': None}
 		// Name is not a reference
@@ -1538,6 +1664,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Instrument': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public Double getDetectorAmplificationGain(final int instrumentIndex,
 		final int detectorIndex)
 	{
@@ -1547,6 +1674,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getAmplificationGain();
 	}
 
+	@Override
 	public Double getDetectorGain(final int instrumentIndex,
 		final int detectorIndex)
 	{
@@ -1556,6 +1684,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getGain();
 	}
 
+	@Override
 	public String
 		getDetectorID(final int instrumentIndex, final int detectorIndex)
 	{
@@ -1566,6 +1695,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Instrument_BackReference back reference
+	@Override
 	public String getDetectorLotNumber(final int instrumentIndex,
 		final int detectorIndex)
 	{
@@ -1575,6 +1705,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLotNumber();
 	}
 
+	@Override
 	public String getDetectorManufacturer(final int instrumentIndex,
 		final int detectorIndex)
 	{
@@ -1584,6 +1715,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getManufacturer();
 	}
 
+	@Override
 	public String getDetectorModel(final int instrumentIndex,
 		final int detectorIndex)
 	{
@@ -1593,6 +1725,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getModel();
 	}
 
+	@Override
 	public Double getDetectorOffset(final int instrumentIndex,
 		final int detectorIndex)
 	{
@@ -1602,6 +1735,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getOffset();
 	}
 
+	@Override
 	public String getDetectorSerialNumber(final int instrumentIndex,
 		final int detectorIndex)
 	{
@@ -1611,6 +1745,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getSerialNumber();
 	}
 
+	@Override
 	public DetectorType getDetectorType(final int instrumentIndex,
 		final int detectorIndex)
 	{
@@ -1620,6 +1755,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getType();
 	}
 
+	@Override
 	public Double getDetectorVoltage(final int instrumentIndex,
 		final int detectorIndex)
 	{
@@ -1629,6 +1765,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getVoltage();
 	}
 
+	@Override
 	public Double getDetectorZoom(final int instrumentIndex,
 		final int detectorIndex)
 	{
@@ -1645,6 +1782,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Channel': {u'Pixels': {u'Image': {u'OME': None}}}}
 	// Is multi path? False
 
+	@Override
 	public Binning getDetectorSettingsBinning(final int imageIndex,
 		final int channelIndex)
 	{
@@ -1655,6 +1793,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring DetectorRef back reference
+	@Override
 	public Double getDetectorSettingsGain(final int imageIndex,
 		final int channelIndex)
 	{
@@ -1664,6 +1803,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getDetectorSettings().getGain();
 	}
 
+	@Override
 	public String getDetectorSettingsID(final int imageIndex,
 		final int channelIndex)
 	{
@@ -1673,6 +1813,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getDetectorSettings().getID();
 	}
 
+	@Override
 	public Double getDetectorSettingsOffset(final int imageIndex,
 		final int channelIndex)
 	{
@@ -1682,6 +1823,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getDetectorSettings().getOffset();
 	}
 
+	@Override
 	public Double getDetectorSettingsReadOutRate(final int imageIndex,
 		final int channelIndex)
 	{
@@ -1691,6 +1833,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getDetectorSettings().getReadOutRate();
 	}
 
+	@Override
 	public Double getDetectorSettingsVoltage(final int imageIndex,
 		final int channelIndex)
 	{
@@ -1708,6 +1851,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Is multi path? False
 
 	// Ignoring FilterSet_BackReference back reference
+	@Override
 	public String
 		getDichroicID(final int instrumentIndex, final int dichroicIndex)
 	{
@@ -1719,6 +1863,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Instrument_BackReference back reference
 	// Ignoring LightPath_BackReference back reference
+	@Override
 	public String getDichroicLotNumber(final int instrumentIndex,
 		final int dichroicIndex)
 	{
@@ -1728,6 +1873,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLotNumber();
 	}
 
+	@Override
 	public String getDichroicManufacturer(final int instrumentIndex,
 		final int dichroicIndex)
 	{
@@ -1737,6 +1883,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getManufacturer();
 	}
 
+	@Override
 	public String getDichroicModel(final int instrumentIndex,
 		final int dichroicIndex)
 	{
@@ -1746,6 +1893,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getModel();
 	}
 
+	@Override
 	public String getDichroicSerialNumber(final int instrumentIndex,
 		final int dichroicIndex)
 	{
@@ -1775,6 +1923,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public String getDoubleAnnotationAnnotationRef(
 		final int doubleAnnotationIndex, final int annotationRefIndex)
 	{
@@ -1786,6 +1935,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public String getDoubleAnnotationDescription(final int doubleAnnotationIndex)
 	{
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
@@ -1796,6 +1946,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public String getDoubleAnnotationID(final int doubleAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// ID is not a reference
@@ -1804,6 +1955,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public String getDoubleAnnotationNamespace(final int doubleAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Namespace is not a reference
@@ -1820,6 +1972,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Reagent_BackReference back reference
 	// Ignoring Screen_BackReference back reference
 	// Ignoring StructuredAnnotations_BackReference back reference
+	@Override
 	public Double getDoubleAnnotationValue(final int doubleAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Value is not a reference
@@ -1838,6 +1991,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Ellipse of parent abstract type
 	// FillColor accessor from parent Shape
+	@Override
 	public Color getEllipseFillColor(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -1847,6 +2001,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FillRule accessor from parent Shape
+	@Override
 	public FillRule getEllipseFillRule(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -1856,6 +2011,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontFamily accessor from parent Shape
+	@Override
 	public FontFamily getEllipseFontFamily(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -1867,6 +2023,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontSize accessor from parent Shape
+	@Override
 	public NonNegativeInteger getEllipseFontSize(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -1878,6 +2035,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontStyle accessor from parent Shape
+	@Override
 	public FontStyle
 		getEllipseFontStyle(final int ROIIndex, final int shapeIndex)
 	{
@@ -1889,6 +2047,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ID accessor from parent Shape
+	@Override
 	public String getEllipseID(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -1900,6 +2059,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Label of parent abstract type
 	// Ignoring Line of parent abstract type
 	// LineCap accessor from parent Shape
+	@Override
 	public LineCap getEllipseLineCap(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -1909,6 +2069,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Locked accessor from parent Shape
+	@Override
 	public Boolean getEllipseLocked(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -1923,6 +2084,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Polyline of parent abstract type
 	// Ignoring Rectangle of parent abstract type
 	// StrokeColor accessor from parent Shape
+	@Override
 	public Color getEllipseStrokeColor(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -1932,6 +2094,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeDashArray accessor from parent Shape
+	@Override
 	public String getEllipseStrokeDashArray(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -1943,6 +2106,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeWidth accessor from parent Shape
+	@Override
 	public Double getEllipseStrokeWidth(final int ROIIndex, final int shapeIndex)
 	{
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
@@ -1953,6 +2117,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Text accessor from parent Shape
+	@Override
 	public String getEllipseText(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -1962,6 +2127,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheC accessor from parent Shape
+	@Override
 	public NonNegativeInteger getEllipseTheC(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -1973,6 +2139,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheT accessor from parent Shape
+	@Override
 	public NonNegativeInteger getEllipseTheT(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -1984,6 +2151,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheZ accessor from parent Shape
+	@Override
 	public NonNegativeInteger getEllipseTheZ(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -1995,6 +2163,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Transform accessor from parent Shape
+	@Override
 	public AffineTransform getEllipseTransform(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -2006,6 +2175,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Visible accessor from parent Shape
+	@Override
 	public Boolean getEllipseVisible(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -2014,6 +2184,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getVisible();
 	}
 
+	@Override
 	public Double getEllipseRadiusX(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -2022,6 +2193,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getRadiusX();
 	}
 
+	@Override
 	public Double getEllipseRadiusY(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -2030,6 +2202,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getRadiusY();
 	}
 
+	@Override
 	public Double getEllipseX(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -2038,6 +2211,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getX();
 	}
 
+	@Override
 	public Double getEllipseY(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -2073,18 +2247,21 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public String getExperimentDescription(final int experimentIndex) {
 		// Parents: {u'OME': None}
 		// Description is not a reference
 		return root.getExperiment(experimentIndex).getDescription();
 	}
 
+	@Override
 	public String getExperimentExperimenterRef(final int experimentIndex) {
 		// Parents: {u'OME': None}
 		// ExperimenterRef is reference and occurs only once
 		return root.getExperiment(experimentIndex).getLinkedExperimenter().getID();
 	}
 
+	@Override
 	public String getExperimentID(final int experimentIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
@@ -2093,6 +2270,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Image_BackReference back reference
 	// Ignoring MicrobeamManipulation element, complex property
+	@Override
 	public ExperimentType getExperimentType(final int experimentIndex) {
 		// Parents: {u'OME': None}
 		// Type is not a reference
@@ -2117,6 +2295,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public String getExperimenterAnnotationRef(final int experimenterIndex,
 		final int annotationRefIndex)
 	{
@@ -2127,6 +2306,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public String getExperimenterEmail(final int experimenterIndex) {
 		// Parents: {u'OME': None}
 		// Email is not a reference
@@ -2135,12 +2315,14 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Experiment_BackReference back reference
 	// Ignoring ExperimenterGroup_BackReference back reference
+	@Override
 	public String getExperimenterFirstName(final int experimenterIndex) {
 		// Parents: {u'OME': None}
 		// FirstName is not a reference
 		return root.getExperimenter(experimenterIndex).getFirstName();
 	}
 
+	@Override
 	public String getExperimenterID(final int experimenterIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
@@ -2148,12 +2330,14 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public String getExperimenterInstitution(final int experimenterIndex) {
 		// Parents: {u'OME': None}
 		// Institution is not a reference
 		return root.getExperimenter(experimenterIndex).getInstitution();
 	}
 
+	@Override
 	public String getExperimenterLastName(final int experimenterIndex) {
 		// Parents: {u'OME': None}
 		// LastName is not a reference
@@ -2161,6 +2345,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring MicrobeamManipulation_BackReference back reference
+	@Override
 	public String getExperimenterMiddleName(final int experimenterIndex) {
 		// Parents: {u'OME': None}
 		// MiddleName is not a reference
@@ -2168,6 +2353,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Project_BackReference back reference
+	@Override
 	public String getExperimenterUserName(final int experimenterIndex) {
 		// Parents: {u'OME': None}
 		// UserName is not a reference
@@ -2181,6 +2367,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public String getExperimenterGroupAnnotationRef(
 		final int experimenterGroupIndex, final int annotationRefIndex)
 	{
@@ -2191,6 +2378,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public String
 		getExperimenterGroupDescription(final int experimenterGroupIndex)
 	{
@@ -2199,6 +2387,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return root.getExperimenterGroup(experimenterGroupIndex).getDescription();
 	}
 
+	@Override
 	public String getExperimenterGroupExperimenterRef(
 		final int experimenterGroupIndex, final int experimenterRefIndex)
 	{
@@ -2208,6 +2397,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLinkedExperimenter(experimenterRefIndex).getID();
 	}
 
+	@Override
 	public String getExperimenterGroupID(final int experimenterGroupIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
@@ -2215,6 +2405,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public String getExperimenterGroupLeader(final int experimenterGroupIndex,
 		final int leaderIndex)
 	{
@@ -2224,6 +2415,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			leaderIndex).getID();
 	}
 
+	@Override
 	public String getExperimenterGroupName(final int experimenterGroupIndex) {
 		// Parents: {u'OME': None}
 		// Name is not a reference
@@ -2272,6 +2464,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Arc of parent abstract type
 	// Ignoring Filament of parent abstract type
 	// ID accessor from parent LightSource
+	@Override
 	public String getFilamentID(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -2286,6 +2479,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Laser of parent abstract type
 	// Ignoring LightEmittingDiode of parent abstract type
 	// LotNumber accessor from parent LightSource
+	@Override
 	public String getFilamentLotNumber(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -2298,6 +2492,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Manufacturer accessor from parent LightSource
+	@Override
 	public String getFilamentManufacturer(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -2310,6 +2505,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Model accessor from parent LightSource
+	@Override
 	public String getFilamentModel(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -2322,6 +2518,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Power accessor from parent LightSource
+	@Override
 	public Double getFilamentPower(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -2334,6 +2531,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// SerialNumber accessor from parent LightSource
+	@Override
 	public String getFilamentSerialNumber(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -2345,6 +2543,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getSerialNumber();
 	}
 
+	@Override
 	public FilamentType getFilamentType(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -2363,6 +2562,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public String getFileAnnotationAnnotationRef(final int fileAnnotationIndex,
 		final int annotationRefIndex)
 	{
@@ -2375,6 +2575,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring BinaryFile element, complex property
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public String getFileAnnotationDescription(final int fileAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Description is not a reference
@@ -2384,6 +2585,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public String getFileAnnotationID(final int fileAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// ID is not a reference
@@ -2392,6 +2594,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public String getFileAnnotationNamespace(final int fileAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Namespace is not a reference
@@ -2419,6 +2622,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring FilterSet_BackReference back reference
 	// Ignoring FilterSet_BackReference back reference
+	@Override
 	public String getFilterFilterWheel(final int instrumentIndex,
 		final int filterIndex)
 	{
@@ -2428,6 +2632,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getFilterWheel();
 	}
 
+	@Override
 	public String getFilterID(final int instrumentIndex, final int filterIndex) {
 		// Parents: {u'Instrument': {u'OME': None}}
 		// ID is not a reference
@@ -2437,6 +2642,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Instrument_BackReference back reference
 	// Ignoring LightPath_BackReference back reference
 	// Ignoring LightPath_BackReference back reference
+	@Override
 	public String getFilterLotNumber(final int instrumentIndex,
 		final int filterIndex)
 	{
@@ -2446,6 +2652,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLotNumber();
 	}
 
+	@Override
 	public String getFilterManufacturer(final int instrumentIndex,
 		final int filterIndex)
 	{
@@ -2455,6 +2662,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getManufacturer();
 	}
 
+	@Override
 	public String
 		getFilterModel(final int instrumentIndex, final int filterIndex)
 	{
@@ -2464,6 +2672,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getModel();
 	}
 
+	@Override
 	public String getFilterSerialNumber(final int instrumentIndex,
 		final int filterIndex)
 	{
@@ -2474,6 +2683,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring TransmittanceRange element, complex property
+	@Override
 	public FilterType getFilterType(final int instrumentIndex,
 		final int filterIndex)
 	{
@@ -2490,6 +2700,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Is multi path? False
 
 	// Ignoring Channel_BackReference back reference
+	@Override
 	public String getFilterSetDichroicRef(final int instrumentIndex,
 		final int filterSetIndex)
 	{
@@ -2499,6 +2710,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLinkedDichroic().getID();
 	}
 
+	@Override
 	public String getFilterSetEmissionFilterRef(final int instrumentIndex,
 		final int filterSetIndex, final int emissionFilterRefIndex)
 	{
@@ -2508,6 +2720,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLinkedEmissionFilter(emissionFilterRefIndex).getID();
 	}
 
+	@Override
 	public String getFilterSetExcitationFilterRef(final int instrumentIndex,
 		final int filterSetIndex, final int excitationFilterRefIndex)
 	{
@@ -2517,6 +2730,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLinkedExcitationFilter(excitationFilterRefIndex).getID();
 	}
 
+	@Override
 	public String getFilterSetID(final int instrumentIndex,
 		final int filterSetIndex)
 	{
@@ -2527,6 +2741,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Instrument_BackReference back reference
+	@Override
 	public String getFilterSetLotNumber(final int instrumentIndex,
 		final int filterSetIndex)
 	{
@@ -2536,6 +2751,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLotNumber();
 	}
 
+	@Override
 	public String getFilterSetManufacturer(final int instrumentIndex,
 		final int filterSetIndex)
 	{
@@ -2545,6 +2761,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getManufacturer();
 	}
 
+	@Override
 	public String getFilterSetModel(final int instrumentIndex,
 		final int filterSetIndex)
 	{
@@ -2554,6 +2771,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getModel();
 	}
 
+	@Override
 	public String getFilterSetSerialNumber(final int instrumentIndex,
 		final int filterSetIndex)
 	{
@@ -2581,12 +2799,14 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public Timestamp getImageAcquisitionDate(final int imageIndex) {
 		// Parents: {u'OME': None}
 		// AcquisitionDate is not a reference
 		return root.getImage(imageIndex).getAcquisitionDate();
 	}
 
+	@Override
 	public String getImageAnnotationRef(final int imageIndex,
 		final int annotationRefIndex)
 	{
@@ -2597,30 +2817,35 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public String getImageDescription(final int imageIndex) {
 		// Parents: {u'OME': None}
 		// Description is not a reference
 		return root.getImage(imageIndex).getDescription();
 	}
 
+	@Override
 	public String getImageExperimentRef(final int imageIndex) {
 		// Parents: {u'OME': None}
 		// ExperimentRef is reference and occurs only once
 		return root.getImage(imageIndex).getLinkedExperiment().getID();
 	}
 
+	@Override
 	public String getImageExperimenterGroupRef(final int imageIndex) {
 		// Parents: {u'OME': None}
 		// ExperimenterGroupRef is reference and occurs only once
 		return root.getImage(imageIndex).getLinkedExperimenterGroup().getID();
 	}
 
+	@Override
 	public String getImageExperimenterRef(final int imageIndex) {
 		// Parents: {u'OME': None}
 		// ExperimenterRef is reference and occurs only once
 		return root.getImage(imageIndex).getLinkedExperimenter().getID();
 	}
 
+	@Override
 	public String getImageID(final int imageIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
@@ -2628,12 +2853,14 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring ImagingEnvironment element, complex property
+	@Override
 	public String getImageInstrumentRef(final int imageIndex) {
 		// Parents: {u'OME': None}
 		// InstrumentRef is reference and occurs only once
 		return root.getImage(imageIndex).getLinkedInstrument().getID();
 	}
 
+	@Override
 	public String getImageMicrobeamManipulationRef(final int imageIndex,
 		final int microbeamManipulationRefIndex)
 	{
@@ -2643,6 +2870,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			microbeamManipulationRefIndex).getID();
 	}
 
+	@Override
 	public String getImageName(final int imageIndex) {
 		// Parents: {u'OME': None}
 		// Name is not a reference
@@ -2651,6 +2879,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ObjectiveSettings element, complex property
 	// Ignoring Pixels element, complex property
+	@Override
 	public String getImageROIRef(final int imageIndex, final int ROIRefIndex) {
 		// Parents: {u'OME': None}
 		// ROIRef is reference and occurs more than once
@@ -2679,24 +2908,28 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Image': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public Double getImagingEnvironmentAirPressure(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// AirPressure is not a reference
 		return root.getImage(imageIndex).getImagingEnvironment().getAirPressure();
 	}
 
+	@Override
 	public PercentFraction getImagingEnvironmentCO2Percent(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// CO2Percent is not a reference
 		return root.getImage(imageIndex).getImagingEnvironment().getCO2Percent();
 	}
 
+	@Override
 	public PercentFraction getImagingEnvironmentHumidity(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// Humidity is not a reference
 		return root.getImage(imageIndex).getImagingEnvironment().getHumidity();
 	}
 
+	@Override
 	public Double getImagingEnvironmentTemperature(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// Temperature is not a reference
@@ -2714,6 +2947,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Dichroic element, complex property
 	// Ignoring Filter element, complex property
 	// Ignoring FilterSet element, complex property
+	@Override
 	public String getInstrumentID(final int instrumentIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
@@ -2744,6 +2978,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Ellipse of parent abstract type
 	// FillColor accessor from parent Shape
+	@Override
 	public Color getLabelFillColor(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -2753,6 +2988,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FillRule accessor from parent Shape
+	@Override
 	public FillRule getLabelFillRule(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -2762,6 +2998,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontFamily accessor from parent Shape
+	@Override
 	public FontFamily
 		getLabelFontFamily(final int ROIIndex, final int shapeIndex)
 	{
@@ -2773,6 +3010,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontSize accessor from parent Shape
+	@Override
 	public NonNegativeInteger getLabelFontSize(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -2784,6 +3022,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontStyle accessor from parent Shape
+	@Override
 	public FontStyle getLabelFontStyle(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -2793,6 +3032,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ID accessor from parent Shape
+	@Override
 	public String getLabelID(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -2804,6 +3044,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Label of parent abstract type
 	// Ignoring Line of parent abstract type
 	// LineCap accessor from parent Shape
+	@Override
 	public LineCap getLabelLineCap(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -2813,6 +3054,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Locked accessor from parent Shape
+	@Override
 	public Boolean getLabelLocked(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -2827,6 +3069,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Polyline of parent abstract type
 	// Ignoring Rectangle of parent abstract type
 	// StrokeColor accessor from parent Shape
+	@Override
 	public Color getLabelStrokeColor(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -2836,6 +3079,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeDashArray accessor from parent Shape
+	@Override
 	public String
 		getLabelStrokeDashArray(final int ROIIndex, final int shapeIndex)
 	{
@@ -2847,6 +3091,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeWidth accessor from parent Shape
+	@Override
 	public Double getLabelStrokeWidth(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -2856,6 +3101,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Text accessor from parent Shape
+	@Override
 	public String getLabelText(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -2865,6 +3111,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheC accessor from parent Shape
+	@Override
 	public NonNegativeInteger getLabelTheC(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -2876,6 +3123,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheT accessor from parent Shape
+	@Override
 	public NonNegativeInteger getLabelTheT(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -2887,6 +3135,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheZ accessor from parent Shape
+	@Override
 	public NonNegativeInteger getLabelTheZ(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -2898,6 +3147,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Transform accessor from parent Shape
+	@Override
 	public AffineTransform getLabelTransform(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -2909,6 +3159,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Visible accessor from parent Shape
+	@Override
 	public Boolean getLabelVisible(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -2917,6 +3168,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getVisible();
 	}
 
+	@Override
 	public Double getLabelX(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -2925,6 +3177,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getX();
 	}
 
+	@Override
 	public Double getLabelY(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -2944,6 +3197,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Arc of parent abstract type
 	// Ignoring Filament of parent abstract type
 	// ID accessor from parent LightSource
+	@Override
 	public String
 		getLaserID(final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -2958,6 +3212,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Laser of parent abstract type
 	// Ignoring LightEmittingDiode of parent abstract type
 	// LotNumber accessor from parent LightSource
+	@Override
 	public String getLaserLotNumber(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -2970,6 +3225,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Manufacturer accessor from parent LightSource
+	@Override
 	public String getLaserManufacturer(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -2982,6 +3238,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Model accessor from parent LightSource
+	@Override
 	public String getLaserModel(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -2994,6 +3251,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Power accessor from parent LightSource
+	@Override
 	public Double getLaserPower(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -3006,6 +3264,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// SerialNumber accessor from parent LightSource
+	@Override
 	public String getLaserSerialNumber(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -3017,6 +3276,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getSerialNumber();
 	}
 
+	@Override
 	public PositiveInteger getLaserFrequencyMultiplication(
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -3028,6 +3288,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getFrequencyMultiplication();
 	}
 
+	@Override
 	public LaserMedium getLaserLaserMedium(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -3039,6 +3300,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getLaserMedium();
 	}
 
+	@Override
 	public Boolean getLaserPockelCell(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -3050,6 +3312,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getPockelCell();
 	}
 
+	@Override
 	public Pulse getLaserPulse(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -3061,6 +3324,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getPulse();
 	}
 
+	@Override
 	public String getLaserPump(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -3072,6 +3336,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getLinkedPump().getID();
 	}
 
+	@Override
 	public Double getLaserRepetitionRate(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -3083,6 +3348,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getRepetitionRate();
 	}
 
+	@Override
 	public Boolean getLaserTuneable(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -3094,6 +3360,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getTuneable();
 	}
 
+	@Override
 	public LaserType getLaserType(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -3105,6 +3372,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getType();
 	}
 
+	@Override
 	public PositiveInteger getLaserWavelength(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -3143,6 +3411,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Arc of parent abstract type
 	// Ignoring Filament of parent abstract type
 	// ID accessor from parent LightSource
+	@Override
 	public String getLightEmittingDiodeID(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -3157,6 +3426,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Laser of parent abstract type
 	// Ignoring LightEmittingDiode of parent abstract type
 	// LotNumber accessor from parent LightSource
+	@Override
 	public String getLightEmittingDiodeLotNumber(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -3169,6 +3439,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Manufacturer accessor from parent LightSource
+	@Override
 	public String getLightEmittingDiodeManufacturer(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -3181,6 +3452,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Model accessor from parent LightSource
+	@Override
 	public String getLightEmittingDiodeModel(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -3193,6 +3465,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Power accessor from parent LightSource
+	@Override
 	public Double getLightEmittingDiodePower(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -3205,6 +3478,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// SerialNumber accessor from parent LightSource
+	@Override
 	public String getLightEmittingDiodeSerialNumber(final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -3223,6 +3497,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Channel': {u'Pixels': {u'Image': {u'OME': None}}}}
 	// Is multi path? False
 
+	@Override
 	public String getLightPathDichroicRef(final int imageIndex,
 		final int channelIndex)
 	{
@@ -3232,6 +3507,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLightPath().getLinkedDichroic().getID();
 	}
 
+	@Override
 	public String getLightPathEmissionFilterRef(final int imageIndex,
 		final int channelIndex, final int emissionFilterRefIndex)
 	{
@@ -3241,6 +3517,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLightPath().getLinkedEmissionFilter(emissionFilterRefIndex).getID();
 	}
 
+	@Override
 	public String getLightPathExcitationFilterRef(final int imageIndex,
 		final int channelIndex, final int excitationFilterRefIndex)
 	{
@@ -3261,6 +3538,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// u'MicrobeamManipulation': {u'Experiment': {u'OME': None}}}
 	// Is multi path? True
 
+	@Override
 	public PercentFraction getChannelLightSourceSettingsAttenuation(
 		final int imageIndex, final int channelIndex)
 	{
@@ -3271,6 +3549,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLightSourceSettings().getAttenuation();
 	}
 
+	@Override
 	public PercentFraction
 		getMicrobeamManipulationLightSourceSettingsAttenuation(
 			final int experimentIndex, final int microbeamManipulationIndex,
@@ -3284,6 +3563,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			lightSourceSettingsIndex).getAttenuation();
 	}
 
+	@Override
 	public String getChannelLightSourceSettingsID(final int imageIndex,
 		final int channelIndex)
 	{
@@ -3294,6 +3574,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLightSourceSettings().getID();
 	}
 
+	@Override
 	public String getMicrobeamManipulationLightSourceSettingsID(
 		final int experimentIndex, final int microbeamManipulationIndex,
 		final int lightSourceSettingsIndex)
@@ -3308,6 +3589,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring LightSourceRef back reference
 	// Ignoring MicrobeamManipulation_BackReference back reference
+	@Override
 	public PositiveInteger getChannelLightSourceSettingsWavelength(
 		final int imageIndex, final int channelIndex)
 	{
@@ -3318,6 +3600,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLightSourceSettings().getWavelength();
 	}
 
+	@Override
 	public PositiveInteger getMicrobeamManipulationLightSourceSettingsWavelength(
 		final int experimentIndex, final int microbeamManipulationIndex,
 		final int lightSourceSettingsIndex)
@@ -3339,6 +3622,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Ellipse of parent abstract type
 	// FillColor accessor from parent Shape
+	@Override
 	public Color getLineFillColor(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3347,6 +3631,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FillRule accessor from parent Shape
+	@Override
 	public FillRule getLineFillRule(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3355,6 +3640,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontFamily accessor from parent Shape
+	@Override
 	public FontFamily getLineFontFamily(final int ROIIndex, final int shapeIndex)
 	{
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
@@ -3364,6 +3650,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontSize accessor from parent Shape
+	@Override
 	public NonNegativeInteger getLineFontSize(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -3374,6 +3661,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontStyle accessor from parent Shape
+	@Override
 	public FontStyle getLineFontStyle(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3382,6 +3670,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ID accessor from parent Shape
+	@Override
 	public String getLineID(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3392,6 +3681,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Label of parent abstract type
 	// Ignoring Line of parent abstract type
 	// LineCap accessor from parent Shape
+	@Override
 	public LineCap getLineLineCap(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3400,6 +3690,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Locked accessor from parent Shape
+	@Override
 	public Boolean getLineLocked(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3413,6 +3704,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Polyline of parent abstract type
 	// Ignoring Rectangle of parent abstract type
 	// StrokeColor accessor from parent Shape
+	@Override
 	public Color getLineStrokeColor(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3421,6 +3713,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeDashArray accessor from parent Shape
+	@Override
 	public String
 		getLineStrokeDashArray(final int ROIIndex, final int shapeIndex)
 	{
@@ -3431,6 +3724,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeWidth accessor from parent Shape
+	@Override
 	public Double getLineStrokeWidth(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3439,6 +3733,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Text accessor from parent Shape
+	@Override
 	public String getLineText(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3447,6 +3742,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheC accessor from parent Shape
+	@Override
 	public NonNegativeInteger
 		getLineTheC(final int ROIIndex, final int shapeIndex)
 	{
@@ -3457,6 +3753,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheT accessor from parent Shape
+	@Override
 	public NonNegativeInteger
 		getLineTheT(final int ROIIndex, final int shapeIndex)
 	{
@@ -3467,6 +3764,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheZ accessor from parent Shape
+	@Override
 	public NonNegativeInteger
 		getLineTheZ(final int ROIIndex, final int shapeIndex)
 	{
@@ -3477,6 +3775,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Transform accessor from parent Shape
+	@Override
 	public AffineTransform getLineTransform(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -3487,6 +3786,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Visible accessor from parent Shape
+	@Override
 	public Boolean getLineVisible(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3494,6 +3794,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getVisible();
 	}
 
+	@Override
 	public Marker getLineMarkerEnd(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3501,6 +3802,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getMarkerEnd();
 	}
 
+	@Override
 	public Marker getLineMarkerStart(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3508,6 +3810,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getMarkerStart();
 	}
 
+	@Override
 	public Double getLineX1(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3515,6 +3818,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getX1();
 	}
 
+	@Override
 	public Double getLineX2(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3522,6 +3826,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getX2();
 	}
 
+	@Override
 	public Double getLineY1(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3529,6 +3834,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getY1();
 	}
 
+	@Override
 	public Double getLineY2(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3543,6 +3849,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public String getListAnnotationAnnotationRef(final int listAnnotationIndex,
 		final int annotationRefIndex)
 	{
@@ -3554,6 +3861,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public String getListAnnotationDescription(final int listAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Description is not a reference
@@ -3563,6 +3871,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public String getListAnnotationID(final int listAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// ID is not a reference
@@ -3571,6 +3880,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public String getListAnnotationNamespace(final int listAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Namespace is not a reference
@@ -3596,6 +3906,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public String getLongAnnotationAnnotationRef(final int longAnnotationIndex,
 		final int annotationRefIndex)
 	{
@@ -3607,6 +3918,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public String getLongAnnotationDescription(final int longAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Description is not a reference
@@ -3616,6 +3928,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public String getLongAnnotationID(final int longAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// ID is not a reference
@@ -3624,6 +3937,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public String getLongAnnotationNamespace(final int longAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Namespace is not a reference
@@ -3640,6 +3954,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Reagent_BackReference back reference
 	// Ignoring Screen_BackReference back reference
 	// Ignoring StructuredAnnotations_BackReference back reference
+	@Override
 	public Long getLongAnnotationValue(final int longAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Value is not a reference
@@ -3658,6 +3973,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Ellipse of parent abstract type
 	// FillColor accessor from parent Shape
+	@Override
 	public Color getMaskFillColor(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3666,6 +3982,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FillRule accessor from parent Shape
+	@Override
 	public FillRule getMaskFillRule(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3674,6 +3991,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontFamily accessor from parent Shape
+	@Override
 	public FontFamily getMaskFontFamily(final int ROIIndex, final int shapeIndex)
 	{
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
@@ -3683,6 +4001,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontSize accessor from parent Shape
+	@Override
 	public NonNegativeInteger getMaskFontSize(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -3693,6 +4012,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontStyle accessor from parent Shape
+	@Override
 	public FontStyle getMaskFontStyle(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3701,6 +4021,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ID accessor from parent Shape
+	@Override
 	public String getMaskID(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3711,6 +4032,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Label of parent abstract type
 	// Ignoring Line of parent abstract type
 	// LineCap accessor from parent Shape
+	@Override
 	public LineCap getMaskLineCap(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3719,6 +4041,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Locked accessor from parent Shape
+	@Override
 	public Boolean getMaskLocked(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3732,6 +4055,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Polyline of parent abstract type
 	// Ignoring Rectangle of parent abstract type
 	// StrokeColor accessor from parent Shape
+	@Override
 	public Color getMaskStrokeColor(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3740,6 +4064,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeDashArray accessor from parent Shape
+	@Override
 	public String
 		getMaskStrokeDashArray(final int ROIIndex, final int shapeIndex)
 	{
@@ -3750,6 +4075,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeWidth accessor from parent Shape
+	@Override
 	public Double getMaskStrokeWidth(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3758,6 +4084,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Text accessor from parent Shape
+	@Override
 	public String getMaskText(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3766,6 +4093,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheC accessor from parent Shape
+	@Override
 	public NonNegativeInteger
 		getMaskTheC(final int ROIIndex, final int shapeIndex)
 	{
@@ -3776,6 +4104,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheT accessor from parent Shape
+	@Override
 	public NonNegativeInteger
 		getMaskTheT(final int ROIIndex, final int shapeIndex)
 	{
@@ -3786,6 +4115,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheZ accessor from parent Shape
+	@Override
 	public NonNegativeInteger
 		getMaskTheZ(final int ROIIndex, final int shapeIndex)
 	{
@@ -3796,6 +4126,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Transform accessor from parent Shape
+	@Override
 	public AffineTransform getMaskTransform(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -3806,6 +4137,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Visible accessor from parent Shape
+	@Override
 	public Boolean getMaskVisible(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3814,6 +4146,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring BinData element, complex property
+	@Override
 	public Double getMaskHeight(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3821,6 +4154,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getHeight();
 	}
 
+	@Override
 	public Double getMaskWidth(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3828,6 +4162,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getWidth();
 	}
 
+	@Override
 	public Double getMaskX(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3835,6 +4170,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getX();
 	}
 
+	@Override
 	public Double getMaskY(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -3857,6 +4193,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Experiment': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public String getMicrobeamManipulationDescription(final int experimentIndex,
 		final int microbeamManipulationIndex)
 	{
@@ -3867,6 +4204,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Experiment_BackReference back reference
+	@Override
 	public String getMicrobeamManipulationExperimenterRef(
 		final int experimentIndex, final int microbeamManipulationIndex)
 	{
@@ -3876,6 +4214,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			microbeamManipulationIndex).getLinkedExperimenter().getID();
 	}
 
+	@Override
 	public String getMicrobeamManipulationID(final int experimentIndex,
 		final int microbeamManipulationIndex)
 	{
@@ -3887,6 +4226,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Image_BackReference back reference
 	// Ignoring LightSourceSettings element, complex property
+	@Override
 	public String getMicrobeamManipulationROIRef(final int experimentIndex,
 		final int microbeamManipulationIndex, final int ROIRefIndex)
 	{
@@ -3896,6 +4236,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			microbeamManipulationIndex).getLinkedROI(ROIRefIndex).getID();
 	}
 
+	@Override
 	public MicrobeamManipulationType getMicrobeamManipulationType(
 		final int experimentIndex, final int microbeamManipulationIndex)
 	{
@@ -3924,12 +4265,14 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Instrument': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public String getMicroscopeLotNumber(final int instrumentIndex) {
 		// Parents: {u'Instrument': {u'OME': None}}
 		// LotNumber is not a reference
 		return root.getInstrument(instrumentIndex).getMicroscope().getLotNumber();
 	}
 
+	@Override
 	public String getMicroscopeManufacturer(final int instrumentIndex) {
 		// Parents: {u'Instrument': {u'OME': None}}
 		// Manufacturer is not a reference
@@ -3937,12 +4280,14 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getManufacturer();
 	}
 
+	@Override
 	public String getMicroscopeModel(final int instrumentIndex) {
 		// Parents: {u'Instrument': {u'OME': None}}
 		// Model is not a reference
 		return root.getInstrument(instrumentIndex).getMicroscope().getModel();
 	}
 
+	@Override
 	public String getMicroscopeSerialNumber(final int instrumentIndex) {
 		// Parents: {u'Instrument': {u'OME': None}}
 		// SerialNumber is not a reference
@@ -3950,6 +4295,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getSerialNumber();
 	}
 
+	@Override
 	public MicroscopeType getMicroscopeType(final int instrumentIndex) {
 		// Parents: {u'Instrument': {u'OME': None}}
 		// Type is not a reference
@@ -3963,6 +4309,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Instrument': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public Double getObjectiveCalibratedMagnification(final int instrumentIndex,
 		final int objectiveIndex)
 	{
@@ -3972,6 +4319,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getCalibratedMagnification();
 	}
 
+	@Override
 	public Correction getObjectiveCorrection(final int instrumentIndex,
 		final int objectiveIndex)
 	{
@@ -3981,6 +4329,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getCorrection();
 	}
 
+	@Override
 	public String getObjectiveID(final int instrumentIndex,
 		final int objectiveIndex)
 	{
@@ -3990,6 +4339,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getID();
 	}
 
+	@Override
 	public Immersion getObjectiveImmersion(final int instrumentIndex,
 		final int objectiveIndex)
 	{
@@ -4000,6 +4350,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Instrument_BackReference back reference
+	@Override
 	public Boolean getObjectiveIris(final int instrumentIndex,
 		final int objectiveIndex)
 	{
@@ -4009,6 +4360,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getIris();
 	}
 
+	@Override
 	public Double getObjectiveLensNA(final int instrumentIndex,
 		final int objectiveIndex)
 	{
@@ -4018,6 +4370,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLensNA();
 	}
 
+	@Override
 	public String getObjectiveLotNumber(final int instrumentIndex,
 		final int objectiveIndex)
 	{
@@ -4027,6 +4380,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLotNumber();
 	}
 
+	@Override
 	public String getObjectiveManufacturer(final int instrumentIndex,
 		final int objectiveIndex)
 	{
@@ -4036,6 +4390,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getManufacturer();
 	}
 
+	@Override
 	public String getObjectiveModel(final int instrumentIndex,
 		final int objectiveIndex)
 	{
@@ -4045,6 +4400,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getModel();
 	}
 
+	@Override
 	public PositiveInteger getObjectiveNominalMagnification(
 		final int instrumentIndex, final int objectiveIndex)
 	{
@@ -4054,6 +4410,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getNominalMagnification();
 	}
 
+	@Override
 	public String getObjectiveSerialNumber(final int instrumentIndex,
 		final int objectiveIndex)
 	{
@@ -4063,6 +4420,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getSerialNumber();
 	}
 
+	@Override
 	public Double getObjectiveWorkingDistance(final int instrumentIndex,
 		final int objectiveIndex)
 	{
@@ -4079,6 +4437,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Image': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public Double getObjectiveSettingsCorrectionCollar(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// CorrectionCollar is not a reference
@@ -4086,12 +4445,14 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getCorrectionCollar();
 	}
 
+	@Override
 	public String getObjectiveSettingsID(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// ID is not a reference
 		return root.getImage(imageIndex).getObjectiveSettings().getID();
 	}
 
+	@Override
 	public Medium getObjectiveSettingsMedium(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// Medium is not a reference
@@ -4099,6 +4460,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring ObjectiveRef back reference
+	@Override
 	public Double getObjectiveSettingsRefractiveIndex(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// RefractiveIndex is not a reference
@@ -4113,6 +4475,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Image': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public String getPixelsAnnotationRef(final int imageIndex,
 		final int annotationRefIndex)
 	{
@@ -4124,12 +4487,14 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring BinData element, complex property
 	// Ignoring Channel element, complex property
+	@Override
 	public DimensionOrder getPixelsDimensionOrder(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// DimensionOrder is not a reference
 		return root.getImage(imageIndex).getPixels().getDimensionOrder();
 	}
 
+	@Override
 	public String getPixelsID(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// ID is not a reference
@@ -4137,18 +4502,21 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring MetadataOnly element, complex property
+	@Override
 	public PositiveFloat getPixelsPhysicalSizeX(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// PhysicalSizeX is not a reference
 		return root.getImage(imageIndex).getPixels().getPhysicalSizeX();
 	}
 
+	@Override
 	public PositiveFloat getPixelsPhysicalSizeY(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// PhysicalSizeY is not a reference
 		return root.getImage(imageIndex).getPixels().getPhysicalSizeY();
 	}
 
+	@Override
 	public PositiveFloat getPixelsPhysicalSizeZ(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// PhysicalSizeZ is not a reference
@@ -4156,30 +4524,35 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Plane element, complex property
+	@Override
 	public PositiveInteger getPixelsSizeC(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// SizeC is not a reference
 		return root.getImage(imageIndex).getPixels().getSizeC();
 	}
 
+	@Override
 	public PositiveInteger getPixelsSizeT(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// SizeT is not a reference
 		return root.getImage(imageIndex).getPixels().getSizeT();
 	}
 
+	@Override
 	public PositiveInteger getPixelsSizeX(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// SizeX is not a reference
 		return root.getImage(imageIndex).getPixels().getSizeX();
 	}
 
+	@Override
 	public PositiveInteger getPixelsSizeY(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// SizeY is not a reference
 		return root.getImage(imageIndex).getPixels().getSizeY();
 	}
 
+	@Override
 	public PositiveInteger getPixelsSizeZ(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// SizeZ is not a reference
@@ -4187,12 +4560,14 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring TiffData element, complex property
+	@Override
 	public Double getPixelsTimeIncrement(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// TimeIncrement is not a reference
 		return root.getImage(imageIndex).getPixels().getTimeIncrement();
 	}
 
+	@Override
 	public PixelType getPixelsType(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// Type is not a reference
@@ -4206,6 +4581,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Pixels': {u'Image': {u'OME': None}}}
 	// Is multi path? False
 
+	@Override
 	public String getPlaneAnnotationRef(final int imageIndex,
 		final int planeIndex, final int annotationRefIndex)
 	{
@@ -4215,6 +4591,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLinkedAnnotation(annotationRefIndex).getID();
 	}
 
+	@Override
 	public Double getPlaneDeltaT(final int imageIndex, final int planeIndex) {
 		// Parents: {u'Pixels': {u'Image': {u'OME': None}}}
 		// DeltaT is not a reference
@@ -4222,6 +4599,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getDeltaT();
 	}
 
+	@Override
 	public Double
 		getPlaneExposureTime(final int imageIndex, final int planeIndex)
 	{
@@ -4231,6 +4609,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getExposureTime();
 	}
 
+	@Override
 	public String getPlaneHashSHA1(final int imageIndex, final int planeIndex) {
 		// Parents: {u'Pixels': {u'Image': {u'OME': None}}}
 		// HashSHA1 is not a reference
@@ -4239,6 +4618,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Pixels_BackReference back reference
+	@Override
 	public Double getPlanePositionX(final int imageIndex, final int planeIndex) {
 		// Parents: {u'Pixels': {u'Image': {u'OME': None}}}
 		// PositionX is not a reference
@@ -4246,6 +4626,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getPositionX();
 	}
 
+	@Override
 	public Double getPlanePositionY(final int imageIndex, final int planeIndex) {
 		// Parents: {u'Pixels': {u'Image': {u'OME': None}}}
 		// PositionY is not a reference
@@ -4253,6 +4634,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getPositionY();
 	}
 
+	@Override
 	public Double getPlanePositionZ(final int imageIndex, final int planeIndex) {
 		// Parents: {u'Pixels': {u'Image': {u'OME': None}}}
 		// PositionZ is not a reference
@@ -4260,6 +4642,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getPositionZ();
 	}
 
+	@Override
 	public NonNegativeInteger getPlaneTheC(final int imageIndex,
 		final int planeIndex)
 	{
@@ -4268,6 +4651,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return root.getImage(imageIndex).getPixels().getPlane(planeIndex).getTheC();
 	}
 
+	@Override
 	public NonNegativeInteger getPlaneTheT(final int imageIndex,
 		final int planeIndex)
 	{
@@ -4276,6 +4660,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return root.getImage(imageIndex).getPixels().getPlane(planeIndex).getTheT();
 	}
 
+	@Override
 	public NonNegativeInteger getPlaneTheZ(final int imageIndex,
 		final int planeIndex)
 	{
@@ -4291,6 +4676,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public String getPlateAnnotationRef(final int plateIndex,
 		final int annotationRefIndex)
 	{
@@ -4300,42 +4686,49 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getID();
 	}
 
+	@Override
 	public NamingConvention getPlateColumnNamingConvention(final int plateIndex) {
 		// Parents: {u'OME': None}
 		// ColumnNamingConvention is not a reference
 		return root.getPlate(plateIndex).getColumnNamingConvention();
 	}
 
+	@Override
 	public PositiveInteger getPlateColumns(final int plateIndex) {
 		// Parents: {u'OME': None}
 		// Columns is not a reference
 		return root.getPlate(plateIndex).getColumns();
 	}
 
+	@Override
 	public String getPlateDescription(final int plateIndex) {
 		// Parents: {u'OME': None}
 		// Description is not a reference
 		return root.getPlate(plateIndex).getDescription();
 	}
 
+	@Override
 	public String getPlateExternalIdentifier(final int plateIndex) {
 		// Parents: {u'OME': None}
 		// ExternalIdentifier is not a reference
 		return root.getPlate(plateIndex).getExternalIdentifier();
 	}
 
+	@Override
 	public NonNegativeInteger getPlateFieldIndex(final int plateIndex) {
 		// Parents: {u'OME': None}
 		// FieldIndex is not a reference
 		return root.getPlate(plateIndex).getFieldIndex();
 	}
 
+	@Override
 	public String getPlateID(final int plateIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
 		return root.getPlate(plateIndex).getID();
 	}
 
+	@Override
 	public String getPlateName(final int plateIndex) {
 		// Parents: {u'OME': None}
 		// Name is not a reference
@@ -4343,12 +4736,14 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring PlateAcquisition element, complex property
+	@Override
 	public NamingConvention getPlateRowNamingConvention(final int plateIndex) {
 		// Parents: {u'OME': None}
 		// RowNamingConvention is not a reference
 		return root.getPlate(plateIndex).getRowNamingConvention();
 	}
 
+	@Override
 	public PositiveInteger getPlateRows(final int plateIndex) {
 		// Parents: {u'OME': None}
 		// Rows is not a reference
@@ -4356,6 +4751,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Screen_BackReference back reference
+	@Override
 	public String getPlateStatus(final int plateIndex) {
 		// Parents: {u'OME': None}
 		// Status is not a reference
@@ -4363,12 +4759,14 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Well element, complex property
+	@Override
 	public Double getPlateWellOriginX(final int plateIndex) {
 		// Parents: {u'OME': None}
 		// WellOriginX is not a reference
 		return root.getPlate(plateIndex).getWellOriginX();
 	}
 
+	@Override
 	public Double getPlateWellOriginY(final int plateIndex) {
 		// Parents: {u'OME': None}
 		// WellOriginY is not a reference
@@ -4382,6 +4780,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Plate': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public String getPlateAcquisitionAnnotationRef(final int plateIndex,
 		final int plateAcquisitionIndex, final int annotationRefIndex)
 	{
@@ -4391,6 +4790,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLinkedAnnotation(annotationRefIndex).getID();
 	}
 
+	@Override
 	public String getPlateAcquisitionDescription(final int plateIndex,
 		final int plateAcquisitionIndex)
 	{
@@ -4400,6 +4800,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getDescription();
 	}
 
+	@Override
 	public Timestamp getPlateAcquisitionEndTime(final int plateIndex,
 		final int plateAcquisitionIndex)
 	{
@@ -4409,6 +4810,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getEndTime();
 	}
 
+	@Override
 	public String getPlateAcquisitionID(final int plateIndex,
 		final int plateAcquisitionIndex)
 	{
@@ -4418,6 +4820,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getID();
 	}
 
+	@Override
 	public PositiveInteger getPlateAcquisitionMaximumFieldCount(
 		final int plateIndex, final int plateAcquisitionIndex)
 	{
@@ -4427,6 +4830,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getMaximumFieldCount();
 	}
 
+	@Override
 	public String getPlateAcquisitionName(final int plateIndex,
 		final int plateAcquisitionIndex)
 	{
@@ -4437,6 +4841,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Plate_BackReference back reference
+	@Override
 	public Timestamp getPlateAcquisitionStartTime(final int plateIndex,
 		final int plateAcquisitionIndex)
 	{
@@ -4446,6 +4851,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getStartTime();
 	}
 
+	@Override
 	public String getPlateAcquisitionWellSampleRef(final int plateIndex,
 		final int plateAcquisitionIndex, final int wellSampleRefIndex)
 	{
@@ -4475,6 +4881,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Ellipse of parent abstract type
 	// FillColor accessor from parent Shape
+	@Override
 	public Color getPointFillColor(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4484,6 +4891,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FillRule accessor from parent Shape
+	@Override
 	public FillRule getPointFillRule(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4493,6 +4901,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontFamily accessor from parent Shape
+	@Override
 	public FontFamily
 		getPointFontFamily(final int ROIIndex, final int shapeIndex)
 	{
@@ -4504,6 +4913,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontSize accessor from parent Shape
+	@Override
 	public NonNegativeInteger getPointFontSize(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -4515,6 +4925,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontStyle accessor from parent Shape
+	@Override
 	public FontStyle getPointFontStyle(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4524,6 +4935,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ID accessor from parent Shape
+	@Override
 	public String getPointID(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4535,6 +4947,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Label of parent abstract type
 	// Ignoring Line of parent abstract type
 	// LineCap accessor from parent Shape
+	@Override
 	public LineCap getPointLineCap(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4544,6 +4957,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Locked accessor from parent Shape
+	@Override
 	public Boolean getPointLocked(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4558,6 +4972,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Polyline of parent abstract type
 	// Ignoring Rectangle of parent abstract type
 	// StrokeColor accessor from parent Shape
+	@Override
 	public Color getPointStrokeColor(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4567,6 +4982,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeDashArray accessor from parent Shape
+	@Override
 	public String
 		getPointStrokeDashArray(final int ROIIndex, final int shapeIndex)
 	{
@@ -4578,6 +4994,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeWidth accessor from parent Shape
+	@Override
 	public Double getPointStrokeWidth(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4587,6 +5004,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Text accessor from parent Shape
+	@Override
 	public String getPointText(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4596,6 +5014,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheC accessor from parent Shape
+	@Override
 	public NonNegativeInteger getPointTheC(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -4607,6 +5026,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheT accessor from parent Shape
+	@Override
 	public NonNegativeInteger getPointTheT(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -4618,6 +5038,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheZ accessor from parent Shape
+	@Override
 	public NonNegativeInteger getPointTheZ(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -4629,6 +5050,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Transform accessor from parent Shape
+	@Override
 	public AffineTransform getPointTransform(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -4640,6 +5062,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Visible accessor from parent Shape
+	@Override
 	public Boolean getPointVisible(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4648,6 +5071,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getVisible();
 	}
 
+	@Override
 	public Double getPointX(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4656,6 +5080,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getX();
 	}
 
+	@Override
 	public Double getPointY(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4673,6 +5098,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Ellipse of parent abstract type
 	// FillColor accessor from parent Shape
+	@Override
 	public Color getPolygonFillColor(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4682,6 +5108,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FillRule accessor from parent Shape
+	@Override
 	public FillRule getPolygonFillRule(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4691,6 +5118,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontFamily accessor from parent Shape
+	@Override
 	public FontFamily getPolygonFontFamily(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -4702,6 +5130,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontSize accessor from parent Shape
+	@Override
 	public NonNegativeInteger getPolygonFontSize(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -4713,6 +5142,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontStyle accessor from parent Shape
+	@Override
 	public FontStyle
 		getPolygonFontStyle(final int ROIIndex, final int shapeIndex)
 	{
@@ -4724,6 +5154,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ID accessor from parent Shape
+	@Override
 	public String getPolygonID(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4735,6 +5166,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Label of parent abstract type
 	// Ignoring Line of parent abstract type
 	// LineCap accessor from parent Shape
+	@Override
 	public LineCap getPolygonLineCap(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4744,6 +5176,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Locked accessor from parent Shape
+	@Override
 	public Boolean getPolygonLocked(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4758,6 +5191,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Polyline of parent abstract type
 	// Ignoring Rectangle of parent abstract type
 	// StrokeColor accessor from parent Shape
+	@Override
 	public Color getPolygonStrokeColor(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4767,6 +5201,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeDashArray accessor from parent Shape
+	@Override
 	public String getPolygonStrokeDashArray(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -4778,6 +5213,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeWidth accessor from parent Shape
+	@Override
 	public Double getPolygonStrokeWidth(final int ROIIndex, final int shapeIndex)
 	{
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
@@ -4788,6 +5224,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Text accessor from parent Shape
+	@Override
 	public String getPolygonText(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4797,6 +5234,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheC accessor from parent Shape
+	@Override
 	public NonNegativeInteger getPolygonTheC(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -4808,6 +5246,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheT accessor from parent Shape
+	@Override
 	public NonNegativeInteger getPolygonTheT(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -4819,6 +5258,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheZ accessor from parent Shape
+	@Override
 	public NonNegativeInteger getPolygonTheZ(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -4830,6 +5270,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Transform accessor from parent Shape
+	@Override
 	public AffineTransform getPolygonTransform(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -4841,6 +5282,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Visible accessor from parent Shape
+	@Override
 	public Boolean getPolygonVisible(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4849,6 +5291,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getVisible();
 	}
 
+	@Override
 	public String getPolygonPoints(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4866,6 +5309,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Ellipse of parent abstract type
 	// FillColor accessor from parent Shape
+	@Override
 	public Color getPolylineFillColor(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4875,6 +5319,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FillRule accessor from parent Shape
+	@Override
 	public FillRule getPolylineFillRule(final int ROIIndex, final int shapeIndex)
 	{
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
@@ -4885,6 +5330,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontFamily accessor from parent Shape
+	@Override
 	public FontFamily getPolylineFontFamily(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -4896,6 +5342,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontSize accessor from parent Shape
+	@Override
 	public NonNegativeInteger getPolylineFontSize(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -4907,6 +5354,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontStyle accessor from parent Shape
+	@Override
 	public FontStyle
 		getPolylineFontStyle(final int ROIIndex, final int shapeIndex)
 	{
@@ -4918,6 +5366,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ID accessor from parent Shape
+	@Override
 	public String getPolylineID(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4929,6 +5378,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Label of parent abstract type
 	// Ignoring Line of parent abstract type
 	// LineCap accessor from parent Shape
+	@Override
 	public LineCap getPolylineLineCap(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4938,6 +5388,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Locked accessor from parent Shape
+	@Override
 	public Boolean getPolylineLocked(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4952,6 +5403,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Polyline of parent abstract type
 	// Ignoring Rectangle of parent abstract type
 	// StrokeColor accessor from parent Shape
+	@Override
 	public Color getPolylineStrokeColor(final int ROIIndex, final int shapeIndex)
 	{
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
@@ -4962,6 +5414,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeDashArray accessor from parent Shape
+	@Override
 	public String getPolylineStrokeDashArray(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -4973,6 +5426,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeWidth accessor from parent Shape
+	@Override
 	public Double
 		getPolylineStrokeWidth(final int ROIIndex, final int shapeIndex)
 	{
@@ -4984,6 +5438,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Text accessor from parent Shape
+	@Override
 	public String getPolylineText(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -4993,6 +5448,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheC accessor from parent Shape
+	@Override
 	public NonNegativeInteger getPolylineTheC(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -5004,6 +5460,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheT accessor from parent Shape
+	@Override
 	public NonNegativeInteger getPolylineTheT(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -5015,6 +5472,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheZ accessor from parent Shape
+	@Override
 	public NonNegativeInteger getPolylineTheZ(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -5026,6 +5484,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Transform accessor from parent Shape
+	@Override
 	public AffineTransform getPolylineTransform(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -5037,6 +5496,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Visible accessor from parent Shape
+	@Override
 	public Boolean getPolylineVisible(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -5045,6 +5505,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getVisible();
 	}
 
+	@Override
 	public Marker getPolylineMarkerEnd(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -5053,6 +5514,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getMarkerEnd();
 	}
 
+	@Override
 	public Marker
 		getPolylineMarkerStart(final int ROIIndex, final int shapeIndex)
 	{
@@ -5063,6 +5525,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getMarkerStart();
 	}
 
+	@Override
 	public String getPolylinePoints(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -5078,6 +5541,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public String getProjectAnnotationRef(final int projectIndex,
 		final int annotationRefIndex)
 	{
@@ -5087,6 +5551,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLinkedAnnotation(annotationRefIndex).getID();
 	}
 
+	@Override
 	public String getProjectDatasetRef(final int projectIndex,
 		final int datasetRefIndex)
 	{
@@ -5096,30 +5561,35 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getID();
 	}
 
+	@Override
 	public String getProjectDescription(final int projectIndex) {
 		// Parents: {u'OME': None}
 		// Description is not a reference
 		return root.getProject(projectIndex).getDescription();
 	}
 
+	@Override
 	public String getProjectExperimenterGroupRef(final int projectIndex) {
 		// Parents: {u'OME': None}
 		// ExperimenterGroupRef is reference and occurs only once
 		return root.getProject(projectIndex).getLinkedExperimenterGroup().getID();
 	}
 
+	@Override
 	public String getProjectExperimenterRef(final int projectIndex) {
 		// Parents: {u'OME': None}
 		// ExperimenterRef is reference and occurs only once
 		return root.getProject(projectIndex).getLinkedExperimenter().getID();
 	}
 
+	@Override
 	public String getProjectID(final int projectIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
 		return root.getProject(projectIndex).getID();
 	}
 
+	@Override
 	public String getProjectName(final int projectIndex) {
 		// Parents: {u'OME': None}
 		// Name is not a reference
@@ -5148,6 +5618,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public String getROIAnnotationRef(final int ROIIndex,
 		final int annotationRefIndex)
 	{
@@ -5157,12 +5628,14 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getID();
 	}
 
+	@Override
 	public String getROIDescription(final int ROIIndex) {
 		// Parents: {u'OME': None}
 		// Description is not a reference
 		return root.getROI(ROIIndex).getDescription();
 	}
 
+	@Override
 	public String getROIID(final int ROIIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
@@ -5171,12 +5644,14 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Image_BackReference back reference
 	// Ignoring MicrobeamManipulation_BackReference back reference
+	@Override
 	public String getROIName(final int ROIIndex) {
 		// Parents: {u'OME': None}
 		// Name is not a reference
 		return root.getROI(ROIIndex).getName();
 	}
 
+	@Override
 	public String getROINamespace(final int ROIIndex) {
 		// Parents: {u'OME': None}
 		// Namespace is not a reference
@@ -5205,6 +5680,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Screen': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public String getReagentAnnotationRef(final int screenIndex,
 		final int reagentIndex, final int annotationRefIndex)
 	{
@@ -5214,6 +5690,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getLinkedAnnotation(annotationRefIndex).getID();
 	}
 
+	@Override
 	public String getReagentDescription(final int screenIndex,
 		final int reagentIndex)
 	{
@@ -5223,18 +5700,21 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getDescription();
 	}
 
+	@Override
 	public String getReagentID(final int screenIndex, final int reagentIndex) {
 		// Parents: {u'Screen': {u'OME': None}}
 		// ID is not a reference
 		return root.getScreen(screenIndex).getReagent(reagentIndex).getID();
 	}
 
+	@Override
 	public String getReagentName(final int screenIndex, final int reagentIndex) {
 		// Parents: {u'Screen': {u'OME': None}}
 		// Name is not a reference
 		return root.getScreen(screenIndex).getReagent(reagentIndex).getName();
 	}
 
+	@Override
 	public String getReagentReagentIdentifier(final int screenIndex,
 		final int reagentIndex)
 	{
@@ -5266,6 +5746,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Ellipse of parent abstract type
 	// FillColor accessor from parent Shape
+	@Override
 	public Color getRectangleFillColor(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -5275,6 +5756,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FillRule accessor from parent Shape
+	@Override
 	public FillRule
 		getRectangleFillRule(final int ROIIndex, final int shapeIndex)
 	{
@@ -5286,6 +5768,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontFamily accessor from parent Shape
+	@Override
 	public FontFamily getRectangleFontFamily(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -5297,6 +5780,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontSize accessor from parent Shape
+	@Override
 	public NonNegativeInteger getRectangleFontSize(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -5308,6 +5792,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontStyle accessor from parent Shape
+	@Override
 	public FontStyle getRectangleFontStyle(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -5319,6 +5804,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ID accessor from parent Shape
+	@Override
 	public String getRectangleID(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -5330,6 +5816,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Label of parent abstract type
 	// Ignoring Line of parent abstract type
 	// LineCap accessor from parent Shape
+	@Override
 	public LineCap getRectangleLineCap(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -5339,6 +5826,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Locked accessor from parent Shape
+	@Override
 	public Boolean getRectangleLocked(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -5353,6 +5841,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Polyline of parent abstract type
 	// Ignoring Rectangle of parent abstract type
 	// StrokeColor accessor from parent Shape
+	@Override
 	public Color
 		getRectangleStrokeColor(final int ROIIndex, final int shapeIndex)
 	{
@@ -5364,6 +5853,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeDashArray accessor from parent Shape
+	@Override
 	public String getRectangleStrokeDashArray(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -5375,6 +5865,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeWidth accessor from parent Shape
+	@Override
 	public Double
 		getRectangleStrokeWidth(final int ROIIndex, final int shapeIndex)
 	{
@@ -5386,6 +5877,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Text accessor from parent Shape
+	@Override
 	public String getRectangleText(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -5395,6 +5887,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheC accessor from parent Shape
+	@Override
 	public NonNegativeInteger getRectangleTheC(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -5406,6 +5899,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheT accessor from parent Shape
+	@Override
 	public NonNegativeInteger getRectangleTheT(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -5417,6 +5911,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheZ accessor from parent Shape
+	@Override
 	public NonNegativeInteger getRectangleTheZ(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -5428,6 +5923,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Transform accessor from parent Shape
+	@Override
 	public AffineTransform getRectangleTransform(final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -5439,6 +5935,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Visible accessor from parent Shape
+	@Override
 	public Boolean getRectangleVisible(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -5447,6 +5944,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getVisible();
 	}
 
+	@Override
 	public Double getRectangleHeight(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -5455,6 +5953,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getHeight();
 	}
 
+	@Override
 	public Double getRectangleWidth(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -5463,6 +5962,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getWidth();
 	}
 
+	@Override
 	public Double getRectangleX(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -5471,6 +5971,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return o.getX();
 	}
 
+	@Override
 	public Double getRectangleY(final int ROIIndex, final int shapeIndex) {
 		// Parents: {u'Shape': {u'Union': {u'ROI': {u'OME': None}}}}
 		// Shape is abstract proprietary and not a reference
@@ -5486,6 +5987,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public String getScreenAnnotationRef(final int screenIndex,
 		final int annotationRefIndex)
 	{
@@ -5495,24 +5997,28 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getID();
 	}
 
+	@Override
 	public String getScreenDescription(final int screenIndex) {
 		// Parents: {u'OME': None}
 		// Description is not a reference
 		return root.getScreen(screenIndex).getDescription();
 	}
 
+	@Override
 	public String getScreenID(final int screenIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
 		return root.getScreen(screenIndex).getID();
 	}
 
+	@Override
 	public String getScreenName(final int screenIndex) {
 		// Parents: {u'OME': None}
 		// Name is not a reference
 		return root.getScreen(screenIndex).getName();
 	}
 
+	@Override
 	public String
 		getScreenPlateRef(final int screenIndex, final int plateRefIndex)
 	{
@@ -5521,12 +6027,14 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return root.getScreen(screenIndex).getLinkedPlate(plateRefIndex).getID();
 	}
 
+	@Override
 	public String getScreenProtocolDescription(final int screenIndex) {
 		// Parents: {u'OME': None}
 		// ProtocolDescription is not a reference
 		return root.getScreen(screenIndex).getProtocolDescription();
 	}
 
+	@Override
 	public String getScreenProtocolIdentifier(final int screenIndex) {
 		// Parents: {u'OME': None}
 		// ProtocolIdentifier is not a reference
@@ -5534,18 +6042,21 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Reagent element, complex property
+	@Override
 	public String getScreenReagentSetDescription(final int screenIndex) {
 		// Parents: {u'OME': None}
 		// ReagentSetDescription is not a reference
 		return root.getScreen(screenIndex).getReagentSetDescription();
 	}
 
+	@Override
 	public String getScreenReagentSetIdentifier(final int screenIndex) {
 		// Parents: {u'OME': None}
 		// ReagentSetIdentifier is not a reference
 		return root.getScreen(screenIndex).getReagentSetIdentifier();
 	}
 
+	@Override
 	public String getScreenType(final int screenIndex) {
 		// Parents: {u'OME': None}
 		// Type is not a reference
@@ -5559,24 +6070,28 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Image': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public String getStageLabelName(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// Name is not a reference
 		return root.getImage(imageIndex).getStageLabel().getName();
 	}
 
+	@Override
 	public Double getStageLabelX(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// X is not a reference
 		return root.getImage(imageIndex).getStageLabel().getX();
 	}
 
+	@Override
 	public Double getStageLabelY(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// Y is not a reference
 		return root.getImage(imageIndex).getStageLabel().getY();
 	}
 
+	@Override
 	public Double getStageLabelZ(final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// Z is not a reference
@@ -5607,6 +6122,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public String getTagAnnotationAnnotationRef(final int tagAnnotationIndex,
 		final int annotationRefIndex)
 	{
@@ -5618,6 +6134,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public String getTagAnnotationDescription(final int tagAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Description is not a reference
@@ -5627,6 +6144,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public String getTagAnnotationID(final int tagAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// ID is not a reference
@@ -5635,6 +6153,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public String getTagAnnotationNamespace(final int tagAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Namespace is not a reference
@@ -5651,6 +6170,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Reagent_BackReference back reference
 	// Ignoring Screen_BackReference back reference
 	// Ignoring StructuredAnnotations_BackReference back reference
+	@Override
 	public String getTagAnnotationValue(final int tagAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Value is not a reference
@@ -5667,6 +6187,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public String getTermAnnotationAnnotationRef(final int termAnnotationIndex,
 		final int annotationRefIndex)
 	{
@@ -5678,6 +6199,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public String getTermAnnotationDescription(final int termAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Description is not a reference
@@ -5687,6 +6209,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public String getTermAnnotationID(final int termAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// ID is not a reference
@@ -5695,6 +6218,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public String getTermAnnotationNamespace(final int termAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Namespace is not a reference
@@ -5711,6 +6235,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Reagent_BackReference back reference
 	// Ignoring Screen_BackReference back reference
 	// Ignoring StructuredAnnotations_BackReference back reference
+	@Override
 	public String getTermAnnotationValue(final int termAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Value is not a reference
@@ -5727,6 +6252,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Pixels': {u'Image': {u'OME': None}}}
 	// Is multi path? False
 
+	@Override
 	public NonNegativeInteger getTiffDataFirstC(final int imageIndex,
 		final int tiffDataIndex)
 	{
@@ -5736,6 +6262,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getFirstC();
 	}
 
+	@Override
 	public NonNegativeInteger getTiffDataFirstT(final int imageIndex,
 		final int tiffDataIndex)
 	{
@@ -5745,6 +6272,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getFirstT();
 	}
 
+	@Override
 	public NonNegativeInteger getTiffDataFirstZ(final int imageIndex,
 		final int tiffDataIndex)
 	{
@@ -5754,6 +6282,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getFirstZ();
 	}
 
+	@Override
 	public NonNegativeInteger getTiffDataIFD(final int imageIndex,
 		final int tiffDataIndex)
 	{
@@ -5764,6 +6293,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Pixels_BackReference back reference
+	@Override
 	public NonNegativeInteger getTiffDataPlaneCount(final int imageIndex,
 		final int tiffDataIndex)
 	{
@@ -5781,6 +6311,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public String getTimestampAnnotationAnnotationRef(
 		final int timestampAnnotationIndex, final int annotationRefIndex)
 	{
@@ -5792,6 +6323,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public String getTimestampAnnotationDescription(
 		final int timestampAnnotationIndex)
 	{
@@ -5803,6 +6335,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public String getTimestampAnnotationID(final int timestampAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// ID is not a reference
@@ -5811,6 +6344,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public String getTimestampAnnotationNamespace(
 		final int timestampAnnotationIndex)
 	{
@@ -5829,6 +6363,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Reagent_BackReference back reference
 	// Ignoring Screen_BackReference back reference
 	// Ignoring StructuredAnnotations_BackReference back reference
+	@Override
 	public Timestamp getTimestampAnnotationValue(
 		final int timestampAnnotationIndex)
 	{
@@ -5847,6 +6382,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Filter': {u'Instrument': {u'OME': None}}}
 	// Is multi path? False
 
+	@Override
 	public PositiveInteger getTransmittanceRangeCutIn(final int instrumentIndex,
 		final int filterIndex)
 	{
@@ -5856,6 +6392,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getTransmittanceRange().getCutIn();
 	}
 
+	@Override
 	public NonNegativeInteger getTransmittanceRangeCutInTolerance(
 		final int instrumentIndex, final int filterIndex)
 	{
@@ -5865,6 +6402,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getTransmittanceRange().getCutInTolerance();
 	}
 
+	@Override
 	public PositiveInteger getTransmittanceRangeCutOut(final int instrumentIndex,
 		final int filterIndex)
 	{
@@ -5874,6 +6412,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getTransmittanceRange().getCutOut();
 	}
 
+	@Override
 	public NonNegativeInteger getTransmittanceRangeCutOutTolerance(
 		final int instrumentIndex, final int filterIndex)
 	{
@@ -5883,6 +6422,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getTransmittanceRange().getCutOutTolerance();
 	}
 
+	@Override
 	public PercentFraction getTransmittanceRangeTransmittance(
 		final int instrumentIndex, final int filterIndex)
 	{
@@ -5899,6 +6439,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'TiffData': {u'Pixels': {u'Image': {u'OME': None}}}}
 	// Is multi path? False
 
+	@Override
 	public String getUUIDFileName(final int imageIndex, final int tiffDataIndex) {
 		// Parents: {u'TiffData': {u'Pixels': {u'Image': {u'OME': None}}}}
 		// FileName is not a reference
@@ -5921,6 +6462,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Plate': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public String getWellAnnotationRef(final int plateIndex, final int wellIndex,
 		final int annotationRefIndex)
 	{
@@ -5930,12 +6472,14 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			annotationRefIndex).getID();
 	}
 
+	@Override
 	public Color getWellColor(final int plateIndex, final int wellIndex) {
 		// Parents: {u'Plate': {u'OME': None}}
 		// Color is not a reference
 		return root.getPlate(plateIndex).getWell(wellIndex).getColor();
 	}
 
+	@Override
 	public NonNegativeInteger getWellColumn(final int plateIndex,
 		final int wellIndex)
 	{
@@ -5944,6 +6488,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return root.getPlate(plateIndex).getWell(wellIndex).getColumn();
 	}
 
+	@Override
 	public String getWellExternalDescription(final int plateIndex,
 		final int wellIndex)
 	{
@@ -5953,6 +6498,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getExternalDescription();
 	}
 
+	@Override
 	public String getWellExternalIdentifier(final int plateIndex,
 		final int wellIndex)
 	{
@@ -5961,6 +6507,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return root.getPlate(plateIndex).getWell(wellIndex).getExternalIdentifier();
 	}
 
+	@Override
 	public String getWellID(final int plateIndex, final int wellIndex) {
 		// Parents: {u'Plate': {u'OME': None}}
 		// ID is not a reference
@@ -5968,6 +6515,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Plate_BackReference back reference
+	@Override
 	public String getWellReagentRef(final int plateIndex, final int wellIndex) {
 		// Parents: {u'Plate': {u'OME': None}}
 		// ReagentRef is reference and occurs only once
@@ -5975,6 +6523,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getID();
 	}
 
+	@Override
 	public NonNegativeInteger
 		getWellRow(final int plateIndex, final int wellIndex)
 	{
@@ -5983,6 +6532,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		return root.getPlate(plateIndex).getWell(wellIndex).getRow();
 	}
 
+	@Override
 	public String getWellType(final int plateIndex, final int wellIndex) {
 		// Parents: {u'Plate': {u'OME': None}}
 		// Type is not a reference
@@ -5998,6 +6548,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Well': {u'Plate': {u'OME': None}}}
 	// Is multi path? False
 
+	@Override
 	public String
 		getWellSampleAnnotationRef(final int plateIndex, final int wellIndex,
 			final int wellSampleIndex, final int annotationRefIndex)
@@ -6008,6 +6559,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			wellSampleIndex).getLinkedAnnotation(annotationRefIndex).getID();
 	}
 
+	@Override
 	public String getWellSampleID(final int plateIndex, final int wellIndex,
 		final int wellSampleIndex)
 	{
@@ -6017,6 +6569,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			wellSampleIndex).getID();
 	}
 
+	@Override
 	public String getWellSampleImageRef(final int plateIndex,
 		final int wellIndex, final int wellSampleIndex)
 	{
@@ -6026,6 +6579,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			wellSampleIndex).getLinkedImage().getID();
 	}
 
+	@Override
 	public NonNegativeInteger getWellSampleIndex(final int plateIndex,
 		final int wellIndex, final int wellSampleIndex)
 	{
@@ -6036,6 +6590,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring PlateAcquisition_BackReference back reference
+	@Override
 	public Double getWellSamplePositionX(final int plateIndex,
 		final int wellIndex, final int wellSampleIndex)
 	{
@@ -6045,6 +6600,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			wellSampleIndex).getPositionX();
 	}
 
+	@Override
 	public Double getWellSamplePositionY(final int plateIndex,
 		final int wellIndex, final int wellSampleIndex)
 	{
@@ -6054,6 +6610,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			wellSampleIndex).getPositionY();
 	}
 
+	@Override
 	public Timestamp getWellSampleTimepoint(final int plateIndex,
 		final int wellIndex, final int wellSampleIndex)
 	{
@@ -6083,6 +6640,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public String getXMLAnnotationAnnotationRef(final int XMLAnnotationIndex,
 		final int annotationRefIndex)
 	{
@@ -6094,6 +6652,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public String getXMLAnnotationDescription(final int XMLAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Description is not a reference
@@ -6103,6 +6662,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public String getXMLAnnotationID(final int XMLAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// ID is not a reference
@@ -6111,6 +6671,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public String getXMLAnnotationNamespace(final int XMLAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Namespace is not a reference
@@ -6127,6 +6688,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Reagent_BackReference back reference
 	// Ignoring Screen_BackReference back reference
 	// Ignoring StructuredAnnotations_BackReference back reference
+	@Override
 	public String getXMLAnnotationValue(final int XMLAnnotationIndex) {
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
 		// Value is not a reference
@@ -6139,6 +6701,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// -- Entity storage (manual definitions) --
 
+	@Override
 	public void setPixelsBinDataBigEndian(final Boolean bigEndian,
 		final int imageIndex, final int binDataIndex)
 	{
@@ -6160,6 +6723,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setBigEndian(bigEndian);
 	}
 
+	@Override
 	public void setMaskBinData(final byte[] binData, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -6200,6 +6764,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Arc of parent abstract type
 	// Ignoring Filament of parent abstract type
 	// ID accessor from parent LightSource
+	@Override
 	public void setArcID(final String id, final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -6221,6 +6786,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Laser of parent abstract type
 	// Ignoring LightEmittingDiode of parent abstract type
 	// LotNumber accessor from parent LightSource
+	@Override
 	public void setArcLotNumber(final String lotNumber,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -6239,6 +6805,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Manufacturer accessor from parent LightSource
+	@Override
 	public void setArcManufacturer(final String manufacturer,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -6257,6 +6824,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Model accessor from parent LightSource
+	@Override
 	public void setArcModel(final String model, final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -6275,6 +6843,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Power accessor from parent LightSource
+	@Override
 	public void setArcPower(final Double power, final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -6293,6 +6862,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// SerialNumber accessor from parent LightSource
+	@Override
 	public void setArcSerialNumber(final String serialNumber,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -6310,6 +6880,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Arc) o2).setSerialNumber(serialNumber);
 	}
 
+	@Override
 	public void setArcType(final ArcType type, final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -6335,6 +6906,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring BinData element, complex property
 	// Ignoring External element, complex property
+	@Override
 	public void setBinaryFileFileName(final String fileName,
 		final int fileAnnotationIndex)
 	{
@@ -6356,6 +6928,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setFileName(fileName);
 	}
 
+	@Override
 	public void setBinaryFileMIMEType(final String mimeType,
 		final int fileAnnotationIndex)
 	{
@@ -6377,6 +6950,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setMIMEType(mimeType);
 	}
 
+	@Override
 	public void setBinaryFileSize(final NonNegativeLong size,
 		final int fileAnnotationIndex)
 	{
@@ -6404,6 +6978,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public void setBinaryOnlyMetadataFile(final String metadataFile) {
 		// Parents: {u'OME': None}
 		// MetadataFile is not a reference
@@ -6415,6 +6990,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setMetadataFile(metadataFile);
 	}
 
+	@Override
 	public void setBinaryOnlyUUID(final String uuid) {
 		// Parents: {u'OME': None}
 		// UUID is not a reference
@@ -6432,6 +7008,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setBooleanAnnotationAnnotationRef(final String annotation,
 		final int booleanAnnotationIndex, final int annotationRefIndex)
 	{
@@ -6445,6 +7022,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public void setBooleanAnnotationDescription(final String description,
 		final int booleanAnnotationIndex)
 	{
@@ -6465,6 +7043,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public void setBooleanAnnotationID(final String id,
 		final int booleanAnnotationIndex)
 	{
@@ -6485,6 +7064,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public void setBooleanAnnotationNamespace(final String namespace,
 		final int booleanAnnotationIndex)
 	{
@@ -6512,6 +7092,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Reagent_BackReference back reference
 	// Ignoring Screen_BackReference back reference
 	// Ignoring StructuredAnnotations_BackReference back reference
+	@Override
 	public void setBooleanAnnotationValue(final Boolean value,
 		final int booleanAnnotationIndex)
 	{
@@ -6538,6 +7119,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Pixels': {u'Image': {u'OME': None}}}
 	// Is multi path? False
 
+	@Override
 	public void setChannelAcquisitionMode(final AcquisitionMode acquisitionMode,
 		final int imageIndex, final int channelIndex)
 	{
@@ -6559,6 +7141,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setAcquisitionMode(acquisitionMode);
 	}
 
+	@Override
 	public void setChannelAnnotationRef(final String annotation,
 		final int imageIndex, final int channelIndex, final int annotationRefIndex)
 	{
@@ -6570,6 +7153,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			channelIndex), annotationLinks_reference);
 	}
 
+	@Override
 	public void setChannelColor(final Color color, final int imageIndex,
 		final int channelIndex)
 	{
@@ -6591,6 +7175,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setColor(color);
 	}
 
+	@Override
 	public void setChannelContrastMethod(final ContrastMethod contrastMethod,
 		final int imageIndex, final int channelIndex)
 	{
@@ -6613,6 +7198,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring DetectorSettings element, complex property
+	@Override
 	public void setChannelEmissionWavelength(
 		final PositiveInteger emissionWavelength, final int imageIndex,
 		final int channelIndex)
@@ -6635,6 +7221,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setEmissionWavelength(emissionWavelength);
 	}
 
+	@Override
 	public void setChannelExcitationWavelength(
 		final PositiveInteger excitationWavelength, final int imageIndex,
 		final int channelIndex)
@@ -6657,6 +7244,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setExcitationWavelength(excitationWavelength);
 	}
 
+	@Override
 	public void setChannelFilterSetRef(final String filterSet,
 		final int imageIndex, final int channelIndex)
 	{
@@ -6668,6 +7256,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			channelIndex), filterSet_reference);
 	}
 
+	@Override
 	public void setChannelFluor(final String fluor, final int imageIndex,
 		final int channelIndex)
 	{
@@ -6689,6 +7278,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setFluor(fluor);
 	}
 
+	@Override
 	public void setChannelID(final String id, final int imageIndex,
 		final int channelIndex)
 	{
@@ -6715,6 +7305,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		}
 	}
 
+	@Override
 	public void setChannelIlluminationType(
 		final IlluminationType illuminationType, final int imageIndex,
 		final int channelIndex)
@@ -6739,6 +7330,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring LightPath element, complex property
 	// Ignoring LightSourceSettings element, complex property
+	@Override
 	public void setChannelNDFilter(final Double ndFilter, final int imageIndex,
 		final int channelIndex)
 	{
@@ -6760,6 +7352,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setNDFilter(ndFilter);
 	}
 
+	@Override
 	public void setChannelName(final String name, final int imageIndex,
 		final int channelIndex)
 	{
@@ -6781,6 +7374,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setName(name);
 	}
 
+	@Override
 	public void setChannelPinholeSize(final Double pinholeSize,
 		final int imageIndex, final int channelIndex)
 	{
@@ -6803,6 +7397,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Pixels_BackReference back reference
+	@Override
 	public void setChannelPockelCellSetting(final Integer pockelCellSetting,
 		final int imageIndex, final int channelIndex)
 	{
@@ -6824,6 +7419,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setPockelCellSetting(pockelCellSetting);
 	}
 
+	@Override
 	public void setChannelSamplesPerPixel(final PositiveInteger samplesPerPixel,
 		final int imageIndex, final int channelIndex)
 	{
@@ -6851,6 +7447,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setCommentAnnotationAnnotationRef(final String annotation,
 		final int commentAnnotationIndex, final int annotationRefIndex)
 	{
@@ -6864,6 +7461,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public void setCommentAnnotationDescription(final String description,
 		final int commentAnnotationIndex)
 	{
@@ -6884,6 +7482,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public void setCommentAnnotationID(final String id,
 		final int commentAnnotationIndex)
 	{
@@ -6904,6 +7503,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public void setCommentAnnotationNamespace(final String namespace,
 		final int commentAnnotationIndex)
 	{
@@ -6931,6 +7531,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Reagent_BackReference back reference
 	// Ignoring Screen_BackReference back reference
 	// Ignoring StructuredAnnotations_BackReference back reference
+	@Override
 	public void setCommentAnnotationValue(final String value,
 		final int commentAnnotationIndex)
 	{
@@ -6957,6 +7558,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public void setDatasetAnnotationRef(final String annotation,
 		final int datasetIndex, final int annotationRefIndex)
 	{
@@ -6968,6 +7570,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.addReference(root.getDataset(datasetIndex), annotationLinks_reference);
 	}
 
+	@Override
 	public void setDatasetDescription(final String description,
 		final int datasetIndex)
 	{
@@ -6981,6 +7584,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setDescription(description);
 	}
 
+	@Override
 	public void setDatasetExperimenterGroupRef(final String experimenterGroup,
 		final int datasetIndex)
 	{
@@ -6993,6 +7597,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			experimenterGroup_reference);
 	}
 
+	@Override
 	public void setDatasetExperimenterRef(final String experimenter,
 		final int datasetIndex)
 	{
@@ -7003,6 +7608,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		model.addReference(root.getDataset(datasetIndex), experimenter_reference);
 	}
 
+	@Override
 	public void setDatasetID(final String id, final int datasetIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
@@ -7015,6 +7621,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setID(id);
 	}
 
+	@Override
 	public void setDatasetImageRef(final String image, final int datasetIndex,
 		final int imageRefIndex)
 	{
@@ -7025,6 +7632,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		model.addReference(root.getDataset(datasetIndex), imageLinks_reference);
 	}
 
+	@Override
 	public void setDatasetName(final String name, final int datasetIndex) {
 		// Parents: {u'OME': None}
 		// Name is not a reference
@@ -7053,6 +7661,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Instrument': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setDetectorAmplificationGain(final Double amplificationGain,
 		final int instrumentIndex, final int detectorIndex)
 	{
@@ -7070,6 +7679,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setAmplificationGain(amplificationGain);
 	}
 
+	@Override
 	public void setDetectorGain(final Double gain, final int instrumentIndex,
 		final int detectorIndex)
 	{
@@ -7087,6 +7697,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setGain(gain);
 	}
 
+	@Override
 	public void setDetectorID(final String id, final int instrumentIndex,
 		final int detectorIndex)
 	{
@@ -7106,6 +7717,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Instrument_BackReference back reference
+	@Override
 	public void setDetectorLotNumber(final String lotNumber,
 		final int instrumentIndex, final int detectorIndex)
 	{
@@ -7123,6 +7735,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setLotNumber(lotNumber);
 	}
 
+	@Override
 	public void setDetectorManufacturer(final String manufacturer,
 		final int instrumentIndex, final int detectorIndex)
 	{
@@ -7140,6 +7753,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setManufacturer(manufacturer);
 	}
 
+	@Override
 	public void setDetectorModel(final String model, final int instrumentIndex,
 		final int detectorIndex)
 	{
@@ -7157,6 +7771,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setModel(model);
 	}
 
+	@Override
 	public void setDetectorOffset(final Double offset, final int instrumentIndex,
 		final int detectorIndex)
 	{
@@ -7174,6 +7789,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setOffset(offset);
 	}
 
+	@Override
 	public void setDetectorSerialNumber(final String serialNumber,
 		final int instrumentIndex, final int detectorIndex)
 	{
@@ -7191,6 +7807,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setSerialNumber(serialNumber);
 	}
 
+	@Override
 	public void setDetectorType(final DetectorType type,
 		final int instrumentIndex, final int detectorIndex)
 	{
@@ -7208,6 +7825,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setType(type);
 	}
 
+	@Override
 	public void setDetectorVoltage(final Double voltage,
 		final int instrumentIndex, final int detectorIndex)
 	{
@@ -7225,6 +7843,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setVoltage(voltage);
 	}
 
+	@Override
 	public void setDetectorZoom(final Double zoom, final int instrumentIndex,
 		final int detectorIndex)
 	{
@@ -7248,6 +7867,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Channel': {u'Pixels': {u'Image': {u'OME': None}}}}
 	// Is multi path? False
 
+	@Override
 	public void setDetectorSettingsBinning(final Binning binning,
 		final int imageIndex, final int channelIndex)
 	{
@@ -7274,6 +7894,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring DetectorRef back reference
+	@Override
 	public void setDetectorSettingsGain(final Double gain, final int imageIndex,
 		final int channelIndex)
 	{
@@ -7299,6 +7920,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o4.setGain(gain);
 	}
 
+	@Override
 	public void setDetectorSettingsID(final String id, final int imageIndex,
 		final int channelIndex)
 	{
@@ -7325,6 +7947,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o4.setID(id);
 	}
 
+	@Override
 	public void setDetectorSettingsOffset(final Double offset,
 		final int imageIndex, final int channelIndex)
 	{
@@ -7350,6 +7973,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o4.setOffset(offset);
 	}
 
+	@Override
 	public void setDetectorSettingsReadOutRate(final Double readOutRate,
 		final int imageIndex, final int channelIndex)
 	{
@@ -7375,6 +7999,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o4.setReadOutRate(readOutRate);
 	}
 
+	@Override
 	public void setDetectorSettingsVoltage(final Double voltage,
 		final int imageIndex, final int channelIndex)
 	{
@@ -7407,6 +8032,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Is multi path? False
 
 	// Ignoring FilterSet_BackReference back reference
+	@Override
 	public void setDichroicID(final String id, final int instrumentIndex,
 		final int dichroicIndex)
 	{
@@ -7427,6 +8053,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Instrument_BackReference back reference
 	// Ignoring LightPath_BackReference back reference
+	@Override
 	public void setDichroicLotNumber(final String lotNumber,
 		final int instrumentIndex, final int dichroicIndex)
 	{
@@ -7444,6 +8071,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setLotNumber(lotNumber);
 	}
 
+	@Override
 	public void setDichroicManufacturer(final String manufacturer,
 		final int instrumentIndex, final int dichroicIndex)
 	{
@@ -7461,6 +8089,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setManufacturer(manufacturer);
 	}
 
+	@Override
 	public void setDichroicModel(final String model, final int instrumentIndex,
 		final int dichroicIndex)
 	{
@@ -7478,6 +8107,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setModel(model);
 	}
 
+	@Override
 	public void setDichroicSerialNumber(final String serialNumber,
 		final int instrumentIndex, final int dichroicIndex)
 	{
@@ -7512,6 +8142,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setDoubleAnnotationAnnotationRef(final String annotation,
 		final int doubleAnnotationIndex, final int annotationRefIndex)
 	{
@@ -7525,6 +8156,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public void setDoubleAnnotationDescription(final String description,
 		final int doubleAnnotationIndex)
 	{
@@ -7544,6 +8176,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public void setDoubleAnnotationID(final String id,
 		final int doubleAnnotationIndex)
 	{
@@ -7563,6 +8196,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public void setDoubleAnnotationNamespace(final String namespace,
 		final int doubleAnnotationIndex)
 	{
@@ -7589,6 +8223,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Reagent_BackReference back reference
 	// Ignoring Screen_BackReference back reference
 	// Ignoring StructuredAnnotations_BackReference back reference
+	@Override
 	public void setDoubleAnnotationValue(final Double value,
 		final int doubleAnnotationIndex)
 	{
@@ -7616,6 +8251,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Ellipse of parent abstract type
 	// FillColor accessor from parent Shape
+	@Override
 	public void setEllipseFillColor(final Color fillColor, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -7638,6 +8274,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FillRule accessor from parent Shape
+	@Override
 	public void setEllipseFillRule(final FillRule fillRule, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -7660,6 +8297,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontFamily accessor from parent Shape
+	@Override
 	public void setEllipseFontFamily(final FontFamily fontFamily,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -7682,6 +8320,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontSize accessor from parent Shape
+	@Override
 	public void setEllipseFontSize(final NonNegativeInteger fontSize,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -7704,6 +8343,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontStyle accessor from parent Shape
+	@Override
 	public void setEllipseFontStyle(final FontStyle fontStyle,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -7726,6 +8366,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ID accessor from parent Shape
+	@Override
 	public void setEllipseID(final String id, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -7751,6 +8392,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Label of parent abstract type
 	// Ignoring Line of parent abstract type
 	// LineCap accessor from parent Shape
+	@Override
 	public void setEllipseLineCap(final LineCap lineCap, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -7773,6 +8415,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Locked accessor from parent Shape
+	@Override
 	public void setEllipseLocked(final Boolean locked, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -7800,6 +8443,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Polyline of parent abstract type
 	// Ignoring Rectangle of parent abstract type
 	// StrokeColor accessor from parent Shape
+	@Override
 	public void setEllipseStrokeColor(final Color strokeColor,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -7822,6 +8466,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeDashArray accessor from parent Shape
+	@Override
 	public void setEllipseStrokeDashArray(final String strokeDashArray,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -7844,6 +8489,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeWidth accessor from parent Shape
+	@Override
 	public void setEllipseStrokeWidth(final Double strokeWidth,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -7866,6 +8512,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Text accessor from parent Shape
+	@Override
 	public void setEllipseText(final String text, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -7888,6 +8535,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheC accessor from parent Shape
+	@Override
 	public void setEllipseTheC(final NonNegativeInteger theC, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -7910,6 +8558,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheT accessor from parent Shape
+	@Override
 	public void setEllipseTheT(final NonNegativeInteger theT, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -7932,6 +8581,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheZ accessor from parent Shape
+	@Override
 	public void setEllipseTheZ(final NonNegativeInteger theZ, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -7954,6 +8604,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Transform accessor from parent Shape
+	@Override
 	public void setEllipseTransform(final AffineTransform transform,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -7976,6 +8627,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Visible accessor from parent Shape
+	@Override
 	public void setEllipseVisible(final Boolean visible, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -7997,6 +8649,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Ellipse) o3).setVisible(visible);
 	}
 
+	@Override
 	public void setEllipseRadiusX(final Double radiusX, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -8018,6 +8671,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Ellipse) o3).setRadiusX(radiusX);
 	}
 
+	@Override
 	public void setEllipseRadiusY(final Double radiusY, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -8039,6 +8693,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Ellipse) o3).setRadiusY(radiusY);
 	}
 
+	@Override
 	public void setEllipseX(final Double x, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -8060,6 +8715,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Ellipse) o3).setX(x);
 	}
 
+	@Override
 	public void setEllipseY(final Double y, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -8101,6 +8757,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public void setExperimentDescription(final String description,
 		final int experimentIndex)
 	{
@@ -8114,6 +8771,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setDescription(description);
 	}
 
+	@Override
 	public void setExperimentExperimenterRef(final String experimenter,
 		final int experimentIndex)
 	{
@@ -8125,6 +8783,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			experimenter_reference);
 	}
 
+	@Override
 	public void setExperimentID(final String id, final int experimentIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
@@ -8139,6 +8798,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Image_BackReference back reference
 	// Ignoring MicrobeamManipulation element, complex property
+	@Override
 	public void setExperimentType(final ExperimentType type,
 		final int experimentIndex)
 	{
@@ -8168,6 +8828,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public void setExperimenterAnnotationRef(final String annotation,
 		final int experimenterIndex, final int annotationRefIndex)
 	{
@@ -8180,6 +8841,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public void setExperimenterEmail(final String email,
 		final int experimenterIndex)
 	{
@@ -8195,6 +8857,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Experiment_BackReference back reference
 	// Ignoring ExperimenterGroup_BackReference back reference
+	@Override
 	public void setExperimenterFirstName(final String firstName,
 		final int experimenterIndex)
 	{
@@ -8208,6 +8871,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setFirstName(firstName);
 	}
 
+	@Override
 	public void setExperimenterID(final String id, final int experimenterIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
@@ -8221,6 +8885,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public void setExperimenterInstitution(final String institution,
 		final int experimenterIndex)
 	{
@@ -8234,6 +8899,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setInstitution(institution);
 	}
 
+	@Override
 	public void setExperimenterLastName(final String lastName,
 		final int experimenterIndex)
 	{
@@ -8248,6 +8914,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring MicrobeamManipulation_BackReference back reference
+	@Override
 	public void setExperimenterMiddleName(final String middleName,
 		final int experimenterIndex)
 	{
@@ -8262,6 +8929,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Project_BackReference back reference
+	@Override
 	public void setExperimenterUserName(final String userName,
 		final int experimenterIndex)
 	{
@@ -8281,6 +8949,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public void setExperimenterGroupAnnotationRef(final String annotation,
 		final int experimenterGroupIndex, final int annotationRefIndex)
 	{
@@ -8293,6 +8962,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public void setExperimenterGroupDescription(final String description,
 		final int experimenterGroupIndex)
 	{
@@ -8307,6 +8977,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setDescription(description);
 	}
 
+	@Override
 	public void setExperimenterGroupExperimenterRef(final String experimenter,
 		final int experimenterGroupIndex, final int experimenterRefIndex)
 	{
@@ -8318,6 +8989,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			experimenterLinks_reference);
 	}
 
+	@Override
 	public void setExperimenterGroupID(final String id,
 		final int experimenterGroupIndex)
 	{
@@ -8334,6 +9006,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public void setExperimenterGroupLeader(final String leader,
 		final int experimenterGroupIndex, final int leaderIndex)
 	{
@@ -8345,6 +9018,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			leaders_reference);
 	}
 
+	@Override
 	public void setExperimenterGroupName(final String name,
 		final int experimenterGroupIndex)
 	{
@@ -8392,6 +9066,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Arc of parent abstract type
 	// Ignoring Filament of parent abstract type
 	// ID accessor from parent LightSource
+	@Override
 	public void setFilamentID(final String id, final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -8413,6 +9088,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Laser of parent abstract type
 	// Ignoring LightEmittingDiode of parent abstract type
 	// LotNumber accessor from parent LightSource
+	@Override
 	public void setFilamentLotNumber(final String lotNumber,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -8431,6 +9107,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Manufacturer accessor from parent LightSource
+	@Override
 	public void setFilamentManufacturer(final String manufacturer,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -8449,6 +9126,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Model accessor from parent LightSource
+	@Override
 	public void setFilamentModel(final String model, final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -8467,6 +9145,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Power accessor from parent LightSource
+	@Override
 	public void setFilamentPower(final Double power, final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -8485,6 +9164,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// SerialNumber accessor from parent LightSource
+	@Override
 	public void setFilamentSerialNumber(final String serialNumber,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -8502,6 +9182,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Filament) o2).setSerialNumber(serialNumber);
 	}
 
+	@Override
 	public void setFilamentType(final FilamentType type,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -8525,6 +9206,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setFileAnnotationAnnotationRef(final String annotation,
 		final int fileAnnotationIndex, final int annotationRefIndex)
 	{
@@ -8539,6 +9221,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring BinaryFile element, complex property
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public void setFileAnnotationDescription(final String description,
 		final int fileAnnotationIndex)
 	{
@@ -8558,6 +9241,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public void
 		setFileAnnotationID(final String id, final int fileAnnotationIndex)
 	{
@@ -8577,6 +9261,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public void setFileAnnotationNamespace(final String namespace,
 		final int fileAnnotationIndex)
 	{
@@ -8613,6 +9298,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring FilterSet_BackReference back reference
 	// Ignoring FilterSet_BackReference back reference
+	@Override
 	public void setFilterFilterWheel(final String filterWheel,
 		final int instrumentIndex, final int filterIndex)
 	{
@@ -8630,6 +9316,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setFilterWheel(filterWheel);
 	}
 
+	@Override
 	public void setFilterID(final String id, final int instrumentIndex,
 		final int filterIndex)
 	{
@@ -8651,6 +9338,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Instrument_BackReference back reference
 	// Ignoring LightPath_BackReference back reference
 	// Ignoring LightPath_BackReference back reference
+	@Override
 	public void setFilterLotNumber(final String lotNumber,
 		final int instrumentIndex, final int filterIndex)
 	{
@@ -8668,6 +9356,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setLotNumber(lotNumber);
 	}
 
+	@Override
 	public void setFilterManufacturer(final String manufacturer,
 		final int instrumentIndex, final int filterIndex)
 	{
@@ -8685,6 +9374,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setManufacturer(manufacturer);
 	}
 
+	@Override
 	public void setFilterModel(final String model, final int instrumentIndex,
 		final int filterIndex)
 	{
@@ -8702,6 +9392,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setModel(model);
 	}
 
+	@Override
 	public void setFilterSerialNumber(final String serialNumber,
 		final int instrumentIndex, final int filterIndex)
 	{
@@ -8720,6 +9411,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring TransmittanceRange element, complex property
+	@Override
 	public void setFilterType(final FilterType type, final int instrumentIndex,
 		final int filterIndex)
 	{
@@ -8744,6 +9436,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Is multi path? False
 
 	// Ignoring Channel_BackReference back reference
+	@Override
 	public void setFilterSetDichroicRef(final String dichroic,
 		final int instrumentIndex, final int filterSetIndex)
 	{
@@ -8755,6 +9448,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			filterSetIndex), dichroic_reference);
 	}
 
+	@Override
 	public void setFilterSetEmissionFilterRef(final String emissionFilter,
 		final int instrumentIndex, final int filterSetIndex,
 		final int emissionFilterRefIndex)
@@ -8768,6 +9462,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			filterSetIndex), emissionFilterLinks_reference);
 	}
 
+	@Override
 	public void setFilterSetExcitationFilterRef(final String excitationFilter,
 		final int instrumentIndex, final int filterSetIndex,
 		final int excitationFilterRefIndex)
@@ -8781,6 +9476,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			filterSetIndex), excitationFilterLinks_reference);
 	}
 
+	@Override
 	public void setFilterSetID(final String id, final int instrumentIndex,
 		final int filterSetIndex)
 	{
@@ -8800,6 +9496,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Instrument_BackReference back reference
+	@Override
 	public void setFilterSetLotNumber(final String lotNumber,
 		final int instrumentIndex, final int filterSetIndex)
 	{
@@ -8817,6 +9514,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setLotNumber(lotNumber);
 	}
 
+	@Override
 	public void setFilterSetManufacturer(final String manufacturer,
 		final int instrumentIndex, final int filterSetIndex)
 	{
@@ -8834,6 +9532,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setManufacturer(manufacturer);
 	}
 
+	@Override
 	public void setFilterSetModel(final String model, final int instrumentIndex,
 		final int filterSetIndex)
 	{
@@ -8851,6 +9550,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setModel(model);
 	}
 
+	@Override
 	public void setFilterSetSerialNumber(final String serialNumber,
 		final int instrumentIndex, final int filterSetIndex)
 	{
@@ -8884,6 +9584,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public void setImageAcquisitionDate(final Timestamp acquisitionDate,
 		final int imageIndex)
 	{
@@ -8897,6 +9598,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setAcquisitionDate(acquisitionDate);
 	}
 
+	@Override
 	public void setImageAnnotationRef(final String annotation,
 		final int imageIndex, final int annotationRefIndex)
 	{
@@ -8908,6 +9610,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public void
 		setImageDescription(final String description, final int imageIndex)
 	{
@@ -8921,6 +9624,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setDescription(description);
 	}
 
+	@Override
 	public void setImageExperimentRef(final String experiment,
 		final int imageIndex)
 	{
@@ -8931,6 +9635,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		model.addReference(root.getImage(imageIndex), experiment_reference);
 	}
 
+	@Override
 	public void setImageExperimenterGroupRef(final String experimenterGroup,
 		final int imageIndex)
 	{
@@ -8942,6 +9647,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		model.addReference(root.getImage(imageIndex), experimenterGroup_reference);
 	}
 
+	@Override
 	public void setImageExperimenterRef(final String experimenter,
 		final int imageIndex)
 	{
@@ -8952,6 +9658,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		model.addReference(root.getImage(imageIndex), experimenter_reference);
 	}
 
+	@Override
 	public void setImageID(final String id, final int imageIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
@@ -8965,6 +9672,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring ImagingEnvironment element, complex property
+	@Override
 	public void setImageInstrumentRef(final String instrument,
 		final int imageIndex)
 	{
@@ -8975,6 +9683,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		model.addReference(root.getImage(imageIndex), instrument_reference);
 	}
 
+	@Override
 	public void setImageMicrobeamManipulationRef(
 		final String microbeamManipulation, final int imageIndex,
 		final int microbeamManipulationRefIndex)
@@ -8988,6 +9697,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			microbeamManipulationLinks_reference);
 	}
 
+	@Override
 	public void setImageName(final String name, final int imageIndex) {
 		// Parents: {u'OME': None}
 		// Name is not a reference
@@ -9001,6 +9711,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ObjectiveSettings element, complex property
 	// Ignoring Pixels element, complex property
+	@Override
 	public void setImageROIRef(final String roi, final int imageIndex,
 		final int ROIRefIndex)
 	{
@@ -9030,6 +9741,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Image': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setImagingEnvironmentAirPressure(final Double airPressure,
 		final int imageIndex)
 	{
@@ -9047,6 +9759,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setAirPressure(airPressure);
 	}
 
+	@Override
 	public void setImagingEnvironmentCO2Percent(final PercentFraction co2Percent,
 		final int imageIndex)
 	{
@@ -9064,6 +9777,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setCO2Percent(co2Percent);
 	}
 
+	@Override
 	public void setImagingEnvironmentHumidity(final PercentFraction humidity,
 		final int imageIndex)
 	{
@@ -9081,6 +9795,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setHumidity(humidity);
 	}
 
+	@Override
 	public void setImagingEnvironmentTemperature(final Double temperature,
 		final int imageIndex)
 	{
@@ -9108,6 +9823,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Dichroic element, complex property
 	// Ignoring Filter element, complex property
 	// Ignoring FilterSet element, complex property
+	@Override
 	public void setInstrumentID(final String id, final int instrumentIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
@@ -9142,6 +9858,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Ellipse of parent abstract type
 	// FillColor accessor from parent Shape
+	@Override
 	public void setLabelFillColor(final Color fillColor, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -9164,6 +9881,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FillRule accessor from parent Shape
+	@Override
 	public void setLabelFillRule(final FillRule fillRule, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -9186,6 +9904,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontFamily accessor from parent Shape
+	@Override
 	public void setLabelFontFamily(final FontFamily fontFamily,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -9208,6 +9927,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontSize accessor from parent Shape
+	@Override
 	public void setLabelFontSize(final NonNegativeInteger fontSize,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -9230,6 +9950,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontStyle accessor from parent Shape
+	@Override
 	public void setLabelFontStyle(final FontStyle fontStyle, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -9252,6 +9973,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ID accessor from parent Shape
+	@Override
 	public void setLabelID(final String id, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -9277,6 +9999,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Label of parent abstract type
 	// Ignoring Line of parent abstract type
 	// LineCap accessor from parent Shape
+	@Override
 	public void setLabelLineCap(final LineCap lineCap, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -9299,6 +10022,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Locked accessor from parent Shape
+	@Override
 	public void setLabelLocked(final Boolean locked, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -9326,6 +10050,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Polyline of parent abstract type
 	// Ignoring Rectangle of parent abstract type
 	// StrokeColor accessor from parent Shape
+	@Override
 	public void setLabelStrokeColor(final Color strokeColor, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -9348,6 +10073,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeDashArray accessor from parent Shape
+	@Override
 	public void setLabelStrokeDashArray(final String strokeDashArray,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -9370,6 +10096,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeWidth accessor from parent Shape
+	@Override
 	public void setLabelStrokeWidth(final Double strokeWidth, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -9392,6 +10119,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Text accessor from parent Shape
+	@Override
 	public void setLabelText(final String text, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -9414,6 +10142,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheC accessor from parent Shape
+	@Override
 	public void setLabelTheC(final NonNegativeInteger theC, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -9436,6 +10165,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheT accessor from parent Shape
+	@Override
 	public void setLabelTheT(final NonNegativeInteger theT, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -9458,6 +10188,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheZ accessor from parent Shape
+	@Override
 	public void setLabelTheZ(final NonNegativeInteger theZ, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -9480,6 +10211,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Transform accessor from parent Shape
+	@Override
 	public void setLabelTransform(final AffineTransform transform,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -9502,6 +10234,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Visible accessor from parent Shape
+	@Override
 	public void setLabelVisible(final Boolean visible, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -9523,6 +10256,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Label) o3).setVisible(visible);
 	}
 
+	@Override
 	public void
 		setLabelX(final Double x, final int ROIIndex, final int shapeIndex)
 	{
@@ -9544,6 +10278,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Label) o3).setX(x);
 	}
 
+	@Override
 	public void
 		setLabelY(final Double y, final int ROIIndex, final int shapeIndex)
 	{
@@ -9574,6 +10309,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Arc of parent abstract type
 	// Ignoring Filament of parent abstract type
 	// ID accessor from parent LightSource
+	@Override
 	public void setLaserID(final String id, final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -9595,6 +10331,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Laser of parent abstract type
 	// Ignoring LightEmittingDiode of parent abstract type
 	// LotNumber accessor from parent LightSource
+	@Override
 	public void setLaserLotNumber(final String lotNumber,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -9613,6 +10350,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Manufacturer accessor from parent LightSource
+	@Override
 	public void setLaserManufacturer(final String manufacturer,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -9631,6 +10369,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Model accessor from parent LightSource
+	@Override
 	public void setLaserModel(final String model, final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -9649,6 +10388,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Power accessor from parent LightSource
+	@Override
 	public void setLaserPower(final Double power, final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -9667,6 +10407,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// SerialNumber accessor from parent LightSource
+	@Override
 	public void setLaserSerialNumber(final String serialNumber,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -9684,6 +10425,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Laser) o2).setSerialNumber(serialNumber);
 	}
 
+	@Override
 	public void setLaserFrequencyMultiplication(
 		final PositiveInteger frequencyMultiplication, final int instrumentIndex,
 		final int lightSourceIndex)
@@ -9702,6 +10444,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Laser) o2).setFrequencyMultiplication(frequencyMultiplication);
 	}
 
+	@Override
 	public void setLaserLaserMedium(final LaserMedium laserMedium,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -9719,6 +10462,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Laser) o2).setLaserMedium(laserMedium);
 	}
 
+	@Override
 	public void setLaserPockelCell(final Boolean pockelCell,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -9736,6 +10480,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Laser) o2).setPockelCell(pockelCell);
 	}
 
+	@Override
 	public void setLaserPulse(final Pulse pulse, final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -9753,6 +10498,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Laser) o2).setPulse(pulse);
 	}
 
+	@Override
 	public void setLaserPump(final String pump, final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -9765,6 +10511,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		// LightSource is abstract proprietary
 	}
 
+	@Override
 	public void setLaserRepetitionRate(final Double repetitionRate,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -9782,6 +10529,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Laser) o2).setRepetitionRate(repetitionRate);
 	}
 
+	@Override
 	public void setLaserTuneable(final Boolean tuneable,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -9799,6 +10547,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Laser) o2).setTuneable(tuneable);
 	}
 
+	@Override
 	public void setLaserType(final LaserType type, final int instrumentIndex,
 		final int lightSourceIndex)
 	{
@@ -9816,6 +10565,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Laser) o2).setType(type);
 	}
 
+	@Override
 	public void setLaserWavelength(final PositiveInteger wavelength,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -9856,6 +10606,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Arc of parent abstract type
 	// Ignoring Filament of parent abstract type
 	// ID accessor from parent LightSource
+	@Override
 	public void setLightEmittingDiodeID(final String id,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -9877,6 +10628,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Laser of parent abstract type
 	// Ignoring LightEmittingDiode of parent abstract type
 	// LotNumber accessor from parent LightSource
+	@Override
 	public void setLightEmittingDiodeLotNumber(final String lotNumber,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -9895,6 +10647,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Manufacturer accessor from parent LightSource
+	@Override
 	public void setLightEmittingDiodeManufacturer(final String manufacturer,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -9913,6 +10666,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Model accessor from parent LightSource
+	@Override
 	public void setLightEmittingDiodeModel(final String model,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -9931,6 +10685,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Power accessor from parent LightSource
+	@Override
 	public void setLightEmittingDiodePower(final Double power,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -9949,6 +10704,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// SerialNumber accessor from parent LightSource
+	@Override
 	public void setLightEmittingDiodeSerialNumber(final String serialNumber,
 		final int instrumentIndex, final int lightSourceIndex)
 	{
@@ -9972,6 +10728,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Channel': {u'Pixels': {u'Image': {u'OME': None}}}}
 	// Is multi path? False
 
+	@Override
 	public void setLightPathDichroicRef(final String dichroic,
 		final int imageIndex, final int channelIndex)
 	{
@@ -9983,6 +10740,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			channelIndex).getLightPath(), dichroic_reference);
 	}
 
+	@Override
 	public void setLightPathEmissionFilterRef(final String emissionFilter,
 		final int imageIndex, final int channelIndex,
 		final int emissionFilterRefIndex)
@@ -9996,6 +10754,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			channelIndex).getLightPath(), emissionFilterLinks_reference);
 	}
 
+	@Override
 	public void setLightPathExcitationFilterRef(final String excitationFilter,
 		final int imageIndex, final int channelIndex,
 		final int excitationFilterRefIndex)
@@ -10016,6 +10775,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// u'MicrobeamManipulation': {u'Experiment': {u'OME': None}}}
 	// Is multi path? True
 
+	@Override
 	public void setChannelLightSourceSettingsAttenuation(
 		final PercentFraction attenuation, final int imageIndex,
 		final int channelIndex)
@@ -10043,6 +10803,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o4.setAttenuation(attenuation);
 	}
 
+	@Override
 	public void setMicrobeamManipulationLightSourceSettingsAttenuation(
 		final PercentFraction attenuation, final int experimentIndex,
 		final int microbeamManipulationIndex, final int lightSourceSettingsIndex)
@@ -10068,6 +10829,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setAttenuation(attenuation);
 	}
 
+	@Override
 	public void setChannelLightSourceSettingsID(final String id,
 		final int imageIndex, final int channelIndex)
 	{
@@ -10095,6 +10857,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o4.setID(id);
 	}
 
+	@Override
 	public void setMicrobeamManipulationLightSourceSettingsID(final String id,
 		final int experimentIndex, final int microbeamManipulationIndex,
 		final int lightSourceSettingsIndex)
@@ -10123,6 +10886,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring LightSourceRef back reference
 	// Ignoring MicrobeamManipulation_BackReference back reference
+	@Override
 	public void setChannelLightSourceSettingsWavelength(
 		final PositiveInteger wavelength, final int imageIndex,
 		final int channelIndex)
@@ -10150,6 +10914,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o4.setWavelength(wavelength);
 	}
 
+	@Override
 	public void setMicrobeamManipulationLightSourceSettingsWavelength(
 		final PositiveInteger wavelength, final int experimentIndex,
 		final int microbeamManipulationIndex, final int lightSourceSettingsIndex)
@@ -10183,6 +10948,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Ellipse of parent abstract type
 	// FillColor accessor from parent Shape
+	@Override
 	public void setLineFillColor(final Color fillColor, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10205,6 +10971,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FillRule accessor from parent Shape
+	@Override
 	public void setLineFillRule(final FillRule fillRule, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10227,6 +10994,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontFamily accessor from parent Shape
+	@Override
 	public void setLineFontFamily(final FontFamily fontFamily,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -10249,6 +11017,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontSize accessor from parent Shape
+	@Override
 	public void setLineFontSize(final NonNegativeInteger fontSize,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -10271,6 +11040,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontStyle accessor from parent Shape
+	@Override
 	public void setLineFontStyle(final FontStyle fontStyle, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10293,6 +11063,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ID accessor from parent Shape
+	@Override
 	public void setLineID(final String id, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10318,6 +11089,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Label of parent abstract type
 	// Ignoring Line of parent abstract type
 	// LineCap accessor from parent Shape
+	@Override
 	public void setLineLineCap(final LineCap lineCap, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10340,6 +11112,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Locked accessor from parent Shape
+	@Override
 	public void setLineLocked(final Boolean locked, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10367,6 +11140,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Polyline of parent abstract type
 	// Ignoring Rectangle of parent abstract type
 	// StrokeColor accessor from parent Shape
+	@Override
 	public void setLineStrokeColor(final Color strokeColor, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10389,6 +11163,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeDashArray accessor from parent Shape
+	@Override
 	public void setLineStrokeDashArray(final String strokeDashArray,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -10411,6 +11186,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeWidth accessor from parent Shape
+	@Override
 	public void setLineStrokeWidth(final Double strokeWidth, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10433,6 +11209,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Text accessor from parent Shape
+	@Override
 	public void setLineText(final String text, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10455,6 +11232,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheC accessor from parent Shape
+	@Override
 	public void setLineTheC(final NonNegativeInteger theC, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10477,6 +11255,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheT accessor from parent Shape
+	@Override
 	public void setLineTheT(final NonNegativeInteger theT, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10499,6 +11278,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheZ accessor from parent Shape
+	@Override
 	public void setLineTheZ(final NonNegativeInteger theZ, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10521,6 +11301,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Transform accessor from parent Shape
+	@Override
 	public void setLineTransform(final AffineTransform transform,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -10543,6 +11324,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Visible accessor from parent Shape
+	@Override
 	public void setLineVisible(final Boolean visible, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10564,6 +11346,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Line) o3).setVisible(visible);
 	}
 
+	@Override
 	public void setLineMarkerEnd(final Marker markerEnd, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10585,6 +11368,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Line) o3).setMarkerEnd(markerEnd);
 	}
 
+	@Override
 	public void setLineMarkerStart(final Marker markerStart, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10606,6 +11390,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Line) o3).setMarkerStart(markerStart);
 	}
 
+	@Override
 	public void setLineX1(final Double x1, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10627,6 +11412,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Line) o3).setX1(x1);
 	}
 
+	@Override
 	public void setLineX2(final Double x2, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10648,6 +11434,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Line) o3).setX2(x2);
 	}
 
+	@Override
 	public void setLineY1(final Double y1, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10669,6 +11456,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Line) o3).setY1(y1);
 	}
 
+	@Override
 	public void setLineY2(final Double y2, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10696,6 +11484,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setListAnnotationAnnotationRef(final String annotation,
 		final int listAnnotationIndex, final int annotationRefIndex)
 	{
@@ -10709,6 +11498,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public void setListAnnotationDescription(final String description,
 		final int listAnnotationIndex)
 	{
@@ -10728,6 +11518,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public void
 		setListAnnotationID(final String id, final int listAnnotationIndex)
 	{
@@ -10747,6 +11538,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public void setListAnnotationNamespace(final String namespace,
 		final int listAnnotationIndex)
 	{
@@ -10781,6 +11573,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setLongAnnotationAnnotationRef(final String annotation,
 		final int longAnnotationIndex, final int annotationRefIndex)
 	{
@@ -10794,6 +11587,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public void setLongAnnotationDescription(final String description,
 		final int longAnnotationIndex)
 	{
@@ -10813,6 +11607,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public void
 		setLongAnnotationID(final String id, final int longAnnotationIndex)
 	{
@@ -10832,6 +11627,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public void setLongAnnotationNamespace(final String namespace,
 		final int longAnnotationIndex)
 	{
@@ -10858,6 +11654,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Reagent_BackReference back reference
 	// Ignoring Screen_BackReference back reference
 	// Ignoring StructuredAnnotations_BackReference back reference
+	@Override
 	public void setLongAnnotationValue(final Long value,
 		final int longAnnotationIndex)
 	{
@@ -10885,6 +11682,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Ellipse of parent abstract type
 	// FillColor accessor from parent Shape
+	@Override
 	public void setMaskFillColor(final Color fillColor, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10907,6 +11705,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FillRule accessor from parent Shape
+	@Override
 	public void setMaskFillRule(final FillRule fillRule, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10929,6 +11728,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontFamily accessor from parent Shape
+	@Override
 	public void setMaskFontFamily(final FontFamily fontFamily,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -10951,6 +11751,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontSize accessor from parent Shape
+	@Override
 	public void setMaskFontSize(final NonNegativeInteger fontSize,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -10973,6 +11774,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontStyle accessor from parent Shape
+	@Override
 	public void setMaskFontStyle(final FontStyle fontStyle, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -10995,6 +11797,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ID accessor from parent Shape
+	@Override
 	public void setMaskID(final String id, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -11020,6 +11823,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Label of parent abstract type
 	// Ignoring Line of parent abstract type
 	// LineCap accessor from parent Shape
+	@Override
 	public void setMaskLineCap(final LineCap lineCap, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -11042,6 +11846,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Locked accessor from parent Shape
+	@Override
 	public void setMaskLocked(final Boolean locked, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -11069,6 +11874,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Polyline of parent abstract type
 	// Ignoring Rectangle of parent abstract type
 	// StrokeColor accessor from parent Shape
+	@Override
 	public void setMaskStrokeColor(final Color strokeColor, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -11091,6 +11897,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeDashArray accessor from parent Shape
+	@Override
 	public void setMaskStrokeDashArray(final String strokeDashArray,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -11113,6 +11920,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeWidth accessor from parent Shape
+	@Override
 	public void setMaskStrokeWidth(final Double strokeWidth, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -11135,6 +11943,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Text accessor from parent Shape
+	@Override
 	public void setMaskText(final String text, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -11157,6 +11966,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheC accessor from parent Shape
+	@Override
 	public void setMaskTheC(final NonNegativeInteger theC, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -11179,6 +11989,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheT accessor from parent Shape
+	@Override
 	public void setMaskTheT(final NonNegativeInteger theT, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -11201,6 +12012,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheZ accessor from parent Shape
+	@Override
 	public void setMaskTheZ(final NonNegativeInteger theZ, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -11223,6 +12035,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Transform accessor from parent Shape
+	@Override
 	public void setMaskTransform(final AffineTransform transform,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -11245,6 +12058,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Visible accessor from parent Shape
+	@Override
 	public void setMaskVisible(final Boolean visible, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -11267,6 +12081,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring BinData element, complex property
+	@Override
 	public void setMaskHeight(final Double height, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -11288,6 +12103,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Mask) o3).setHeight(height);
 	}
 
+	@Override
 	public void setMaskWidth(final Double width, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -11309,6 +12125,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Mask) o3).setWidth(width);
 	}
 
+	@Override
 	public void
 		setMaskX(final Double x, final int ROIIndex, final int shapeIndex)
 	{
@@ -11330,6 +12147,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Mask) o3).setX(x);
 	}
 
+	@Override
 	public void
 		setMaskY(final Double y, final int ROIIndex, final int shapeIndex)
 	{
@@ -11363,6 +12181,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Experiment': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setMicrobeamManipulationDescription(final String description,
 		final int experimentIndex, final int microbeamManipulationIndex)
 	{
@@ -11382,6 +12201,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Experiment_BackReference back reference
+	@Override
 	public void setMicrobeamManipulationExperimenterRef(
 		final String experimenter, final int experimentIndex,
 		final int microbeamManipulationIndex)
@@ -11395,6 +12215,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			experimenter_reference);
 	}
 
+	@Override
 	public void setMicrobeamManipulationID(final String id,
 		final int experimentIndex, final int microbeamManipulationIndex)
 	{
@@ -11416,6 +12237,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Image_BackReference back reference
 	// Ignoring LightSourceSettings element, complex property
+	@Override
 	public void setMicrobeamManipulationROIRef(final String roi,
 		final int experimentIndex, final int microbeamManipulationIndex,
 		final int ROIRefIndex)
@@ -11430,6 +12252,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 				roiLinks_reference);
 	}
 
+	@Override
 	public void setMicrobeamManipulationType(
 		final MicrobeamManipulationType type, final int experimentIndex,
 		final int microbeamManipulationIndex)
@@ -11465,6 +12288,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Instrument': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setMicroscopeLotNumber(final String lotNumber,
 		final int instrumentIndex)
 	{
@@ -11482,6 +12306,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setLotNumber(lotNumber);
 	}
 
+	@Override
 	public void setMicroscopeManufacturer(final String manufacturer,
 		final int instrumentIndex)
 	{
@@ -11499,6 +12324,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setManufacturer(manufacturer);
 	}
 
+	@Override
 	public void setMicroscopeModel(final String model, final int instrumentIndex)
 	{
 		// Parents: {u'Instrument': {u'OME': None}}
@@ -11515,6 +12341,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setModel(model);
 	}
 
+	@Override
 	public void setMicroscopeSerialNumber(final String serialNumber,
 		final int instrumentIndex)
 	{
@@ -11532,6 +12359,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setSerialNumber(serialNumber);
 	}
 
+	@Override
 	public void setMicroscopeType(final MicroscopeType type,
 		final int instrumentIndex)
 	{
@@ -11555,6 +12383,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Instrument': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setObjectiveCalibratedMagnification(
 		final Double calibratedMagnification, final int instrumentIndex,
 		final int objectiveIndex)
@@ -11573,6 +12402,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setCalibratedMagnification(calibratedMagnification);
 	}
 
+	@Override
 	public void setObjectiveCorrection(final Correction correction,
 		final int instrumentIndex, final int objectiveIndex)
 	{
@@ -11590,6 +12420,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setCorrection(correction);
 	}
 
+	@Override
 	public void setObjectiveID(final String id, final int instrumentIndex,
 		final int objectiveIndex)
 	{
@@ -11608,6 +12439,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setID(id);
 	}
 
+	@Override
 	public void setObjectiveImmersion(final Immersion immersion,
 		final int instrumentIndex, final int objectiveIndex)
 	{
@@ -11626,6 +12458,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Instrument_BackReference back reference
+	@Override
 	public void setObjectiveIris(final Boolean iris, final int instrumentIndex,
 		final int objectiveIndex)
 	{
@@ -11643,6 +12476,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setIris(iris);
 	}
 
+	@Override
 	public void setObjectiveLensNA(final Double lensNA,
 		final int instrumentIndex, final int objectiveIndex)
 	{
@@ -11660,6 +12494,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setLensNA(lensNA);
 	}
 
+	@Override
 	public void setObjectiveLotNumber(final String lotNumber,
 		final int instrumentIndex, final int objectiveIndex)
 	{
@@ -11677,6 +12512,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setLotNumber(lotNumber);
 	}
 
+	@Override
 	public void setObjectiveManufacturer(final String manufacturer,
 		final int instrumentIndex, final int objectiveIndex)
 	{
@@ -11694,6 +12530,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setManufacturer(manufacturer);
 	}
 
+	@Override
 	public void setObjectiveModel(final String model, final int instrumentIndex,
 		final int objectiveIndex)
 	{
@@ -11711,6 +12548,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setModel(model);
 	}
 
+	@Override
 	public void setObjectiveNominalMagnification(
 		final PositiveInteger nominalMagnification, final int instrumentIndex,
 		final int objectiveIndex)
@@ -11729,6 +12567,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setNominalMagnification(nominalMagnification);
 	}
 
+	@Override
 	public void setObjectiveSerialNumber(final String serialNumber,
 		final int instrumentIndex, final int objectiveIndex)
 	{
@@ -11746,6 +12585,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setSerialNumber(serialNumber);
 	}
 
+	@Override
 	public void setObjectiveWorkingDistance(final Double workingDistance,
 		final int instrumentIndex, final int objectiveIndex)
 	{
@@ -11769,6 +12609,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Image': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setObjectiveSettingsCorrectionCollar(
 		final Double correctionCollar, final int imageIndex)
 	{
@@ -11786,6 +12627,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setCorrectionCollar(correctionCollar);
 	}
 
+	@Override
 	public void setObjectiveSettingsID(final String id, final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// ID is not a reference
@@ -11802,6 +12644,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setID(id);
 	}
 
+	@Override
 	public void setObjectiveSettingsMedium(final Medium medium,
 		final int imageIndex)
 	{
@@ -11820,6 +12663,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring ObjectiveRef back reference
+	@Override
 	public void setObjectiveSettingsRefractiveIndex(final Double refractiveIndex,
 		final int imageIndex)
 	{
@@ -11843,6 +12687,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Image': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setPixelsAnnotationRef(final String annotation,
 		final int imageIndex, final int annotationRefIndex)
 	{
@@ -11856,6 +12701,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring BinData element, complex property
 	// Ignoring Channel element, complex property
+	@Override
 	public void setPixelsDimensionOrder(final DimensionOrder dimensionOrder,
 		final int imageIndex)
 	{
@@ -11873,6 +12719,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setDimensionOrder(dimensionOrder);
 	}
 
+	@Override
 	public void setPixelsID(final String id, final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// ID is not a reference
@@ -11890,6 +12737,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring MetadataOnly element, complex property
+	@Override
 	public void setPixelsPhysicalSizeX(final PositiveFloat physicalSizeX,
 		final int imageIndex)
 	{
@@ -11907,6 +12755,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setPhysicalSizeX(physicalSizeX);
 	}
 
+	@Override
 	public void setPixelsPhysicalSizeY(final PositiveFloat physicalSizeY,
 		final int imageIndex)
 	{
@@ -11924,6 +12773,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setPhysicalSizeY(physicalSizeY);
 	}
 
+	@Override
 	public void setPixelsPhysicalSizeZ(final PositiveFloat physicalSizeZ,
 		final int imageIndex)
 	{
@@ -11942,6 +12792,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Plane element, complex property
+	@Override
 	public void setPixelsSizeC(final PositiveInteger sizeC, final int imageIndex)
 	{
 		// Parents: {u'Image': {u'OME': None}}
@@ -11958,6 +12809,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setSizeC(sizeC);
 	}
 
+	@Override
 	public void setPixelsSizeT(final PositiveInteger sizeT, final int imageIndex)
 	{
 		// Parents: {u'Image': {u'OME': None}}
@@ -11974,6 +12826,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setSizeT(sizeT);
 	}
 
+	@Override
 	public void setPixelsSizeX(final PositiveInteger sizeX, final int imageIndex)
 	{
 		// Parents: {u'Image': {u'OME': None}}
@@ -11990,6 +12843,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setSizeX(sizeX);
 	}
 
+	@Override
 	public void setPixelsSizeY(final PositiveInteger sizeY, final int imageIndex)
 	{
 		// Parents: {u'Image': {u'OME': None}}
@@ -12006,6 +12860,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setSizeY(sizeY);
 	}
 
+	@Override
 	public void setPixelsSizeZ(final PositiveInteger sizeZ, final int imageIndex)
 	{
 		// Parents: {u'Image': {u'OME': None}}
@@ -12023,6 +12878,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring TiffData element, complex property
+	@Override
 	public void setPixelsTimeIncrement(final Double timeIncrement,
 		final int imageIndex)
 	{
@@ -12040,6 +12896,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setTimeIncrement(timeIncrement);
 	}
 
+	@Override
 	public void setPixelsType(final PixelType type, final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// Type is not a reference
@@ -12061,6 +12918,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Pixels': {u'Image': {u'OME': None}}}
 	// Is multi path? False
 
+	@Override
 	public void setPlaneAnnotationRef(final String annotation,
 		final int imageIndex, final int planeIndex, final int annotationRefIndex)
 	{
@@ -12072,6 +12930,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			planeIndex), annotationLinks_reference);
 	}
 
+	@Override
 	public void setPlaneDeltaT(final Double deltaT, final int imageIndex,
 		final int planeIndex)
 	{
@@ -12093,6 +12952,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setDeltaT(deltaT);
 	}
 
+	@Override
 	public void setPlaneExposureTime(final Double exposureTime,
 		final int imageIndex, final int planeIndex)
 	{
@@ -12114,6 +12974,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setExposureTime(exposureTime);
 	}
 
+	@Override
 	public void setPlaneHashSHA1(final String hashSHA1, final int imageIndex,
 		final int planeIndex)
 	{
@@ -12136,6 +12997,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Pixels_BackReference back reference
+	@Override
 	public void setPlanePositionX(final Double positionX, final int imageIndex,
 		final int planeIndex)
 	{
@@ -12157,6 +13019,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setPositionX(positionX);
 	}
 
+	@Override
 	public void setPlanePositionY(final Double positionY, final int imageIndex,
 		final int planeIndex)
 	{
@@ -12178,6 +13041,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setPositionY(positionY);
 	}
 
+	@Override
 	public void setPlanePositionZ(final Double positionZ, final int imageIndex,
 		final int planeIndex)
 	{
@@ -12199,6 +13063,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setPositionZ(positionZ);
 	}
 
+	@Override
 	public void setPlaneTheC(final NonNegativeInteger theC, final int imageIndex,
 		final int planeIndex)
 	{
@@ -12220,6 +13085,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setTheC(theC);
 	}
 
+	@Override
 	public void setPlaneTheT(final NonNegativeInteger theT, final int imageIndex,
 		final int planeIndex)
 	{
@@ -12241,6 +13107,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setTheT(theT);
 	}
 
+	@Override
 	public void setPlaneTheZ(final NonNegativeInteger theZ, final int imageIndex,
 		final int planeIndex)
 	{
@@ -12268,6 +13135,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public void setPlateAnnotationRef(final String annotation,
 		final int plateIndex, final int annotationRefIndex)
 	{
@@ -12278,6 +13146,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		model.addReference(root.getPlate(plateIndex), annotationLinks_reference);
 	}
 
+	@Override
 	public void setPlateColumnNamingConvention(
 		final NamingConvention columnNamingConvention, final int plateIndex)
 	{
@@ -12291,6 +13160,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setColumnNamingConvention(columnNamingConvention);
 	}
 
+	@Override
 	public void setPlateColumns(final PositiveInteger columns,
 		final int plateIndex)
 	{
@@ -12304,6 +13174,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setColumns(columns);
 	}
 
+	@Override
 	public void
 		setPlateDescription(final String description, final int plateIndex)
 	{
@@ -12317,6 +13188,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setDescription(description);
 	}
 
+	@Override
 	public void setPlateExternalIdentifier(final String externalIdentifier,
 		final int plateIndex)
 	{
@@ -12330,6 +13202,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setExternalIdentifier(externalIdentifier);
 	}
 
+	@Override
 	public void setPlateFieldIndex(final NonNegativeInteger fieldIndex,
 		final int plateIndex)
 	{
@@ -12343,6 +13216,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setFieldIndex(fieldIndex);
 	}
 
+	@Override
 	public void setPlateID(final String id, final int plateIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
@@ -12355,6 +13229,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setID(id);
 	}
 
+	@Override
 	public void setPlateName(final String name, final int plateIndex) {
 		// Parents: {u'OME': None}
 		// Name is not a reference
@@ -12367,6 +13242,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring PlateAcquisition element, complex property
+	@Override
 	public void setPlateRowNamingConvention(
 		final NamingConvention rowNamingConvention, final int plateIndex)
 	{
@@ -12380,6 +13256,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setRowNamingConvention(rowNamingConvention);
 	}
 
+	@Override
 	public void setPlateRows(final PositiveInteger rows, final int plateIndex) {
 		// Parents: {u'OME': None}
 		// Rows is not a reference
@@ -12392,6 +13269,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Screen_BackReference back reference
+	@Override
 	public void setPlateStatus(final String status, final int plateIndex) {
 		// Parents: {u'OME': None}
 		// Status is not a reference
@@ -12404,6 +13282,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Well element, complex property
+	@Override
 	public void
 		setPlateWellOriginX(final Double wellOriginX, final int plateIndex)
 	{
@@ -12417,6 +13296,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setWellOriginX(wellOriginX);
 	}
 
+	@Override
 	public void
 		setPlateWellOriginY(final Double wellOriginY, final int plateIndex)
 	{
@@ -12436,6 +13316,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Plate': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setPlateAcquisitionAnnotationRef(final String annotation,
 		final int plateIndex, final int plateAcquisitionIndex,
 		final int annotationRefIndex)
@@ -12448,6 +13329,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			plateAcquisitionIndex), annotationLinks_reference);
 	}
 
+	@Override
 	public void setPlateAcquisitionDescription(final String description,
 		final int plateIndex, final int plateAcquisitionIndex)
 	{
@@ -12465,6 +13347,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setDescription(description);
 	}
 
+	@Override
 	public void setPlateAcquisitionEndTime(final Timestamp endTime,
 		final int plateIndex, final int plateAcquisitionIndex)
 	{
@@ -12482,6 +13365,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setEndTime(endTime);
 	}
 
+	@Override
 	public void setPlateAcquisitionID(final String id, final int plateIndex,
 		final int plateAcquisitionIndex)
 	{
@@ -12500,6 +13384,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setID(id);
 	}
 
+	@Override
 	public void setPlateAcquisitionMaximumFieldCount(
 		final PositiveInteger maximumFieldCount, final int plateIndex,
 		final int plateAcquisitionIndex)
@@ -12518,6 +13403,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setMaximumFieldCount(maximumFieldCount);
 	}
 
+	@Override
 	public void setPlateAcquisitionName(final String name, final int plateIndex,
 		final int plateAcquisitionIndex)
 	{
@@ -12536,6 +13422,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Plate_BackReference back reference
+	@Override
 	public void setPlateAcquisitionStartTime(final Timestamp startTime,
 		final int plateIndex, final int plateAcquisitionIndex)
 	{
@@ -12553,6 +13440,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setStartTime(startTime);
 	}
 
+	@Override
 	public void setPlateAcquisitionWellSampleRef(final String wellSample,
 		final int plateIndex, final int plateAcquisitionIndex,
 		final int wellSampleRefIndex)
@@ -12583,6 +13471,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Ellipse of parent abstract type
 	// FillColor accessor from parent Shape
+	@Override
 	public void setPointFillColor(final Color fillColor, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -12605,6 +13494,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FillRule accessor from parent Shape
+	@Override
 	public void setPointFillRule(final FillRule fillRule, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -12627,6 +13517,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontFamily accessor from parent Shape
+	@Override
 	public void setPointFontFamily(final FontFamily fontFamily,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -12649,6 +13540,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontSize accessor from parent Shape
+	@Override
 	public void setPointFontSize(final NonNegativeInteger fontSize,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -12671,6 +13563,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontStyle accessor from parent Shape
+	@Override
 	public void setPointFontStyle(final FontStyle fontStyle, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -12693,6 +13586,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ID accessor from parent Shape
+	@Override
 	public void setPointID(final String id, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -12718,6 +13612,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Label of parent abstract type
 	// Ignoring Line of parent abstract type
 	// LineCap accessor from parent Shape
+	@Override
 	public void setPointLineCap(final LineCap lineCap, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -12740,6 +13635,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Locked accessor from parent Shape
+	@Override
 	public void setPointLocked(final Boolean locked, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -12767,6 +13663,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Polyline of parent abstract type
 	// Ignoring Rectangle of parent abstract type
 	// StrokeColor accessor from parent Shape
+	@Override
 	public void setPointStrokeColor(final Color strokeColor, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -12789,6 +13686,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeDashArray accessor from parent Shape
+	@Override
 	public void setPointStrokeDashArray(final String strokeDashArray,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -12811,6 +13709,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeWidth accessor from parent Shape
+	@Override
 	public void setPointStrokeWidth(final Double strokeWidth, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -12833,6 +13732,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Text accessor from parent Shape
+	@Override
 	public void setPointText(final String text, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -12855,6 +13755,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheC accessor from parent Shape
+	@Override
 	public void setPointTheC(final NonNegativeInteger theC, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -12877,6 +13778,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheT accessor from parent Shape
+	@Override
 	public void setPointTheT(final NonNegativeInteger theT, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -12899,6 +13801,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheZ accessor from parent Shape
+	@Override
 	public void setPointTheZ(final NonNegativeInteger theZ, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -12921,6 +13824,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Transform accessor from parent Shape
+	@Override
 	public void setPointTransform(final AffineTransform transform,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -12943,6 +13847,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Visible accessor from parent Shape
+	@Override
 	public void setPointVisible(final Boolean visible, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -12964,6 +13869,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Point) o3).setVisible(visible);
 	}
 
+	@Override
 	public void
 		setPointX(final Double x, final int ROIIndex, final int shapeIndex)
 	{
@@ -12985,6 +13891,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Point) o3).setX(x);
 	}
 
+	@Override
 	public void
 		setPointY(final Double y, final int ROIIndex, final int shapeIndex)
 	{
@@ -13014,6 +13921,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Ellipse of parent abstract type
 	// FillColor accessor from parent Shape
+	@Override
 	public void setPolygonFillColor(final Color fillColor, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13036,6 +13944,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FillRule accessor from parent Shape
+	@Override
 	public void setPolygonFillRule(final FillRule fillRule, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13058,6 +13967,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontFamily accessor from parent Shape
+	@Override
 	public void setPolygonFontFamily(final FontFamily fontFamily,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13080,6 +13990,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontSize accessor from parent Shape
+	@Override
 	public void setPolygonFontSize(final NonNegativeInteger fontSize,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13102,6 +14013,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontStyle accessor from parent Shape
+	@Override
 	public void setPolygonFontStyle(final FontStyle fontStyle,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13124,6 +14036,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ID accessor from parent Shape
+	@Override
 	public void setPolygonID(final String id, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13149,6 +14062,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Label of parent abstract type
 	// Ignoring Line of parent abstract type
 	// LineCap accessor from parent Shape
+	@Override
 	public void setPolygonLineCap(final LineCap lineCap, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13171,6 +14085,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Locked accessor from parent Shape
+	@Override
 	public void setPolygonLocked(final Boolean locked, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13198,6 +14113,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Polyline of parent abstract type
 	// Ignoring Rectangle of parent abstract type
 	// StrokeColor accessor from parent Shape
+	@Override
 	public void setPolygonStrokeColor(final Color strokeColor,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13220,6 +14136,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeDashArray accessor from parent Shape
+	@Override
 	public void setPolygonStrokeDashArray(final String strokeDashArray,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13242,6 +14159,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeWidth accessor from parent Shape
+	@Override
 	public void setPolygonStrokeWidth(final Double strokeWidth,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13264,6 +14182,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Text accessor from parent Shape
+	@Override
 	public void setPolygonText(final String text, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13286,6 +14205,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheC accessor from parent Shape
+	@Override
 	public void setPolygonTheC(final NonNegativeInteger theC, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13308,6 +14228,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheT accessor from parent Shape
+	@Override
 	public void setPolygonTheT(final NonNegativeInteger theT, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13330,6 +14251,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheZ accessor from parent Shape
+	@Override
 	public void setPolygonTheZ(final NonNegativeInteger theZ, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13352,6 +14274,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Transform accessor from parent Shape
+	@Override
 	public void setPolygonTransform(final AffineTransform transform,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13374,6 +14297,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Visible accessor from parent Shape
+	@Override
 	public void setPolygonVisible(final Boolean visible, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13395,6 +14319,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Polygon) o3).setVisible(visible);
 	}
 
+	@Override
 	public void setPolygonPoints(final String points, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13424,6 +14349,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Ellipse of parent abstract type
 	// FillColor accessor from parent Shape
+	@Override
 	public void setPolylineFillColor(final Color fillColor, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13446,6 +14372,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FillRule accessor from parent Shape
+	@Override
 	public void setPolylineFillRule(final FillRule fillRule, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13468,6 +14395,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontFamily accessor from parent Shape
+	@Override
 	public void setPolylineFontFamily(final FontFamily fontFamily,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13490,6 +14418,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontSize accessor from parent Shape
+	@Override
 	public void setPolylineFontSize(final NonNegativeInteger fontSize,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13512,6 +14441,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontStyle accessor from parent Shape
+	@Override
 	public void setPolylineFontStyle(final FontStyle fontStyle,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13534,6 +14464,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ID accessor from parent Shape
+	@Override
 	public void setPolylineID(final String id, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13559,6 +14490,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Label of parent abstract type
 	// Ignoring Line of parent abstract type
 	// LineCap accessor from parent Shape
+	@Override
 	public void setPolylineLineCap(final LineCap lineCap, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13581,6 +14513,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Locked accessor from parent Shape
+	@Override
 	public void setPolylineLocked(final Boolean locked, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13608,6 +14541,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Polyline of parent abstract type
 	// Ignoring Rectangle of parent abstract type
 	// StrokeColor accessor from parent Shape
+	@Override
 	public void setPolylineStrokeColor(final Color strokeColor,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13630,6 +14564,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeDashArray accessor from parent Shape
+	@Override
 	public void setPolylineStrokeDashArray(final String strokeDashArray,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13652,6 +14587,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeWidth accessor from parent Shape
+	@Override
 	public void setPolylineStrokeWidth(final Double strokeWidth,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13674,6 +14610,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Text accessor from parent Shape
+	@Override
 	public void setPolylineText(final String text, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13696,6 +14633,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheC accessor from parent Shape
+	@Override
 	public void setPolylineTheC(final NonNegativeInteger theC,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13718,6 +14656,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheT accessor from parent Shape
+	@Override
 	public void setPolylineTheT(final NonNegativeInteger theT,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13740,6 +14679,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheZ accessor from parent Shape
+	@Override
 	public void setPolylineTheZ(final NonNegativeInteger theZ,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13762,6 +14702,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Transform accessor from parent Shape
+	@Override
 	public void setPolylineTransform(final AffineTransform transform,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13784,6 +14725,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Visible accessor from parent Shape
+	@Override
 	public void setPolylineVisible(final Boolean visible, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13805,6 +14747,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Polyline) o3).setVisible(visible);
 	}
 
+	@Override
 	public void setPolylineMarkerEnd(final Marker markerEnd, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13826,6 +14769,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Polyline) o3).setMarkerEnd(markerEnd);
 	}
 
+	@Override
 	public void setPolylineMarkerStart(final Marker markerStart,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -13847,6 +14791,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Polyline) o3).setMarkerStart(markerStart);
 	}
 
+	@Override
 	public void setPolylinePoints(final String points, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -13874,6 +14819,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public void setProjectAnnotationRef(final String annotation,
 		final int projectIndex, final int annotationRefIndex)
 	{
@@ -13885,6 +14831,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.addReference(root.getProject(projectIndex), annotationLinks_reference);
 	}
 
+	@Override
 	public void setProjectDatasetRef(final String dataset,
 		final int projectIndex, final int datasetRefIndex)
 	{
@@ -13895,6 +14842,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		model.addReference(root.getProject(projectIndex), datasetLinks_reference);
 	}
 
+	@Override
 	public void setProjectDescription(final String description,
 		final int projectIndex)
 	{
@@ -13908,6 +14856,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setDescription(description);
 	}
 
+	@Override
 	public void setProjectExperimenterGroupRef(final String experimenterGroup,
 		final int projectIndex)
 	{
@@ -13920,6 +14869,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			experimenterGroup_reference);
 	}
 
+	@Override
 	public void setProjectExperimenterRef(final String experimenter,
 		final int projectIndex)
 	{
@@ -13930,6 +14880,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		model.addReference(root.getProject(projectIndex), experimenter_reference);
 	}
 
+	@Override
 	public void setProjectID(final String id, final int projectIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
@@ -13942,6 +14893,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setID(id);
 	}
 
+	@Override
 	public void setProjectName(final String name, final int projectIndex) {
 		// Parents: {u'OME': None}
 		// Name is not a reference
@@ -13973,6 +14925,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public void setROIAnnotationRef(final String annotation, final int ROIIndex,
 		final int annotationRefIndex)
 	{
@@ -13983,6 +14936,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		model.addReference(root.getROI(ROIIndex), annotationLinks_reference);
 	}
 
+	@Override
 	public void setROIDescription(final String description, final int ROIIndex) {
 		// Parents: {u'OME': None}
 		// Description is not a reference
@@ -13994,6 +14948,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setDescription(description);
 	}
 
+	@Override
 	public void setROIID(final String id, final int ROIIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
@@ -14008,6 +14963,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Image_BackReference back reference
 	// Ignoring MicrobeamManipulation_BackReference back reference
+	@Override
 	public void setROIName(final String name, final int ROIIndex) {
 		// Parents: {u'OME': None}
 		// Name is not a reference
@@ -14019,6 +14975,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setName(name);
 	}
 
+	@Override
 	public void setROINamespace(final String namespace, final int ROIIndex) {
 		// Parents: {u'OME': None}
 		// Namespace is not a reference
@@ -14048,6 +15005,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Screen': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void
 		setReagentAnnotationRef(final String annotation, final int screenIndex,
 			final int reagentIndex, final int annotationRefIndex)
@@ -14060,6 +15018,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			annotationLinks_reference);
 	}
 
+	@Override
 	public void setReagentDescription(final String description,
 		final int screenIndex, final int reagentIndex)
 	{
@@ -14077,6 +15036,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setDescription(description);
 	}
 
+	@Override
 	public void setReagentID(final String id, final int screenIndex,
 		final int reagentIndex)
 	{
@@ -14095,6 +15055,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setID(id);
 	}
 
+	@Override
 	public void setReagentName(final String name, final int screenIndex,
 		final int reagentIndex)
 	{
@@ -14112,6 +15073,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setName(name);
 	}
 
+	@Override
 	public void setReagentReagentIdentifier(final String reagentIdentifier,
 		final int screenIndex, final int reagentIndex)
 	{
@@ -14149,6 +15111,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Ellipse of parent abstract type
 	// FillColor accessor from parent Shape
+	@Override
 	public void setRectangleFillColor(final Color fillColor, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -14171,6 +15134,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FillRule accessor from parent Shape
+	@Override
 	public void setRectangleFillRule(final FillRule fillRule, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -14193,6 +15157,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontFamily accessor from parent Shape
+	@Override
 	public void setRectangleFontFamily(final FontFamily fontFamily,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -14215,6 +15180,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontSize accessor from parent Shape
+	@Override
 	public void setRectangleFontSize(final NonNegativeInteger fontSize,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -14237,6 +15203,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// FontStyle accessor from parent Shape
+	@Override
 	public void setRectangleFontStyle(final FontStyle fontStyle,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -14259,6 +15226,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// ID accessor from parent Shape
+	@Override
 	public void setRectangleID(final String id, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -14284,6 +15252,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Label of parent abstract type
 	// Ignoring Line of parent abstract type
 	// LineCap accessor from parent Shape
+	@Override
 	public void setRectangleLineCap(final LineCap lineCap, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -14306,6 +15275,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Locked accessor from parent Shape
+	@Override
 	public void setRectangleLocked(final Boolean locked, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -14333,6 +15303,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Polyline of parent abstract type
 	// Ignoring Rectangle of parent abstract type
 	// StrokeColor accessor from parent Shape
+	@Override
 	public void setRectangleStrokeColor(final Color strokeColor,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -14355,6 +15326,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeDashArray accessor from parent Shape
+	@Override
 	public void setRectangleStrokeDashArray(final String strokeDashArray,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -14377,6 +15349,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// StrokeWidth accessor from parent Shape
+	@Override
 	public void setRectangleStrokeWidth(final Double strokeWidth,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -14399,6 +15372,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Text accessor from parent Shape
+	@Override
 	public void setRectangleText(final String text, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -14421,6 +15395,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheC accessor from parent Shape
+	@Override
 	public void setRectangleTheC(final NonNegativeInteger theC,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -14443,6 +15418,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheT accessor from parent Shape
+	@Override
 	public void setRectangleTheT(final NonNegativeInteger theT,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -14465,6 +15441,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// TheZ accessor from parent Shape
+	@Override
 	public void setRectangleTheZ(final NonNegativeInteger theZ,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -14487,6 +15464,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Transform accessor from parent Shape
+	@Override
 	public void setRectangleTransform(final AffineTransform transform,
 		final int ROIIndex, final int shapeIndex)
 	{
@@ -14509,6 +15487,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Visible accessor from parent Shape
+	@Override
 	public void setRectangleVisible(final Boolean visible, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -14530,6 +15509,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Rectangle) o3).setVisible(visible);
 	}
 
+	@Override
 	public void setRectangleHeight(final Double height, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -14551,6 +15531,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Rectangle) o3).setHeight(height);
 	}
 
+	@Override
 	public void setRectangleWidth(final Double width, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -14572,6 +15553,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Rectangle) o3).setWidth(width);
 	}
 
+	@Override
 	public void setRectangleX(final Double x, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -14593,6 +15575,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		((Rectangle) o3).setX(x);
 	}
 
+	@Override
 	public void setRectangleY(final Double y, final int ROIIndex,
 		final int shapeIndex)
 	{
@@ -14620,6 +15603,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'OME': None}
 	// Is multi path? False
 
+	@Override
 	public void setScreenAnnotationRef(final String annotation,
 		final int screenIndex, final int annotationRefIndex)
 	{
@@ -14630,6 +15614,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		model.addReference(root.getScreen(screenIndex), annotationLinks_reference);
 	}
 
+	@Override
 	public void setScreenDescription(final String description,
 		final int screenIndex)
 	{
@@ -14643,6 +15628,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setDescription(description);
 	}
 
+	@Override
 	public void setScreenID(final String id, final int screenIndex) {
 		// Parents: {u'OME': None}
 		// ID is not a reference
@@ -14655,6 +15641,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setID(id);
 	}
 
+	@Override
 	public void setScreenName(final String name, final int screenIndex) {
 		// Parents: {u'OME': None}
 		// Name is not a reference
@@ -14666,6 +15653,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setName(name);
 	}
 
+	@Override
 	public void setScreenPlateRef(final String plate, final int screenIndex,
 		final int plateRefIndex)
 	{
@@ -14676,6 +15664,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		model.addReference(root.getScreen(screenIndex), plateLinks_reference);
 	}
 
+	@Override
 	public void setScreenProtocolDescription(final String protocolDescription,
 		final int screenIndex)
 	{
@@ -14689,6 +15678,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setProtocolDescription(protocolDescription);
 	}
 
+	@Override
 	public void setScreenProtocolIdentifier(final String protocolIdentifier,
 		final int screenIndex)
 	{
@@ -14703,6 +15693,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Reagent element, complex property
+	@Override
 	public void setScreenReagentSetDescription(
 		final String reagentSetDescription, final int screenIndex)
 	{
@@ -14716,6 +15707,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setReagentSetDescription(reagentSetDescription);
 	}
 
+	@Override
 	public void setScreenReagentSetIdentifier(final String reagentSetIdentifier,
 		final int screenIndex)
 	{
@@ -14729,6 +15721,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o1.setReagentSetIdentifier(reagentSetIdentifier);
 	}
 
+	@Override
 	public void setScreenType(final String type, final int screenIndex) {
 		// Parents: {u'OME': None}
 		// Type is not a reference
@@ -14746,6 +15739,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Image': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setStageLabelName(final String name, final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// Name is not a reference
@@ -14761,6 +15755,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setName(name);
 	}
 
+	@Override
 	public void setStageLabelX(final Double x, final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// X is not a reference
@@ -14776,6 +15771,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setX(x);
 	}
 
+	@Override
 	public void setStageLabelY(final Double y, final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// Y is not a reference
@@ -14791,6 +15787,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setY(y);
 	}
 
+	@Override
 	public void setStageLabelZ(final Double z, final int imageIndex) {
 		// Parents: {u'Image': {u'OME': None}}
 		// Z is not a reference
@@ -14828,6 +15825,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setTagAnnotationAnnotationRef(final String annotation,
 		final int tagAnnotationIndex, final int annotationRefIndex)
 	{
@@ -14841,6 +15839,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public void setTagAnnotationDescription(final String description,
 		final int tagAnnotationIndex)
 	{
@@ -14860,6 +15859,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public void setTagAnnotationID(final String id, final int tagAnnotationIndex)
 	{
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
@@ -14878,6 +15878,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public void setTagAnnotationNamespace(final String namespace,
 		final int tagAnnotationIndex)
 	{
@@ -14904,6 +15905,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Reagent_BackReference back reference
 	// Ignoring Screen_BackReference back reference
 	// Ignoring StructuredAnnotations_BackReference back reference
+	@Override
 	public void setTagAnnotationValue(final String value,
 		final int tagAnnotationIndex)
 	{
@@ -14929,6 +15931,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setTermAnnotationAnnotationRef(final String annotation,
 		final int termAnnotationIndex, final int annotationRefIndex)
 	{
@@ -14942,6 +15945,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public void setTermAnnotationDescription(final String description,
 		final int termAnnotationIndex)
 	{
@@ -14961,6 +15965,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public void
 		setTermAnnotationID(final String id, final int termAnnotationIndex)
 	{
@@ -14980,6 +15985,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public void setTermAnnotationNamespace(final String namespace,
 		final int termAnnotationIndex)
 	{
@@ -15006,6 +16012,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Reagent_BackReference back reference
 	// Ignoring Screen_BackReference back reference
 	// Ignoring StructuredAnnotations_BackReference back reference
+	@Override
 	public void setTermAnnotationValue(final String value,
 		final int termAnnotationIndex)
 	{
@@ -15031,6 +16038,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Pixels': {u'Image': {u'OME': None}}}
 	// Is multi path? False
 
+	@Override
 	public void setTiffDataFirstC(final NonNegativeInteger firstC,
 		final int imageIndex, final int tiffDataIndex)
 	{
@@ -15052,6 +16060,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setFirstC(firstC);
 	}
 
+	@Override
 	public void setTiffDataFirstT(final NonNegativeInteger firstT,
 		final int imageIndex, final int tiffDataIndex)
 	{
@@ -15073,6 +16082,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setFirstT(firstT);
 	}
 
+	@Override
 	public void setTiffDataFirstZ(final NonNegativeInteger firstZ,
 		final int imageIndex, final int tiffDataIndex)
 	{
@@ -15094,6 +16104,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setFirstZ(firstZ);
 	}
 
+	@Override
 	public void setTiffDataIFD(final NonNegativeInteger ifd,
 		final int imageIndex, final int tiffDataIndex)
 	{
@@ -15116,6 +16127,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Pixels_BackReference back reference
+	@Override
 	public void setTiffDataPlaneCount(final NonNegativeInteger planeCount,
 		final int imageIndex, final int tiffDataIndex)
 	{
@@ -15144,6 +16156,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setTimestampAnnotationAnnotationRef(final String annotation,
 		final int timestampAnnotationIndex, final int annotationRefIndex)
 	{
@@ -15157,6 +16170,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public void setTimestampAnnotationDescription(final String description,
 		final int timestampAnnotationIndex)
 	{
@@ -15177,6 +16191,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public void setTimestampAnnotationID(final String id,
 		final int timestampAnnotationIndex)
 	{
@@ -15197,6 +16212,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public void setTimestampAnnotationNamespace(final String namespace,
 		final int timestampAnnotationIndex)
 	{
@@ -15224,6 +16240,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Reagent_BackReference back reference
 	// Ignoring Screen_BackReference back reference
 	// Ignoring StructuredAnnotations_BackReference back reference
+	@Override
 	public void setTimestampAnnotationValue(final Timestamp value,
 		final int timestampAnnotationIndex)
 	{
@@ -15250,6 +16267,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Filter': {u'Instrument': {u'OME': None}}}
 	// Is multi path? False
 
+	@Override
 	public void setTransmittanceRangeCutIn(final PositiveInteger cutIn,
 		final int instrumentIndex, final int filterIndex)
 	{
@@ -15271,6 +16289,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setCutIn(cutIn);
 	}
 
+	@Override
 	public void setTransmittanceRangeCutInTolerance(
 		final NonNegativeInteger cutInTolerance, final int instrumentIndex,
 		final int filterIndex)
@@ -15293,6 +16312,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setCutInTolerance(cutInTolerance);
 	}
 
+	@Override
 	public void setTransmittanceRangeCutOut(final PositiveInteger cutOut,
 		final int instrumentIndex, final int filterIndex)
 	{
@@ -15314,6 +16334,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setCutOut(cutOut);
 	}
 
+	@Override
 	public void setTransmittanceRangeCutOutTolerance(
 		final NonNegativeInteger cutOutTolerance, final int instrumentIndex,
 		final int filterIndex)
@@ -15336,6 +16357,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setCutOutTolerance(cutOutTolerance);
 	}
 
+	@Override
 	public void setTransmittanceRangeTransmittance(
 		final PercentFraction transmittance, final int instrumentIndex,
 		final int filterIndex)
@@ -15364,6 +16386,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'TiffData': {u'Pixels': {u'Image': {u'OME': None}}}}
 	// Is multi path? False
 
+	@Override
 	public void setUUIDFileName(final String fileName, final int imageIndex,
 		final int tiffDataIndex)
 	{
@@ -15402,6 +16425,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Plate': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setWellAnnotationRef(final String annotation,
 		final int plateIndex, final int wellIndex, final int annotationRefIndex)
 	{
@@ -15413,6 +16437,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			annotationLinks_reference);
 	}
 
+	@Override
 	public void setWellColor(final Color color, final int plateIndex,
 		final int wellIndex)
 	{
@@ -15430,6 +16455,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setColor(color);
 	}
 
+	@Override
 	public void setWellColumn(final NonNegativeInteger column,
 		final int plateIndex, final int wellIndex)
 	{
@@ -15447,6 +16473,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setColumn(column);
 	}
 
+	@Override
 	public void setWellExternalDescription(final String externalDescription,
 		final int plateIndex, final int wellIndex)
 	{
@@ -15464,6 +16491,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setExternalDescription(externalDescription);
 	}
 
+	@Override
 	public void setWellExternalIdentifier(final String externalIdentifier,
 		final int plateIndex, final int wellIndex)
 	{
@@ -15481,6 +16509,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setExternalIdentifier(externalIdentifier);
 	}
 
+	@Override
 	public void setWellID(final String id, final int plateIndex,
 		final int wellIndex)
 	{
@@ -15500,6 +16529,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Plate_BackReference back reference
+	@Override
 	public void setWellReagentRef(final String reagent, final int plateIndex,
 		final int wellIndex)
 	{
@@ -15511,6 +16541,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			reagent_reference);
 	}
 
+	@Override
 	public void setWellRow(final NonNegativeInteger row, final int plateIndex,
 		final int wellIndex)
 	{
@@ -15528,6 +16559,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o2.setRow(row);
 	}
 
+	@Override
 	public void setWellType(final String type, final int plateIndex,
 		final int wellIndex)
 	{
@@ -15552,6 +16584,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'Well': {u'Plate': {u'OME': None}}}
 	// Is multi path? False
 
+	@Override
 	public void setWellSampleAnnotationRef(final String annotation,
 		final int plateIndex, final int wellIndex, final int wellSampleIndex,
 		final int annotationRefIndex)
@@ -15564,6 +16597,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getWellSample(wellSampleIndex), annotationLinks_reference);
 	}
 
+	@Override
 	public void setWellSampleID(final String id, final int plateIndex,
 		final int wellIndex, final int wellSampleIndex)
 	{
@@ -15586,6 +16620,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setID(id);
 	}
 
+	@Override
 	public void setWellSampleImageRef(final String image, final int plateIndex,
 		final int wellIndex, final int wellSampleIndex)
 	{
@@ -15597,6 +16632,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 			.getWellSample(wellSampleIndex), image_reference);
 	}
 
+	@Override
 	public void setWellSampleIndex(final NonNegativeInteger index,
 		final int plateIndex, final int wellIndex, final int wellSampleIndex)
 	{
@@ -15619,6 +16655,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring PlateAcquisition_BackReference back reference
+	@Override
 	public void setWellSamplePositionX(final Double positionX,
 		final int plateIndex, final int wellIndex, final int wellSampleIndex)
 	{
@@ -15640,6 +16677,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setPositionX(positionX);
 	}
 
+	@Override
 	public void setWellSamplePositionY(final Double positionY,
 		final int plateIndex, final int wellIndex, final int wellSampleIndex)
 	{
@@ -15661,6 +16699,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 		o3.setPositionY(positionY);
 	}
 
+	@Override
 	public void setWellSampleTimepoint(final Timestamp timepoint,
 		final int plateIndex, final int wellIndex, final int wellSampleIndex)
 	{
@@ -15699,6 +16738,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// {u'StructuredAnnotations': {u'OME': None}}
 	// Is multi path? False
 
+	@Override
 	public void setXMLAnnotationAnnotationRef(final String annotation,
 		final int XMLAnnotationIndex, final int annotationRefIndex)
 	{
@@ -15712,6 +16752,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring Channel_BackReference back reference
 	// Ignoring Dataset_BackReference back reference
+	@Override
 	public void setXMLAnnotationDescription(final String description,
 		final int XMLAnnotationIndex)
 	{
@@ -15731,6 +16772,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 
 	// Ignoring ExperimenterGroup_BackReference back reference
 	// Ignoring Experimenter_BackReference back reference
+	@Override
 	public void setXMLAnnotationID(final String id, final int XMLAnnotationIndex)
 	{
 		// Parents: {u'StructuredAnnotations': {u'OME': None}}
@@ -15749,6 +16791,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	}
 
 	// Ignoring Image_BackReference back reference
+	@Override
 	public void setXMLAnnotationNamespace(final String namespace,
 		final int XMLAnnotationIndex)
 	{
@@ -15775,6 +16818,7 @@ public class OMEXMLMetadataImpl extends AbstractOMEXMLMetadata {
 	// Ignoring Reagent_BackReference back reference
 	// Ignoring Screen_BackReference back reference
 	// Ignoring StructuredAnnotations_BackReference back reference
+	@Override
 	public void setXMLAnnotationValue(final String value,
 		final int XMLAnnotationIndex)
 	{

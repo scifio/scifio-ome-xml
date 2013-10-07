@@ -72,7 +72,7 @@ public class ICSTranslator {
 
 	/**
 	 * Translator class from {@link io.scif.formats.ICSFormat.Metadata} to
-	 * {@link ome.xml.meta.OMEMetadata}.
+	 * {@link OMEMetadata}.
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -87,9 +87,6 @@ public class ICSTranslator {
 		FromOMETranslator<ICSFormat.Metadata>
 	{
 
-		/*
-		 * @see OMETranslator#typedTranslate(io.scif.Metadata, io.scif.Metadata)
-		 */
 		@Override
 		protected void typedTranslate(final OMEMetadata source,
 			final ICSFormat.Metadata dest)
@@ -188,19 +185,10 @@ public class ICSTranslator {
 
 				if (retrieve.getPlaneCount(0) > 0) {
 					final Double[] timestamps =
-						new Double[source.getAxisLength(0, Axes.TIME)];
-
-					for (int t = 0; t < timestamps.length; t++) {
-						for (int z = 0; z < source.getAxisLength(0, Axes.Z); z++) {
-							for (int c = 0; c < source.getEffectiveSizeC(0); c++) {
-								final int index =
-									FormatTools.getIndex(FormatTools
-										.findDimensionOrder(source, 0), source.getAxisLength(0,
-										Axes.Z), source.getEffectiveSizeC(0), source.getAxisLength(
-										0, Axes.TIME), source.getPlaneCount(0), z, c, t);
-								timestamps[t] = retrieve.getPlaneDeltaT(0, index);
-							}
-						}
+						new Double[(int) source.getAxisLength(0, Axes.TIME)];
+					
+					for (int t=0; t<timestamps.length; t++) {
+						timestamps[t] = retrieve.getPlaneDeltaT(0, t);
 					}
 
 					dest.putTimestamps(timestamps);
@@ -215,8 +203,11 @@ public class ICSTranslator {
 					new Hashtable<Integer, Double>();
 				final List<Integer> emWaves = new ArrayList<Integer>();
 				final List<Integer> exWaves = new ArrayList<Integer>();
-
-				for (int i = 0; i < source.getEffectiveSizeC(0); i++) {
+				final long effSizeC =
+						source.getPlaneCount(0) /
+							(source.getAxisLength(0, Axes.TIME) * source.getAxisLength(
+								0, Axes.Z));
+				for (int i = 0; i < effSizeC; i++) {
 					final String cName = retrieve.getChannelName(0, i);
 					if (cName != null) channelNames.put(i, cName);
 
@@ -249,7 +240,8 @@ public class ICSTranslator {
 	}
 
 	/**
-	 * Translator class from {@link ICSMetadata} to {@link OMEMetadata}.
+	 * Translator class from {@link io.scif.formats.ICSFormat.Metadata} to
+	 * {@link OMEMetadata}.
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -267,9 +259,6 @@ public class ICSTranslator {
 
 		// -- Translator API --
 
-		/*
-		 * @see OMETranslator#typedTranslate(io.scif.Metadata, io.scif.Metadata)
-		 */
 		@Override
 		protected void typedTranslate(final ICSFormat.Metadata source,
 			final OMEMetadata dest)
@@ -467,14 +456,22 @@ public class ICSTranslator {
 					if (timestamps[t] == null) continue; // ignore missing timestamp
 					final double deltaT = timestamps[t];
 					if (Double.isNaN(deltaT)) continue; // ignore invalid timestamp
+					final long effSizeC =
+							source.getPlaneCount(imageIndex) /
+								(source.getAxisLength(imageIndex, Axes.TIME) * source.getAxisLength(
+									imageIndex, Axes.Z));
 					// assign timestamp to all relevant planes
+					OMEXMLMetadataService metaService =
+						getContext().getService(OMEXMLMetadataService.class);
+					final String dimOrder = metaService.findDimensionOrder(source, imageIndex);
 					for (int z = 0; z < source.getAxisLength(imageIndex, Axes.Z); z++) {
-						for (int c = 0; c < source.getEffectiveSizeC(imageIndex); c++) {
+						for (int c = 0; c < effSizeC; c++) {
 							final int index =
-								FormatTools.getIndex(FormatTools.findDimensionOrder(source,
-									imageIndex), imageIndex, source.getAxisLength(imageIndex,
-									Axes.Z), source.getEffectiveSizeC(imageIndex), source
-									.getAxisLength(imageIndex, Axes.TIME), z, c, t);
+								(int)FormatTools.positionToRaster(metaService.zctToArray(dimOrder,
+									(int) source.getAxisLength(imageIndex, Axes.Z),
+									(int) effSizeC, (int) source.getAxisLength(imageIndex,
+										Axes.TIME)), metaService.zctToArray(dimOrder, z, c, t));
+
 							store.setPlaneDeltaT(deltaT, 0, index);
 						}
 					}
@@ -500,8 +497,11 @@ public class ICSTranslator {
 			if (exWaves == null) {
 				exWaves = source.getEXSingleton();
 			}
-
-			for (int i = 0; i < source.getEffectiveSizeC(imageIndex); i++) {
+			final long effSizeC =
+					source.getPlaneCount(imageIndex) /
+						(source.getAxisLength(imageIndex, Axes.TIME) * source.getAxisLength(
+							imageIndex, Axes.Z));
+			for (int i = 0; i < effSizeC; i++) {
 				if (channelNames.containsKey(i)) {
 					store.setChannelName(channelNames.get(i), 0, i);
 				}
@@ -709,9 +709,10 @@ public class ICSTranslator {
 
 			gains = source.getGains();
 
+
 			for (final Integer key : gains.keySet()) {
 				final int index = key.intValue();
-				if (index < source.getEffectiveSizeC(imageIndex)) {
+				if (index < effSizeC) {
 					store.setDetectorSettingsGain(gains.get(key), 0, index);
 					store.setDetectorSettingsID(detectorID, 0, index);
 				}

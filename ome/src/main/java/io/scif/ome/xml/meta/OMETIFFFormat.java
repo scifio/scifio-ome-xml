@@ -45,7 +45,6 @@ import io.scif.AbstractTranslator;
 import io.scif.ByteArrayPlane;
 import io.scif.ByteArrayReader;
 import io.scif.DefaultImageMetadata;
-import io.scif.DependencyException;
 import io.scif.Format;
 import io.scif.FormatException;
 import io.scif.ImageMetadata;
@@ -116,16 +115,12 @@ public class OMETIFFFormat extends AbstractFormat {
 
 	// -- Format API Methods --
 
-	/*
-	 * @see io.scif.Format#getFormatName()
-	 */
+	@Override
 	public String getFormatName() {
 		return "OME-TIFF";
 	}
 
-	/*
-	 * @see io.scif.Format#getSuffixes()
-	 */
+	@Override
 	public String[] getSuffixes() {
 		return new String[] { "ome.tif", "ome.tiff" };
 	}
@@ -158,7 +153,7 @@ public class OMETIFFFormat extends AbstractFormat {
 		// TODO maybe this should be an o mexmlmetadata...
 		private OMEMetadata omeMeta;
 
-		private int lastPlane = 0;
+		private long lastPlane = 0;
 		private boolean hasSPW;
 
 		private int[] tileWidth;
@@ -226,12 +221,12 @@ public class OMETIFFFormat extends AbstractFormat {
 		}
 
 		@Override
-		public int getLastPlane() {
+		public long getLastPlane() {
 			return lastPlane;
 		}
 
 		@Override
-		public void setLastPlane(final int lastPlane) {
+		public void setLastPlane(final long lastPlane) {
 			this.lastPlane = lastPlane;
 		}
 
@@ -283,6 +278,7 @@ public class OMETIFFFormat extends AbstractFormat {
 
 				final ImageMetadata m = get(s);
 				try {
+					m.setPlanarAxisCount(2);
 					m.setAxisLength(Axes.X, omexmlMeta.getPixelsSizeX(s).getValue()
 						.intValue());
 					final int tiffWidth = (int) firstIFD.getImageWidth();
@@ -317,7 +313,6 @@ public class OMETIFFFormat extends AbstractFormat {
 						m.setPixelType(tiffPixelType);
 					}
 					m.setBitsPerPixel(FormatTools.getBitsPerPixel(m.getPixelType()));
-					m.setPlaneCount(info[s].length);
 					String dimensionOrder =
 						omexmlMeta.getPixelsDimensionOrder(s).toString();
 
@@ -337,11 +332,13 @@ public class OMETIFFFormat extends AbstractFormat {
 					{
 						dimensionOrder = "XYZCT";
 					}
-					m.setAxisTypes(FormatTools.findDimensionList(dimensionOrder));
+					m.setAxisTypes(metaService.findDimensionList(dimensionOrder));
 
 					m.setOrderCertain(true);
 					final PhotoInterp photo = firstIFD.getPhotometricInterpretation();
-					m.setRGB(samples.get(s) > 1 || photo == PhotoInterp.RGB);
+					if (samples.get(s) > 1 || photo == PhotoInterp.RGB) {
+						m.setPlanarAxisCount(3);
+					}
 					if ((samples.get(s) != m.getAxisLength(Axes.CHANNEL) &&
 						(samples.get(s) % m.getAxisLength(Axes.CHANNEL)) != 0 && (m
 						.getAxisLength(Axes.CHANNEL) % samples.get(s)) != 0) ||
@@ -352,18 +349,18 @@ public class OMETIFFFormat extends AbstractFormat {
 					}
 
 					if (m.getAxisLength(Axes.Z) * m.getAxisLength(Axes.TIME) *
-						m.getAxisLength(Axes.CHANNEL) > m.getPlaneCount() &&
-						!m.isRGB())
+						m.getAxisLength(Axes.CHANNEL) > info[s].length &&
+						!m.isMultichannel())
 					{
-						if (m.getAxisLength(Axes.Z) == m.getPlaneCount()) {
+						if (m.getAxisLength(Axes.Z) == info[s].length) {
 							m.setAxisLength(Axes.TIME, 1);
 							m.setAxisLength(Axes.CHANNEL, 1);
 						}
-						else if (m.getAxisLength(Axes.TIME) == m.getPlaneCount()) {
+						else if (m.getAxisLength(Axes.TIME) == info[s].length) {
 							m.setAxisLength(Axes.Z, 1);
 							m.setAxisLength(Axes.CHANNEL, 1);
 						}
-						else if (m.getAxisLength(Axes.CHANNEL) == m.getPlaneCount()) {
+						else if (m.getAxisLength(Axes.CHANNEL) == info[s].length) {
 							m.setAxisLength(Axes.TIME, 1);
 							m.setAxisLength(Axes.Z, 1);
 						}
@@ -375,12 +372,8 @@ public class OMETIFFFormat extends AbstractFormat {
 								+ "Ignoring.");
 					}
 					m.setLittleEndian(firstIFD.isLittleEndian());
-					m.setInterleaved(false);
 					m.setIndexed(photo == PhotoInterp.RGB_PALETTE &&
 						firstIFD.getIFDValue(IFD.COLOR_MAP) != null);
-					if (m.isIndexed()) {
-						m.setRGB(false);
-					}
 					m.setFalseColor(true);
 					m.setMetadataComplete(true);
 				}
@@ -432,18 +425,18 @@ public class OMETIFFFormat extends AbstractFormat {
 		// -- HasColorTable API Methods --
 
 		@Override
-		public ColorTable getColorTable(final int imageIndex, final int planeIndex)
+		public ColorTable getColorTable(final int imageIndex, final long planeIndex)
 		{
-			if (info[imageIndex][lastPlane] == null ||
-				info[imageIndex][lastPlane].reader == null ||
-				info[imageIndex][lastPlane].id == null)
+			if (info[imageIndex][(int) lastPlane] == null ||
+				info[imageIndex][(int) lastPlane].reader == null ||
+				info[imageIndex][(int) lastPlane].id == null)
 			{
 				return null;
 			}
 			try {
-				info[imageIndex][lastPlane].reader
-					.setSource(info[imageIndex][lastPlane].id);
-				return info[imageIndex][lastPlane].reader.getMetadata().getColorTable(
+				info[imageIndex][(int) lastPlane].reader
+					.setSource(info[imageIndex][(int) lastPlane].id);
+				return info[imageIndex][(int) lastPlane].reader.getMetadata().getColorTable(
 					imageIndex, planeIndex);
 			}
 			catch (final IOException e) {
@@ -593,8 +586,8 @@ public class OMETIFFFormat extends AbstractFormat {
 					}
 
 					info[s][0].reader.setSource(info[s][0].id);
-					meta.getTileWidth()[s] = info[s][0].reader.getOptimalTileWidth(s);
-					meta.getTileHeight()[s] = info[s][0].reader.getOptimalTileHeight(s);
+					meta.getTileWidth()[s] = (int) info[s][0].reader.getOptimalTileWidth(s);
+					meta.getTileHeight()[s] = (int) info[s][0].reader.getOptimalTileHeight(s);
 				}
 				catch (final FormatException e) {
 					log().debug("OME-XML parsing failed", e);
@@ -905,8 +898,11 @@ public class OMETIFFFormat extends AbstractFormat {
 						break;
 					}
 
-					final int index =
-						FormatTools.getIndex(order, sizeZ, effSizeC, sizeT, num, z, c, t);
+					long[] pos = metaService.zctToArray(order, z, c, t);
+					long[] lengths =
+						metaService.zctToArray(order, sizeZ, effSizeC, sizeT);
+					final long index =
+						FormatTools.positionToRaster(lengths, pos);
 					final int count = numPlanes == null ? 1 : numPlanes.getValue();
 					if (count == 0) {
 						meta.get(s);
@@ -942,7 +938,7 @@ public class OMETIFFFormat extends AbstractFormat {
 
 					// populate plane index -> IFD mapping
 					for (int q = 0; q < count; q++) {
-						final int no = index + q;
+						final int no = (int) (index + q);
 						planes[no].reader = r;
 						planes[no].id = filename;
 						planes[no].ifd = ifd + q;
@@ -953,7 +949,7 @@ public class OMETIFFFormat extends AbstractFormat {
 					}
 					if (numPlanes == null) {
 						// unknown number of planes; fill down
-						for (int no = index + 1; no < num; no++) {
+						for (int no = (int) (index + 1); no < num; no++) {
 							if (planes[no].certain) break;
 							planes[no].reader = r;
 							planes[no].id = filename;
@@ -963,7 +959,7 @@ public class OMETIFFFormat extends AbstractFormat {
 					}
 					else {
 						// known number of planes; clear anything subsequently filled
-						for (int no = index + count; no < num; no++) {
+						for (int no = (int) (index + count); no < num; no++) {
 							if (planes[no].certain) break;
 							planes[no].reader = null;
 							planes[no].id = null;
@@ -1030,6 +1026,7 @@ public class OMETIFFFormat extends AbstractFormat {
 
 		// -- Helper methods --
 
+
 		private String normalizeFilename(final String dir, final String name) {
 			final File file = new File(dir, name);
 			if (file.exists()) return file.getAbsolutePath();
@@ -1055,12 +1052,12 @@ public class OMETIFFFormat extends AbstractFormat {
 		// -- Reader API Methods --
 
 		@Override
-		public int getOptimalTileWidth(final int imageIndex) {
+		public long getOptimalTileWidth(final int imageIndex) {
 			return getMetadata().getTileWidth()[imageIndex];
 		}
 
 		@Override
-		public int getOptimalTileHeight(final int imageIndex) {
+		public long getOptimalTileHeight(final int imageIndex) {
 			return getMetadata().getTileHeight()[imageIndex];
 		}
 
@@ -1071,24 +1068,22 @@ public class OMETIFFFormat extends AbstractFormat {
 				: FormatTools.NON_SPECIAL_DOMAINS;
 		}
 
-		/*
-		 * @see io.scif.TypedReader#openPlane(int, int, io.scif.DataPlane, int, int, int, int)
-		 */
-		public ByteArrayPlane openPlane(final int imageIndex, final int planeIndex,
-			final ByteArrayPlane plane, final int x, final int y, final int w,
-			final int h) throws io.scif.FormatException, IOException
+		@Override
+		public ByteArrayPlane openPlane(final int imageIndex, final long planeIndex,
+			final ByteArrayPlane plane, final long[] offsets, final long[] lengths)
+			throws io.scif.FormatException, IOException
 		{
 			final Metadata meta = getMetadata();
 			final byte[] buf = plane.getBytes();
 			final OMETIFFPlane[][] info = meta.getPlaneInfo();
 
-			FormatTools.checkPlaneParameters(this, imageIndex, planeIndex,
-				buf.length, x, y, w, h);
+			FormatTools.checkPlaneParameters(meta, imageIndex, planeIndex,
+				buf.length, offsets, lengths);
 			meta.setLastPlane(planeIndex);
-			final int i = info[imageIndex][planeIndex].ifd;
-			final MinimalTIFFFormat.Reader<?> r = info[imageIndex][planeIndex].reader;
+			final int i = info[imageIndex][(int) planeIndex].ifd;
+			final MinimalTIFFFormat.Reader<?> r = info[imageIndex][(int) planeIndex].reader;
 			if (r.getCurrentFile() == null) {
-				r.setSource(info[imageIndex][planeIndex].id);
+				r.setSource(info[imageIndex][(int) planeIndex].id);
 			}
 			final IFDList ifdList = r.getMetadata().getIfds();
 			if (i >= ifdList.size()) {
@@ -1099,8 +1094,14 @@ public class OMETIFFFormat extends AbstractFormat {
 			final IFD ifd = ifdList.get(i);
 			final RandomAccessInputStream s =
 				new RandomAccessInputStream(getContext(),
-					info[imageIndex][planeIndex].id);
+					info[imageIndex][(int) planeIndex].id);
 			final TiffParser p = new TiffParser(getContext(), s);
+			final int xIndex = meta.getAxisIndex(imageIndex, Axes.X),
+								yIndex = meta.getAxisIndex(imageIndex, Axes.Y);
+			final int x = (int) offsets[xIndex],
+								y = (int) offsets[yIndex],
+								w = (int) lengths[xIndex],
+								h = (int) lengths[yIndex];
 			p.getSamples(ifd, buf, x, y, w, h);
 			s.close();
 			return plane;
@@ -1165,27 +1166,27 @@ public class OMETIFFFormat extends AbstractFormat {
 		 * @see io.scif.Writer#savePlane(int, int, io.scif.Plane, int, int, int, int)
 		 */
 		@Override
-		public void savePlane(final int imageIndex, final int planeIndex,
-			final Plane plane, final int x, final int y, final int w, final int h)
+		public void savePlane(final int imageIndex, final long planeIndex,
+			final Plane plane, final long[] offsets, final long[] lengths)
 			throws FormatException, IOException
 		{
-			savePlane(imageIndex, planeIndex, plane, null, x, y, w, h);
+			savePlane(imageIndex, planeIndex, plane, null, offsets, lengths);
 		}
 
 		@Override
-		public void savePlane(final int imageIndex, final int planeIndex,
-			final Plane plane, final IFD ifd, final int x, final int y, final int w,
-			final int h) throws io.scif.FormatException, IOException
+		public void savePlane(final int imageIndex, final long planeIndex,
+			final Plane plane, final IFD ifd, final long[] offsets,
+			final long[] lengths) throws io.scif.FormatException, IOException
 		{
 			if (imageMap == null) imageMap = new ArrayList<Integer>();
 			if (!imageMap.contains(imageIndex)) {
 				imageMap.add(new Integer(imageIndex));
 			}
 
-			super.savePlane(imageIndex, planeIndex, plane, ifd, x, y, w, h);
+			super.savePlane(imageIndex, planeIndex, plane, ifd, offsets, lengths);
 
 			// TODO should this be the output id?
-			imageLocations[imageIndex][planeIndex] = getMetadata().getDatasetName();
+			imageLocations[imageIndex][(int) planeIndex] = getMetadata().getDatasetName();
 		}
 
 		/* @see loci.formats.IFormatHandler#close() */
@@ -1216,9 +1217,6 @@ public class OMETIFFFormat extends AbstractFormat {
 						}
 					}
 				}
-			}
-			catch (final DependencyException de) {
-				throw new RuntimeException(de);
 			}
 			catch (final ServiceException se) {
 				throw new RuntimeException(se);
@@ -1279,7 +1277,7 @@ public class OMETIFFFormat extends AbstractFormat {
 			return uuid;
 		}
 
-		private void setupServiceAndMetadata() throws DependencyException,
+		private void setupServiceAndMetadata() throws
 			ServiceException
 		{
 			// extract OME-XML string from metadata object
@@ -1342,11 +1340,14 @@ public class OMETIFFFormat extends AbstractFormat {
 		}
 
 		private void populateTiffData(final OMEXMLMetadata omeMeta,
-			final int[] zct, final int ifd, final int series, final int plane)
+			final long[] zct, final int ifd, final int series, final int plane)
 		{
-			omeMeta.setTiffDataFirstZ(new NonNegativeInteger(zct[0]), series, plane);
-			omeMeta.setTiffDataFirstC(new NonNegativeInteger(zct[1]), series, plane);
-			omeMeta.setTiffDataFirstT(new NonNegativeInteger(zct[2]), series, plane);
+			omeMeta.setTiffDataFirstZ(new NonNegativeInteger((int) zct[0]), series,
+				plane);
+			omeMeta.setTiffDataFirstC(new NonNegativeInteger((int) zct[1]), series,
+				plane);
+			omeMeta.setTiffDataFirstT(new NonNegativeInteger((int) zct[2]), series,
+				plane);
 			omeMeta.setTiffDataIFD(new NonNegativeInteger(ifd), series, plane);
 			omeMeta.setTiffDataPlaneCount(new NonNegativeInteger(1), series, plane);
 		}
@@ -1362,7 +1363,7 @@ public class OMETIFFFormat extends AbstractFormat {
 			final int sizeT =
 				omeMeta.getPixelsSizeT(imageIndex).getValue().intValue();
 
-			final int planeCount = getPlaneCount(imageIndex);
+			final long planeCount = getMetadata().getPlaneCount(imageIndex);
 			final int ifdCount = imageMap.size();
 
 			if (planeCount == 0) {
@@ -1371,17 +1372,20 @@ public class OMETIFFFormat extends AbstractFormat {
 			}
 
 			final PositiveInteger samplesPerPixel =
-				new PositiveInteger((sizeZ * sizeC * sizeT) / planeCount);
+				new PositiveInteger((int) ((sizeZ * sizeC * sizeT) / planeCount));
 			for (int c = 0; c < omeMeta.getChannelCount(imageIndex); c++) {
 				omeMeta.setChannelSamplesPerPixel(samplesPerPixel, imageIndex, c);
 			}
 			sizeC /= samplesPerPixel.getValue();
 
+			final long[] lengths =
+				metaService.zctToArray(dimensionOrder, sizeC, sizeC, sizeT);
+
 			int nextPlane = 0;
 			for (int plane = 0; plane < planeCount; plane++) {
-				final int[] zct =
-					FormatTools.getZCTCoords(dimensionOrder, sizeZ, sizeC, sizeT,
-						planeCount, imageIndex, plane);
+				metaService.zctToArray(dimensionOrder, sizeC, sizeC, sizeT);
+				final long[] zct =
+					FormatTools.rasterToPosition(lengths, planeCount);
 
 				int planeIndex = plane;
 				if (imageLocations[imageIndex].length < planeCount) {
@@ -1539,7 +1543,7 @@ public class OMETIFFFormat extends AbstractFormat {
 			dest.createImageMetadata(0);
 
 			for (int i = 0; i < source.getImageCount(); i++) {
-				info[i] = new OMETIFFPlane[source.getPlaneCount(i)];
+				info[i] = new OMETIFFPlane[(int) source.getPlaneCount(i)];
 
 				for (int j = 0; j < source.getPlaneCount(i); j++) {
 					info[i][j] = new OMETIFFPlane();
@@ -1547,7 +1551,8 @@ public class OMETIFFFormat extends AbstractFormat {
 
 				dest.add(new DefaultImageMetadata());
 
-				samples.add(source.getRGBChannelCount(i));
+				samples.add((int) (source.isMultichannel(i) ? source.getAxisLength(i,
+					Axes.CHANNEL) : 1));
 				adjustedSamples.add(false);
 			}
 		}
