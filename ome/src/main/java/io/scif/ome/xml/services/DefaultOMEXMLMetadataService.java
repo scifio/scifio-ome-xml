@@ -477,14 +477,19 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 		int index = 0;
 		for (char dim : order.toUpperCase().toCharArray()) {
 			switch (dim) {
-				case 'C': zct[index] = c;
+				case 'C':
+					zct[index] = c;
+					index++;
 					break;
-				case 'Z': zct[index] = z;
+				case 'Z':
+					zct[index] = z;
+					index++;
 					break;
-				case 'T': zct[index] = t;
+				case 'T':
+					zct[index] = t;
+					index++;
 					break;
 			}
-			index++;
 		}
 		return zct;
 	}
