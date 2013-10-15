@@ -70,10 +70,10 @@ public class CalibrationTest {
 		Metadata meta = scifio.initializer().parseMetadata(id);
 
 		// Adjust calibration
-		meta.getAxis(0, Axes.X).setCalibration(5.0);
-		meta.getAxis(0, Axes.Y).setCalibration(6.0);
-		meta.getAxis(0, Axes.Z).setCalibration(7.0);
-		meta.getAxis(0, Axes.TIME).setCalibration(8.0);
+		meta.get(0).getAxis(Axes.X).setCalibration(5.0);
+		meta.get(0).getAxis(Axes.Y).setCalibration(6.0);
+		meta.get(0).getAxis(Axes.Z).setCalibration(7.0);
+		meta.get(0).getAxis(Axes.TIME).setCalibration(8.0);
 
 		OMEMetadata omeMeta = new OMEMetadata(scifio.getContext());
 

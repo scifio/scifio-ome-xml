@@ -189,7 +189,8 @@ public class OMETIFFFormat extends AbstractFormat {
 		public MetadataStore getMetadataStoreForConversion() {
 			final MetadataStore store = omeMeta.getRoot();
 			for (int i = 0; i < getImageCount(); i++) {
-				store.setPixelsBinDataBigEndian(new Boolean(!isLittleEndian(i)), i, 0);
+				store.setPixelsBinDataBigEndian(new Boolean(!get(i).isLittleEndian()),
+					i, 0);
 			}
 			return store;
 		}
@@ -1096,8 +1097,8 @@ public class OMETIFFFormat extends AbstractFormat {
 				new RandomAccessInputStream(getContext(),
 					info[imageIndex][(int) planeIndex].id);
 			final TiffParser p = new TiffParser(getContext(), s);
-			final int xIndex = meta.getAxisIndex(imageIndex, Axes.X),
-								yIndex = meta.getAxisIndex(imageIndex, Axes.Y);
+			final int xIndex = meta.get(imageIndex).getAxisIndex(Axes.X),
+								yIndex = meta.get(imageIndex).getAxisIndex(Axes.Y);
 			final int x = (int) offsets[xIndex],
 								y = (int) offsets[yIndex],
 								w = (int) lengths[xIndex],
@@ -1363,7 +1364,7 @@ public class OMETIFFFormat extends AbstractFormat {
 			final int sizeT =
 				omeMeta.getPixelsSizeT(imageIndex).getValue().intValue();
 
-			final long planeCount = getMetadata().getPlaneCount(imageIndex);
+			final long planeCount = getMetadata().get(imageIndex).getPlaneCount();
 			final int ifdCount = imageMap.size();
 
 			if (planeCount == 0) {
@@ -1543,16 +1544,16 @@ public class OMETIFFFormat extends AbstractFormat {
 			dest.createImageMetadata(0);
 
 			for (int i = 0; i < source.getImageCount(); i++) {
-				info[i] = new OMETIFFPlane[(int) source.getPlaneCount(i)];
+				info[i] = new OMETIFFPlane[(int) source.get(i).getPlaneCount()];
 
-				for (int j = 0; j < source.getPlaneCount(i); j++) {
+				for (int j = 0; j < source.get(i).getPlaneCount(); j++) {
 					info[i][j] = new OMETIFFPlane();
 				}
 
 				dest.add(new DefaultImageMetadata());
 
-				samples.add((int) (source.isMultichannel(i) ? source.getAxisLength(i,
-					Axes.CHANNEL) : 1));
+				samples.add((int) (source.get(i).isMultichannel() ? source.get(i)
+					.getAxisLength(Axes.CHANNEL) : 1));
 				adjustedSamples.add(false);
 			}
 		}

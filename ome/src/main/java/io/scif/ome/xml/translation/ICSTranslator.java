@@ -185,7 +185,7 @@ public class ICSTranslator {
 
 				if (retrieve.getPlaneCount(0) > 0) {
 					final Double[] timestamps =
-						new Double[(int) source.getAxisLength(0, Axes.TIME)];
+						new Double[(int) source.get(0).getAxisLength(Axes.TIME)];
 					
 					for (int t=0; t<timestamps.length; t++) {
 						timestamps[t] = retrieve.getPlaneDeltaT(0, t);
@@ -204,9 +204,9 @@ public class ICSTranslator {
 				final List<Integer> emWaves = new ArrayList<Integer>();
 				final List<Integer> exWaves = new ArrayList<Integer>();
 				final long effSizeC =
-						source.getPlaneCount(0) /
-							(source.getAxisLength(0, Axes.TIME) * source.getAxisLength(
-								0, Axes.Z));
+						source.get(0).getPlaneCount() /
+						(source.get(0).getAxisLength(Axes.TIME) * source.get(0)
+							.getAxisLength(Axes.Z));
 				for (int i = 0; i < effSizeC; i++) {
 					final String cName = retrieve.getChannelName(0, i);
 					if (cName != null) channelNames.put(i, cName);
@@ -432,7 +432,7 @@ public class ICSTranslator {
 							"Expected positive value for PhysicalSizeX; got " + sizes[0]);
 					}
 					if (sizes.length > 1) {
-						sizes[1] /= source.getAxisLength(imageIndex, Axes.Y);
+						sizes[1] /= source.get(imageIndex).getAxisLength(Axes.Y);
 						if (sizes[1] > 0) {
 							store.setPixelsPhysicalSizeY(new PositiveFloat(sizes[1]), 0);
 						}
@@ -450,26 +450,26 @@ public class ICSTranslator {
 
 			if (timestamps != null) {
 				for (int t = 0; t < timestamps.length; t++) {
-					if (t >= source.getAxisLength(imageIndex, Axes.TIME)) break; // ignore
+					if (t >= source.get(imageIndex).getAxisLength(Axes.TIME)) break; // ignore
 																																				// superfluous
 																																				// timestamps
 					if (timestamps[t] == null) continue; // ignore missing timestamp
 					final double deltaT = timestamps[t];
 					if (Double.isNaN(deltaT)) continue; // ignore invalid timestamp
 					final long effSizeC =
-							source.getPlaneCount(imageIndex) /
-								(source.getAxisLength(imageIndex, Axes.TIME) * source.getAxisLength(
-									imageIndex, Axes.Z));
+							source.get(imageIndex).getPlaneCount() /
+							(source.get(imageIndex).getAxisLength(Axes.TIME) * source.get(
+								imageIndex).getAxisLength(Axes.Z));
 					// assign timestamp to all relevant planes
 					OMEXMLMetadataService metaService =
 						getContext().getService(OMEXMLMetadataService.class);
 					final String dimOrder = metaService.findDimensionOrder(source, imageIndex);
-					for (int z = 0; z < source.getAxisLength(imageIndex, Axes.Z); z++) {
+					for (int z = 0; z < source.get(imageIndex).getAxisLength(Axes.Z); z++) {
 						for (int c = 0; c < effSizeC; c++) {
 							final int index =
 								(int)FormatTools.positionToRaster(metaService.zctToArray(dimOrder,
-									(int) source.getAxisLength(imageIndex, Axes.Z),
-									(int) effSizeC, (int) source.getAxisLength(imageIndex,
+									(int) source.get(imageIndex).getAxisLength(Axes.Z),
+									(int) effSizeC, (int) source.get(imageIndex).getAxisLength(
 										Axes.TIME)), metaService.zctToArray(dimOrder, z, c, t));
 
 							store.setPlaneDeltaT(deltaT, 0, index);
@@ -498,9 +498,9 @@ public class ICSTranslator {
 				exWaves = source.getEXSingleton();
 			}
 			final long effSizeC =
-					source.getPlaneCount(imageIndex) /
-						(source.getAxisLength(imageIndex, Axes.TIME) * source.getAxisLength(
-							imageIndex, Axes.Z));
+					source.get(imageIndex).getPlaneCount() /
+					(source.get(imageIndex).getAxisLength(Axes.TIME) * source.get(
+						imageIndex).getAxisLength(Axes.Z));
 			for (int i = 0; i < effSizeC; i++) {
 				if (channelNames.containsKey(i)) {
 					store.setChannelName(channelNames.get(i), 0, i);

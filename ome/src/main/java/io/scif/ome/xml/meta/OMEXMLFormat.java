@@ -213,9 +213,9 @@ public class OMEXMLFormat extends AbstractFormat {
 				getOMEMeta().getRoot(), this);
 
 			for (int i = 0; i < getImageCount(); i++) {
-				setIndexed(i, false);
-				setFalseColor(i, true);
-				setPlanarAxisCount(i, 2);
+				get(i).setIndexed(false);
+				get(i).setFalseColor(true);
+				get(i).setPlanarAxisCount(2);
 			}
 		}
 
@@ -364,7 +364,7 @@ public class OMEXMLFormat extends AbstractFormat {
 			int index = (int)planeIndex;
 
 			for (int i = 0; i < imageIndex; i++) {
-				index += meta.getPlaneCount(i);
+				index += meta.get(i).getPlaneCount();
 			}
 			if (index >= meta.getBinDataOffsets().size()) {
 				index = meta.getBinDataOffsets().size() - 1;
@@ -376,21 +376,21 @@ public class OMEXMLFormat extends AbstractFormat {
 			getStream().seek(offset);
 
 			final int depth =
-				FormatTools.getBytesPerPixel(meta.getPixelType(imageIndex));
+				FormatTools.getBytesPerPixel(meta.get(imageIndex).getPixelType());
 			final int planeSize =
-				(int) (meta.getAxisLength(imageIndex, Axes.X) *
-				meta.getAxisLength(imageIndex, Axes.Y) * depth);
+				(int) (meta.get(imageIndex).getAxisLength(Axes.X) *
+				meta.get(imageIndex).getAxisLength(Axes.Y) * depth);
 
 			final CodecOptions options = new CodecOptions();
-			options.width = (int) meta.getAxisLength(imageIndex, Axes.X);
-			options.height = (int) meta.getAxisLength(imageIndex, Axes.Y);
+			options.width = (int) meta.get(imageIndex).getAxisLength(Axes.X);
+			options.height = (int) meta.get(imageIndex).getAxisLength(Axes.Y);
 			options.bitsPerSample = depth * 8;
 			options.channels =
-				(int) (meta.isMultichannel(imageIndex) ? meta.getAxisLength(imageIndex,
-					Axes.CHANNEL) : 1);
+				(int) (meta.get(imageIndex).isMultichannel() ? meta.get(imageIndex)
+					.getAxisLength(Axes.CHANNEL) : 1);
 			options.maxBytes = planeSize;
-			options.littleEndian = meta.isLittleEndian(imageIndex);
-			options.interleaved = meta.getInterleavedAxisCount(imageIndex) > 0;
+			options.littleEndian = meta.get(imageIndex).isLittleEndian();
+			options.interleaved = meta.get(imageIndex).getInterleavedAxisCount() > 0;
 
 			byte[] pixels = new Base64Codec().decompress(getStream(), options);
 
@@ -426,15 +426,15 @@ public class OMEXMLFormat extends AbstractFormat {
 				pixels = new JPEGCodec().decompress(pixels, options);
 			}
 
-			final int xIndex = meta.getAxisIndex(imageIndex, Axes.X),
-								yIndex = meta.getAxisIndex(imageIndex, Axes.Y);
+			final int xIndex = meta.get(imageIndex).getAxisIndex(Axes.X),
+								yIndex = meta.get(imageIndex).getAxisIndex(Axes.Y);
 			final int x = (int) offsets[xIndex],
 								y = (int) offsets[yIndex],
 								w = (int) lengths[xIndex],
 								h = (int) lengths[yIndex];
 			for (int row = 0; row < h; row++) {
 				final int off =
-					(int) ((row + y) * meta.getAxisLength(imageIndex, Axes.X) * depth + x *
+					(int) ((row + y) * meta.get(imageIndex).getAxisLength(Axes.X) * depth + x *
 						depth);
 				System.arraycopy(pixels, off, buf, row * w * depth, w * depth);
 			}
@@ -500,8 +500,8 @@ public class OMEXMLFormat extends AbstractFormat {
 			final int pixelType = FormatTools.pixelTypeFromString(type);
 			final int bytes = FormatTools.getBytesPerPixel(pixelType);
 			final int nChannels =
-				(int) (meta.isMultichannel(imageIndex) ? meta.getAxisLength(imageIndex,
-					Axes.CHANNEL) : 1);
+				(int) (meta.get(imageIndex).isMultichannel() ? meta.get(imageIndex)
+					.getAxisLength(Axes.CHANNEL) : 1);
 			final int sizeX =
 				retrieve.getPixelsSizeX(imageIndex).getValue().intValue();
 			final int sizeY =

@@ -154,7 +154,7 @@ public class MicromanagerTranslator {
 					}
 
 					int nextStamp = 0;
-					for (int q = 0; q < meta.getPlaneCount(i); q++) {
+					for (int q = 0; q < meta.get(i).getPlaneCount(); q++) {
 						store.setPlaneExposureTime(p.exposureTime, i, q);
 						final String tiff = positions.get(i).getFile(meta, i, q);
 						if (tiff != null && new Location(getContext(), tiff).exists() &&
