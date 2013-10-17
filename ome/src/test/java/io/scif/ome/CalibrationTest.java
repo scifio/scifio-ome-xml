@@ -43,6 +43,7 @@ import io.scif.FormatException;
 import io.scif.Metadata;
 import io.scif.SCIFIO;
 import io.scif.ome.xml.meta.OMEMetadata;
+import io.scif.util.FormatTools;
 
 import java.io.IOException;
 
@@ -70,10 +71,10 @@ public class CalibrationTest {
 		Metadata meta = scifio.initializer().parseMetadata(id);
 
 		// Adjust calibration
-		meta.get(0).getAxis(Axes.X).setCalibration(5.0);
-		meta.get(0).getAxis(Axes.Y).setCalibration(6.0);
-		meta.get(0).getAxis(Axes.Z).setCalibration(7.0);
-		meta.get(0).getAxis(Axes.TIME).setCalibration(8.0);
+		FormatTools.calibrate(meta.get(0).getAxis(Axes.X), 5.0, 0);
+		FormatTools.calibrate(meta.get(0).getAxis(Axes.Y), 6.0, 0);
+		FormatTools.calibrate(meta.get(0).getAxis(Axes.Z), 7.0, 0);
+		FormatTools.calibrate(meta.get(0).getAxis(Axes.TIME), 8.0, 0);
 
 		OMEMetadata omeMeta = new OMEMetadata(scifio.getContext());
 
