@@ -47,7 +47,7 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
         <configuration>
-          <licenseName>gpl_v2</licenseName>
+          <licenseName>bsd</licenseName>
           <licenseResolver>file://${project.rootdir}/license</licenseResolver>
           <projectName>SCIFIO OME Formats Extension</projectName>
           <organizationName>Open Microscopy Environment:
