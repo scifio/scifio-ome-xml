@@ -42,6 +42,9 @@ import io.scif.AbstractTranslator;
 import io.scif.Metadata;
 import io.scif.Translator;
 import io.scif.ome.xml.meta.OMEMetadata;
+import io.scif.services.TranslatorService;
+
+import org.scijava.plugin.Parameter;
 
 /**
  * Abstract base class for all {@link io.scif.Translator} implementations that
@@ -55,6 +58,11 @@ public abstract class OMETranslator<M extends Metadata, N extends Metadata>
 	extends AbstractTranslator<M, N>
 {
 
+	// -- Fields --
+
+	@Parameter
+	TranslatorService translatorService;
+
 	/*
 	 * Before invoking the OME-specific translation, perform the base
 	 * Metadata-level translation.
@@ -62,8 +70,7 @@ public abstract class OMETranslator<M extends Metadata, N extends Metadata>
 	@Override
 	protected void typedTranslate(final M source, final N dest) {
 		final Translator t =
-			scifio().translator().findTranslator(Metadata.class, dest.getClass(),
-				true);
+			translatorService.findTranslator(Metadata.class, dest.getClass(), true);
 
 		t.translate(source, dest);
 	}

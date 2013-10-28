@@ -44,6 +44,7 @@ import io.scif.ome.xml.services.OMEXMLService;
 import io.scif.services.ServiceException;
 
 import org.scijava.Context;
+import org.scijava.plugin.Parameter;
 
 /**
  * io.scif.Metadata class wrapping an OME-XML root.
@@ -62,6 +63,9 @@ public class OMEMetadata extends AbstractMetadata {
 
 	/** OME core */
 	protected OMEXMLMetadata root;
+
+	@Parameter
+	OMEXMLService omexmlService;
 
 	// -- Constructor --
 
@@ -96,10 +100,8 @@ public class OMEMetadata extends AbstractMetadata {
 	 */
 	public OMEXMLMetadata getRoot() {
 		if (root == null) {
-			final OMEXMLService service =
-				scifio().format().getInstance(OMEXMLService.class);
 			try {
-				root = service.createOMEXMLMetadata();
+				root = omexmlService.createOMEXMLMetadata();
 			}
 			catch (final ServiceException e) {
 				log().debug("Failed to get OME-XML Service", e);

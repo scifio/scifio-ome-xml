@@ -64,6 +64,7 @@ import io.scif.ome.xml.services.OMEXMLMetadataService;
 import io.scif.ome.xml.services.OMEXMLService;
 import io.scif.ome.xml.services.OMEXMLServiceImpl;
 import io.scif.ome.xml.translation.FromOMETranslator;
+import io.scif.services.FormatService;
 import io.scif.services.ServiceException;
 import io.scif.util.FormatTools;
 import io.scif.util.ImageTools;
@@ -262,6 +263,9 @@ public class OMEXMLFormat extends AbstractFormat {
 
 		@Parameter
 		private XMLService xmlService;
+		
+		@Parameter
+		private FormatService formatService;
 
 		// -- Parser API Methods --
 
@@ -313,7 +317,7 @@ public class OMEXMLFormat extends AbstractFormat {
 			OMEXMLMetadata omexmlMeta = null;
 			if (omeMeta != null) omexmlMeta = meta.getOMEMeta().getRoot();
 			final OMEXMLService service =
-				scifio().format().getInstance(OMEXMLService.class);
+				formatService.getInstance(OMEXMLService.class);
 
 			try {
 
@@ -358,7 +362,7 @@ public class OMEXMLFormat extends AbstractFormat {
 			final byte[] buf = plane.getBytes();
 			final Metadata meta = getMetadata();
 
-			FormatTools.checkPlaneParameters(meta, imageIndex, planeIndex,
+			FormatTools.checkPlaneForReading(meta, imageIndex, planeIndex,
 				buf.length, offsets, lengths);
 
 			int index = (int)planeIndex;
@@ -461,10 +465,12 @@ public class OMEXMLFormat extends AbstractFormat {
 
 		private Vector<String> xmlFragments;
 		private String currentFragment;
-		private OMEXMLService service;
 
 		@Parameter
 		private XMLService xmlService;
+
+		@Parameter
+		private OMEXMLService omexmlService;
 
 		// -- Constructor --
 
@@ -484,6 +490,7 @@ public class OMEXMLFormat extends AbstractFormat {
 		{
 			final Metadata meta = getMetadata();
 			final byte[] buf = plane.getBytes();
+			boolean interleaved = meta.get(imageIndex).getInterleavedAxisCount() > 1;
 
 			checkParams(imageIndex, planeIndex, buf, offsets, lengths);
 			if (!SCIFIOMetadataTools.wholePlane(imageIndex, meta, offsets, lengths)) {
@@ -512,7 +519,7 @@ public class OMEXMLFormat extends AbstractFormat {
 
 			final String namespace =
 				"xmlns=\"http://www.openmicroscopy.org/Schemas/BinaryFile/" +
-					service.getLatestVersion() + "\"";
+						omexmlService.getLatestVersion() + "\"";
 
 			for (int i = 0; i < nChannels; i++) {
 				final byte[] b =
@@ -547,11 +554,10 @@ public class OMEXMLFormat extends AbstractFormat {
 
 			String xml;
 			try {
-				service = scifio().format().getInstance(OMEXMLService.class);
-				xml = service.getOMEXML(retrieve);
-				final OMEXMLMetadata noBin = service.createOMEXMLMetadata(xml);
-				service.removeBinData(noBin);
-				xml = service.getOMEXML(noBin);
+				xml = omexmlService.getOMEXML(retrieve);
+				final OMEXMLMetadata noBin = omexmlService.createOMEXMLMetadata(xml);
+				omexmlService.removeBinData(noBin);
+				xml = omexmlService.getOMEXML(noBin);
 			}
 			catch (final ServiceException se) {
 				throw new FormatException(se);
@@ -594,7 +600,6 @@ public class OMEXMLFormat extends AbstractFormat {
 			}
 			super.close();
 			xmlFragments = null;
-			service = null;
 		}
 
 		// -- Helper methods --
@@ -640,7 +645,6 @@ public class OMEXMLFormat extends AbstractFormat {
 			value = io.scif.ome.xml.meta.OMEMetadata.CNAME),
 		@Attr(name = OMEXMLTranslator.DEST, value = Metadata.CNAME) })
 	public static class OMETranslator extends FromOMETranslator<Metadata> {
-
 		@Override
 		public void typedTranslate(final io.scif.ome.xml.meta.OMEMetadata source,
 			final Metadata dest)
@@ -657,15 +661,18 @@ public class OMEXMLFormat extends AbstractFormat {
 		AbstractTranslator<io.scif.Metadata, Metadata>
 	{
 
+		// -- Fields --
+
+		@Parameter
+		private OMEXMLMetadataService omexmlMetadataService;
+
 		@Override
 		public void typedTranslate(final io.scif.Metadata source,
 			final Metadata dest)
 		{
 			final OMEXMLMetadata root = new OMEXMLMetadataImpl();
 			final OMEMetadata meta = new OMEMetadata(getContext(), root);
-			final OMEXMLMetadataService service =
-				scifio().get(OMEXMLMetadataService.class);
-			service.populatePixels(root, source);
+			omexmlMetadataService.populatePixels(root, source);
 			dest.setOMEMeta(meta);
 		}
 	}

@@ -43,6 +43,7 @@ import io.scif.ome.xml.services.OMEXMLMetadataService;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Attr;
+import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
 /**
@@ -56,12 +57,17 @@ import org.scijava.plugin.Plugin;
 		@Attr(name = DefaultOMETranslator.DEST, value = OMEMetadata.CNAME) })
 public class DefaultOMETranslator extends ToOMETranslator<Metadata> {
 
+	// -- Fields --
+
+	@Parameter
+	private OMEXMLMetadataService omexmlMetadataService;
+
 	// -- Translator API Methods --
 
 	@Override
 	protected void typedTranslate(final Metadata source, final OMEMetadata dest) {
 		for (int i = 0; i < source.getImageCount(); i++) {
-			scifio().get(OMEXMLMetadataService.class).populateMetadata(
+			omexmlMetadataService.populateMetadata(
 				dest.getRoot(), 0, source.getDatasetName(), source);
 		}
 	}

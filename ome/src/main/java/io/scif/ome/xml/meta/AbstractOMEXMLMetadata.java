@@ -38,7 +38,7 @@
 
 package io.scif.ome.xml.meta;
 
-import io.scif.AbstractSCIFIOComponent;
+import io.scif.AbstractSCIFIOPlugin;
 import io.scif.common.Constants;
 
 import java.io.ByteArrayOutputStream;
@@ -72,7 +72,7 @@ import org.w3c.dom.Element;
  * @author Curtis Rueden ctrueden at wisc.edu
  * @author Melissa Linkert melissa at glencoesoftware.com
  */
-public abstract class AbstractOMEXMLMetadata extends AbstractSCIFIOComponent
+public abstract class AbstractOMEXMLMetadata extends AbstractSCIFIOPlugin
 	implements OMEXMLMetadata
 {
 

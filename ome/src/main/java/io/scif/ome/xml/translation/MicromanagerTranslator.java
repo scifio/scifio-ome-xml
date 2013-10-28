@@ -56,6 +56,7 @@ import ome.xml.model.primitives.Timestamp;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Attr;
+import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
 /**
@@ -84,6 +85,11 @@ public class MicromanagerTranslator {
 		ToOMETranslator<MicromanagerFormat.Metadata>
 	{
 
+		// -- Fields --
+
+		@Parameter
+		private OMEXMLMetadataService omexmlMetadataService;
+
 		@Override
 		protected void typedTranslate(final MicromanagerFormat.Metadata source,
 			final OMEMetadata dest)
@@ -102,9 +108,7 @@ public class MicromanagerTranslator {
 		private void populateMetadata(final Metadata meta,
 			final OMEXMLMetadata store) throws FormatException
 		{
-			final OMEXMLMetadataService service =
-				scifio().get(OMEXMLMetadataService.class);
-			final String instrumentID = service.createLSID("Instrument", 0);
+			final String instrumentID = omexmlMetadataService.createLSID("Instrument", 0);
 			store.setInstrumentID(instrumentID, 0);
 			final Vector<Position> positions = meta.getPositions();
 
@@ -165,11 +169,11 @@ public class MicromanagerTranslator {
 					}
 
 					final String serialNumber = p.detectorID;
-					p.detectorID = service.createLSID("Detector", 0, i);
+					p.detectorID = omexmlMetadataService.createLSID("Detector", 0, i);
 
 					for (int c = 0; c < p.channels.length; c++) {
-						store.setDetectorSettingsBinning(service.getBinning(p.binning), i,
-							c);
+						store.setDetectorSettingsBinning(omexmlMetadataService
+							.getBinning(p.binning), i, c);
 						store.setDetectorSettingsGain(new Double(p.gain), i, c);
 						if (c < p.voltage.size()) {
 							store.setDetectorSettingsVoltage(p.voltage.get(c), i, c);
@@ -191,7 +195,7 @@ public class MicromanagerTranslator {
 					}
 
 					if (p.cameraMode == null) p.cameraMode = "Other";
-					store.setDetectorType(service.getDetectorType(p.cameraMode), 0, i);
+					store.setDetectorType(omexmlMetadataService.getDetectorType(p.cameraMode), 0, i);
 					store.setImagingEnvironmentTemperature(p.temperature, i);
 				}
 			}

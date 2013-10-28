@@ -49,7 +49,6 @@ import io.scif.Format;
 import io.scif.FormatException;
 import io.scif.ImageMetadata;
 import io.scif.Plane;
-import io.scif.SCIFIO;
 import io.scif.Translator;
 import io.scif.formats.MinimalTIFFFormat;
 import io.scif.formats.TIFFFormat;
@@ -64,7 +63,9 @@ import io.scif.io.RandomAccessInputStream;
 import io.scif.io.RandomAccessOutputStream;
 import io.scif.ome.xml.services.OMEXMLMetadataService;
 import io.scif.ome.xml.services.OMEXMLService;
+import io.scif.services.FormatService;
 import io.scif.services.ServiceException;
+import io.scif.services.TranslatorService;
 import io.scif.util.FormatTools;
 
 import java.io.File;
@@ -91,6 +92,7 @@ import ome.xml.model.primitives.Timestamp;
 
 import org.scijava.Context;
 import org.scijava.plugin.Attr;
+import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
 /**
@@ -524,6 +526,11 @@ public class OMETIFFFormat extends AbstractFormat {
 	 */
 	public static class Parser extends AbstractParser<Metadata> {
 
+		// -- Fields --
+
+		@Parameter
+		private FormatService formatService;
+
 		// -- Parser API Methods --
 
 		@Override
@@ -918,7 +925,9 @@ public class OMETIFFFormat extends AbstractFormat {
 					else filename = normalizeFilename(dir, filename);
 					MinimalTIFFFormat.Reader<?> r = readers.get(filename);
 					if (r == null) {
-						r = getReader(scifio(), MinimalTIFFFormat.class);
+						r =
+							(io.scif.formats.MinimalTIFFFormat.Reader<?>) formatService
+								.getFormatFromClass(MinimalTIFFFormat.class).createReader();
 						readers.put(filename, r);
 					}
 
@@ -985,7 +994,8 @@ public class OMETIFFFormat extends AbstractFormat {
 								no + ".  " +
 								"Using TiffReader to determine the number of planes.");
 						final TIFFFormat.Reader<?> r =
-							getReader(scifio(), TIFFFormat.class);
+								(io.scif.formats.TIFFFormat.Reader<?>) formatService
+									.getFormatFromClass(TIFFFormat.class).createReader();
 						r.setSource(currentId);
 						try {
 							planes = new OMETIFFPlane[r.getImageCount()];
@@ -1078,7 +1088,7 @@ public class OMETIFFFormat extends AbstractFormat {
 			final byte[] buf = plane.getBytes();
 			final OMETIFFPlane[][] info = meta.getPlaneInfo();
 
-			FormatTools.checkPlaneParameters(meta, imageIndex, planeIndex,
+			FormatTools.checkPlaneForReading(meta, imageIndex, planeIndex,
 				buf.length, offsets, lengths);
 			meta.setLastPlane(planeIndex);
 			final int i = info[imageIndex][(int) planeIndex].ifd;
@@ -1431,14 +1441,6 @@ public class OMETIFFFormat extends AbstractFormat {
 
 	// -- Helper Methods --
 
-	@SuppressWarnings("unchecked")
-	private static <T extends MinimalTIFFFormat.Reader<?>> T getReader(
-		final SCIFIO scifio, final Class<? extends Format> formatClass)
-		throws FormatException
-	{
-		return (T) scifio.format().getFormatFromClass(formatClass).createReader();
-	}
-
 	private static void setupServices(final Context ctx) {
 		service = ctx.getService(OMEXMLService.class);
 		metaService = ctx.getService(OMEXMLMetadataService.class);
@@ -1505,6 +1507,14 @@ public class OMETIFFFormat extends AbstractFormat {
 		AbstractTranslator<io.scif.Metadata, Metadata>
 	{
 
+		// -- Fields --
+
+		@Parameter
+		private FormatService formatService;
+
+		@Parameter
+		private TranslatorService translatorService;
+
 		// -- Translator API Methods --
 
 		@Override
@@ -1514,16 +1524,16 @@ public class OMETIFFFormat extends AbstractFormat {
 
 			if (dest.getOmeMeta() == null) {
 				final OMEMetadata omeMeta = new OMEMetadata(getContext());
-				scifio().translator().translate(source, omeMeta, false);
+				translatorService.translate(source, omeMeta, false);
 				dest.setOmeMeta(omeMeta);
 			}
 
 			try {
 				final TIFFFormat.Metadata tiffMeta =
-					(TIFFFormat.Metadata) scifio().format().getFormatFromClass(
+					(TIFFFormat.Metadata) formatService.getFormatFromClass(
 						TIFFFormat.class).createMetadata();
 
-				scifio().translator().translate(source, tiffMeta, false);
+				translatorService.translate(source, tiffMeta, false);
 
 				dest.setFirstIFD(tiffMeta.getIfds().get(0));
 
