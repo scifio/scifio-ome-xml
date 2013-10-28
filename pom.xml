@@ -20,7 +20,6 @@
   <inceptionYear>2013</inceptionYear>
 
   <modules>
-    <module>bioformats</module>
     <module>ome</module>
   </modules>
 
