@@ -25,6 +25,11 @@
       <version>${scifio.version}</version>
     </dependency>
     <dependency>
+      <groupId>${scifio.groupId}</groupId>
+      <artifactId>scifio-tools</artifactId>
+      <version>${scifio.version}</version>
+    </dependency>
+    <dependency>
       <groupId>${bio-formats.groupId}</groupId>
       <artifactId>scifio</artifactId>
       <version>${bio-formats.version}</version>
