@@ -10,7 +10,7 @@
 
   <groupId>io.scif</groupId>
   <artifactId>pom-ome-formats</artifactId>
-  <version>0.3.1-SNAPSHOT</version>
+  <version>0.4.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>SCIFIO OME Formats Extension</name>
