@@ -39,13 +39,13 @@
 package io.scif.ome.xml.translation;
 
 import io.scif.FormatException;
+import io.scif.Metadata;
 import io.scif.formats.APNGFormat;
 import io.scif.ome.xml.meta.OMEMetadata;
 import io.scif.ome.xml.services.OMEXMLMetadataService;
 import io.scif.util.FormatTools;
 
 import org.scijava.Priority;
-import org.scijava.plugin.Attr;
 import org.scijava.plugin.Plugin;
 
 /**
@@ -65,13 +65,22 @@ public class APNGTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH_PRIORITY,
-		attrs = {
-			@Attr(name = OMEAPNGTranslator.SOURCE, value = OMEMetadata.CNAME),
-			@Attr(name = OMEAPNGTranslator.DEST, value = APNGFormat.Metadata.CNAME) })
+	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH_PRIORITY)
 	public static class OMEAPNGTranslator extends
 		FromOMETranslator<APNGFormat.Metadata>
 	{
+
+		// -- Translator API Methods --
+
+		@Override
+		public Class<? extends Metadata> source() {
+			return OMEMetadata.class;
+		}
+
+		@Override
+		public Class<? extends Metadata> dest() {
+			return APNGFormat.Metadata.class;
+		}
 
 		@Override
 		protected void typedTranslate(final OMEMetadata source,
@@ -105,16 +114,22 @@ public class APNGTranslator {
 	 * @author Mark Hiner
 	 */
 	@Plugin(
-		type = ToOMETranslator.class,
-		priority = Priority.HIGH_PRIORITY,
-		attrs = {
-			@Attr(name = APNGOMETranslator.SOURCE, value = APNGFormat.Metadata.CNAME),
-			@Attr(name = APNGOMETranslator.DEST, value = OMEMetadata.CNAME) })
+		type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
 	public static class APNGOMETranslator extends
 		ToOMETranslator<APNGFormat.Metadata>
 	{
 
 		// -- Translator API Methods --
+
+		@Override
+		public Class<? extends Metadata> source() {
+			return APNGFormat.Metadata.class;
+		}
+
+		@Override
+		public Class<? extends Metadata> dest() {
+			return OMEMetadata.class;
+		}
 
 		@Override
 		protected void typedTranslate(final APNGFormat.Metadata source,

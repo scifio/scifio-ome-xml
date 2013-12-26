@@ -91,7 +91,6 @@ import ome.xml.model.primitives.PositiveInteger;
 import ome.xml.model.primitives.Timestamp;
 
 import org.scijava.Context;
-import org.scijava.plugin.Attr;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
@@ -133,11 +132,6 @@ public class OMETIFFFormat extends AbstractFormat {
 	 * @author Mark Hiner hinerm at gmail.com
 	 */
 	public static class Metadata extends TIFFFormat.Metadata {
-
-		// -- Constants --
-
-		public static final String CNAME =
-			"io.scif.ome.xml.meta.OMETIFFFormat$Metadata";
 
 		// -- Fields --
 
@@ -1499,10 +1493,7 @@ public class OMETIFFFormat extends AbstractFormat {
 	 * used to write it can not be guaranteed valid.
 	 * </p>
 	 */
-	@Plugin(type = Translator.class, attrs = {
-		@Attr(name = OMETIFFTranslator.SOURCE, value = io.scif.Metadata.CNAME),
-		@Attr(name = OMETIFFTranslator.DEST, value = Metadata.CNAME) },
-		priority = OMETIFFFormat.PRIORITY)
+	@Plugin(type = Translator.class, priority = OMETIFFFormat.PRIORITY)
 	public static class OMETIFFTranslator extends
 		AbstractTranslator<io.scif.Metadata, Metadata>
 	{
@@ -1516,6 +1507,16 @@ public class OMETIFFFormat extends AbstractFormat {
 		private TranslatorService translatorService;
 
 		// -- Translator API Methods --
+
+		@Override
+		public Class<? extends io.scif.Metadata> source() {
+			return io.scif.Metadata.class;
+		}
+
+		@Override
+		public Class<? extends io.scif.Metadata> dest() {
+			return Metadata.class;
+		}
 
 		@Override
 		public void typedTranslate(final io.scif.Metadata source,

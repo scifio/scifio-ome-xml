@@ -38,14 +38,16 @@
 
 package io.scif.ome.xml.translation;
 
+import io.scif.Metadata;
 import io.scif.formats.TIFFFormat;
 import io.scif.ome.xml.meta.OMEMetadata;
 import io.scif.ome.xml.meta.OMEXMLMetadata;
+import io.scif.util.FormatTools;
+import net.imglib2.meta.Axes;
 import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.Timestamp;
 
 import org.scijava.Priority;
-import org.scijava.plugin.Attr;
 import org.scijava.plugin.Plugin;
 
 /**
@@ -70,16 +72,22 @@ public class TIFFTranslator {
 	 * @author Mark Hiner
 	 */
 	@Plugin(
-		type = ToOMETranslator.class,
-		priority = TIFFTranslator.PRIORITY,
-		attrs = {
-			@Attr(name = TIFFOMETranslator.SOURCE, value = TIFFFormat.Metadata.CNAME),
-			@Attr(name = TIFFOMETranslator.DEST, value = OMEMetadata.CNAME) })
+		type = ToOMETranslator.class, priority = TIFFTranslator.PRIORITY)
 	public static class TIFFOMETranslator extends
 		ToOMETranslator<TIFFFormat.Metadata>
 	{
 
 		// -- Translator API Methods --
+
+		@Override
+		public Class<? extends Metadata> source() {
+			return TIFFFormat.Metadata.class;
+		}
+
+		@Override
+		public Class<? extends Metadata> dest() {
+			return OMEMetadata.class;
+		}
 
 		@Override
 		protected void typedTranslate(final TIFFFormat.Metadata source,
@@ -89,9 +97,9 @@ public class TIFFTranslator {
 
 			final OMEXMLMetadata meta = dest.getRoot();
 
-			final double physX = source.getPhysicalSizeX();
-			final double physY = source.getPhysicalSizeY();
-			final double physZ = source.getPhysicalSizeZ();
+			final double physX = source.get(0).getAxis(Axes.X).averageScale(0, 1);
+			final double physY = source.get(0).getAxis(Axes.Y).averageScale(0, 1);
+			final double physZ = source.get(0).getAxis(Axes.Z).averageScale(0, 1);
 
 			meta
 				.setPixelsPhysicalSizeX(new PositiveFloat(physX > 0 ? physX : 1.0), 0);
@@ -120,13 +128,20 @@ public class TIFFTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = FromOMETranslator.class, priority = TIFFTranslator.PRIORITY,
-		attrs = {
-			@Attr(name = OMETIFFTranslator.SOURCE, value = OMEMetadata.CNAME),
-			@Attr(name = OMETIFFTranslator.DEST, value = TIFFFormat.Metadata.CNAME) })
+	@Plugin(type = FromOMETranslator.class, priority = TIFFTranslator.PRIORITY)
 	public static class OMETIFFTranslator extends
 		FromOMETranslator<TIFFFormat.Metadata>
 	{
+
+		@Override
+		public Class<? extends Metadata> source() {
+			return OMEMetadata.class;
+		}
+
+		@Override
+		public Class<? extends Metadata> dest() {
+			return TIFFFormat.Metadata.class;
+		}
 
 		@Override
 		protected void typedTranslate(final OMEMetadata source,
@@ -137,9 +152,12 @@ public class TIFFTranslator {
 			final OMEXMLMetadata meta = source.getRoot();
 
 			if (meta.getPixelsBinDataCount(0) > 0) {
-				dest.setPhysicalSizeX(checkValue(meta.getPixelsPhysicalSizeX(0)));
-				dest.setPhysicalSizeY(checkValue(meta.getPixelsPhysicalSizeY(0)));
-				dest.setPhysicalSizeZ(checkValue(meta.getPixelsPhysicalSizeZ(0)));
+				FormatTools.calibrate(dest.get(0).getAxis(Axes.X), checkValue(meta
+					.getPixelsPhysicalSizeX(0)), 0);
+				FormatTools.calibrate(dest.get(0).getAxis(Axes.Y), checkValue(meta
+					.getPixelsPhysicalSizeY(0)), 0);
+				FormatTools.calibrate(dest.get(0).getAxis(Axes.Z), checkValue(meta
+					.getPixelsPhysicalSizeZ(0)), 0);
 			}
 
 			if (meta.getImageCount() > 0) dest.setImageDescription(meta

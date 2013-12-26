@@ -38,13 +38,13 @@
 
 package io.scif.ome.xml.translation;
 
+import io.scif.Metadata;
 import io.scif.MetadataLevel;
 import io.scif.formats.NRRDFormat;
 import io.scif.ome.xml.meta.OMEMetadata;
 import ome.xml.model.primitives.PositiveFloat;
 
 import org.scijava.Priority;
-import org.scijava.plugin.Attr;
 import org.scijava.plugin.Plugin;
 
 /**
@@ -65,16 +65,22 @@ public class NRRDTranslator {
 	 * @author Mark Hiner
 	 */
 	@Plugin(
-		type = ToOMETranslator.class,
-		priority = Priority.HIGH_PRIORITY,
-		attrs = {
-			@Attr(name = NRRDOMETranslator.SOURCE, value = NRRDFormat.Metadata.CNAME),
-			@Attr(name = NRRDOMETranslator.DEST, value = OMEMetadata.CNAME) })
+		type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
 	public static class NRRDOMETranslator extends
 		ToOMETranslator<NRRDFormat.Metadata>
 	{
 
 		// -- Translator API Methods --
+
+		@Override
+		public Class<? extends Metadata> source() {
+			return NRRDFormat.Metadata.class;
+		}
+
+		@Override
+		public Class<? extends Metadata> dest() {
+			return OMEMetadata.class;
+		}
 
 		@Override
 		protected void typedTranslate(final NRRDFormat.Metadata source,

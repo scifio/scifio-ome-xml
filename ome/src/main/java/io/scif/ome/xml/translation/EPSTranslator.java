@@ -38,13 +38,13 @@
 
 package io.scif.ome.xml.translation;
 
+import io.scif.Metadata;
 import io.scif.formats.EPSFormat;
 import io.scif.ome.xml.meta.OMEMetadata;
 import io.scif.ome.xml.meta.OMEXMLMetadata;
 import net.imglib2.meta.Axes;
 
 import org.scijava.Priority;
-import org.scijava.plugin.Attr;
 import org.scijava.plugin.Plugin;
 
 /**
@@ -64,12 +64,20 @@ public class EPSTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH_PRIORITY,
-		attrs = { @Attr(name = OMEEPSTranslator.SOURCE, value = OMEMetadata.CNAME),
-			@Attr(name = OMEEPSTranslator.DEST, value = EPSFormat.Metadata.CNAME) })
+	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH_PRIORITY)
 	public static class OMEEPSTranslator extends
 		FromOMETranslator<EPSFormat.Metadata>
 	{
+
+		@Override
+		public Class<? extends Metadata> source() {
+			return OMEMetadata.class;
+		}
+
+		@Override
+		public Class<? extends Metadata> dest() {
+			return EPSFormat.Metadata.class;
+		}
 
 		@Override
 		protected void typedTranslate(final OMEMetadata source,

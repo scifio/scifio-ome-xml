@@ -81,7 +81,6 @@ import net.imglib2.meta.Axes;
 
 import org.scijava.Priority;
 import org.scijava.log.StderrLogService;
-import org.scijava.plugin.Attr;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 import org.xml.sax.Attributes;
@@ -640,23 +639,27 @@ public class OMEXMLFormat extends AbstractFormat {
 
 	}
 
-	@Plugin(type = Translator.class, attrs = {
-		@Attr(name = OMEXMLTranslator.SOURCE,
-			value = io.scif.ome.xml.meta.OMEMetadata.CNAME),
-		@Attr(name = OMEXMLTranslator.DEST, value = Metadata.CNAME) })
+	@Plugin(type = Translator.class)
 	public static class OMETranslator extends FromOMETranslator<Metadata> {
 		@Override
-		public void typedTranslate(final io.scif.ome.xml.meta.OMEMetadata source,
+		public Class<? extends io.scif.Metadata> source() {
+			return OMEMetadata.class;
+		}
+
+		@Override
+		public Class<? extends io.scif.Metadata> dest() {
+			return Metadata.class;
+		}
+
+		@Override
+		public void typedTranslate(final OMEMetadata source,
 			final Metadata dest)
 		{
 			dest.setOMEMeta(source);
 		}
 	}
 
-	@Plugin(type = Translator.class, attrs = {
-		@Attr(name = OMEXMLTranslator.SOURCE, value = io.scif.Metadata.CNAME),
-		@Attr(name = OMEXMLTranslator.DEST, value = Metadata.CNAME) },
-		priority = Priority.LOW_PRIORITY)
+	@Plugin(type = Translator.class, priority = Priority.LOW_PRIORITY)
 	public static class OMEXMLTranslator extends
 		AbstractTranslator<io.scif.Metadata, Metadata>
 	{
@@ -665,6 +668,18 @@ public class OMEXMLFormat extends AbstractFormat {
 
 		@Parameter
 		private OMEXMLMetadataService omexmlMetadataService;
+
+		// -- Translator API --
+
+		@Override
+		public Class<? extends io.scif.Metadata> source() {
+			return io.scif.Metadata.class;
+		}
+
+		@Override
+		public Class<? extends io.scif.Metadata> dest() {
+			return Metadata.class;
+		}
 
 		@Override
 		public void typedTranslate(final io.scif.Metadata source,

@@ -42,7 +42,6 @@ import io.scif.ome.xml.meta.OMEMetadata;
 import io.scif.ome.xml.services.OMEXMLMetadataService;
 
 import org.scijava.Priority;
-import org.scijava.plugin.Attr;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
@@ -52,9 +51,7 @@ import org.scijava.plugin.Plugin;
  * 
  * @author Mark Hiner hinerm at gmail.com
  */
-@Plugin(type = ToOMETranslator.class, priority = Priority.NORMAL_PRIORITY,
-	attrs = { @Attr(name = DefaultOMETranslator.SOURCE, value = Metadata.CNAME),
-		@Attr(name = DefaultOMETranslator.DEST, value = OMEMetadata.CNAME) })
+@Plugin(type = ToOMETranslator.class, priority = Priority.NORMAL_PRIORITY)
 public class DefaultOMETranslator extends ToOMETranslator<Metadata> {
 
 	// -- Fields --
@@ -63,6 +60,16 @@ public class DefaultOMETranslator extends ToOMETranslator<Metadata> {
 	private OMEXMLMetadataService omexmlMetadataService;
 
 	// -- Translator API Methods --
+
+	@Override
+	public Class<? extends Metadata> source() {
+		return Metadata.class;
+	}
+
+	@Override
+	public Class<? extends Metadata> dest() {
+		return OMEMetadata.class;
+	}
 
 	@Override
 	protected void typedTranslate(final Metadata source, final OMEMetadata dest) {

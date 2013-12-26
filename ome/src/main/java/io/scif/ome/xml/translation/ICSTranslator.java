@@ -39,6 +39,7 @@
 package io.scif.ome.xml.translation;
 
 import io.scif.FormatException;
+import io.scif.Metadata;
 import io.scif.MetadataLevel;
 import io.scif.MetadataOptions;
 import io.scif.formats.ICSFormat;
@@ -60,7 +61,6 @@ import ome.xml.model.primitives.PositiveInteger;
 import ome.xml.model.primitives.Timestamp;
 
 import org.scijava.Priority;
-import org.scijava.plugin.Attr;
 import org.scijava.plugin.Plugin;
 
 /**
@@ -80,12 +80,20 @@ public class ICSTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH_PRIORITY,
-		attrs = { @Attr(name = OMEICSTranslator.SOURCE, value = OMEMetadata.CNAME),
-			@Attr(name = OMEICSTranslator.DEST, value = ICSFormat.Metadata.CNAME) })
+	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH_PRIORITY)
 	public static class OMEICSTranslator extends
 		FromOMETranslator<ICSFormat.Metadata>
 	{
+
+		@Override
+		public Class<? extends Metadata> source() {
+			return OMEMetadata.class;
+		}
+
+		@Override
+		public Class<? extends Metadata> dest() {
+			return ICSFormat.Metadata.class;
+		}
 
 		@Override
 		protected void typedTranslate(final OMEMetadata source,
@@ -249,15 +257,22 @@ public class ICSTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY,
-		attrs = {
-			@Attr(name = ICSOMETranslator.SOURCE, value = ICSFormat.Metadata.CNAME),
-			@Attr(name = ICSOMETranslator.DEST, value = OMEMetadata.CNAME) })
+	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
 	public static class ICSOMETranslator extends
 		ToOMETranslator<ICSFormat.Metadata>
 	{
 
 		// -- Translator API --
+
+		@Override
+		public Class<? extends Metadata> source() {
+			return ICSFormat.Metadata.class;
+		}
+
+		@Override
+		public Class<? extends Metadata> dest() {
+			return OMEMetadata.class;
+		}
 
 		@Override
 		protected void typedTranslate(final ICSFormat.Metadata source,

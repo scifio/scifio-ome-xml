@@ -55,7 +55,6 @@ import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.Timestamp;
 
 import org.scijava.Priority;
-import org.scijava.plugin.Attr;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
@@ -76,11 +75,7 @@ public class MicromanagerTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH_PRIORITY,
-		attrs = {
-			@Attr(name = MicromanagerOMETranslator.SOURCE,
-				value = MicromanagerFormat.Metadata.CNAME),
-			@Attr(name = MicromanagerOMETranslator.DEST, value = OMEMetadata.CNAME) })
+	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH_PRIORITY)
 	public static class MicromanagerOMETranslator extends
 		ToOMETranslator<MicromanagerFormat.Metadata>
 	{
@@ -89,6 +84,18 @@ public class MicromanagerTranslator {
 
 		@Parameter
 		private OMEXMLMetadataService omexmlMetadataService;
+
+		// -- Translator API --
+
+		@Override
+		public Class<? extends io.scif.Metadata> source() {
+			return MicromanagerFormat.Metadata.class;
+		}
+
+		@Override
+		public Class<? extends io.scif.Metadata> dest() {
+			return OMEMetadata.class;
+		}
 
 		@Override
 		protected void typedTranslate(final MicromanagerFormat.Metadata source,

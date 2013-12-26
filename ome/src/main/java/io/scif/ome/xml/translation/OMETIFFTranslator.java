@@ -38,10 +38,10 @@
 
 package io.scif.ome.xml.translation;
 
+import io.scif.Metadata;
 import io.scif.ome.xml.meta.OMEMetadata;
 import io.scif.ome.xml.meta.OMETIFFFormat;
 
-import org.scijava.plugin.Attr;
 import org.scijava.plugin.Plugin;
 
 /**
@@ -61,17 +61,25 @@ public class OMETIFFTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = ToOMETranslator.class, priority = TIFFTranslator.PRIORITY + 1,
-		attrs = {
-			@Attr(name = OMEtoOMETIFFTranslator.SOURCE,
-				value = OMETIFFFormat.Metadata.CNAME),
-			@Attr(name = OMEtoOMETIFFTranslator.DEST, value = OMEMetadata.CNAME) })
+	@Plugin(type = ToOMETranslator.class, priority = TIFFTranslator.PRIORITY + 1)
 	public static class OMEtoOMETIFFTranslator extends
 		ToOMETranslator<OMETIFFFormat.Metadata>
 	{
 
 		// -- Translator API Methods --
 
+		@Override
+		public Class<? extends Metadata> source() {
+			return OMETIFFFormat.Metadata.class;
+		}
+
+		@Override
+		public Class<? extends Metadata> dest() {
+			return OMEMetadata.class;
+		}
+
+		// -- Translator API Methods --
+		
 		@Override
 		protected void typedTranslate(final OMETIFFFormat.Metadata source,
 			final OMEMetadata dest)
@@ -92,13 +100,20 @@ public class OMETIFFTranslator {
 	 * @author Mark Hiner
 	 */
 	@Plugin(type = FromOMETranslator.class,
-		priority = TIFFTranslator.PRIORITY + 1, attrs = {
-			@Attr(name = OMETIFFtoOMETranslator.SOURCE, value = OMEMetadata.CNAME),
-			@Attr(name = OMETIFFtoOMETranslator.DEST,
-				value = OMETIFFFormat.Metadata.CNAME) })
+		priority = TIFFTranslator.PRIORITY + 1)
 	public static class OMETIFFtoOMETranslator extends
 		FromOMETranslator<OMETIFFFormat.Metadata>
 	{
+
+		@Override
+		public Class<? extends Metadata> source() {
+			return OMEMetadata.class;
+		}
+
+		@Override
+		public Class<? extends Metadata> dest() {
+			return OMETIFFFormat.Metadata.class;
+		}
 
 		/*
 		 * @see OMETranslator#typedTranslate(io.scif.Metadata, io.scif.Metadata)

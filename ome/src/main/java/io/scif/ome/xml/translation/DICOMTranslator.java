@@ -38,6 +38,7 @@
 
 package io.scif.ome.xml.translation;
 
+import io.scif.Metadata;
 import io.scif.MetadataLevel;
 import io.scif.common.DateTools;
 import io.scif.formats.DICOMFormat;
@@ -47,7 +48,6 @@ import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.Timestamp;
 
 import org.scijava.Priority;
-import org.scijava.plugin.Attr;
 import org.scijava.plugin.Plugin;
 
 /**
@@ -67,16 +67,22 @@ public class DICOMTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY,
-		attrs = {
-			@Attr(name = DICOMOMETranslator.SOURCE,
-				value = DICOMFormat.Metadata.CNAME),
-			@Attr(name = DICOMOMETranslator.DEST, value = OMEMetadata.CNAME) })
+	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
 	public static class DICOMOMETranslator extends
 		ToOMETranslator<DICOMFormat.Metadata>
 	{
 
 		// -- Translator API Methods --
+
+		@Override
+		public Class<? extends Metadata> source() {
+			return DICOMFormat.Metadata.class;
+		}
+
+		@Override
+		public Class<? extends Metadata> dest() {
+			return OMEMetadata.class;
+		}
 
 		@Override
 		protected void typedTranslate(final DICOMFormat.Metadata source,

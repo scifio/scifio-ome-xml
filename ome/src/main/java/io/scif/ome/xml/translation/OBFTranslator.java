@@ -39,6 +39,7 @@
 package io.scif.ome.xml.translation;
 
 import io.scif.ImageMetadata;
+import io.scif.Metadata;
 import io.scif.formats.OBFFormat;
 import io.scif.ome.xml.meta.OMEMetadata;
 
@@ -48,7 +49,6 @@ import net.imglib2.meta.Axes;
 import ome.xml.model.primitives.PositiveFloat;
 
 import org.scijava.Priority;
-import org.scijava.plugin.Attr;
 import org.scijava.plugin.Plugin;
 
 /**
@@ -60,7 +60,7 @@ public class OBFTranslator {
 
 	/**
 	 * Translator class from {@link io.scif.formats.OBFFormat.Metadata} to
-	 * {@link ome.xml.meta.OMEMetadata}
+	 * {@link io.scif.ome.xml.meta.OMEMetadata}
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -68,15 +68,22 @@ public class OBFTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY,
-		attrs = {
-			@Attr(name = OBFOMETranslator.SOURCE, value = OBFFormat.Metadata.CNAME),
-			@Attr(name = OBFOMETranslator.DEST, value = OMEMetadata.CNAME) })
+	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
 	public static class OBFOMETranslator extends
 		ToOMETranslator<OBFFormat.Metadata>
 	{
 
 		// -- Translator API methods --
+
+		@Override
+		public Class<? extends Metadata> source() {
+			return OBFFormat.Metadata.class;
+		}
+
+		@Override
+		public Class<? extends Metadata> dest() {
+			return OMEMetadata.class;
+		}
 
 		@Override
 		protected void typedTranslate(final OBFFormat.Metadata source,
