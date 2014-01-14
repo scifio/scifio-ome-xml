@@ -192,8 +192,8 @@ public class ICSTranslator {
 				if (retrieve.getPlaneCount(0) > 0) {
 					final Double[] timestamps =
 						new Double[(int) source.get(0).getAxisLength(Axes.TIME)];
-					
-					for (int t=0; t<timestamps.length; t++) {
+
+					for (int t = 0; t < timestamps.length; t++) {
 						timestamps[t] = retrieve.getPlaneDeltaT(0, t);
 					}
 
@@ -210,7 +210,7 @@ public class ICSTranslator {
 				final List<Integer> emWaves = new ArrayList<Integer>();
 				final List<Integer> exWaves = new ArrayList<Integer>();
 				final long effSizeC =
-						source.get(0).getPlaneCount() /
+					source.get(0).getPlaneCount() /
 						(source.get(0).getAxisLength(Axes.TIME) * source.get(0)
 							.getAxisLength(Axes.Z));
 				for (int i = 0; i < effSizeC; i++) {
@@ -464,24 +464,26 @@ public class ICSTranslator {
 			if (timestamps != null) {
 				for (int t = 0; t < timestamps.length; t++) {
 					if (t >= source.get(imageIndex).getAxisLength(Axes.TIME)) break; // ignore
-																																				// superfluous
-																																				// timestamps
+					// superfluous
+					// timestamps
 					if (timestamps[t] == null) continue; // ignore missing timestamp
 					final double deltaT = timestamps[t];
 					if (Double.isNaN(deltaT)) continue; // ignore invalid timestamp
 					final long effSizeC =
-							source.get(imageIndex).getPlaneCount() /
+						source.get(imageIndex).getPlaneCount() /
 							(source.get(imageIndex).getAxisLength(Axes.TIME) * source.get(
 								imageIndex).getAxisLength(Axes.Z));
 					// assign timestamp to all relevant planes
-					OMEXMLMetadataService metaService =
+					final OMEXMLMetadataService metaService =
 						getContext().getService(OMEXMLMetadataService.class);
-					final String dimOrder = metaService.findDimensionOrder(source, imageIndex);
-					for (int z = 0; z < source.get(imageIndex).getAxisLength(Axes.Z); z++) {
+					final String dimOrder =
+						metaService.findDimensionOrder(source, imageIndex);
+					for (int z = 0; z < source.get(imageIndex).getAxisLength(Axes.Z); z++)
+					{
 						for (int c = 0; c < effSizeC; c++) {
 							final int index =
-								(int)FormatTools.positionToRaster(metaService.zctToArray(dimOrder,
-									(int) source.get(imageIndex).getAxisLength(Axes.Z),
+								(int) FormatTools.positionToRaster(metaService.zctToArray(
+									dimOrder, (int) source.get(imageIndex).getAxisLength(Axes.Z),
 									(int) effSizeC, (int) source.get(imageIndex).getAxisLength(
 										Axes.TIME)), metaService.zctToArray(dimOrder, z, c, t));
 
@@ -511,7 +513,7 @@ public class ICSTranslator {
 				exWaves = source.getEXSingleton();
 			}
 			final long effSizeC =
-					source.get(imageIndex).getPlaneCount() /
+				source.get(imageIndex).getPlaneCount() /
 					(source.get(imageIndex).getAxisLength(Axes.TIME) * source.get(
 						imageIndex).getAxisLength(Axes.Z));
 			for (int i = 0; i < effSizeC; i++) {
@@ -721,7 +723,6 @@ public class ICSTranslator {
 			}
 
 			gains = source.getGains();
-
 
 			for (final Integer key : gains.keySet()) {
 				final int index = key.intValue();

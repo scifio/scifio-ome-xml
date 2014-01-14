@@ -80,9 +80,9 @@ public class OMEXMLTest {
 		assertTrue(omexml.length() > 0);
 
 		assertTrue(omexml
-			.contains("<Pixels DimensionOrder=\"XYZTC\" ID=\"Pixels:0\" " +
-				"PhysicalSizeX=\"1.0\" PhysicalSizeY=\"1.0\" PhysicalSizeZ=\"NaN\"" +
-				" SizeC=\"1\" SizeT=\"1\" SizeX=\"512\" SizeY=\"512\" SizeZ=\"1\"" +
-				" TimeIncrement=\"NaN\" Type=\"uint8\">"));
+			.contains("<Pixels DimensionOrder=\"XYZTC\" ID=\"Pixels:0\" "
+				+ "PhysicalSizeX=\"1.0\" PhysicalSizeY=\"1.0\" PhysicalSizeZ=\"NaN\""
+				+ " SizeC=\"1\" SizeT=\"1\" SizeX=\"512\" SizeY=\"512\" SizeZ=\"1\""
+				+ " TimeIncrement=\"NaN\" Type=\"uint8\">"));
 	}
 }

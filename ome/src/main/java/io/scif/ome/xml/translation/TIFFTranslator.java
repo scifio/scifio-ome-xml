@@ -71,8 +71,7 @@ public class TIFFTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(
-		type = ToOMETranslator.class, priority = TIFFTranslator.PRIORITY)
+	@Plugin(type = ToOMETranslator.class, priority = TIFFTranslator.PRIORITY)
 	public static class TIFFOMETranslator extends
 		ToOMETranslator<TIFFFormat.Metadata>
 	{

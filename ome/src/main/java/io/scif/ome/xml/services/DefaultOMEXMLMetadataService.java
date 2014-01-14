@@ -102,7 +102,7 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 
 	@Parameter
 	private FormatService formatService;
-	
+
 	@Parameter
 	private LogService logService;
 
@@ -153,23 +153,23 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 			}
 
 			// Compress planar axes to Y
-			for (CalibratedAxis axis : meta.get(i).getAxesPlanar()) {
+			for (final CalibratedAxis axis : meta.get(i).getAxesPlanar()) {
 				final AxisType type = axis.type();
 				if (type != Axes.X && type != Axes.Y && type != Axes.CHANNEL) {
 					ySize *= meta.get(i).getAxisLength(type);
 				}
 			}
-			//Compress non-planar axes to Time
-			for (CalibratedAxis axis : meta.get(i).getAxesNonPlanar()) {
+			// Compress non-planar axes to Time
+			for (final CalibratedAxis axis : meta.get(i).getAxesNonPlanar()) {
 				final AxisType type = axis.type();
 				if (type != Axes.Z && type != Axes.TIME && type != Axes.CHANNEL) {
 					tSize *= meta.get(i).getAxisLength(type);
 				}
 			}
 
-			populateMetadata(store, meta.getDatasetName(), i, imageName, meta
-				.get(i).isLittleEndian(), order, pixelType, xSize, ySize, zSize, cSize,
-				tSize, calX, calY, calZ, calC, calT, rgbCCount);
+			populateMetadata(store, meta.getDatasetName(), i, imageName, meta.get(i)
+				.isLittleEndian(), order, pixelType, xSize, ySize, zSize, cSize, tSize,
+				calX, calY, calZ, calC, calT, rgbCCount);
 
 			final OMEXMLService service =
 				formatService.getInstance(OMEXMLService.class);
@@ -233,14 +233,14 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 		final double calT = FormatTools.getScale(meta, imageIndex, Axes.TIME);
 
 		// Compress planar axes to Y
-		for (CalibratedAxis axis : meta.get(imageIndex).getAxesPlanar()) {
+		for (final CalibratedAxis axis : meta.get(imageIndex).getAxesPlanar()) {
 			final AxisType type = axis.type();
 			if (type != Axes.X && type != Axes.Y && type != Axes.CHANNEL) {
 				sizeY *= meta.get(imageIndex).getAxisLength(type);
 			}
 		}
 		// Compress non-planar axes to Time
-		for (CalibratedAxis axis : meta.get(imageIndex).getAxesNonPlanar()) {
+		for (final CalibratedAxis axis : meta.get(imageIndex).getAxesNonPlanar()) {
 			final AxisType type = axis.type();
 			if (type != Axes.Z && type != Axes.TIME && type != Axes.CHANNEL) {
 				sizeT *= meta.get(imageIndex).getAxisLength(type);
@@ -252,10 +252,10 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 		final int effSizeC =
 			(int) (meta.get(imageIndex).getPlaneCount() / sizeZ / sizeT);
 		final int samplesPerPixel = sizeC / effSizeC;
-		populateMetadata(store, null, imageIndex, imageName, meta
-			.get(imageIndex).isLittleEndian(), findDimensionOrder(meta, imageIndex),
-			pixelType, sizeX, sizeY, sizeZ, sizeC, sizeT, calX, calY,
-			calZ, calC, calT, samplesPerPixel);
+		populateMetadata(store, null, imageIndex, imageName, meta.get(imageIndex)
+			.isLittleEndian(), findDimensionOrder(meta, imageIndex), pixelType,
+			sizeX, sizeY, sizeZ, sizeC, sizeT, calX, calY, calZ, calC, calT,
+			samplesPerPixel);
 	}
 
 	@Override
@@ -298,14 +298,15 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 			}
 
 			// Compress planar axes to Y
-			for (CalibratedAxis axis : meta.get(imageIndex).getAxesPlanar()) {
+			for (final CalibratedAxis axis : meta.get(imageIndex).getAxesPlanar()) {
 				final AxisType type = axis.type();
 				if (type != Axes.X && type != Axes.Y && type != Axes.CHANNEL) {
 					ySize *= meta.get(imageIndex).getAxisLength(type);
 				}
 			}
 			// Compress non-planar axes to Time
-			for (CalibratedAxis axis : meta.get(imageIndex).getAxesNonPlanar()) {
+			for (final CalibratedAxis axis : meta.get(imageIndex).getAxesNonPlanar())
+			{
 				final AxisType type = axis.type();
 				if (type != Axes.Z && type != Axes.TIME && type != Axes.CHANNEL) {
 					tSize *= meta.get(imageIndex).getAxisLength(type);
@@ -313,7 +314,8 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 			}
 			populatePixelsOnly(store, imageIndex, meta.get(imageIndex)
 				.isLittleEndian(), findDimensionOrder(meta, imageIndex), pixelType,
-				xSize, ySize, zSize, cSize, tSize, calX, calY, calZ, calC, calT, rgbCCount);
+				xSize, ySize, zSize, cSize, tSize, calX, calY, calZ, calC, calT,
+				rgbCCount);
 		}
 	}
 
@@ -435,12 +437,11 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 		}
 	}
 
-
 	@Override
-	public String findDimensionOrder(Metadata meta, int imageIndex) {
+	public String findDimensionOrder(final Metadata meta, final int imageIndex) {
 		String dimOrder = "";
 
-		for (CalibratedAxis axis : meta.get(imageIndex).getAxes()) {
+		for (final CalibratedAxis axis : meta.get(imageIndex).getAxes()) {
 			dimOrder += axis.type().getLabel().charAt(0);
 		}
 
@@ -448,21 +449,26 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 	}
 
 	@Override
-	public AxisType[] findDimensionList(String dimensionOrder) {
-		AxisType[] axes = new AxisType[dimensionOrder.length()];
-		
+	public AxisType[] findDimensionList(final String dimensionOrder) {
+		final AxisType[] axes = new AxisType[dimensionOrder.length()];
+
 		int index = 0;
-		for (char d : dimensionOrder.toUpperCase().toCharArray()) {
+		for (final char d : dimensionOrder.toUpperCase().toCharArray()) {
 			switch (d) {
-				case 'X': axes[index] = Axes.X;
+				case 'X':
+					axes[index] = Axes.X;
 					break;
-				case 'Y': axes[index] = Axes.Y;
+				case 'Y':
+					axes[index] = Axes.Y;
 					break;
-				case 'Z': axes[index] = Axes.Z;
+				case 'Z':
+					axes[index] = Axes.Z;
 					break;
-				case 'C': axes[index] = Axes.CHANNEL;
+				case 'C':
+					axes[index] = Axes.CHANNEL;
 					break;
-				case 'T': axes[index] = Axes.TIME;
+				case 'T':
+					axes[index] = Axes.TIME;
 					break;
 				default:
 					axes[index] = Axes.unknown();
@@ -473,10 +479,12 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 	}
 
 	@Override
-	public long[] zctToArray(String order, int z, int c, int t) {
-		long[] zct = new long[3];
+	public long[] zctToArray(final String order, final int z, final int c,
+		final int t)
+	{
+		final long[] zct = new long[3];
 		int index = 0;
-		for (char dim : order.toUpperCase().toCharArray()) {
+		for (final char dim : order.toUpperCase().toCharArray()) {
 			switch (dim) {
 				case 'C':
 					zct[index] = c;
@@ -630,10 +638,10 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 		final PositiveFloat physY = retrieve.getPixelsPhysicalSizeY(imageIndex);
 		final PositiveFloat physZ = retrieve.getPixelsPhysicalSizeZ(imageIndex);
 		final Double physT = retrieve.getPixelsTimeIncrement(imageIndex);
-		double calX = physX == null ? 1.0 : physX.getValue();
-		double calY = physY == null ? 1.0 : physY.getValue();
-		double calZ = physZ == null ? 1.0 : physZ.getValue();
-		double calT = physT == null ? 1.0 : physT;
+		final double calX = physX == null ? 1.0 : physX.getValue();
+		final double calY = physY == null ? 1.0 : physY.getValue();
+		final double calZ = physZ == null ? 1.0 : physZ.getValue();
+		final double calT = physT == null ? 1.0 : physT;
 
 		final String dimensionOrder =
 			retrieve.getPixelsDimensionOrder(imageIndex).getValue();
@@ -655,7 +663,7 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 
 		// populate the axis information in dimension order
 		int i = 0;
-		for (char d : dimensionOrder.toUpperCase().toCharArray()) {
+		for (final char d : dimensionOrder.toUpperCase().toCharArray()) {
 			// Check for RGB channel position
 			if (axisCount == 6 && i > 0 && axes[i - 1].type() == Axes.Y) {
 				sizeC /= rgbCCount;

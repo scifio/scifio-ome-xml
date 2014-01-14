@@ -111,8 +111,7 @@ public class APNGTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(
-		type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
+	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
 	public static class APNGOMETranslator extends
 		ToOMETranslator<APNGFormat.Metadata>
 	{

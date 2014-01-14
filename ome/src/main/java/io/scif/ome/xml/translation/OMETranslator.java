@@ -58,5 +58,5 @@ public abstract class OMETranslator<M extends Metadata, N extends Metadata>
 	 * Convert between type-specific Metadata and OME-XML
 	 */
 	protected abstract void translateOMEXML(final M source, final N dest);
-	
+
 }

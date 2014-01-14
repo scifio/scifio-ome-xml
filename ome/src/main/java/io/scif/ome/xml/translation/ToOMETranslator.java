@@ -53,6 +53,7 @@ import org.scijava.plugin.Parameter;
 public abstract class ToOMETranslator<M extends Metadata> extends
 	OMETranslator<M, OMEMetadata>
 {
+
 	// -- Fields --
 
 	@Parameter
@@ -63,8 +64,8 @@ public abstract class ToOMETranslator<M extends Metadata> extends
 	@Override
 	protected void typedTranslate(final M source, final OMEMetadata dest) {
 		for (int i = 0; i < source.getImageCount(); i++) {
-			omexmlMetadataService.populateMetadata(
-				dest.getRoot(), 0, source.getDatasetName(), source);
+			omexmlMetadataService.populateMetadata(dest.getRoot(), 0, source
+				.getDatasetName(), source);
 		}
 
 		translateOMEXML(source, dest);

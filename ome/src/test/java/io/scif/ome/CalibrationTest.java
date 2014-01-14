@@ -60,7 +60,7 @@ import org.junit.Test;
 public class CalibrationTest {
 
 	private final SCIFIO scifio = new SCIFIO();
-	private String id =
+	private final String id =
 		"testImg&lengths=512,512,2,3,4&axes=X,Y,Z,Time,Channel.fake";
 
 	// Try setting calibration values, translate to OMEMetadata and
@@ -68,7 +68,7 @@ public class CalibrationTest {
 	@Test
 	public void testTranslateToOME() throws IOException, FormatException {
 		// Parse source metadata
-		Metadata meta = scifio.initializer().parseMetadata(id);
+		final Metadata meta = scifio.initializer().parseMetadata(id);
 
 		// Adjust calibration
 		FormatTools.calibrate(meta.get(0).getAxis(Axes.X), 5.0, 0);
@@ -76,7 +76,7 @@ public class CalibrationTest {
 		FormatTools.calibrate(meta.get(0).getAxis(Axes.Z), 7.0, 0);
 		FormatTools.calibrate(meta.get(0).getAxis(Axes.TIME), 8.0, 0);
 
-		OMEMetadata omeMeta = new OMEMetadata(scifio.getContext());
+		final OMEMetadata omeMeta = new OMEMetadata(scifio.getContext());
 
 		// Translate to OMEMetadata
 		scifio.translator().translate(meta, omeMeta, false);
@@ -88,8 +88,7 @@ public class CalibrationTest {
 			new Double(6.0));
 		assertEquals(omeMeta.getRoot().getPixelsPhysicalSizeZ(0).getValue(),
 			new Double(7.0));
-		assertEquals(omeMeta.getRoot().getPixelsTimeIncrement(0),
-			new Double(8.0));
+		assertEquals(omeMeta.getRoot().getPixelsTimeIncrement(0), new Double(8.0));
 	}
-	
+
 }

@@ -64,8 +64,7 @@ public class NRRDTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(
-		type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
+	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
 	public static class NRRDOMETranslator extends
 		ToOMETranslator<NRRDFormat.Metadata>
 	{

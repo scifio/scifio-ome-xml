@@ -262,7 +262,7 @@ public class OMEXMLFormat extends AbstractFormat {
 
 		@Parameter
 		private XMLService xmlService;
-		
+
 		@Parameter
 		private FormatService formatService;
 
@@ -354,9 +354,9 @@ public class OMEXMLFormat extends AbstractFormat {
 		// -- Reader API Methods --
 
 		@Override
-		public ByteArrayPlane openPlane(final int imageIndex, final long planeIndex,
-			final ByteArrayPlane plane, final long[] offsets, final long[] lengths)
-			throws FormatException, IOException
+		public ByteArrayPlane openPlane(final int imageIndex,
+			final long planeIndex, final ByteArrayPlane plane, final long[] offsets,
+			final long[] lengths) throws FormatException, IOException
 		{
 			final byte[] buf = plane.getBytes();
 			final Metadata meta = getMetadata();
@@ -364,7 +364,7 @@ public class OMEXMLFormat extends AbstractFormat {
 			FormatTools.checkPlaneForReading(meta, imageIndex, planeIndex,
 				buf.length, offsets, lengths);
 
-			int index = (int)planeIndex;
+			int index = (int) planeIndex;
 
 			for (int i = 0; i < imageIndex; i++) {
 				index += meta.get(i).getPlaneCount();
@@ -382,7 +382,7 @@ public class OMEXMLFormat extends AbstractFormat {
 				FormatTools.getBytesPerPixel(meta.get(imageIndex).getPixelType());
 			final int planeSize =
 				(int) (meta.get(imageIndex).getAxisLength(Axes.X) *
-				meta.get(imageIndex).getAxisLength(Axes.Y) * depth);
+					meta.get(imageIndex).getAxisLength(Axes.Y) * depth);
 
 			final CodecOptions options = new CodecOptions();
 			options.width = (int) meta.get(imageIndex).getAxisLength(Axes.X);
@@ -429,12 +429,10 @@ public class OMEXMLFormat extends AbstractFormat {
 				pixels = new JPEGCodec().decompress(pixels, options);
 			}
 
-			final int xIndex = meta.get(imageIndex).getAxisIndex(Axes.X),
-								yIndex = meta.get(imageIndex).getAxisIndex(Axes.Y);
-			final int x = (int) offsets[xIndex],
-								y = (int) offsets[yIndex],
-								w = (int) lengths[xIndex],
-								h = (int) lengths[yIndex];
+			final int xIndex = meta.get(imageIndex).getAxisIndex(Axes.X), yIndex =
+				meta.get(imageIndex).getAxisIndex(Axes.Y);
+			final int x = (int) offsets[xIndex], y = (int) offsets[yIndex], w =
+				(int) lengths[xIndex], h = (int) lengths[yIndex];
 			for (int row = 0; row < h; row++) {
 				final int off =
 					(int) ((row + y) * meta.get(imageIndex).getAxisLength(Axes.X) * depth + x *
@@ -489,7 +487,8 @@ public class OMEXMLFormat extends AbstractFormat {
 		{
 			final Metadata meta = getMetadata();
 			final byte[] buf = plane.getBytes();
-			boolean interleaved = meta.get(imageIndex).getInterleavedAxisCount() > 1;
+			final boolean interleaved =
+				meta.get(imageIndex).getInterleavedAxisCount() > 1;
 
 			checkParams(imageIndex, planeIndex, buf, offsets, lengths);
 			if (!SCIFIOMetadataTools.wholePlane(imageIndex, meta, offsets, lengths)) {
@@ -518,7 +517,7 @@ public class OMEXMLFormat extends AbstractFormat {
 
 			final String namespace =
 				"xmlns=\"http://www.openmicroscopy.org/Schemas/BinaryFile/" +
-						omexmlService.getLatestVersion() + "\"";
+					omexmlService.getLatestVersion() + "\"";
 
 			for (int i = 0; i < nChannels; i++) {
 				final byte[] b =
@@ -641,6 +640,7 @@ public class OMEXMLFormat extends AbstractFormat {
 
 	@Plugin(type = Translator.class)
 	public static class OMETranslator extends FromOMETranslator<Metadata> {
+
 		@Override
 		public Class<? extends io.scif.Metadata> source() {
 			return OMEMetadata.class;
@@ -652,9 +652,7 @@ public class OMEXMLFormat extends AbstractFormat {
 		}
 
 		@Override
-		public void translateOMEXML(final OMEMetadata source,
-			final Metadata dest)
-		{
+		public void translateOMEXML(final OMEMetadata source, final Metadata dest) {
 			dest.setOMEMeta(source);
 		}
 	}

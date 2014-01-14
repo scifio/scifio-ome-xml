@@ -82,8 +82,9 @@ public class OMEXML extends AbstractSCIFIOToolCommand {
 	@Argument(metaVar = "file", index = 0, usage = "image dataset to parse")
 	private String file;
 
-	@Argument(metaVar = "indent", index = 1, required = false, usage = "indentation for xml nesting")
-	private Integer xmlIndent = 3;
+	@Argument(metaVar = "indent", index = 1, required = false,
+		usage = "indentation for xml nesting")
+	private final Integer xmlIndent = 3;
 
 	@Argument(index = 2, multiValued = true)
 	private final List<String> arguments = new ArrayList<String>();
@@ -95,7 +96,8 @@ public class OMEXML extends AbstractSCIFIOToolCommand {
 		try {
 			// OMEXML uses a fixed-5D XY[ZCT] data model. Thus we need to adjust the
 			// axis order to best match the OME model.
-			final ReaderFilter reader = initializeService.initializeReader(file, true);
+			final ReaderFilter reader =
+				initializeService.initializeReader(file, true);
 			reader.enable(PlaneSeparator.class).separate(axesToSplit(reader));
 			final Metadata meta = reader.getMetadata();
 

@@ -177,8 +177,8 @@ public interface OMEXMLMetadataService extends SCIFIOService {
 		throws FormatException;
 
 	/**
-	 * Extracts a standard 5-D dimension order from an N-dimensional
-	 * ImageMetadata object.
+	 * Extracts a standard 5-D dimension order from an N-dimensional ImageMetadata
+	 * object.
 	 */
 	String findDimensionOrder(Metadata meta, int imageIndex);
 
@@ -189,8 +189,8 @@ public interface OMEXMLMetadataService extends SCIFIOService {
 	AxisType[] findDimensionList(String dimensionOrder);
 
 	/**
-	 * Given a String dimension order, places the given z, c and t indices
-	 * in the correct relative positions in a long array, which is returned.
+	 * Given a String dimension order, places the given z, c and t indices in the
+	 * correct relative positions in a long array, which is returned.
 	 */
 	long[] zctToArray(String order, int z, int c, int t);
 
@@ -218,8 +218,7 @@ public interface OMEXMLMetadataService extends SCIFIOService {
 	 * Retrieves an {@link ome.xml.model.enums.LaserType} enumeration value for
 	 * the given String.
 	 * 
-	 * @throws FormatException if an appropriate
-	 *           enumeration value is not found.
+	 * @throws FormatException if an appropriate enumeration value is not found.
 	 */
 	LaserType getLaserType(String value) throws FormatException;
 

@@ -113,7 +113,8 @@ public class MicromanagerTranslator {
 		private void populateMetadata(final Metadata meta,
 			final OMEXMLMetadata store) throws FormatException
 		{
-			final String instrumentID = omexmlMetadataService.createLSID("Instrument", 0);
+			final String instrumentID =
+				omexmlMetadataService.createLSID("Instrument", 0);
 			store.setInstrumentID(instrumentID, 0);
 			final Vector<Position> positions = meta.getPositions();
 
@@ -200,7 +201,8 @@ public class MicromanagerTranslator {
 					}
 
 					if (p.cameraMode == null) p.cameraMode = "Other";
-					store.setDetectorType(omexmlMetadataService.getDetectorType(p.cameraMode), 0, i);
+					store.setDetectorType(omexmlMetadataService
+						.getDetectorType(p.cameraMode), 0, i);
 					store.setImagingEnvironmentTemperature(p.temperature, i);
 				}
 			}

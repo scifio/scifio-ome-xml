@@ -35,6 +35,7 @@
  * policies, either expressed or implied, of any organization.
  * #L%
  */
+
 package io.scif.ome.xml.translation;
 
 import io.scif.Metadata;
@@ -72,7 +73,8 @@ public class DefaultOMETranslator extends ToOMETranslator<Metadata> {
 	}
 
 	@Override
-	protected void translateOMEXML(final Metadata source, final OMEMetadata dest) {
+	protected void translateOMEXML(final Metadata source, final OMEMetadata dest)
+	{
 		// No translation to perform. Handled by the ToOMETranslator layer.
 	}
 }

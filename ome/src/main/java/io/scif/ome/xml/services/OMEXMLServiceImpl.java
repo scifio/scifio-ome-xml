@@ -107,7 +107,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 
 	@Parameter
 	XMLService xmlService;
-	
+
 	@Parameter
 	LogService logService;
 
