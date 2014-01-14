@@ -96,11 +96,9 @@ public class ICSTranslator {
 		}
 
 		@Override
-		protected void typedTranslate(final OMEMetadata source,
+		protected void translateOMEXML(final OMEMetadata source,
 			final ICSFormat.Metadata dest)
 		{
-			super.typedTranslate(source, dest);
-
 			final MetadataRetrieve retrieve = source.getRoot();
 
 			final Timestamp ts = retrieve.getImageAcquisitionDate(0);
@@ -275,7 +273,7 @@ public class ICSTranslator {
 		}
 
 		@Override
-		protected void typedTranslate(final ICSFormat.Metadata source,
+		protected void translateOMEXML(final ICSFormat.Metadata source,
 			final OMEMetadata dest)
 		{
 			final OMEXMLMetadata store = dest.getRoot();

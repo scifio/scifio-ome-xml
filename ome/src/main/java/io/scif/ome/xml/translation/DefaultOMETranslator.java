@@ -72,10 +72,7 @@ public class DefaultOMETranslator extends ToOMETranslator<Metadata> {
 	}
 
 	@Override
-	protected void typedTranslate(final Metadata source, final OMEMetadata dest) {
-		for (int i = 0; i < source.getImageCount(); i++) {
-			omexmlMetadataService.populateMetadata(
-				dest.getRoot(), 0, source.getDatasetName(), source);
-		}
+	protected void translateOMEXML(final Metadata source, final OMEMetadata dest) {
+		// No translation to perform. Handled by the ToOMETranslator layer.
 	}
 }

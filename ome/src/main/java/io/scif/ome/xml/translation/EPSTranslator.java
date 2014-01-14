@@ -80,11 +80,9 @@ public class EPSTranslator {
 		}
 
 		@Override
-		protected void typedTranslate(final OMEMetadata source,
+		protected void translateOMEXML(final OMEMetadata source,
 			final EPSFormat.Metadata dest)
 		{
-			super.typedTranslate(source, dest);
-
 			final OMEXMLMetadata meta = source.getRoot();
 
 			final int sizeX = meta.getPixelsSizeX(0).getValue().intValue();

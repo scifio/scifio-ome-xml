@@ -98,11 +98,9 @@ public class MicromanagerTranslator {
 		}
 
 		@Override
-		protected void typedTranslate(final MicromanagerFormat.Metadata source,
+		protected void translateOMEXML(final MicromanagerFormat.Metadata source,
 			final OMEMetadata dest)
 		{
-			super.typedTranslate(source, dest);
-
 			try {
 				populateMetadata(source, dest.getRoot());
 			}

@@ -83,11 +83,9 @@ public class APNGTranslator {
 		}
 
 		@Override
-		protected void typedTranslate(final OMEMetadata source,
+		protected void translateOMEXML(final OMEMetadata source,
 			final APNGFormat.Metadata dest)
 		{
-			super.typedTranslate(source, dest);
-
 			if (dest.getFctl() != null && dest.getFctl().size() > 0) {
 				final Double timeIncrement = source.getRoot().getPixelsTimeIncrement(0);
 
@@ -132,7 +130,7 @@ public class APNGTranslator {
 		}
 
 		@Override
-		protected void typedTranslate(final APNGFormat.Metadata source,
+		protected void translateOMEXML(final APNGFormat.Metadata source,
 			final OMEMetadata dest)
 		{
 			int sizeC = 1;

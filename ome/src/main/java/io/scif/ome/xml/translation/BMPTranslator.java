@@ -82,7 +82,7 @@ public class BMPTranslator {
 		}
 
 		@Override
-		protected void typedTranslate(final BMPFormat.Metadata source,
+		protected void translateOMEXML(final BMPFormat.Metadata source,
 			final OMEMetadata dest)
 		{
 			if (source.getMetadataOptions().getMetadataLevel() != MetadataLevel.MINIMUM)

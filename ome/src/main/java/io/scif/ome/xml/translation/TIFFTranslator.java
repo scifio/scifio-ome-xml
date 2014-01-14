@@ -90,11 +90,9 @@ public class TIFFTranslator {
 		}
 
 		@Override
-		protected void typedTranslate(final TIFFFormat.Metadata source,
+		protected void translateOMEXML(final TIFFFormat.Metadata source,
 			final OMEMetadata dest)
 		{
-			super.typedTranslate(source, dest);
-
 			final OMEXMLMetadata meta = dest.getRoot();
 
 			final double physX = source.get(0).getAxis(Axes.X).averageScale(0, 1);
@@ -144,11 +142,9 @@ public class TIFFTranslator {
 		}
 
 		@Override
-		protected void typedTranslate(final OMEMetadata source,
+		protected void translateOMEXML(final OMEMetadata source,
 			final TIFFFormat.Metadata dest)
 		{
-			super.typedTranslate(source, dest);
-
 			final OMEXMLMetadata meta = source.getRoot();
 
 			if (meta.getPixelsBinDataCount(0) > 0) {

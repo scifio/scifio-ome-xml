@@ -40,6 +40,9 @@ package io.scif.ome.xml.translation;
 
 import io.scif.Metadata;
 import io.scif.ome.xml.meta.OMEMetadata;
+import io.scif.ome.xml.services.OMEXMLMetadataService;
+
+import org.scijava.plugin.Parameter;
 
 /**
  * Abstract base class for all io.scif.Translators that translate to an
@@ -50,10 +53,20 @@ import io.scif.ome.xml.meta.OMEMetadata;
 public abstract class ToOMETranslator<M extends Metadata> extends
 	OMETranslator<M, OMEMetadata>
 {
+	// -- Fields --
+
+	@Parameter
+	private OMEXMLMetadataService omexmlMetadataService;
 
 	// -- Translator API Methods --
 
-	public void translate(final M source, final OMEMetadata destination) {
-		super.translate(source, destination);
+	@Override
+	protected void typedTranslate(final M source, final OMEMetadata dest) {
+		for (int i = 0; i < source.getImageCount(); i++) {
+			omexmlMetadataService.populateMetadata(
+				dest.getRoot(), 0, source.getDatasetName(), source);
+		}
+
+		translateOMEXML(source, dest);
 	}
 }

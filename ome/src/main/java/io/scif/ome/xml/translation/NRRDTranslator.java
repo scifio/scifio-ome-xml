@@ -83,7 +83,7 @@ public class NRRDTranslator {
 		}
 
 		@Override
-		protected void typedTranslate(final NRRDFormat.Metadata source,
+		protected void translateOMEXML(final NRRDFormat.Metadata source,
 			final OMEMetadata dest)
 		{
 

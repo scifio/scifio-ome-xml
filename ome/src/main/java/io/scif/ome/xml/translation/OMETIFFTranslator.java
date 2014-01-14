@@ -81,11 +81,10 @@ public class OMETIFFTranslator {
 		// -- Translator API Methods --
 		
 		@Override
-		protected void typedTranslate(final OMETIFFFormat.Metadata source,
+		protected void translateOMEXML(final OMETIFFFormat.Metadata source,
 			final OMEMetadata dest)
 		{
 			dest.setRoot(source.getOmeMeta().getRoot());
-			super.typedTranslate(source, dest);
 		}
 	}
 
@@ -119,7 +118,7 @@ public class OMETIFFTranslator {
 		 * @see OMETranslator#typedTranslate(io.scif.Metadata, io.scif.Metadata)
 		 */
 		@Override
-		protected void typedTranslate(final OMEMetadata source,
+		protected void translateOMEXML(final OMEMetadata source,
 			final OMETIFFFormat.Metadata dest)
 		{
 			OMEMetadata omeMeta = dest.getOmeMeta();
@@ -129,8 +128,6 @@ public class OMETIFFTranslator {
 				dest.setOmeMeta(omeMeta);
 			}
 			else omeMeta.setRoot(source.getRoot());
-
-			super.typedTranslate(source, dest);
 		}
 	}
 }
