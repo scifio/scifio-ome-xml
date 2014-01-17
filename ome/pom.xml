@@ -54,25 +54,6 @@
     </dependency>
   </dependencies>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <configuration>
-          <licenseName>bsd</licenseName>
-          <organizationName>Open Microscopy Environment:
-  - Massachusetts Institute of Technology
-  - National Institutes of Health
-  - University of Dundee
-  - Board of Regents of the University of Wisconsin-Madison
-  - Glencoe Software, Inc.</organizationName>
-          <projectName>SCIFIO OME-XML Formats.</projectName>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-
   <repositories>
     <!-- NB: for parent project, in case of partial checkout -->
     <repository>
