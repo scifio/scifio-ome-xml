@@ -14,8 +14,7 @@
   <packaging>pom</packaging>
 
   <name>SCIFIO OME Formats Extension</name>
-  <description>Provides SCIFIO support for all Open Microscopy Environment
-  formats.</description>
+  <description>SCIFIO support for the OME data model (OME-XML and OME-TIFF).</description>
   <url>http://scif.io/</url>
   <inceptionYear>2013</inceptionYear>
 
