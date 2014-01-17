@@ -1,130 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.scijava</groupId>
-    <artifactId>pom-scijava</artifactId>
-    <version>1.126</version>
-  </parent>
+	<parent>
+		<groupId>org.scijava</groupId>
+		<artifactId>pom-scijava</artifactId>
+		<version>1.126</version>
+	</parent>
 
-  <groupId>io.scif</groupId>
-  <artifactId>pom-ome-formats</artifactId>
-  <version>0.5.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
+	<groupId>io.scif</groupId>
+	<artifactId>pom-ome-formats</artifactId>
+	<version>0.5.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-  <name>SCIFIO OME Formats Extension</name>
-  <description>SCIFIO support for the OME data model (OME-XML and OME-TIFF).</description>
-  <url>http://scif.io/</url>
-  <inceptionYear>2013</inceptionYear>
+	<name>SCIFIO OME Formats Extension</name>
+	<description>SCIFIO support for the OME data model (OME-XML and OME-TIFF).</description>
+	<url>http://scif.io/</url>
+	<inceptionYear>2013</inceptionYear>
 
-  <modules>
-    <module>ome</module>
-  </modules>
+	<modules>
+		<module>ome</module>
+	</modules>
 
-  <properties>
-    <project.rootdir>${basedir}</project.rootdir>
-  </properties>
+	<properties>
+		<project.rootdir>${basedir}</project.rootdir>
+	</properties>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <configuration>
-          <licenseName>bsd_2</licenseName>
-          <organizationName>Open Microscopy Environment:
-  - Massachusetts Institute of Technology
-  - National Institutes of Health
-  - University of Dundee
-  - Board of Regents of the University of Wisconsin-Madison
-  - Glencoe Software, Inc.</organizationName>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<configuration>
+					<licenseName>bsd_2</licenseName>
+					<organizationName>Open Microscopy Environment:
+	- Massachusetts Institute of Technology
+	- National Institutes of Health
+	- University of Dundee
+	- Board of Regents of the University of Wisconsin-Madison
+	- Glencoe Software, Inc.</organizationName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
-  <licenses>
-    <license>
-      <name>Simplified BSD License</name>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
+	<licenses>
+		<license>
+			<name>Simplified BSD License</name>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
-  <organization>
-    <name>SCIFIO</name>
-    <url>http://scif.io/</url>
-  </organization>
+	<organization>
+		<name>SCIFIO</name>
+		<url>http://scif.io/</url>
+	</organization>
 
-  <developers>
-    <developer>
-      <id>hinerm</id>
-      <name>Mark Hiner</name>
-      <email>hinerm@gmail.edu</email>
-      <url>http://developer.imagej.net/users/hinerm</url>
-      <organization>UW-Madison LOCI</organization>
-      <organizationUrl>http://loci.wisc.edu/</organizationUrl>
-      <roles>
-        <role>architect</role>
-        <role>developer</role>
-      </roles>
-      <timezone>-6</timezone>
-    </developer>
-    <developer>
-      <id>ctrueden</id>
-      <name>Curtis Rueden</name>
-      <email>ctrueden@wisc.edu</email>
-      <url>http://loci.wisc.edu/people/curtis-rueden</url>
-      <organization>UW-Madison LOCI</organization>
-      <organizationUrl>http://loci.wisc.edu/</organizationUrl>
-      <roles>
-        <role>architect</role>
-        <role>developer</role>
-      </roles>
-      <timezone>-6</timezone>
-    </developer>
-  </developers>
+	<developers>
+		<developer>
+			<id>hinerm</id>
+			<name>Mark Hiner</name>
+			<email>hinerm@gmail.edu</email>
+			<url>http://developer.imagej.net/users/hinerm</url>
+			<organization>UW-Madison LOCI</organization>
+			<organizationUrl>http://loci.wisc.edu/</organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>-6</timezone>
+		</developer>
+		<developer>
+			<id>ctrueden</id>
+			<name>Curtis Rueden</name>
+			<email>ctrueden@wisc.edu</email>
+			<url>http://loci.wisc.edu/people/curtis-rueden</url>
+			<organization>UW-Madison LOCI</organization>
+			<organizationUrl>http://loci.wisc.edu/</organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>-6</timezone>
+		</developer>
+	</developers>
 
-  <issueManagement>
-    <system>GitHub Issues</system>
-    <url>https://github.com/scifio/ome-formats/issues</url>
-  </issueManagement>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/scifio/ome-formats/issues</url>
+	</issueManagement>
 
-  <ciManagement>
-    <system>Jenkins</system>
-    <url>http://jenkins.imagej.net/job/OME-formats/</url>
-  </ciManagement>
+	<ciManagement>
+		<system>Jenkins</system>
+		<url>http://jenkins.imagej.net/job/OME-formats/</url>
+	</ciManagement>
 
-  <mailingLists>
-    <mailingList>
-      <name>SCIFIO</name>
-      <subscribe>http://scif.io/mailman/listinfo/scifio</subscribe>
-      <unsubscribe>http://scif.io/mailman/listinfo/scifio</unsubscribe>
-      <post>scifio@scif.io</post>
-      <archive>http://scif.io/pipermail/scifio/</archive>
-    </mailingList>
-    <mailingList>
-      <name>SciJava</name>
-      <subscribe>https://groups.google.com/forum/?fromgroups#!forum/scijava</subscribe>
-      <unsubscribe>https://groups.google.com/forum/?fromgroups#!forum/scijava</unsubscribe>
-      <post>scijava@googlegroups.com</post>
-      <archive>https://groups.google.com/forum/?fromgroups#!forum/scijava</archive>
-    </mailingList>
-  </mailingLists>
+	<mailingLists>
+		<mailingList>
+			<name>SCIFIO</name>
+			<subscribe>http://scif.io/mailman/listinfo/scifio</subscribe>
+			<unsubscribe>http://scif.io/mailman/listinfo/scifio</unsubscribe>
+			<post>scifio@scif.io</post>
+			<archive>http://scif.io/pipermail/scifio/</archive>
+		</mailingList>
+		<mailingList>
+			<name>SciJava</name>
+			<subscribe>https://groups.google.com/forum/?fromgroups#!forum/scijava</subscribe>
+			<unsubscribe>https://groups.google.com/forum/?fromgroups#!forum/scijava</unsubscribe>
+			<post>scijava@googlegroups.com</post>
+			<archive>https://groups.google.com/forum/?fromgroups#!forum/scijava</archive>
+		</mailingList>
+	</mailingLists>
 
-  <scm>
-    <connection>scm:git:git://github.com/scifio/ome-formats</connection>
-    <developerConnection>scm:git:git@github.com:scifio/ome-formats</developerConnection>
-    <tag>HEAD</tag>
-    <url>http://github.com/scifio/ome-formats</url>
-  </scm>
+	<scm>
+		<connection>scm:git:git://github.com/scifio/ome-formats</connection>
+		<developerConnection>scm:git:git@github.com:scifio/ome-formats</developerConnection>
+		<tag>HEAD</tag>
+		<url>http://github.com/scifio/ome-formats</url>
+	</scm>
 
-  <repositories>
-    <!-- NB: for parent project -->
-    <repository>
-      <id>imagej.public</id>
-      <url>http://maven.imagej.net/content/groups/public</url>
-    </repository>
-  </repositories>
+	<repositories>
+		<!-- NB: for parent project -->
+		<repository>
+			<id>imagej.public</id>
+			<url>http://maven.imagej.net/content/groups/public</url>
+		</repository>
+	</repositories>
 
 </project>
