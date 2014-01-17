@@ -12,10 +12,6 @@
 
   <name>OME-XML Formats Extension</name>
 
-  <properties>
-    <project.rootdir>${project.parent.basedir}</project.rootdir>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>${scifio.groupId}</groupId>

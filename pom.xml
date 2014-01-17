@@ -23,10 +23,6 @@
 		<module>ome</module>
 	</modules>
 
-	<properties>
-		<project.rootdir>${basedir}</project.rootdir>
-	</properties>
-
 	<build>
 		<plugins>
 			<plugin>
