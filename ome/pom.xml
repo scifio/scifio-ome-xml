@@ -11,8 +11,6 @@
   <artifactId>ome-formats</artifactId>
 
   <name>OME-XML Formats Extension</name>
-  <description>Provides SCIFIO-based support for OME-XML readers
-  and metadata.</description>
 
   <properties>
     <project.rootdir>${project.parent.basedir}</project.rootdir>
