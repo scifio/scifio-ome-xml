@@ -32,9 +32,7 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
         <configuration>
-          <licenseName>bsd</licenseName>
-          <licenseResolver>file://${project.rootdir}/license</licenseResolver>
-          <projectName>SCIFIO OME Formats Extension</projectName>
+          <licenseName>bsd_2</licenseName>
           <organizationName>Open Microscopy Environment:
   - Board of Regents of the University of Wisconsin-Madison
   - Glencoe Software, Inc.
