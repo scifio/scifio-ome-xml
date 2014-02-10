@@ -37,6 +37,7 @@ package io.scif.ome.xml.commands;
 import io.scif.FormatException;
 import io.scif.Metadata;
 import io.scif.SCIFIO;
+import io.scif.config.SCIFIOConfig;
 import io.scif.filters.PlaneSeparator;
 import io.scif.filters.ReaderFilter;
 import io.scif.ome.xml.meta.OMEMetadata;
@@ -93,7 +94,8 @@ public class OMEXML extends AbstractSCIFIOToolCommand {
 			// OMEXML uses a fixed-5D XY[ZCT] data model. Thus we need to adjust the
 			// axis order to best match the OME model.
 			final ReaderFilter reader =
-				initializeService.initializeReader(file, true);
+				initializeService.initializeReader(file, new SCIFIOConfig()
+					.checkerSetOpen(true));
 			reader.enable(PlaneSeparator.class).separate(axesToSplit(reader));
 			final Metadata meta = reader.getMetadata();
 

@@ -35,7 +35,6 @@
 package io.scif.ome.xml.translation;
 
 import io.scif.FormatException;
-import io.scif.MetadataLevel;
 import io.scif.common.DateTools;
 import io.scif.formats.MicromanagerFormat;
 import io.scif.formats.MicromanagerFormat.Metadata;
@@ -130,77 +129,73 @@ public class MicromanagerTranslator {
 					store.setImageName(parent.getName(), i);
 				}
 
-				if (meta.getMetadataOptions().getMetadataLevel() != MetadataLevel.MINIMUM)
-				{
-					store.setImageDescription(p.comment, i);
+				store.setImageDescription(p.comment, i);
 
-					// link Instrument and Image
-					store.setImageInstrumentRef(instrumentID, i);
+				// link Instrument and Image
+				store.setImageInstrumentRef(instrumentID, i);
 
-					for (int c = 0; c < p.channels.length; c++) {
-						store.setChannelName(p.channels[c], i, c);
-					}
-
-					if (p.pixelSize != null && p.pixelSize > 0) {
-						store.setPixelsPhysicalSizeX(new PositiveFloat(p.pixelSize), i);
-						store.setPixelsPhysicalSizeY(new PositiveFloat(p.pixelSize), i);
-					}
-					else {
-						log().warn(
-							"Expected positive value for PhysicalSizeX; got " + p.pixelSize);
-					}
-					if (p.sliceThickness != null && p.sliceThickness > 0) {
-						store
-							.setPixelsPhysicalSizeZ(new PositiveFloat(p.sliceThickness), i);
-					}
-					else {
-						log().warn(
-							"Expected positive value for PhysicalSizeZ; got " +
-								p.sliceThickness);
-					}
-
-					int nextStamp = 0;
-					for (int q = 0; q < meta.get(i).getPlaneCount(); q++) {
-						store.setPlaneExposureTime(p.exposureTime, i, q);
-						final String tiff = positions.get(i).getFile(meta, i, q);
-						if (tiff != null && new Location(getContext(), tiff).exists() &&
-							nextStamp < p.timestamps.length)
-						{
-							store.setPlaneDeltaT(p.timestamps[nextStamp++], i, q);
-						}
-					}
-
-					final String serialNumber = p.detectorID;
-					p.detectorID = omexmlMetadataService.createLSID("Detector", 0, i);
-
-					for (int c = 0; c < p.channels.length; c++) {
-						store.setDetectorSettingsBinning(omexmlMetadataService
-							.getBinning(p.binning), i, c);
-						store.setDetectorSettingsGain(new Double(p.gain), i, c);
-						if (c < p.voltage.size()) {
-							store.setDetectorSettingsVoltage(p.voltage.get(c), i, c);
-						}
-						store.setDetectorSettingsID(p.detectorID, i, c);
-					}
-
-					store.setDetectorID(p.detectorID, 0, i);
-					if (p.detectorModel != null) {
-						store.setDetectorModel(p.detectorModel, 0, i);
-					}
-
-					if (serialNumber != null) {
-						store.setDetectorSerialNumber(serialNumber, 0, i);
-					}
-
-					if (p.detectorManufacturer != null) {
-						store.setDetectorManufacturer(p.detectorManufacturer, 0, i);
-					}
-
-					if (p.cameraMode == null) p.cameraMode = "Other";
-					store.setDetectorType(omexmlMetadataService
-						.getDetectorType(p.cameraMode), 0, i);
-					store.setImagingEnvironmentTemperature(p.temperature, i);
+				for (int c = 0; c < p.channels.length; c++) {
+					store.setChannelName(p.channels[c], i, c);
 				}
+
+				if (p.pixelSize != null && p.pixelSize > 0) {
+					store.setPixelsPhysicalSizeX(new PositiveFloat(p.pixelSize), i);
+					store.setPixelsPhysicalSizeY(new PositiveFloat(p.pixelSize), i);
+				}
+				else {
+					log().warn(
+						"Expected positive value for PhysicalSizeX; got " + p.pixelSize);
+				}
+				if (p.sliceThickness != null && p.sliceThickness > 0) {
+					store.setPixelsPhysicalSizeZ(new PositiveFloat(p.sliceThickness), i);
+				}
+				else {
+					log().warn(
+						"Expected positive value for PhysicalSizeZ; got " +
+							p.sliceThickness);
+				}
+
+				int nextStamp = 0;
+				for (int q = 0; q < meta.get(i).getPlaneCount(); q++) {
+					store.setPlaneExposureTime(p.exposureTime, i, q);
+					final String tiff = positions.get(i).getFile(meta, i, q);
+					if (tiff != null && new Location(getContext(), tiff).exists() &&
+						nextStamp < p.timestamps.length)
+					{
+						store.setPlaneDeltaT(p.timestamps[nextStamp++], i, q);
+					}
+				}
+
+				final String serialNumber = p.detectorID;
+				p.detectorID = omexmlMetadataService.createLSID("Detector", 0, i);
+
+				for (int c = 0; c < p.channels.length; c++) {
+					store.setDetectorSettingsBinning(omexmlMetadataService
+						.getBinning(p.binning), i, c);
+					store.setDetectorSettingsGain(new Double(p.gain), i, c);
+					if (c < p.voltage.size()) {
+						store.setDetectorSettingsVoltage(p.voltage.get(c), i, c);
+					}
+					store.setDetectorSettingsID(p.detectorID, i, c);
+				}
+
+				store.setDetectorID(p.detectorID, 0, i);
+				if (p.detectorModel != null) {
+					store.setDetectorModel(p.detectorModel, 0, i);
+				}
+
+				if (serialNumber != null) {
+					store.setDetectorSerialNumber(serialNumber, 0, i);
+				}
+
+				if (p.detectorManufacturer != null) {
+					store.setDetectorManufacturer(p.detectorManufacturer, 0, i);
+				}
+
+				if (p.cameraMode == null) p.cameraMode = "Other";
+				store.setDetectorType(omexmlMetadataService
+					.getDetectorType(p.cameraMode), 0, i);
+				store.setImagingEnvironmentTemperature(p.temperature, i);
 			}
 		}
 

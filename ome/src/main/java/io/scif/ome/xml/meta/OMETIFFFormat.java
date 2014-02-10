@@ -46,6 +46,7 @@ import io.scif.FormatException;
 import io.scif.ImageMetadata;
 import io.scif.Plane;
 import io.scif.Translator;
+import io.scif.config.SCIFIOConfig;
 import io.scif.formats.MinimalTIFFFormat;
 import io.scif.formats.TIFFFormat;
 import io.scif.formats.tiff.IFD;
@@ -118,7 +119,7 @@ public class OMETIFFFormat extends AbstractFormat {
 	}
 
 	@Override
-	public String[] getSuffixes() {
+	protected String[] makeSuffixArray() {
 		return new String[] { "ome.tif", "ome.tiff" };
 	}
 
@@ -445,14 +446,17 @@ public class OMETIFFFormat extends AbstractFormat {
 	 */
 	public static class Checker extends AbstractChecker {
 
-		// -- Constructor --
+		// -- Checker API Methods --
 
-		public Checker() {
-			suffixNecessary = false;
-			suffixSufficient = false;
+		@Override
+		public boolean suffixNecessary() {
+			return false;
 		}
 
-		// -- Checker API Methods --
+		@Override
+		public boolean suffixSufficient() {
+			return false;
+		}
 
 		@Override
 		public boolean isFormat(final RandomAccessInputStream stream)
@@ -528,29 +532,29 @@ public class OMETIFFFormat extends AbstractFormat {
 		public String[] getImageUsedFiles(final int imageIndex,
 			final boolean noPixels)
 		{
-			FormatTools.assertId(currentId, true, 1);
+			FormatTools.assertId(getMetadata().getDatasetName(), true, 1);
 			if (noPixels) return null;
 			final Vector<String> usedFiles = new Vector<String>();
-			for (int i = 0; i < metadata.info[imageIndex].length; i++) {
-				if (!usedFiles.contains(metadata.info[imageIndex][i].id)) {
-					usedFiles.add(metadata.info[imageIndex][i].id);
+			for (int i = 0; i < getMetadata().info[imageIndex].length; i++) {
+				if (!usedFiles.contains(getMetadata().info[imageIndex][i].id)) {
+					usedFiles.add(getMetadata().info[imageIndex][i].id);
 				}
 			}
 			return usedFiles.toArray(new String[usedFiles.size()]);
 		}
 
 		@Override
-		public Metadata parse(final String fileName, final Metadata meta)
-			throws IOException, FormatException
+		public Metadata parse(final String fileName, final Metadata meta,
+			final SCIFIOConfig config) throws IOException, FormatException
 		{
-			return super.parse(normalizeFilename(null, fileName), meta);
+			return super.parse(normalizeFilename(null, fileName), meta, config);
 		}
 
 		@Override
-		public Metadata parse(final File file, final Metadata meta)
-			throws IOException, FormatException
+		public Metadata parse(final File file, final Metadata meta,
+			final SCIFIOConfig config) throws IOException, FormatException
 		{
-			return super.parse(normalizeFilename(null, file.getPath()), meta);
+			return super.parse(normalizeFilename(null, file.getPath()), meta, config);
 		}
 
 		@Override
@@ -563,10 +567,10 @@ public class OMETIFFFormat extends AbstractFormat {
 
 		@Override
 		public Metadata parse(final RandomAccessInputStream stream,
-			final Metadata meta) throws IOException, FormatException
+			final Metadata meta, final SCIFIOConfig config) throws IOException,
+			FormatException
 		{
-
-			super.parse(stream, meta);
+			super.parse(stream, meta, config);
 			for (int s = 0; s < meta.getImageCount(); s++) {
 				final OMETIFFPlane[][] info = meta.getPlaneInfo();
 
@@ -611,7 +615,8 @@ public class OMETIFFFormat extends AbstractFormat {
 
 		@Override
 		protected void typedParse(final io.scif.io.RandomAccessInputStream stream,
-			final Metadata meta) throws IOException, io.scif.FormatException
+			final Metadata meta, final SCIFIOConfig config) throws IOException,
+			io.scif.FormatException
 		{
 			// normalize file name
 			final String id = stream.getFileName();
@@ -622,7 +627,7 @@ public class OMETIFFFormat extends AbstractFormat {
 			String fileName =
 				new Location(getContext(), id).getAbsoluteFile().getAbsolutePath();
 			if (!new File(fileName).exists()) {
-				fileName = currentId;
+				fileName = stream.getFileName();
 			}
 			final RandomAccessInputStream ras =
 				new RandomAccessInputStream(getContext(), fileName);
@@ -934,7 +939,7 @@ public class OMETIFFFormat extends AbstractFormat {
 						filename = dir + File.separator + filename;
 
 						if (!new Location(getContext(), filename).exists()) {
-							filename = currentId;
+							filename = stream.getFileName();
 						}
 					}
 
@@ -988,12 +993,12 @@ public class OMETIFFFormat extends AbstractFormat {
 						final TIFFFormat.Reader<?> r =
 							(io.scif.formats.TIFFFormat.Reader<?>) formatService
 								.getFormatFromClass(TIFFFormat.class).createReader();
-						r.setSource(currentId);
+						r.setSource(stream.getFileName());
 						try {
 							planes = new OMETIFFPlane[r.getImageCount()];
 							for (int plane = 0; plane < planes.length; plane++) {
 								planes[plane] = new OMETIFFPlane();
-								planes[plane].id = currentId;
+								planes[plane].id = stream.getFileName();
 								planes[plane].reader = r;
 								planes[plane].ifd = plane;
 							}
@@ -1034,22 +1039,12 @@ public class OMETIFFFormat extends AbstractFormat {
 			if (file.exists()) return file.getAbsolutePath();
 			return name;
 		}
-
 	}
 
 	/**
 	 * @author Mark Hiner hinerm at gmail.com
 	 */
 	public static class Reader extends ByteArrayReader<Metadata> {
-
-		// -- Fields --
-
-		// -- Constructor --
-
-		public Reader() {
-			domains = FormatTools.NON_GRAPHICS_DOMAINS;
-			hasCompanionFiles = true;
-		}
 
 		// -- Reader API Methods --
 
@@ -1065,7 +1060,7 @@ public class OMETIFFFormat extends AbstractFormat {
 
 		@Override
 		public String[] getDomains() {
-			FormatTools.assertId(currentId, true, 1);
+			FormatTools.assertId(getMetadata().getDatasetName(), true, 1);
 			return getMetadata().isHasSPW() ? new String[] { FormatTools.HCS_DOMAIN }
 				: FormatTools.NON_SPECIAL_DOMAINS;
 		}
@@ -1073,7 +1068,8 @@ public class OMETIFFFormat extends AbstractFormat {
 		@Override
 		public ByteArrayPlane openPlane(final int imageIndex,
 			final long planeIndex, final ByteArrayPlane plane, final long[] offsets,
-			final long[] lengths) throws io.scif.FormatException, IOException
+			final long[] lengths, final SCIFIOConfig config)
+			throws io.scif.FormatException, IOException
 		{
 			final Metadata meta = getMetadata();
 			final byte[] buf = plane.getBytes();
@@ -1115,6 +1111,16 @@ public class OMETIFFFormat extends AbstractFormat {
 			IOException
 		{
 			return OMETIFFFormat.isSingleFile(getContext(), id);
+		}
+
+		@Override
+		public boolean hasCompanionFiles() {
+			return true;
+		}
+
+		@Override
+		protected String[] createDomainArray() {
+			return FormatTools.NON_GRAPHICS_DOMAINS;
 		}
 
 	}
@@ -1195,7 +1201,7 @@ public class OMETIFFFormat extends AbstractFormat {
 		@Override
 		public void close() throws IOException {
 			try {
-				if (this.out != null) {
+				if (getStream() != null) {
 					setupServiceAndMetadata();
 
 					// remove any BinData elements from the OME-XML
@@ -1314,14 +1320,14 @@ public class OMETIFFFormat extends AbstractFormat {
 		}
 
 		private void saveComment(final String file, final String xml)
-			throws IOException
+			throws IOException, FormatException
 		{
-			if (out != null) out.close();
-			out = new RandomAccessOutputStream(getContext(), file);
+			if (getStream() != null) getStream().close();
+			setDest(new RandomAccessOutputStream(getContext(), file));
 			RandomAccessInputStream in = null;
 			try {
-				final TiffSaver saver = new TiffSaver(getContext(), out, file);
-				saver.setBigTiff(isBigTiff);
+				final TiffSaver saver = new TiffSaver(getContext(), getStream(), file);
+				saver.setBigTiff(isBigTiff());
 				in = new RandomAccessInputStream(getContext(), file);
 				saver.overwriteLastIFDOffset(in);
 				saver.overwriteComment(in, xml);
@@ -1334,7 +1340,7 @@ public class OMETIFFFormat extends AbstractFormat {
 				throw io;
 			}
 			finally {
-				if (out != null) out.close();
+				if (getStream() != null) getStream().close();
 				if (in != null) in.close();
 			}
 		}

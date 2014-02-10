@@ -57,7 +57,7 @@ public class OMEXMLTest {
 	public void extractOMEXML() throws FormatException, IOException {
 		// Get Metadata describing a .fake image
 		final String fakeId =
-			"testImg&lengths=512,512,1,1,1&axes=X,Y,Z,Time,Channel.fake";
+			"testImg&lengths=512,512&axes=X,Y.fake";
 
 		final Metadata fakeMeta =
 			scifio.initializer().initializeReader(fakeId).getMetadata();
@@ -76,9 +76,9 @@ public class OMEXMLTest {
 		assertTrue(omexml.length() > 0);
 
 		assertTrue(omexml
-			.contains("<Pixels DimensionOrder=\"XYZTC\" ID=\"Pixels:0\" "
-				+ "PhysicalSizeX=\"1.0\" PhysicalSizeY=\"1.0\" PhysicalSizeZ=\"NaN\""
+			.contains("<Pixels DimensionOrder=\"XYCZT\" ID=\"Pixels:0\" "
+				+ "PhysicalSizeX=\"1.0\" PhysicalSizeY=\"1.0\" PhysicalSizeZ=\"1.0\""
 				+ " SizeC=\"1\" SizeT=\"1\" SizeX=\"512\" SizeY=\"512\" SizeZ=\"1\""
-				+ " TimeIncrement=\"NaN\" Type=\"uint8\">"));
+				+ " TimeIncrement=\"1.0\" Type=\"uint8\">"));
 	}
 }

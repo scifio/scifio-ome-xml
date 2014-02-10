@@ -44,7 +44,9 @@ import io.scif.ome.xml.meta.OMEXMLMetadata;
 import io.scif.services.FormatService;
 import io.scif.services.ServiceException;
 import io.scif.util.FormatTools;
-import io.scif.util.SCIFIOMetadataTools;
+
+import java.util.Arrays;
+
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.meta.MetadataStore;
 import net.imglib2.meta.Axes;
@@ -699,7 +701,7 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 		}
 
 		// populate the metadata
-		SCIFIOMetadataTools.populate(iMeta, axes, lengths, pType, FormatTools
+		iMeta.populate(Arrays.asList(axes), lengths, pType, FormatTools
 			.getBitsPerPixel(pType), true, little, false, false, true);
 	}
 }

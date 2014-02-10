@@ -35,7 +35,6 @@
 package io.scif.ome.xml.translation;
 
 import io.scif.Metadata;
-import io.scif.MetadataLevel;
 import io.scif.formats.BMPFormat;
 import io.scif.ome.xml.meta.OMEMetadata;
 import ome.xml.model.primitives.PositiveFloat;
@@ -81,36 +80,31 @@ public class BMPTranslator {
 		protected void translateOMEXML(final BMPFormat.Metadata source,
 			final OMEMetadata dest)
 		{
-			if (source.getMetadataOptions().getMetadataLevel() != MetadataLevel.MINIMUM)
-			{
-				// resolution is stored as pixels per meter; we want to convert to
-				// microns per pixel
+			// resolution is stored as pixels per meter; we want to convert to
+			// microns per pixel
 
-				final int pixelSizeX = (Integer) source.getTable().get("X resolution");
+			final Integer pixelSizeX = (Integer) source.getTable().get("X resolution");
 
-				final int pixelSizeY = (Integer) source.getTable().get("Y resolution");
+			final Integer pixelSizeY = (Integer) source.getTable().get("Y resolution");
 
-				final double correctedX =
-					pixelSizeX == 0 ? 0.0 : 1000000.0 / pixelSizeX;
-				final double correctedY =
-					pixelSizeY == 0 ? 0.0 : 1000000.0 / pixelSizeY;
+			final double correctedX =
+				pixelSizeX == null || pixelSizeX == 0 ? 0.0 : 1000000.0 / pixelSizeX;
+			final double correctedY =
+				pixelSizeY == null || pixelSizeY == 0 ? 0.0 : 1000000.0 / pixelSizeY;
 
-				if (correctedX > 0) {
-					dest.getRoot().setPixelsPhysicalSizeX(new PositiveFloat(correctedX),
-						0);
-				}
-				else {
-					log().warn(
-						"Expected positive value for PhysicalSizeX; got " + correctedX);
-				}
-				if (correctedY > 0) {
-					dest.getRoot().setPixelsPhysicalSizeY(new PositiveFloat(correctedY),
-						0);
-				}
-				else {
-					log().warn(
-						"Expected positive value for PhysicalSizeY; got " + correctedY);
-				}
+			if (correctedX > 0) {
+				dest.getRoot().setPixelsPhysicalSizeX(new PositiveFloat(correctedX), 0);
+			}
+			else {
+				log().warn(
+					"Expected positive value for PhysicalSizeX; got " + correctedX);
+			}
+			if (correctedY > 0) {
+				dest.getRoot().setPixelsPhysicalSizeY(new PositiveFloat(correctedY), 0);
+			}
+			else {
+				log().warn(
+					"Expected positive value for PhysicalSizeY; got " + correctedY);
 			}
 		}
 	}

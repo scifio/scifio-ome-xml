@@ -35,7 +35,6 @@
 package io.scif.ome.xml.translation;
 
 import io.scif.Metadata;
-import io.scif.MetadataLevel;
 import io.scif.common.DateTools;
 import io.scif.formats.DICOMFormat;
 import io.scif.ome.xml.meta.OMEMetadata;
@@ -110,38 +109,35 @@ public class DICOMTranslator {
 				store.setImageName("Series " + i, i);
 			}
 
-			if (source.getMetadataOptions().getMetadataLevel() != MetadataLevel.MINIMUM)
-			{
-				for (int i = 0; i < source.getImageCount(); i++) {
-					store.setImageDescription(imageType, i);
+			for (int i = 0; i < source.getImageCount(); i++) {
+				store.setImageDescription(imageType, i);
 
-					if (pixelSizeX != null) {
-						final Double sizeX = new Double(pixelSizeX);
-						if (sizeX > 0) {
-							store.setPixelsPhysicalSizeX(new PositiveFloat(sizeX), i);
-						}
-						else {
-							log().warn(
-								"Expected positive value for PhysicalSizeX; got " + sizeX);
-						}
-					}
-					if (pixelSizeY != null) {
-						final Double sizeY = new Double(pixelSizeY);
-						if (sizeY > 0) {
-							store.setPixelsPhysicalSizeY(new PositiveFloat(sizeY), i);
-						}
-						else {
-							log().warn(
-								"Expected positive value for PhysicalSizeY; got " + sizeY);
-						}
-					}
-					if (pixelSizeZ != null && pixelSizeZ > 0) {
-						store.setPixelsPhysicalSizeZ(new PositiveFloat(pixelSizeZ), i);
+				if (pixelSizeX != null) {
+					final Double sizeX = new Double(pixelSizeX);
+					if (sizeX > 0) {
+						store.setPixelsPhysicalSizeX(new PositiveFloat(sizeX), i);
 					}
 					else {
 						log().warn(
-							"Expected positive value for PhysicalSizeZ; got " + pixelSizeZ);
+							"Expected positive value for PhysicalSizeX; got " + sizeX);
 					}
+				}
+				if (pixelSizeY != null) {
+					final Double sizeY = new Double(pixelSizeY);
+					if (sizeY > 0) {
+						store.setPixelsPhysicalSizeY(new PositiveFloat(sizeY), i);
+					}
+					else {
+						log().warn(
+							"Expected positive value for PhysicalSizeY; got " + sizeY);
+					}
+				}
+				if (pixelSizeZ != null && pixelSizeZ > 0) {
+					store.setPixelsPhysicalSizeZ(new PositiveFloat(pixelSizeZ), i);
+				}
+				else {
+					log().warn(
+						"Expected positive value for PhysicalSizeZ; got " + pixelSizeZ);
 				}
 			}
 		}

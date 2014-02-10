@@ -35,7 +35,6 @@
 package io.scif.ome.xml.translation;
 
 import io.scif.Metadata;
-import io.scif.MetadataLevel;
 import io.scif.formats.NRRDFormat;
 import io.scif.ome.xml.meta.OMEMetadata;
 import ome.xml.model.primitives.PositiveFloat;
@@ -82,37 +81,29 @@ public class NRRDTranslator {
 			final OMEMetadata dest)
 		{
 
-			if (source.getMetadataOptions().getMetadataLevel() != MetadataLevel.MINIMUM)
-			{
+			final String[] pixelSizes = source.getPixelSizes();
 
-				final String[] pixelSizes = source.getPixelSizes();
-
-				if (pixelSizes != null) {
-					for (int i = 0; i < pixelSizes.length; i++) {
-						if (pixelSizes[i] == null) continue;
-						try {
-							final Double d = new Double(pixelSizes[i].trim());
-							if (d > 0) {
-								if (i == 0) {
-									dest.getRoot()
-										.setPixelsPhysicalSizeX(new PositiveFloat(d), 0);
-								}
-								else if (i == 1) {
-									dest.getRoot()
-										.setPixelsPhysicalSizeY(new PositiveFloat(d), 0);
-								}
-								else if (i == 2) {
-									dest.getRoot()
-										.setPixelsPhysicalSizeZ(new PositiveFloat(d), 0);
-								}
+			if (pixelSizes != null) {
+				for (int i = 0; i < pixelSizes.length; i++) {
+					if (pixelSizes[i] == null) continue;
+					try {
+						final Double d = new Double(pixelSizes[i].trim());
+						if (d > 0) {
+							if (i == 0) {
+								dest.getRoot().setPixelsPhysicalSizeX(new PositiveFloat(d), 0);
 							}
-							else {
-								log()
-									.warn("Expected positive value for PhysicalSize; got " + d);
+							else if (i == 1) {
+								dest.getRoot().setPixelsPhysicalSizeY(new PositiveFloat(d), 0);
+							}
+							else if (i == 2) {
+								dest.getRoot().setPixelsPhysicalSizeZ(new PositiveFloat(d), 0);
 							}
 						}
-						catch (final NumberFormatException e) {}
+						else {
+							log().warn("Expected positive value for PhysicalSize; got " + d);
+						}
 					}
+					catch (final NumberFormatException e) {}
 				}
 			}
 		}

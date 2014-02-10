@@ -36,8 +36,6 @@ package io.scif.ome.xml.translation;
 
 import io.scif.FormatException;
 import io.scif.Metadata;
-import io.scif.MetadataLevel;
-import io.scif.MetadataOptions;
 import io.scif.formats.ICSFormat;
 import io.scif.ome.xml.meta.OMEMetadata;
 import io.scif.ome.xml.meta.OMEXMLMetadata;
@@ -101,143 +99,136 @@ public class ICSTranslator {
 
 			if (ts != null) dest.putDate(ts.getValue());
 
-			final MetadataOptions options = source.getMetadataOptions();
+			dest.putDescription(retrieve.getImageDescription(0));
 
-			if (options != null &&
-				options.getMetadataLevel() != MetadataLevel.MINIMUM)
-			{
-				dest.putDescription(retrieve.getImageDescription(0));
+			if (retrieve.getInstrumentCount() > 0) {
+				dest.putMicroscopeModel(retrieve.getMicroscopeModel(0));
+				dest.putMicroscopeManufacturer(retrieve.getMicroscopeManufacturer(0));
+				final Hashtable<Integer, Integer> laserWaves =
+					new Hashtable<Integer, Integer>();
 
-				if (retrieve.getInstrumentCount() > 0) {
-					dest.putMicroscopeModel(retrieve.getMicroscopeModel(0));
-					dest.putMicroscopeManufacturer(retrieve.getMicroscopeManufacturer(0));
-					final Hashtable<Integer, Integer> laserWaves =
-						new Hashtable<Integer, Integer>();
-
-					for (int i = 0; i < retrieve.getLightSourceCount(0); i++) {
-						laserWaves.put(i, retrieve.getLaserWavelength(0, i).getValue());
-					}
-
-					dest.putWavelengths(laserWaves);
-					dest.putLaserManufacturer(retrieve.getLaserManufacturer(0, 0));
-					dest.putLaserModel(retrieve.getLaserModel(0, 0));
-					dest.putLaserPower(retrieve.getLaserPower(0, 0));
-					dest.putLaserRepetitionRate(retrieve.getLaserRepetitionRate(0, 0));
-
-					dest.putFilterSetModel(retrieve.getFilterSetModel(0, 0));
-					dest.putDichroicModel(retrieve.getDichroicModel(0, 0));
-					dest.putExcitationModel(retrieve.getFilterModel(0, 0));
-					dest.putEmissionModel(retrieve.getFilterModel(0, 1));
-
-					dest.putObjectiveModel(retrieve.getObjectiveModel(0, 0));
-					dest.putImmersion(retrieve.getObjectiveImmersion(0, 0).getValue());
-					dest.putLensNA(retrieve.getObjectiveLensNA(0, 0));
-					dest.putWorkingDistance(retrieve.getObjectiveWorkingDistance(0, 0));
-					dest.putMagnification(retrieve.getObjectiveCalibratedMagnification(0,
-						0));
-
-					dest.putDetectorManufacturer(retrieve.getDetectorManufacturer(0, 0));
-					dest.putDetectorModel(retrieve.getDetectorModel(0, 0));
+				for (int i = 0; i < retrieve.getLightSourceCount(0); i++) {
+					laserWaves.put(i, retrieve.getLaserWavelength(0, i).getValue());
 				}
 
-				if (retrieve.getExperimentCount() > 0) {
-					dest.putExperimentType(retrieve.getExperimentType(0).getValue());
-					dest.putAuthorLastName(retrieve.getExperimenterLastName(0));
-				}
+				dest.putWavelengths(laserWaves);
+				dest.putLaserManufacturer(retrieve.getLaserManufacturer(0, 0));
+				dest.putLaserModel(retrieve.getLaserModel(0, 0));
+				dest.putLaserPower(retrieve.getLaserPower(0, 0));
+				dest.putLaserRepetitionRate(retrieve.getLaserRepetitionRate(0, 0));
 
-				final Double[] pixelSizes = new Double[5];
-				final String[] units = new String[5];
+				dest.putFilterSetModel(retrieve.getFilterSetModel(0, 0));
+				dest.putDichroicModel(retrieve.getDichroicModel(0, 0));
+				dest.putExcitationModel(retrieve.getFilterModel(0, 0));
+				dest.putEmissionModel(retrieve.getFilterModel(0, 1));
 
-				final String order = retrieve.getPixelsDimensionOrder(0).getValue();
-				final PositiveFloat sizex = retrieve.getPixelsPhysicalSizeX(0), sizey =
-					retrieve.getPixelsPhysicalSizeY(0), sizez =
-					retrieve.getPixelsPhysicalSizeZ(0);
-				final Double sizet = retrieve.getPixelsTimeIncrement(0);
+				dest.putObjectiveModel(retrieve.getObjectiveModel(0, 0));
+				dest.putImmersion(retrieve.getObjectiveImmersion(0, 0).getValue());
+				dest.putLensNA(retrieve.getObjectiveLensNA(0, 0));
+				dest.putWorkingDistance(retrieve.getObjectiveWorkingDistance(0, 0));
+				dest.putMagnification(retrieve
+					.getObjectiveCalibratedMagnification(0, 0));
 
-				for (int i = 0; i < order.length(); i++) {
-					switch (order.toUpperCase().charAt(i)) {
-						case 'X':
-							pixelSizes[i] = sizex == null ? 1.0 : sizex.getValue();
-							units[i] = "um";
-							break;
-						case 'Y':
-							pixelSizes[i] = sizey == null ? 1.0 : sizey.getValue();
-							units[i] = "um";
-							break;
-						case 'Z':
-							pixelSizes[i] = sizez == null ? 1.0 : sizez.getValue();
-							units[i] = "um";
-							break;
-						case 'T':
-							pixelSizes[i] = sizet == null ? 1.0 : sizet;
-							units[i] = "s";
-							break;
-						case 'C':
-							pixelSizes[i] = 1.0;
-							units[i] = "um";
-							break;
-						default:
-							pixelSizes[i] = 1.0;
-							units[i] = "um";
-					}
-				}
-
-				dest.putPixelSizes(pixelSizes);
-				dest.putUnits(units);
-
-				if (retrieve.getPlaneCount(0) > 0) {
-					final Double[] timestamps =
-						new Double[(int) source.get(0).getAxisLength(Axes.TIME)];
-
-					for (int t = 0; t < timestamps.length; t++) {
-						timestamps[t] = retrieve.getPlaneDeltaT(0, t);
-					}
-
-					dest.putTimestamps(timestamps);
-					dest.putExposureTime(retrieve.getPlaneExposureTime(0, 0));
-				}
-
-				final Hashtable<Integer, String> channelNames =
-					new Hashtable<Integer, String>();
-				final Hashtable<Integer, Double> pinholes =
-					new Hashtable<Integer, Double>();
-				final Hashtable<Integer, Double> gains =
-					new Hashtable<Integer, Double>();
-				final List<Integer> emWaves = new ArrayList<Integer>();
-				final List<Integer> exWaves = new ArrayList<Integer>();
-				final long effSizeC =
-					source.get(0).getPlaneCount() /
-						(source.get(0).getAxisLength(Axes.TIME) * source.get(0)
-							.getAxisLength(Axes.Z));
-				for (int i = 0; i < effSizeC; i++) {
-					final String cName = retrieve.getChannelName(0, i);
-					if (cName != null) channelNames.put(i, cName);
-
-					final Double pinSize = retrieve.getChannelPinholeSize(0, i);
-					if (pinSize != null) pinholes.put(i, pinSize);
-
-					final PositiveInteger emWave =
-						retrieve.getChannelEmissionWavelength(0, i);
-					if (emWave != null) emWaves.add(emWave.getValue());
-
-					final PositiveInteger exWave =
-						retrieve.getChannelExcitationWavelength(0, i);
-					if (exWave != null) exWaves.add(exWave.getValue());
-
-					if (retrieve.getInstrumentCount() > 0 &&
-						retrieve.getDetectorCount(0) > 0)
-					{
-						final Double chGain = retrieve.getDetectorSettingsGain(0, i);
-						if (chGain != null) gains.put(i, chGain);
-					}
-				}
-
-				dest.putChannelNames(channelNames);
-				dest.putPinholes(pinholes);
-				dest.putEXWaves(exWaves.toArray(new Integer[exWaves.size()]));
-				dest.putEMWaves(emWaves.toArray(new Integer[emWaves.size()]));
-				dest.putGains(gains);
+				dest.putDetectorManufacturer(retrieve.getDetectorManufacturer(0, 0));
+				dest.putDetectorModel(retrieve.getDetectorModel(0, 0));
 			}
+
+			if (retrieve.getExperimentCount() > 0) {
+				dest.putExperimentType(retrieve.getExperimentType(0).getValue());
+				dest.putAuthorLastName(retrieve.getExperimenterLastName(0));
+			}
+
+			final Double[] pixelSizes = new Double[5];
+			final String[] units = new String[5];
+
+			final String order = retrieve.getPixelsDimensionOrder(0).getValue();
+			final PositiveFloat sizex = retrieve.getPixelsPhysicalSizeX(0), sizey =
+				retrieve.getPixelsPhysicalSizeY(0), sizez =
+				retrieve.getPixelsPhysicalSizeZ(0);
+			final Double sizet = retrieve.getPixelsTimeIncrement(0);
+
+			for (int i = 0; i < order.length(); i++) {
+				switch (order.toUpperCase().charAt(i)) {
+					case 'X':
+						pixelSizes[i] = sizex == null ? 1.0 : sizex.getValue();
+						units[i] = "um";
+						break;
+					case 'Y':
+						pixelSizes[i] = sizey == null ? 1.0 : sizey.getValue();
+						units[i] = "um";
+						break;
+					case 'Z':
+						pixelSizes[i] = sizez == null ? 1.0 : sizez.getValue();
+						units[i] = "um";
+						break;
+					case 'T':
+						pixelSizes[i] = sizet == null ? 1.0 : sizet;
+						units[i] = "s";
+						break;
+					case 'C':
+						pixelSizes[i] = 1.0;
+						units[i] = "um";
+						break;
+					default:
+						pixelSizes[i] = 1.0;
+						units[i] = "um";
+				}
+			}
+
+			dest.putPixelSizes(pixelSizes);
+			dest.putUnits(units);
+
+			if (retrieve.getPlaneCount(0) > 0) {
+				final Double[] timestamps =
+					new Double[(int) source.get(0).getAxisLength(Axes.TIME)];
+
+				for (int t = 0; t < timestamps.length; t++) {
+					timestamps[t] = retrieve.getPlaneDeltaT(0, t);
+				}
+
+				dest.putTimestamps(timestamps);
+				dest.putExposureTime(retrieve.getPlaneExposureTime(0, 0));
+			}
+
+			final Hashtable<Integer, String> channelNames =
+				new Hashtable<Integer, String>();
+			final Hashtable<Integer, Double> pinholes =
+				new Hashtable<Integer, Double>();
+			final Hashtable<Integer, Double> gains = new Hashtable<Integer, Double>();
+			final List<Integer> emWaves = new ArrayList<Integer>();
+			final List<Integer> exWaves = new ArrayList<Integer>();
+			final long effSizeC =
+				source.get(0).getPlaneCount() /
+					(source.get(0).getAxisLength(Axes.TIME) * source.get(0)
+						.getAxisLength(Axes.Z));
+			for (int i = 0; i < effSizeC; i++) {
+				final String cName = retrieve.getChannelName(0, i);
+				if (cName != null) channelNames.put(i, cName);
+
+				final Double pinSize = retrieve.getChannelPinholeSize(0, i);
+				if (pinSize != null) pinholes.put(i, pinSize);
+
+				final PositiveInteger emWave =
+					retrieve.getChannelEmissionWavelength(0, i);
+				if (emWave != null) emWaves.add(emWave.getValue());
+
+				final PositiveInteger exWave =
+					retrieve.getChannelExcitationWavelength(0, i);
+				if (exWave != null) exWaves.add(exWave.getValue());
+
+				if (retrieve.getInstrumentCount() > 0 &&
+					retrieve.getDetectorCount(0) > 0)
+				{
+					final Double chGain = retrieve.getDetectorSettingsGain(0, i);
+					if (chGain != null) gains.put(i, chGain);
+				}
+			}
+
+			dest.putChannelNames(channelNames);
+			dest.putPinholes(pinholes);
+			dest.putEXWaves(exWaves.toArray(new Integer[exWaves.size()]));
+			dest.putEMWaves(emWaves.toArray(new Integer[emWaves.size()]));
+			dest.putGains(gains);
 		}
 	}
 
@@ -312,143 +303,132 @@ public class ICSTranslator {
 
 			if (date != null) store.setImageAcquisitionDate(new Timestamp(date), 0);
 
-			// > Minimum Metadata population
-			if (source.getMetadataOptions().getMetadataLevel() != MetadataLevel.MINIMUM)
-			{
+			description = source.getDescription();
+			store.setImageDescription(description, 0);
 
-				description = source.getDescription();
-				store.setImageDescription(description, 0);
+			// link Instrument and Image
+			final String instrumentID =
+				getContext().getService(OMEXMLMetadataService.class).createLSID(
+					"Instrument", 0);
+			store.setInstrumentID(instrumentID, 0);
 
-				// link Instrument and Image
-				final String instrumentID =
-					getContext().getService(OMEXMLMetadataService.class).createLSID(
-						"Instrument", 0);
-				store.setInstrumentID(instrumentID, 0);
+			microscopeModel = source.getMicroscopeModel();
+			store.setMicroscopeModel(microscopeModel, 0);
 
-				microscopeModel = source.getMicroscopeModel();
-				store.setMicroscopeModel(microscopeModel, 0);
+			microscopeManufacturer = source.getMicroscopeManufacturer();
+			store.setMicroscopeManufacturer(microscopeManufacturer, 0);
 
-				microscopeManufacturer = source.getMicroscopeManufacturer();
-				store.setMicroscopeManufacturer(microscopeManufacturer, 0);
+			store.setImageInstrumentRef(instrumentID, 0);
 
-				store.setImageInstrumentRef(instrumentID, 0);
+			store
+				.setExperimentID(getContext().getService(OMEXMLMetadataService.class)
+					.createLSID("Experiment", 0), 0);
 
-				store.setExperimentID(getContext().getService(
-					OMEXMLMetadataService.class).createLSID("Experiment", 0), 0);
+			lifetime = source.getLifetime();
 
-				lifetime = source.getLifetime();
+			experimentType = source.getExperimentType();
 
-				experimentType = source.getExperimentType();
+			try {
+				store.setExperimentType(getContext().getService(
+					OMEXMLMetadataService.class).getExperimentType(experimentType), 0);
+			}
+			catch (final FormatException e) {
+				log().debug("Could not set experiment type", e);
+			}
 
-				try {
-					store.setExperimentType(getContext().getService(
-						OMEXMLMetadataService.class).getExperimentType(experimentType), 0);
+			// populate Dimensions data
+
+			pixelSizes = source.getPixelSizes();
+
+			units = source.getUnits();
+
+			axes = source.getAxes();
+
+			sizes = source.getAxesSizes();
+
+			if (pixelSizes != null) {
+				if (units != null && units.length == pixelSizes.length - 1) {
+					// correct for missing units
+					// sometimes, the units for the C axis are missing entirely
+					final ArrayList<String> realUnits = new ArrayList<String>();
+					int unitIndex = 0;
+					for (int i = 0; i < axes.length; i++) {
+						if (axes[i].toLowerCase().equals("ch")) {
+							realUnits.add("nm");
+						}
+						else {
+							realUnits.add(units[unitIndex++]);
+						}
+					}
+					units = realUnits.toArray(new String[realUnits.size()]);
 				}
-				catch (final FormatException e) {
-					log().debug("Could not set experiment type", e);
-				}
 
-				// populate Dimensions data
+				for (int i = 0; i < pixelSizes.length; i++) {
+					final Double pixelSize = pixelSizes[i];
 
-				pixelSizes = source.getPixelSizes();
+					if (pixelSize == null) continue;
 
-				units = source.getUnits();
-
-				axes = source.getAxes();
-
-				sizes = source.getAxesSizes();
-
-				if (pixelSizes != null) {
-					if (units != null && units.length == pixelSizes.length - 1) {
-						// correct for missing units
-						// sometimes, the units for the C axis are missing entirely
-						final ArrayList<String> realUnits = new ArrayList<String>();
-						int unitIndex = 0;
-						for (int i = 0; i < axes.length; i++) {
-							if (axes[i].toLowerCase().equals("ch")) {
-								realUnits.add("nm");
-							}
-							else {
-								realUnits.add(units[unitIndex++]);
-							}
-						}
-						units = realUnits.toArray(new String[realUnits.size()]);
-					}
-
-					for (int i = 0; i < pixelSizes.length; i++) {
-						final Double pixelSize = pixelSizes[i];
-
-						if (pixelSize == null) continue;
-
-						final String axis = axes != null && axes.length > i ? axes[i] : "";
-						final String unit =
-							units != null && units.length > i ? units[i] : "";
-						if (axis.equals("x")) {
-							if (pixelSize > 0 &&
-								checkUnit(unit, "um", "microns", "micrometers"))
-							{
-								store.setPixelsPhysicalSizeX(new PositiveFloat(pixelSize), 0);
-							}
-							else {
-								log()
-									.warn(
-										"Expected positive value for PhysicalSizeX; got " +
-											pixelSize);
-							}
-						}
-						else if (axis.equals("y")) {
-							if (pixelSize > 0 &&
-								checkUnit(unit, "um", "microns", "micrometers"))
-							{
-								store.setPixelsPhysicalSizeY(new PositiveFloat(pixelSize), 0);
-							}
-							else {
-								log()
-									.warn(
-										"Expected positive value for PhysicalSizeY; got " +
-											pixelSize);
-							}
-						}
-						else if (axis.equals("z")) {
-							if (pixelSize > 0 &&
-								checkUnit(unit, "um", "microns", "micrometers"))
-							{
-								store.setPixelsPhysicalSizeZ(new PositiveFloat(pixelSize), 0);
-							}
-							else {
-								log()
-									.warn(
-										"Expected positive value for PhysicalSizeZ; got " +
-											pixelSize);
-							}
-						}
-						else if (axis.equals("t")) {
-							if (checkUnit(unit, "ms")) {
-								store.setPixelsTimeIncrement(1000 * pixelSize, 0);
-							}
-							else if (checkUnit(unit, "seconds") || checkUnit(unit, "s")) {
-								store.setPixelsTimeIncrement(pixelSize, 0);
-							}
-						}
-					}
-				}
-				else if (sizes != null) {
-					if (sizes.length > 0 && sizes[0] > 0) {
-						store.setPixelsPhysicalSizeX(new PositiveFloat(sizes[0]), 0);
-					}
-					else {
-						log().warn(
-							"Expected positive value for PhysicalSizeX; got " + sizes[0]);
-					}
-					if (sizes.length > 1) {
-						sizes[1] /= source.get(imageIndex).getAxisLength(Axes.Y);
-						if (sizes[1] > 0) {
-							store.setPixelsPhysicalSizeY(new PositiveFloat(sizes[1]), 0);
+					final String axis = axes != null && axes.length > i ? axes[i] : "";
+					final String unit = units != null && units.length > i ? units[i] : "";
+					if (axis.equals("x")) {
+						if (pixelSize > 0 &&
+							checkUnit(unit, "um", "microns", "micrometers"))
+						{
+							store.setPixelsPhysicalSizeX(new PositiveFloat(pixelSize), 0);
 						}
 						else {
 							log().warn(
-								"Expected positive value for PhysicalSizeY; got " + sizes[1]);
+								"Expected positive value for PhysicalSizeX; got " + pixelSize);
 						}
+					}
+					else if (axis.equals("y")) {
+						if (pixelSize > 0 &&
+							checkUnit(unit, "um", "microns", "micrometers"))
+						{
+							store.setPixelsPhysicalSizeY(new PositiveFloat(pixelSize), 0);
+						}
+						else {
+							log().warn(
+								"Expected positive value for PhysicalSizeY; got " + pixelSize);
+						}
+					}
+					else if (axis.equals("z")) {
+						if (pixelSize > 0 &&
+							checkUnit(unit, "um", "microns", "micrometers"))
+						{
+							store.setPixelsPhysicalSizeZ(new PositiveFloat(pixelSize), 0);
+						}
+						else {
+							log().warn(
+								"Expected positive value for PhysicalSizeZ; got " + pixelSize);
+						}
+					}
+					else if (axis.equals("t")) {
+						if (checkUnit(unit, "ms")) {
+							store.setPixelsTimeIncrement(1000 * pixelSize, 0);
+						}
+						else if (checkUnit(unit, "seconds") || checkUnit(unit, "s")) {
+							store.setPixelsTimeIncrement(pixelSize, 0);
+						}
+					}
+				}
+			}
+			else if (sizes != null) {
+				if (sizes.length > 0 && sizes[0] > 0) {
+					store.setPixelsPhysicalSizeX(new PositiveFloat(sizes[0]), 0);
+				}
+				else {
+					log().warn(
+						"Expected positive value for PhysicalSizeX; got " + sizes[0]);
+				}
+				if (sizes.length > 1) {
+					sizes[1] /= source.get(imageIndex).getAxisLength(Axes.Y);
+					if (sizes[1] > 0) {
+						store.setPixelsPhysicalSizeY(new PositiveFloat(sizes[1]), 0);
+					}
+					else {
+						log().warn(
+							"Expected positive value for PhysicalSizeY; got " + sizes[1]);
 					}
 				}
 			}

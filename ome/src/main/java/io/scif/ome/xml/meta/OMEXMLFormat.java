@@ -54,6 +54,7 @@ import io.scif.codec.JPEG2000Codec;
 import io.scif.codec.JPEGCodec;
 import io.scif.codec.ZlibCodec;
 import io.scif.common.Constants;
+import io.scif.config.SCIFIOConfig;
 import io.scif.io.CBZip2InputStream;
 import io.scif.io.RandomAccessInputStream;
 import io.scif.ome.xml.services.OMEXMLMetadataService;
@@ -118,7 +119,7 @@ public class OMEXMLFormat extends AbstractFormat {
 	}
 
 	@Override
-	public String[] getSuffixes() {
+	protected String[] makeSuffixArray() {
 		return new String[] { "ome" };
 	}
 
@@ -233,10 +234,11 @@ public class OMEXMLFormat extends AbstractFormat {
 	 */
 	public static class Checker extends AbstractChecker {
 
-		// -- Constructor --
+		// -- Checker API --
 
-		public Checker() {
-			suffixNecessary = false;
+		@Override
+		public boolean suffixNecessary() {
+			return false;
 		}
 
 		@Override
@@ -266,7 +268,8 @@ public class OMEXMLFormat extends AbstractFormat {
 
 		@Override
 		protected void typedParse(final RandomAccessInputStream stream,
-			final Metadata meta) throws IOException, FormatException
+			final Metadata meta, final SCIFIOConfig config) throws IOException,
+			FormatException
 		{
 			if (noOME) {
 				throw new MissingLibraryException(OMEXMLServiceImpl.NO_OME_XML_MSG);
@@ -296,7 +299,7 @@ public class OMEXMLFormat extends AbstractFormat {
 				final int col = bin.getColumn();
 
 				while (lineNumber < line) {
-					in.readLine();
+					getSource().readLine();
 					lineNumber++;
 				}
 				binDataOffsets.add(stream.getFilePointer() + col - 1);
@@ -332,7 +335,7 @@ public class OMEXMLFormat extends AbstractFormat {
 				omexmlMeta.setImageName(stream.getFileName(), i);
 
 			meta.setSPW(omexmlMeta.getPlateCount() > 0);
-			addGlobalMeta("Is SPW file", meta.isSPW());
+			meta.getTable().put("Is SPW file", meta.isSPW());
 		}
 	}
 
@@ -341,18 +344,18 @@ public class OMEXMLFormat extends AbstractFormat {
 	 */
 	public static class Reader extends ByteArrayReader<Metadata> {
 
-		// -- Constructor --
-
-		public Reader() {
-			domains = FormatTools.NON_GRAPHICS_DOMAINS;
-		}
-
 		// -- Reader API Methods --
+
+		@Override
+		protected String[] createDomainArray() {
+			return FormatTools.NON_GRAPHICS_DOMAINS;
+		}
 
 		@Override
 		public ByteArrayPlane openPlane(final int imageIndex,
 			final long planeIndex, final ByteArrayPlane plane, final long[] offsets,
-			final long[] lengths) throws FormatException, IOException
+			final long[] lengths, final SCIFIOConfig config) throws FormatException,
+			IOException
 		{
 			final byte[] buf = plane.getBytes();
 			final Metadata meta = getMetadata();
@@ -443,7 +446,7 @@ public class OMEXMLFormat extends AbstractFormat {
 
 		@Override
 		public String[] getDomains() {
-			FormatTools.assertId(currentId, true, 1);
+			FormatTools.assertId(getStream(), true, 1);
 			return getMetadata().isSPW() ? new String[] { FormatTools.HCS_DOMAIN }
 				: FormatTools.NON_SPECIAL_DOMAINS;
 		}
@@ -465,19 +468,16 @@ public class OMEXMLFormat extends AbstractFormat {
 		@Parameter
 		private OMEXMLService omexmlService;
 
-		// -- Constructor --
-
-		public Writer() {
-			compressionTypes =
-				new String[] { CompressionType.UNCOMPRESSED.getCompression(),
-					CompressionType.ZLIB.getCompression() };
-			compression = compressionTypes[0];
-		}
-
 		// -- Writer API Methods --
 
 		@Override
-		public void savePlane(final int imageIndex, final long planeIndex,
+		protected String[] makeCompressionTypes() {
+			return new String[] { CompressionType.UNCOMPRESSED.getCompression(),
+				CompressionType.ZLIB.getCompression() };
+		}
+
+		@Override
+		public void writePlane(final int imageIndex, final long planeIndex,
 			final Plane plane, final long[] offsets, final long[] lengths)
 			throws FormatException, IOException
 		{
@@ -494,7 +494,7 @@ public class OMEXMLFormat extends AbstractFormat {
 			final MetadataRetrieve retrieve = meta.getOMEMeta().getRoot();
 
 			if (planeIndex == 0) {
-				out.writeBytes(xmlFragments.get(imageIndex));
+				getStream().writeBytes(xmlFragments.get(imageIndex));
 			}
 
 			final String type = retrieve.getPixelsType(imageIndex).toString();
@@ -529,15 +529,15 @@ public class OMEXMLFormat extends AbstractFormat {
 				omePlane.append(" BigEndian=\"");
 				omePlane.append(bigEndian);
 				omePlane.append("\"");
-				if (compression != null && !compression.equals("Uncompressed")) {
+				if (getCompression() != null && !getCompression().equals("Uncompressed")) {
 					omePlane.append(" Compression=\"");
-					omePlane.append(compression);
+					omePlane.append(getCompression());
 					omePlane.append("\"");
 				}
 				omePlane.append(">");
 				omePlane.append(new String(encodedPix, Constants.ENCODING));
 				omePlane.append("</BinData>");
-				out.writeBytes(omePlane.toString());
+				getStream().writeBytes(omePlane.toString());
 			}
 		}
 
@@ -589,8 +589,8 @@ public class OMEXMLFormat extends AbstractFormat {
 
 		@Override
 		public void close() throws IOException {
-			if (out != null) {
-				out.writeBytes(xmlFragments.get(xmlFragments.size() - 1));
+			if (getStream() != null) {
+				getStream().writeBytes(xmlFragments.get(xmlFragments.size() - 1));
 			}
 			super.close();
 			xmlFragments = null;
@@ -620,18 +620,17 @@ public class OMEXMLFormat extends AbstractFormat {
 				!r.getPixelsBinDataBigEndian(imageIndex, 0).booleanValue();
 			options.bitsPerSample = bytes * 8;
 
-			if (compression.equals("J2K")) {
+			if (getCompression().equals("J2K")) {
 				b = new JPEG2000Codec().compress(b, options);
 			}
-			else if (compression.equals("JPEG")) {
+			else if (getCompression().equals("JPEG")) {
 				b = new JPEGCodec().compress(b, options);
 			}
-			else if (compression.equals("zlib")) {
+			else if (getCompression().equals("zlib")) {
 				b = new ZlibCodec().compress(b, options);
 			}
 			return new Base64Codec().compress(b, options);
 		}
-
 	}
 
 	@Plugin(type = Translator.class)
