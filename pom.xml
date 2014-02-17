@@ -11,7 +11,7 @@
 
 	<groupId>io.scif</groupId>
 	<artifactId>pom-ome-formats</artifactId>
-	<version>0.5.1-SNAPSHOT</version>
+	<version>0.6.0</version>
 	<packaging>pom</packaging>
 
 	<name>SCIFIO OME Formats Extension</name>
@@ -112,7 +112,7 @@
 	<scm>
 		<connection>scm:git:git://github.com/scifio/ome-formats</connection>
 		<developerConnection>scm:git:git@github.com:scifio/ome-formats</developerConnection>
-		<tag>HEAD</tag>
+		<tag>ome-formats-0.6.0</tag>
 		<url>http://github.com/scifio/ome-formats</url>
 	</scm>
 
