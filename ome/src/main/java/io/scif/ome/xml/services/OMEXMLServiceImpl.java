@@ -113,7 +113,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 
 	// -- Stylesheet names --
 
-	private static final String XSLT_PATH = "/io/scif/ome/xml/meta/";
+	private static final String XSLT_PATH = "/loci/formats/meta/";
 	private static final String XSLT_REORDER = XSLT_PATH + "reorder-2008-09.xsl";
 	private static final String XSLT_2003FC = XSLT_PATH +
 		"2003-FC-to-2008-09.xsl";
@@ -133,6 +133,8 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 		"2010-06-to-2011-06.xsl";
 	private static final String XSLT_201106 = XSLT_PATH +
 		"2011-06-to-2012-06.xsl";
+	private static final String XSLT_201206 = XSLT_PATH +
+		"2012-06-to-2013-06.xsl";
 
 	// -- Cached stylesheets --
 
@@ -209,7 +211,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 
 			if (!version.equals("2009-09") && !version.equals("2010-04") &&
 				!version.equals("2010-06") && !version.equals("2011-06") &&
-				!version.equals("2012-06"))
+				!version.equals("2012-06") && !version.equals("2013-06"))
 			{
 				transformed = verifyOMENamespace(transformed);
 				logService.debug("Running UPDATE_200809 stylesheet.");
@@ -220,24 +222,25 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 				transformed = xmlService.transformXML(transformed, update200809);
 			}
 			logService.debug("XML updated to at least 2009-09");
-			logService.trace("At least 2009-09 dump: " + transformed);
-			if (!version.equals("2010-04") && !version.equals("2010-06") &&
-				!version.equals("2011-06") && !version.equals("2012-06"))
+			logService.trace("At least 2008-09 dump: " + transformed);
+			if (!version.equals("2009-09") && !version.equals("2010-04") &&
+				!version.equals("2010-06") && !version.equals("2011-06") &&
+				!version.equals("2012-06") && !version.equals("2013-06"))
 			{
 				transformed = verifyOMENamespace(transformed);
-				logService.debug("Running UPDATE_200909 stylesheet.");
+				logService.debug("Running UPDATE_200809 stylesheet.");
 				if (update200909 == null) {
 					update200909 =
-						xmlService.getStylesheet(XSLT_200909, OMEXMLServiceImpl.class);
+						xmlService.getStylesheet(XSLT_200809, OMEXMLServiceImpl.class);
 				}
-				transformed = xmlService.transformXML(transformed, update200909);
+				transformed = xmlService.transformXML(transformed, update200809);
 			}
 			else transformed = xml;
 			logService.debug("XML updated to at least 2010-04");
 			logService.trace("At least 2010-04 dump: " + transformed);
 
 			if (!version.equals("2010-06") && !version.equals("2011-06") &&
-				!version.equals("2012-06"))
+				!version.equals("2012-06") && !version.equals("2013-06"))
 			{
 				transformed = verifyOMENamespace(transformed);
 				logService.debug("Running UPDATE_201004 stylesheet.");
@@ -250,7 +253,9 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 			else transformed = xml;
 			logService.debug("XML updated to at least 2010-06");
 
-			if (!version.equals("2011-06") && !version.equals("2012-06")) {
+			if (!version.equals("2011-06") && !version.equals("2012-06") &&
+				!version.equals("2013-06"))
+			{
 				transformed = verifyOMENamespace(transformed);
 				logService.debug("Running UPDATE_201006 stylesheet.");
 				if (update201006 == null) {
@@ -262,7 +267,7 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 			else transformed = xml;
 			logService.debug("XML updated to at least 2011-06");
 
-			if (!version.equals("2012-06")) {
+			if (!version.equals("2012-06") && !version.equals("2013-06")) {
 				transformed = verifyOMENamespace(transformed);
 				logService.debug("Running UPDATE_201106 stylesheet.");
 				if (update201106 == null) {
@@ -273,6 +278,18 @@ public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
 			}
 			else transformed = xml;
 			logService.debug("XML updated to at least 2012-06");
+
+			if (!version.equals("2013-06")) {
+				transformed = verifyOMENamespace(transformed);
+				logService.debug("Running UPDATE_201206 stylesheet.");
+				if (update201106 == null) {
+					update201106 =
+						xmlService.getStylesheet(XSLT_201206, OMEXMLServiceImpl.class);
+				}
+				transformed = xmlService.transformXML(transformed, update201106);
+			}
+			else transformed = xml;
+			logService.debug("XML updated to at least 2013-06");
 
 			// fix namespaces
 			transformed = transformed.replaceAll("<ns.*?:", "<");
