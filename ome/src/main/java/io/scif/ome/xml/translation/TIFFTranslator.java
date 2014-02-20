@@ -40,6 +40,7 @@ import io.scif.ome.xml.meta.OMEMetadata;
 import io.scif.ome.xml.meta.OMEXMLMetadata;
 import io.scif.util.FormatTools;
 import net.imglib2.meta.Axes;
+import net.imglib2.meta.CalibratedAxis;
 import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.Timestamp;
 
@@ -90,9 +91,13 @@ public class TIFFTranslator {
 		{
 			final OMEXMLMetadata meta = dest.getRoot();
 
-			final double physX = source.get(0).getAxis(Axes.X).averageScale(0, 1);
-			final double physY = source.get(0).getAxis(Axes.Y).averageScale(0, 1);
-			final double physZ = source.get(0).getAxis(Axes.Z).averageScale(0, 1);
+			final CalibratedAxis xAxis = source.get(0).getAxis(Axes.X);
+			final CalibratedAxis yAxis = source.get(0).getAxis(Axes.Y);
+			final CalibratedAxis zAxis = source.get(0).getAxis(Axes.Z);
+
+			final double physX = xAxis == null ? 1.0 : xAxis.averageScale(0.0, 1.0);
+			final double physY = yAxis == null ? 1.0 : yAxis.averageScale(0.0, 1.0);
+			final double physZ = zAxis == null ? 1.0 : zAxis.averageScale(0.0, 1.0);
 
 			meta
 				.setPixelsPhysicalSizeX(new PositiveFloat(physX > 0 ? physX : 1.0), 0);
@@ -100,6 +105,7 @@ public class TIFFTranslator {
 				.setPixelsPhysicalSizeY(new PositiveFloat(physY > 0 ? physY : 1.0), 0);
 			meta
 				.setPixelsPhysicalSizeZ(new PositiveFloat(physZ > 0 ? physZ : 1.0), 0);
+
 			meta.setImageDescription(source.getDescription(), 0);
 			meta.setExperimenterFirstName(source.getExperimenterFirstName(), 0);
 			meta.setExperimenterLastName(source.getExperimenterLastName(), 0);
