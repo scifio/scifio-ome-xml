@@ -38,7 +38,6 @@ import io.scif.FormatException;
 import io.scif.Metadata;
 import io.scif.formats.ICSFormat;
 import io.scif.ome.xml.meta.OMEMetadata;
-import io.scif.ome.xml.meta.OMEXMLMetadata;
 import io.scif.ome.xml.services.OMEXMLMetadataService;
 import io.scif.util.FormatTools;
 
@@ -49,6 +48,7 @@ import java.util.List;
 
 import loci.formats.meta.FilterMetadata;
 import loci.formats.meta.MetadataRetrieve;
+import loci.formats.ome.OMEXMLMetadata;
 import net.imglib2.meta.Axes;
 import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.PositiveInteger;

@@ -34,6 +34,7 @@
 
 package io.scif.ome.xml.meta;
 
+import loci.formats.ome.OMEXMLMetadata;
 import io.scif.AbstractMetadata;
 import io.scif.ome.xml.services.OMEXMLMetadataService;
 import io.scif.ome.xml.services.OMEXMLService;

@@ -35,8 +35,6 @@
 package io.scif.ome.xml.services;
 
 import io.scif.ome.xml.meta.OMEMetadata;
-import io.scif.ome.xml.meta.OMEXMLMetadata;
-import io.scif.ome.xml.meta.OMEXMLMetadataImpl;
 import io.scif.services.ServiceException;
 import io.scif.xml.XMLService;
 
@@ -55,6 +53,8 @@ import loci.formats.meta.IMetadata;
 import loci.formats.meta.MetadataConverter;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.meta.MetadataStore;
+import loci.formats.ome.OMEXMLMetadata;
+import loci.formats.ome.OMEXMLMetadataImpl;
 import ome.xml.OMEXMLFactory;
 import ome.xml.model.BinData;
 import ome.xml.model.Channel;

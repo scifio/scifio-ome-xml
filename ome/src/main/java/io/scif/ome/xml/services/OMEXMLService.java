@@ -36,13 +36,13 @@ package io.scif.ome.xml.services;
 
 import io.scif.SCIFIOService;
 import io.scif.ome.xml.meta.OMEMetadata;
-import io.scif.ome.xml.meta.OMEXMLMetadata;
 import io.scif.services.ServiceException;
 
 import java.util.Hashtable;
 
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.meta.MetadataStore;
+import loci.formats.ome.OMEXMLMetadata;
 
 /**
  * <dl>

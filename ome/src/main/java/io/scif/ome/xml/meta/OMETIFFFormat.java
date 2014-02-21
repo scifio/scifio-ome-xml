@@ -81,6 +81,7 @@ import java.util.Vector;
 import loci.formats.meta.IMetadata;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.meta.MetadataStore;
+import loci.formats.ome.OMEXMLMetadata;
 import net.imglib2.display.ColorTable;
 import net.imglib2.meta.Axes;
 import ome.xml.model.primitives.NonNegativeInteger;

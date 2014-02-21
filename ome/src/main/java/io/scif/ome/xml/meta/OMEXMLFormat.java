@@ -74,6 +74,8 @@ import java.io.IOException;
 import java.util.Vector;
 
 import loci.formats.meta.MetadataRetrieve;
+import loci.formats.ome.OMEXMLMetadata;
+import loci.formats.ome.OMEXMLMetadataImpl;
 import net.imglib2.meta.Axes;
 
 import org.scijava.Priority;

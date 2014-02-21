@@ -40,7 +40,6 @@ import io.scif.Metadata;
 import io.scif.Reader;
 import io.scif.common.DateTools;
 import io.scif.io.Location;
-import io.scif.ome.xml.meta.OMEXMLMetadata;
 import io.scif.services.FormatService;
 import io.scif.services.ServiceException;
 import io.scif.util.FormatTools;
@@ -49,6 +48,7 @@ import java.util.Arrays;
 
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.meta.MetadataStore;
+import loci.formats.ome.OMEXMLMetadata;
 import net.imglib2.meta.Axes;
 import net.imglib2.meta.AxisType;
 import net.imglib2.meta.CalibratedAxis;
