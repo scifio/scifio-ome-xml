@@ -1163,7 +1163,6 @@ public class OMETIFFFormat extends AbstractFormat {
 		private List<Integer> imageMap;
 		private String[][] imageLocations;
 		private OMEXMLMetadata omeMeta;
-		private OMEXMLService service;
 		private final Map<String, Integer> ifdCounts =
 			new HashMap<String, Integer>();
 
@@ -1173,12 +1172,11 @@ public class OMETIFFFormat extends AbstractFormat {
 
 		/* @see IFormatHandler#setId(String) */
 		@Override
-		public void
-			setDest(final RandomAccessOutputStream out, final int imageIndex)
-				throws FormatException, IOException
+		public void setDest(RandomAccessOutputStream out, int imageIndex,
+			SCIFIOConfig config) throws FormatException, IOException
 		{
 			// TODO if already set, return
-			super.setDest(out, imageIndex);
+			super.setDest(out, imageIndex, config);
 			if (imageLocations == null) {
 				final MetadataRetrieve r = getMetadata().getOmeMeta().getRoot();
 				imageLocations = new String[r.getImageCount()][];
