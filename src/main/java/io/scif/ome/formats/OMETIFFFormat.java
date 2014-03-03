@@ -82,6 +82,7 @@ import loci.formats.ome.OMEXMLMetadata;
 import net.imglib2.display.ColorTable;
 import net.imglib2.meta.Axes;
 import ome.xml.model.primitives.NonNegativeInteger;
+import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.PositiveInteger;
 import ome.xml.model.primitives.Timestamp;
 
@@ -376,6 +377,13 @@ public class OMETIFFFormat extends AbstractFormat {
 				catch (final FormatException exc) {
 					log().error("Format exception when creating ImageMetadata", exc);
 				}
+				// Set the physical pixel sizes
+				FormatTools.calibrate(m.getAxis(Axes.X), getValue(omexmlMeta
+					.getPixelsPhysicalSizeX(s)), 0.0);
+				FormatTools.calibrate(m.getAxis(Axes.Y), getValue(omexmlMeta
+					.getPixelsPhysicalSizeY(s)), 0.0);
+				FormatTools.calibrate(m.getAxis(Axes.Z), getValue(omexmlMeta
+					.getPixelsPhysicalSizeZ(s)), 0.0);
 			}
 
 //      if (getImageCount() == 1) {
@@ -437,6 +445,18 @@ public class OMETIFFFormat extends AbstractFormat {
 				log().error("IOException when trying to read color table", e);
 				return null;
 			}
+		}
+
+		/**
+		 * Helper method to extract values out of {@link PositiveFloat}s, for
+		 * physical pixel sizes (calibration values). Returns 1.0 if given a null or
+		 * invalid (< 0) calibration.
+		 */
+		private double getValue(PositiveFloat pixelPhysicalSize) {
+			if (pixelPhysicalSize == null) return 1.0;
+			Double physSize = pixelPhysicalSize.getValue();
+			if (physSize < 0) return 1.0;
+			return physSize;
 		}
 	}
 
