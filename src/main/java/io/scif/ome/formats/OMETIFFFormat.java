@@ -107,8 +107,10 @@ public class OMETIFFFormat extends AbstractFormat {
 
 	// -- Fields --
 
-	// FIXME: These should not be static.
+	@Parameter
 	private static OMEXMLService service;
+
+	@Parameter
 	private static OMEMetadataService metaService;
 
 	// -- Format API Methods --
@@ -511,7 +513,6 @@ public class OMETIFFFormat extends AbstractFormat {
 			}
 
 			try {
-				if (service == null) setupServices(getContext());
 				final IMetadata meta = service.createOMEXMLMetadata(comment);
 				for (int i = 0; i < meta.getImageCount(); i++) {
 					meta.setPixelsBinDataBigEndian(Boolean.TRUE, i, 0);
@@ -663,7 +664,6 @@ public class OMETIFFFormat extends AbstractFormat {
 
 			meta.setFirstIFD(firstIFD);
 
-			if (service == null) setupServices(getContext());
 			OMEXMLMetadata omexmlMeta;
 			try {
 				omexmlMeta = service.createOMEXMLMetadata(xml);
@@ -1282,7 +1282,6 @@ public class OMETIFFFormat extends AbstractFormat {
 					imageMap = null;
 					imageLocations = null;
 					omeMeta = null;
-					service = null;
 					ifdCounts.clear();
 				}
 				else {
@@ -1308,7 +1307,6 @@ public class OMETIFFFormat extends AbstractFormat {
 			// extract OME-XML string from metadata object
 			final MetadataRetrieve retrieve = getMetadata().getOmeMeta().getRoot();
 
-			service = getContext().getService(OMEXMLService.class);
 			final OMEXMLMetadata originalOMEMeta = service.getOMEMetadata(retrieve);
 			originalOMEMeta.resolveReferences();
 
@@ -1454,11 +1452,6 @@ public class OMETIFFFormat extends AbstractFormat {
 
 	// -- Helper Methods --
 
-	private static void setupServices(final Context ctx) {
-		service = ctx.getService(OMEXMLService.class);
-		metaService = ctx.getService(OMEMetadataService.class);
-	}
-
 	private static boolean isSingleFile(final Context context, final String id)
 		throws FormatException, IOException
 	{
@@ -1473,7 +1466,6 @@ public class OMETIFFFormat extends AbstractFormat {
 		ras.close();
 		final String xml = ifd.getComment();
 
-		if (service == null) setupServices(context);
 		OMEXMLMetadata meta;
 		try {
 			meta = service.createOMEXMLMetadata(xml);
