@@ -46,7 +46,7 @@ public abstract class FromOMETranslator<M extends Metadata> extends
 	// -- Translator API Methods --
 
 	@Override
-	protected void typedTranslate(final OMEMetadata source, final M dest) {
+	protected void translateFormatMetadata(final OMEMetadata source, final M dest) {
 		translateOMEXML(source, dest);
 	}
 }

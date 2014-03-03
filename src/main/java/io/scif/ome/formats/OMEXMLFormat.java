@@ -40,6 +40,7 @@ import io.scif.ByteArrayPlane;
 import io.scif.ByteArrayReader;
 import io.scif.Format;
 import io.scif.FormatException;
+import io.scif.ImageMetadata;
 import io.scif.Plane;
 import io.scif.Translator;
 import io.scif.codec.Base64Codec;
@@ -65,6 +66,7 @@ import io.scif.xml.XMLService;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Vector;
 
 import loci.common.services.ServiceException;
@@ -651,13 +653,20 @@ public class OMEXMLFormat extends AbstractFormat {
 		}
 
 		@Override
-		public void typedTranslate(final io.scif.Metadata source,
+		protected void translateFormatMetadata(final io.scif.Metadata source,
 			final Metadata dest)
 		{
 			final OMEXMLMetadata root = new OMEXMLMetadataImpl();
 			final OMEMetadata meta = new OMEMetadata(getContext(), root);
 			omexmlMetadataService.populatePixels(root, source);
 			dest.setOMEMeta(meta);
+		}
+
+		@Override
+		protected void translateImageMetadata(final List<ImageMetadata> source,
+			final Metadata dest)
+		{
+			// No implementation necessary. See translateFormatMetadata
 		}
 	}
 

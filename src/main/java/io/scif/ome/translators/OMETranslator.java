@@ -30,7 +30,10 @@
 
 package io.scif.ome.translators;
 
+import java.util.List;
+
 import io.scif.AbstractTranslator;
+import io.scif.ImageMetadata;
 import io.scif.Metadata;
 import io.scif.ome.OMEMetadata;
 
@@ -45,6 +48,13 @@ import io.scif.ome.OMEMetadata;
 public abstract class OMETranslator<M extends Metadata, N extends Metadata>
 	extends AbstractTranslator<M, N>
 {
+
+	@Override
+	protected void translateImageMetadata(final List<ImageMetadata> source,
+		final N dest)
+	{
+		// nothing to do. Translation will happen in translateOMEXML
+	}
 
 	/**
 	 * Convert between type-specific Metadata and OME-XML

@@ -1538,7 +1538,7 @@ public class OMETIFFFormat extends AbstractFormat {
 		}
 
 		@Override
-		public void typedTranslate(final io.scif.Metadata source,
+		public void translateFormatMetadata(final io.scif.Metadata source,
 			final Metadata dest)
 		{
 
@@ -1586,6 +1586,13 @@ public class OMETIFFFormat extends AbstractFormat {
 					.getAxisLength(Axes.CHANNEL) : 1));
 				adjustedSamples.add(false);
 			}
+		}
+
+		@Override
+		protected void translateImageMetadata(final List<ImageMetadata> source,
+			final Metadata dest)
+		{
+			// No implementation necessary. See translateFormatMetadata
 		}
 	}
 
