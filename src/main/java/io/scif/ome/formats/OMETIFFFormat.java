@@ -1186,17 +1186,6 @@ public class OMETIFFFormat extends AbstractFormat {
 			}
 		}
 
-		/*
-		 * @see io.scif.Writer#savePlane(int, int, io.scif.Plane, int, int, int, int)
-		 */
-		@Override
-		public void savePlane(final int imageIndex, final long planeIndex,
-			final Plane plane, final long[] offsets, final long[] lengths)
-			throws FormatException, IOException
-		{
-			savePlane(imageIndex, planeIndex, plane, null, offsets, lengths);
-		}
-
 		@Override
 		public void savePlane(final int imageIndex, final long planeIndex,
 			final Plane plane, final IFD ifd, final long[] offsets,
