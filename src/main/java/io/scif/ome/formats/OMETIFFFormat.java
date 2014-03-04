@@ -1350,13 +1350,31 @@ public class OMETIFFFormat extends AbstractFormat {
 		}
 
 		private void populateTiffData(final OMEXMLMetadata omeMeta,
-			final long[] zct, final int ifd, final int series, final int plane)
+			final String dimensionOrder, final long[] zct, final int ifd,
+			final int series, final int plane)
 		{
-			omeMeta.setTiffDataFirstZ(new NonNegativeInteger((int) zct[0]), series,
+			int zIndex = 0;
+			int tIndex = 0;
+			int cIndex = 0;
+
+			// Determine zct positions
+			int index = 0;
+			for (char c : dimensionOrder.toUpperCase().toCharArray()) {
+				switch (c) {
+					case 'Z': zIndex = index++;
+						break;
+					case 'C': cIndex = index++;
+						break;
+					case 'T': tIndex = index++;
+						break;
+				}
+			}
+
+			omeMeta.setTiffDataFirstZ(new NonNegativeInteger((int) zct[zIndex]), series,
 				plane);
-			omeMeta.setTiffDataFirstC(new NonNegativeInteger((int) zct[1]), series,
+			omeMeta.setTiffDataFirstC(new NonNegativeInteger((int) zct[cIndex]), series,
 				plane);
-			omeMeta.setTiffDataFirstT(new NonNegativeInteger((int) zct[2]), series,
+			omeMeta.setTiffDataFirstT(new NonNegativeInteger((int) zct[tIndex]), series,
 				plane);
 			omeMeta.setTiffDataIFD(new NonNegativeInteger(ifd), series, plane);
 			omeMeta.setTiffDataPlaneCount(new NonNegativeInteger(1), series, plane);
@@ -1388,13 +1406,13 @@ public class OMETIFFFormat extends AbstractFormat {
 			}
 			sizeC /= samplesPerPixel.getValue();
 
+			// lengths is in ZTC order
 			final long[] lengths =
-				metaService.zctToArray(dimensionOrder, sizeC, sizeC, sizeT);
+				metaService.zctToArray(dimensionOrder, sizeZ, sizeC, sizeT);
 
 			int nextPlane = 0;
 			for (int plane = 0; plane < planeCount; plane++) {
-				metaService.zctToArray(dimensionOrder, sizeC, sizeC, sizeT);
-				final long[] zct = FormatTools.rasterToPosition(lengths, planeCount);
+				final long[] zct = FormatTools.rasterToPosition(lengths, plane);
 
 				int planeIndex = plane;
 				if (imageLocations[imageIndex].length < planeCount) {
@@ -1413,7 +1431,8 @@ public class OMETIFFFormat extends AbstractFormat {
 					omeMeta.setUUIDValue(uuid, imageIndex, nextPlane);
 
 					// fill in any non-default TiffData attributes
-					populateTiffData(omeMeta, zct, ifd, imageIndex, nextPlane);
+					populateTiffData(omeMeta, dimensionOrder, zct, ifd, imageIndex,
+						nextPlane);
 					ifdCounts.put(filename, ifd + 1);
 					nextPlane++;
 				}
