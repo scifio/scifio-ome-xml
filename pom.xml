@@ -120,7 +120,7 @@
 
 	<ciManagement>
 		<system>Jenkins</system>
-		<url>http://jenkins.imagej.net/job/OME-formats/</url>
+		<url>http://jenkins.imagej.net/job/SCIFIO-OME-XML/</url>
 	</ciManagement>
 
 	<mailingLists>
