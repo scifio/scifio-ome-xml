@@ -10,18 +10,49 @@
 	</parent>
 
 	<groupId>io.scif</groupId>
-	<artifactId>pom-ome-formats</artifactId>
+	<artifactId>ome-formats</artifactId>
 	<version>0.6.2-SNAPSHOT</version>
-	<packaging>pom</packaging>
 
-	<name>SCIFIO OME Formats Extension</name>
+	<name>SCIFIO OME-XML Extension</name>
 	<description>SCIFIO support for the OME data model (OME-XML and OME-TIFF).</description>
 	<url>http://scif.io/</url>
 	<inceptionYear>2013</inceptionYear>
 
-	<modules>
-		<module>ome</module>
-	</modules>
+	<dependencies>
+		<dependency>
+			<groupId>${scifio.groupId}</groupId>
+			<artifactId>scifio</artifactId>
+			<version>${scifio.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${scifio.groupId}</groupId>
+			<artifactId>scifio-tools</artifactId>
+			<version>${scifio.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${bio-formats.groupId}</groupId>
+			<artifactId>scifio</artifactId>
+			<version>${bio-formats.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${bio-formats.groupId}</groupId>
+			<artifactId>ome-xml</artifactId>
+			<version>${bio-formats.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.10</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>
