@@ -10,7 +10,7 @@
 	</parent>
 
 	<groupId>io.scif</groupId>
-	<artifactId>ome-formats</artifactId>
+	<artifactId>scifio-ome-xml</artifactId>
 	<version>0.6.2-SNAPSHOT</version>
 
 	<name>SCIFIO OME-XML Extension</name>
