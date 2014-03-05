@@ -131,13 +131,6 @@
 			<post>scifio@scif.io</post>
 			<archive>http://scif.io/pipermail/scifio/</archive>
 		</mailingList>
-		<mailingList>
-			<name>SciJava</name>
-			<subscribe>https://groups.google.com/forum/?fromgroups#!forum/scijava</subscribe>
-			<unsubscribe>https://groups.google.com/forum/?fromgroups#!forum/scijava</unsubscribe>
-			<post>scijava@googlegroups.com</post>
-			<archive>https://groups.google.com/forum/?fromgroups#!forum/scijava</archive>
-		</mailingList>
 	</mailingLists>
 
 	<scm>
