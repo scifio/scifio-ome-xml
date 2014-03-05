@@ -115,7 +115,7 @@
 
 	<issueManagement>
 		<system>GitHub Issues</system>
-		<url>https://github.com/scifio/ome-formats/issues</url>
+		<url>https://github.com/scifio/scifio-ome-xml/issues</url>
 	</issueManagement>
 
 	<ciManagement>
@@ -134,10 +134,10 @@
 	</mailingLists>
 
 	<scm>
-		<connection>scm:git:git://github.com/scifio/ome-formats</connection>
-		<developerConnection>scm:git:git@github.com:scifio/ome-formats</developerConnection>
+		<connection>scm:git:git://github.com/scifio/scifio-ome-xml</connection>
+		<developerConnection>scm:git:git@github.com:scifio/scifio-ome-xml</developerConnection>
 		<tag>HEAD</tag>
-		<url>http://github.com/scifio/ome-formats</url>
+		<url>http://github.com/scifio/scifio-ome-xml</url>
 	</scm>
 
 	<repositories>
