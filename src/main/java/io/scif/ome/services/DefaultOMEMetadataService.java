@@ -97,6 +97,9 @@ public class DefaultOMEMetadataService extends AbstractService implements
 	private FormatService formatService;
 
 	@Parameter
+	private OMEXMLService omexmlService;
+
+	@Parameter
 	private LogService logService;
 
 	// -- Utility methods - OME-XML --
@@ -164,14 +167,13 @@ public class DefaultOMEMetadataService extends AbstractService implements
 				.isLittleEndian(), order, pixelType, xSize, ySize, zSize, cSize, tSize,
 				calX, calY, calZ, calC, calT, rgbCCount);
 
-			final OMEXMLService service =
-				formatService.getInstance(OMEXMLService.class);
-			if (service.isOMEXMLRoot(store.getRoot())) {
+			if (omexmlService.isOMEXMLRoot(store.getRoot())) {
 				// TODO any way or reason to access a base store?
-				if (service.isOMEXMLMetadata(store)) {
+				if (omexmlService.isOMEXMLMetadata(store)) {
 					OMEXMLMetadata omeMeta;
 					try {
-						omeMeta = service.getOMEMetadata(service.asRetrieve(store));
+						omeMeta =
+							omexmlService.getOMEMetadata(omexmlService.asRetrieve(store));
 						omeMeta.resolveReferences();
 					}
 					catch (final ServiceException e) {
