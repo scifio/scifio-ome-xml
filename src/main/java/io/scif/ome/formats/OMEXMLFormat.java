@@ -44,7 +44,6 @@ import io.scif.ByteArrayPlane;
 import io.scif.ByteArrayReader;
 import io.scif.Format;
 import io.scif.FormatException;
-import io.scif.MissingLibraryException;
 import io.scif.Plane;
 import io.scif.Translator;
 import io.scif.codec.Base64Codec;
@@ -95,24 +94,6 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 @Plugin(type = Format.class)
 public class OMEXMLFormat extends AbstractFormat {
-
-	// -- Static fields --
-
-	private static boolean noOME = false;
-
-	static {
-		// FIXME: Class.forName causes fatal ClassLoader woes.
-		try {
-			Class.forName("ome.xml.OMEXMLNode");
-		}
-		catch (final Throwable t) {
-			noOME = true;
-			// FIXME: no static log access
-//			log().debug(OMEXMLServiceImpl.NO_OME_XML_MSG, t);
-		}
-	}
-
-	// -- Fields --
 
 	// -- Format API Methods --
 
@@ -274,10 +255,6 @@ public class OMEXMLFormat extends AbstractFormat {
 			final Metadata meta, final SCIFIOConfig config) throws IOException,
 			FormatException
 		{
-			if (noOME) {
-				throw new MissingLibraryException(OMEXMLServiceImpl.NO_OME_XML_MSG);
-			}
-
 			final Vector<BinData> binData = new Vector<BinData>();
 			final Vector<Long> binDataOffsets = new Vector<Long>();
 			final Vector<String> compression = new Vector<String>();
