@@ -110,6 +110,7 @@ public class OMETIFFFormat extends AbstractFormat {
 
 	// -- Fields --
 
+	// FIXME: These should not be static.
 	private static OMEXMLService service;
 	private static OMEXMLMetadataService metaService;
 
