@@ -38,7 +38,7 @@ import static org.junit.Assert.assertTrue;
 import io.scif.FormatException;
 import io.scif.Metadata;
 import io.scif.SCIFIO;
-import io.scif.ome.xml.meta.OMEXMLFormat;
+import io.scif.ome.formats.OMEXMLFormat;
 
 import java.io.IOException;
 

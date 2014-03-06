@@ -32,7 +32,7 @@
  * #L%
  */
 
-package io.scif.ome.xml.meta;
+package io.scif.ome.formats;
 
 import io.scif.AbstractChecker;
 import io.scif.AbstractFormat;
