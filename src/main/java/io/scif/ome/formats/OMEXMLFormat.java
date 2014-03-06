@@ -393,6 +393,7 @@ public class OMEXMLFormat extends AbstractFormat {
 				pixels = new byte[planeSize];
 				bzip.read(pixels, 0, pixels.length);
 				tempPixels = null;
+				bzip.close();
 				bais.close();
 				bais = null;
 				bzip = null;
