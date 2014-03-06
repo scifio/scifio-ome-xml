@@ -55,7 +55,7 @@ import ome.xml.model.enums.LaserType;
  * A utility class for working with OME metadata objects, including
  * {@link MetadataStore} and {@link MetadataRetrieve}.
  */
-public interface OMEXMLMetadataService extends SCIFIOService {
+public interface OMEMetadataService extends SCIFIOService {
 
 	/**
 	 * Populates the 'pixels' element of the given metadata store, using core

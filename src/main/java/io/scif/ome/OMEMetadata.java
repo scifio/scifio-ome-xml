@@ -35,7 +35,7 @@
 package io.scif.ome;
 
 import io.scif.AbstractMetadata;
-import io.scif.ome.services.OMEXMLMetadataService;
+import io.scif.ome.services.OMEMetadataService;
 import io.scif.ome.services.OMEXMLService;
 import loci.common.services.ServiceException;
 import loci.formats.ome.OMEXMLMetadata;
@@ -79,7 +79,7 @@ public class OMEMetadata extends AbstractMetadata {
 
 	@Override
 	public void populateImageMetadata() {
-		getContext().getService(OMEXMLMetadataService.class).populateMetadata(
+		getContext().getService(OMEMetadataService.class).populateMetadata(
 			getRoot(), this);
 	}
 

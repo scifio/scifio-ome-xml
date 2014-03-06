@@ -38,7 +38,7 @@ import io.scif.FormatException;
 import io.scif.Metadata;
 import io.scif.formats.APNGFormat;
 import io.scif.ome.OMEMetadata;
-import io.scif.ome.services.OMEXMLMetadataService;
+import io.scif.ome.services.OMEMetadataService;
 import io.scif.util.FormatTools;
 
 import org.scijava.Priority;
@@ -169,7 +169,7 @@ public class APNGTranslator {
 			// = sizeC / effectiveSizeC... just sizeC for APNG? #planes / Z * T
 			final String imageName = "";
 
-			getContext().getService(OMEXMLMetadataService.class).populateMetadata(
+			getContext().getService(OMEMetadataService.class).populateMetadata(
 				dest.getRoot(), series, imageName, littleEndian, dimOrder, pixelType,
 				sizeX, sizeY, sizeZ, sizeC, sizeT, 1.0, 1.0, 1.0, 1.0, 1.0,
 				samplesPerPixel);

@@ -59,7 +59,7 @@ import io.scif.io.Location;
 import io.scif.io.RandomAccessInputStream;
 import io.scif.io.RandomAccessOutputStream;
 import io.scif.ome.OMEMetadata;
-import io.scif.ome.services.OMEXMLMetadataService;
+import io.scif.ome.services.OMEMetadataService;
 import io.scif.ome.services.OMEXMLService;
 import io.scif.services.FormatService;
 import io.scif.services.TranslatorService;
@@ -112,7 +112,7 @@ public class OMETIFFFormat extends AbstractFormat {
 
 	// FIXME: These should not be static.
 	private static OMEXMLService service;
-	private static OMEXMLMetadataService metaService;
+	private static OMEMetadataService metaService;
 
 	// -- Format API Methods --
 
@@ -1440,7 +1440,7 @@ public class OMETIFFFormat extends AbstractFormat {
 
 	private static void setupServices(final Context ctx) {
 		service = ctx.getService(OMEXMLService.class);
-		metaService = ctx.getService(OMEXMLMetadataService.class);
+		metaService = ctx.getService(OMEMetadataService.class);
 	}
 
 	private static boolean isSingleFile(final Context context, final String id)

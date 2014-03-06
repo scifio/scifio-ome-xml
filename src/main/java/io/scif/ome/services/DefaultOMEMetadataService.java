@@ -81,10 +81,10 @@ import org.scijava.plugin.Plugin;
 import org.scijava.service.AbstractService;
 import org.scijava.service.Service;
 
-/** Default implementation of {@link OMEXMLMetadataService}. */
+/** Default implementation of {@link OMEMetadataService}. */
 @Plugin(type = Service.class)
-public class DefaultOMEXMLMetadataService extends AbstractService implements
-	OMEXMLMetadataService
+public class DefaultOMEMetadataService extends AbstractService implements
+	OMEMetadataService
 {
 
 	// -- Static fields --

@@ -36,7 +36,7 @@ package io.scif.ome.translators;
 
 import io.scif.Metadata;
 import io.scif.ome.OMEMetadata;
-import io.scif.ome.services.OMEXMLMetadataService;
+import io.scif.ome.services.OMEMetadataService;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Parameter;
@@ -54,7 +54,7 @@ public class DefaultOMETranslator extends ToOMETranslator<Metadata> {
 	// -- Fields --
 
 	@Parameter
-	private OMEXMLMetadataService omexmlMetadataService;
+	private OMEMetadataService omexmlMetadataService;
 
 	// -- Translator API Methods --
 

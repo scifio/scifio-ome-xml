@@ -57,7 +57,7 @@ import io.scif.config.SCIFIOConfig;
 import io.scif.io.CBZip2InputStream;
 import io.scif.io.RandomAccessInputStream;
 import io.scif.ome.OMEMetadata;
-import io.scif.ome.services.OMEXMLMetadataService;
+import io.scif.ome.services.OMEMetadataService;
 import io.scif.ome.services.OMEXMLService;
 import io.scif.ome.translators.FromOMETranslator;
 import io.scif.services.FormatService;
@@ -189,7 +189,7 @@ public class OMEXMLFormat extends AbstractFormat {
 
 		@Override
 		public void populateImageMetadata() {
-			getContext().getService(OMEXMLMetadataService.class).populateMetadata(
+			getContext().getService(OMEMetadataService.class).populateMetadata(
 				getOMEMeta().getRoot(), this);
 
 			for (int i = 0; i < getImageCount(); i++) {
@@ -640,7 +640,7 @@ public class OMEXMLFormat extends AbstractFormat {
 		// -- Fields --
 
 		@Parameter
-		private OMEXMLMetadataService omexmlMetadataService;
+		private OMEMetadataService omexmlMetadataService;
 
 		// -- Translator API --
 
