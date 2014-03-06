@@ -50,7 +50,7 @@ import org.scijava.service.AbstractService;
 
 /** Default implementation of {@link OMEXMLService}. */
 @Plugin(type = OMEXMLService.class)
-public class OMEXMLServiceImpl extends AbstractService implements OMEXMLService
+public class DefaultOMEXMLService extends AbstractService implements OMEXMLService
 {
 
 	private loci.formats.services.OMEXMLService omexmlService;
