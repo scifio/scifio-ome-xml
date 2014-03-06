@@ -36,10 +36,10 @@ package io.scif.ome.xml.services;
 
 import io.scif.SCIFIOService;
 import io.scif.ome.OMEMetadata;
-import io.scif.services.ServiceException;
 
 import java.util.Hashtable;
 
+import loci.common.services.ServiceException;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.meta.MetadataStore;
 import loci.formats.ome.OMEXMLMetadata;
@@ -53,7 +53,7 @@ public interface OMEXMLService extends SCIFIOService {
 	/**
 	 * @see loci.formats.services.OMEXMLService#transformToLatestVersion(String)
 	 */
-	public String transformToLatestVersion(String xml);
+	public String transformToLatestVersion(String xml) throws ServiceException;
 
 	/** @see loci.formats.services.OMEXMLService#createOMEXMLMetadata() */
 	public OMEXMLMetadata createOMEXMLMetadata() throws ServiceException;

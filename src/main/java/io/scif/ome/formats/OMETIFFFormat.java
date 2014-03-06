@@ -62,7 +62,6 @@ import io.scif.ome.OMEMetadata;
 import io.scif.ome.xml.services.OMEXMLMetadataService;
 import io.scif.ome.xml.services.OMEXMLService;
 import io.scif.services.FormatService;
-import io.scif.services.ServiceException;
 import io.scif.services.TranslatorService;
 import io.scif.util.FormatTools;
 
@@ -79,6 +78,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.Vector;
 
+import loci.common.services.ServiceException;
 import loci.formats.meta.IMetadata;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.meta.MetadataStore;

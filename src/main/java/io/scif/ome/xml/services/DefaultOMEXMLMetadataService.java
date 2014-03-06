@@ -41,11 +41,11 @@ import io.scif.Reader;
 import io.scif.common.DateTools;
 import io.scif.io.Location;
 import io.scif.services.FormatService;
-import io.scif.services.ServiceException;
 import io.scif.util.FormatTools;
 
 import java.util.Arrays;
 
+import loci.common.services.ServiceException;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.meta.MetadataStore;
 import loci.formats.ome.OMEXMLMetadata;

@@ -60,9 +60,7 @@ import io.scif.ome.OMEMetadata;
 import io.scif.ome.translators.FromOMETranslator;
 import io.scif.ome.xml.services.OMEXMLMetadataService;
 import io.scif.ome.xml.services.OMEXMLService;
-import io.scif.ome.xml.services.OMEXMLServiceImpl;
 import io.scif.services.FormatService;
-import io.scif.services.ServiceException;
 import io.scif.util.FormatTools;
 import io.scif.util.ImageTools;
 import io.scif.util.SCIFIOMetadataTools;
@@ -73,6 +71,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Vector;
 
+import loci.common.services.ServiceException;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.ome.OMEXMLMetadata;
 import loci.formats.ome.OMEXMLMetadataImpl;

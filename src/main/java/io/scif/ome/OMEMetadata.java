@@ -34,11 +34,11 @@
 
 package io.scif.ome;
 
-import loci.formats.ome.OMEXMLMetadata;
 import io.scif.AbstractMetadata;
 import io.scif.ome.xml.services.OMEXMLMetadataService;
 import io.scif.ome.xml.services.OMEXMLService;
-import io.scif.services.ServiceException;
+import loci.common.services.ServiceException;
+import loci.formats.ome.OMEXMLMetadata;
 
 import org.scijava.Context;
 import org.scijava.plugin.Parameter;
