@@ -32,27 +32,45 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
-import io.scif.AbstractTranslator;
 import io.scif.Metadata;
 import io.scif.ome.OMEMetadata;
+import io.scif.ome.xml.services.OMEXMLMetadataService;
+
+import org.scijava.Priority;
+import org.scijava.plugin.Parameter;
+import org.scijava.plugin.Plugin;
 
 /**
- * Abstract base class for all {@link io.scif.Translator} implementations that
- * operate on {@link OMEMetadata}.
+ * Basic translator for OME Metadata. Uses ImageMetadata to populate a
+ * MetadataStore.
  * 
- * @see io.scif.Translator
- * @see OMEMetadata
- * @author Mark Hiner
+ * @author Mark Hiner hinerm at gmail.com
  */
-public abstract class OMETranslator<M extends Metadata, N extends Metadata>
-	extends AbstractTranslator<M, N>
-{
+@Plugin(type = ToOMETranslator.class, priority = Priority.NORMAL_PRIORITY)
+public class DefaultOMETranslator extends ToOMETranslator<Metadata> {
 
-	/**
-	 * Convert between type-specific Metadata and OME-XML
-	 */
-	protected abstract void translateOMEXML(final M source, final N dest);
+	// -- Fields --
 
+	@Parameter
+	private OMEXMLMetadataService omexmlMetadataService;
+
+	// -- Translator API Methods --
+
+	@Override
+	public Class<? extends Metadata> source() {
+		return Metadata.class;
+	}
+
+	@Override
+	public Class<? extends Metadata> dest() {
+		return OMEMetadata.class;
+	}
+
+	@Override
+	protected void translateOMEXML(final Metadata source, final OMEMetadata dest)
+	{
+		// No translation to perform. Handled by the ToOMETranslator layer.
+	}
 }

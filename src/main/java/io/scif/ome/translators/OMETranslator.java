@@ -32,25 +32,27 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
+import io.scif.AbstractTranslator;
 import io.scif.Metadata;
 import io.scif.ome.OMEMetadata;
 
 /**
- * Abstract base class for all io.scif.Translators that translate from an
- * OMEMetadata object.
+ * Abstract base class for all {@link io.scif.Translator} implementations that
+ * operate on {@link OMEMetadata}.
  * 
+ * @see io.scif.Translator
+ * @see OMEMetadata
  * @author Mark Hiner
  */
-public abstract class FromOMETranslator<M extends Metadata> extends
-	OMETranslator<OMEMetadata, M>
+public abstract class OMETranslator<M extends Metadata, N extends Metadata>
+	extends AbstractTranslator<M, N>
 {
 
-	// -- Translator API Methods --
+	/**
+	 * Convert between type-specific Metadata and OME-XML
+	 */
+	protected abstract void translateOMEXML(final M source, final N dest);
 
-	@Override
-	protected void typedTranslate(final OMEMetadata source, final M dest) {
-		translateOMEXML(source, dest);
-	}
 }

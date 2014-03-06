@@ -32,26 +32,27 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
 import io.scif.Metadata;
-import io.scif.formats.NRRDFormat;
+import io.scif.formats.EPSFormat;
 import io.scif.ome.OMEMetadata;
-import ome.xml.model.primitives.PositiveFloat;
+import loci.formats.ome.OMEXMLMetadata;
+import net.imglib2.meta.Axes;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Plugin;
 
 /**
- * Container class for translators between OME and NRRD formats.
+ * Container class for translators between OME and EPS formats.
  * 
  * @author Mark Hiner hinerm at gmail.com
  */
-public class NRRDTranslator {
+public class EPSTranslator {
 
 	/**
-	 * Translator class from {@link io.scif.formats.NRRDFormat.Metadata} to
-	 * {@link OMEMetadata}
+	 * Translator class from {@link io.scif.formats.EPSFormat.Metadata} to
+	 * {@link OMEMetadata}.
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -59,53 +60,35 @@ public class NRRDTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
-	public static class NRRDOMETranslator extends
-		ToOMETranslator<NRRDFormat.Metadata>
+	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH_PRIORITY)
+	public static class OMEEPSTranslator extends
+		FromOMETranslator<EPSFormat.Metadata>
 	{
-
-		// -- Translator API Methods --
 
 		@Override
 		public Class<? extends Metadata> source() {
-			return NRRDFormat.Metadata.class;
-		}
-
-		@Override
-		public Class<? extends Metadata> dest() {
 			return OMEMetadata.class;
 		}
 
 		@Override
-		protected void translateOMEXML(final NRRDFormat.Metadata source,
-			final OMEMetadata dest)
+		public Class<? extends Metadata> dest() {
+			return EPSFormat.Metadata.class;
+		}
+
+		@Override
+		protected void translateOMEXML(final OMEMetadata source,
+			final EPSFormat.Metadata dest)
 		{
+			final OMEXMLMetadata meta = source.getRoot();
 
-			final String[] pixelSizes = source.getPixelSizes();
+			final int sizeX = meta.getPixelsSizeX(0).getValue().intValue();
+			final int sizeY = meta.getPixelsSizeY(0).getValue().intValue();
+			final int sizeC =
+				meta.getChannelSamplesPerPixel(0, 0).getValue().intValue();
 
-			if (pixelSizes != null) {
-				for (int i = 0; i < pixelSizes.length; i++) {
-					if (pixelSizes[i] == null) continue;
-					try {
-						final Double d = new Double(pixelSizes[i].trim());
-						if (d > 0) {
-							if (i == 0) {
-								dest.getRoot().setPixelsPhysicalSizeX(new PositiveFloat(d), 0);
-							}
-							else if (i == 1) {
-								dest.getRoot().setPixelsPhysicalSizeY(new PositiveFloat(d), 0);
-							}
-							else if (i == 2) {
-								dest.getRoot().setPixelsPhysicalSizeZ(new PositiveFloat(d), 0);
-							}
-						}
-						else {
-							log().warn("Expected positive value for PhysicalSize; got " + d);
-						}
-					}
-					catch (final NumberFormatException e) {}
-				}
-			}
+			dest.get(0).setAxisLength(Axes.X, sizeX);
+			dest.get(0).setAxisLength(Axes.Y, sizeY);
+			dest.get(0).setAxisLength(Axes.CHANNEL, sizeC);
 		}
 	}
 }

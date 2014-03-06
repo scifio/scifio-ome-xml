@@ -32,7 +32,7 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
 import io.scif.FormatException;
 import io.scif.Metadata;

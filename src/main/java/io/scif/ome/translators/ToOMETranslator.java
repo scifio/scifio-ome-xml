@@ -32,63 +32,38 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
 import io.scif.Metadata;
-import io.scif.formats.EPSFormat;
 import io.scif.ome.OMEMetadata;
-import loci.formats.ome.OMEXMLMetadata;
-import net.imglib2.meta.Axes;
+import io.scif.ome.xml.services.OMEXMLMetadataService;
 
-import org.scijava.Priority;
-import org.scijava.plugin.Plugin;
+import org.scijava.plugin.Parameter;
 
 /**
- * Container class for translators between OME and EPS formats.
+ * Abstract base class for all io.scif.Translators that translate to an
+ * OMEMetadata object.
  * 
- * @author Mark Hiner hinerm at gmail.com
+ * @author Mark Hiner
  */
-public class EPSTranslator {
+public abstract class ToOMETranslator<M extends Metadata> extends
+	OMETranslator<M, OMEMetadata>
+{
 
-	/**
-	 * Translator class from {@link io.scif.formats.EPSFormat.Metadata} to
-	 * {@link OMEMetadata}.
-	 * <p>
-	 * NB: Plugin priority is set to high to be selected over the base
-	 * {@link io.scif.Metadata} translator.
-	 * </p>
-	 * 
-	 * @author Mark Hiner
-	 */
-	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH_PRIORITY)
-	public static class OMEEPSTranslator extends
-		FromOMETranslator<EPSFormat.Metadata>
-	{
+	// -- Fields --
 
-		@Override
-		public Class<? extends Metadata> source() {
-			return OMEMetadata.class;
+	@Parameter
+	private OMEXMLMetadataService omexmlMetadataService;
+
+	// -- Translator API Methods --
+
+	@Override
+	protected void typedTranslate(final M source, final OMEMetadata dest) {
+		for (int i = 0; i < source.getImageCount(); i++) {
+			omexmlMetadataService.populateMetadata(dest.getRoot(), 0, source
+				.getDatasetName(), source);
 		}
 
-		@Override
-		public Class<? extends Metadata> dest() {
-			return EPSFormat.Metadata.class;
-		}
-
-		@Override
-		protected void translateOMEXML(final OMEMetadata source,
-			final EPSFormat.Metadata dest)
-		{
-			final OMEXMLMetadata meta = source.getRoot();
-
-			final int sizeX = meta.getPixelsSizeX(0).getValue().intValue();
-			final int sizeY = meta.getPixelsSizeY(0).getValue().intValue();
-			final int sizeC =
-				meta.getChannelSamplesPerPixel(0, 0).getValue().intValue();
-
-			dest.get(0).setAxisLength(Axes.X, sizeX);
-			dest.get(0).setAxisLength(Axes.Y, sizeY);
-			dest.get(0).setAxisLength(Axes.CHANNEL, sizeC);
-		}
+		translateOMEXML(source, dest);
 	}
 }

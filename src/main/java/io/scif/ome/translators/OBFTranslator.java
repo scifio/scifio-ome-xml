@@ -32,24 +32,31 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
+import io.scif.ImageMetadata;
 import io.scif.Metadata;
+import io.scif.formats.OBFFormat;
 import io.scif.ome.OMEMetadata;
-import io.scif.ome.formats.OMETIFFFormat;
 
+import java.util.List;
+
+import net.imglib2.meta.Axes;
+import ome.xml.model.primitives.PositiveFloat;
+
+import org.scijava.Priority;
 import org.scijava.plugin.Plugin;
 
 /**
- * Container class for translators between OME and OMETIFF formats.
+ * Container class for translators between OME and OBF formats.
  * 
  * @author Mark Hiner hinerm at gmail.com
  */
-public class OMETIFFTranslator {
+public class OBFTranslator {
 
 	/**
-	 * Translator class from {@link io.scif.ome.formats.OMETIFFFormat.Metadata}
-	 * to {@link OMEMetadata}
+	 * Translator class from {@link io.scif.formats.OBFFormat.Metadata} to
+	 * {@link io.scif.ome.OMEMetadata}
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -57,16 +64,16 @@ public class OMETIFFTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = ToOMETranslator.class, priority = TIFFTranslator.PRIORITY + 1)
-	public static class OMEtoOMETIFFTranslator extends
-		ToOMETranslator<OMETIFFFormat.Metadata>
+	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
+	public static class OBFOMETranslator extends
+		ToOMETranslator<OBFFormat.Metadata>
 	{
 
-		// -- Translator API Methods --
+		// -- Translator API methods --
 
 		@Override
 		public Class<? extends Metadata> source() {
-			return OMETIFFFormat.Metadata.class;
+			return OBFFormat.Metadata.class;
 		}
 
 		@Override
@@ -74,56 +81,39 @@ public class OMETIFFTranslator {
 			return OMEMetadata.class;
 		}
 
-		// -- Translator API Methods --
-
 		@Override
-		protected void translateOMEXML(final OMETIFFFormat.Metadata source,
+		protected void translateOMEXML(final OBFFormat.Metadata source,
 			final OMEMetadata dest)
 		{
-			dest.setRoot(source.getOmeMeta().getRoot());
-		}
-	}
+			for (int image = 0; image != source.getImageCount(); ++image) {
+				final ImageMetadata obf = source.get(image);
 
-	/**
-	 * Translator class from {@link io.scif.ome.formats.OMETIFFFormat.Metadata}
-	 * to {@link OMEMetadata}.
-	 * <p>
-	 * NB: Plugin priority is set to high to be selected over the base
-	 * {@link io.scif.Metadata} translator.
-	 * </p>
-	 * 
-	 * @author Mark Hiner
-	 */
-	@Plugin(type = FromOMETranslator.class,
-		priority = TIFFTranslator.PRIORITY + 1)
-	public static class OMETIFFtoOMETranslator extends
-		FromOMETranslator<OMETIFFFormat.Metadata>
-	{
+				final String name = obf.getTable().get("Name").toString();
+				dest.getRoot().setImageName(name, image);
 
-		@Override
-		public Class<? extends Metadata> source() {
-			return OMEMetadata.class;
-		}
+				@SuppressWarnings("unchecked")
+				final List<Double> lengths =
+					(List<Double>) obf.getTable().get("Lengths");
 
-		@Override
-		public Class<? extends Metadata> dest() {
-			return OMETIFFFormat.Metadata.class;
-		}
-
-		/*
-		 * @see OMETranslator#typedTranslate(io.scif.Metadata, io.scif.Metadata)
-		 */
-		@Override
-		protected void translateOMEXML(final OMEMetadata source,
-			final OMETIFFFormat.Metadata dest)
-		{
-			OMEMetadata omeMeta = dest.getOmeMeta();
-
-			if (omeMeta == null) {
-				omeMeta = new OMEMetadata(getContext(), source.getRoot());
-				dest.setOmeMeta(omeMeta);
+				final double lengthX = Math.abs(lengths.get(0));
+				if (lengthX > 0) {
+					final PositiveFloat physicalSizeX =
+						new PositiveFloat(lengthX / obf.getAxisLength(Axes.X));
+					dest.getRoot().setPixelsPhysicalSizeX(physicalSizeX, image);
+				}
+				final double lengthY = Math.abs(lengths.get(1));
+				if (lengthY > 0) {
+					final PositiveFloat physicalSizeY =
+						new PositiveFloat(lengthY / obf.getAxisLength(Axes.Y));
+					dest.getRoot().setPixelsPhysicalSizeY(physicalSizeY, image);
+				}
+				final double lengthZ = Math.abs(lengths.get(2));
+				if (lengthZ > 0) {
+					final PositiveFloat physicalSizeZ =
+						new PositiveFloat(lengthZ / obf.getAxisLength(Axes.Z));
+					dest.getRoot().setPixelsPhysicalSizeZ(physicalSizeZ, image);
+				}
 			}
-			else omeMeta.setRoot(source.getRoot());
 		}
 	}
 }

@@ -32,28 +32,25 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
 import io.scif.Metadata;
-import io.scif.common.DateTools;
-import io.scif.formats.DICOMFormat;
+import io.scif.formats.NRRDFormat;
 import io.scif.ome.OMEMetadata;
-import loci.formats.ome.OMEXMLMetadata;
 import ome.xml.model.primitives.PositiveFloat;
-import ome.xml.model.primitives.Timestamp;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Plugin;
 
 /**
- * Container class for translators between OME and DICOM formats.
+ * Container class for translators between OME and NRRD formats.
  * 
  * @author Mark Hiner hinerm at gmail.com
  */
-public class DICOMTranslator {
+public class NRRDTranslator {
 
 	/**
-	 * Translator class from {@link io.scif.formats.DICOMFormat.Metadata} to
+	 * Translator class from {@link io.scif.formats.NRRDFormat.Metadata} to
 	 * {@link OMEMetadata}
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
@@ -63,15 +60,15 @@ public class DICOMTranslator {
 	 * @author Mark Hiner
 	 */
 	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
-	public static class DICOMOMETranslator extends
-		ToOMETranslator<DICOMFormat.Metadata>
+	public static class NRRDOMETranslator extends
+		ToOMETranslator<NRRDFormat.Metadata>
 	{
 
 		// -- Translator API Methods --
 
 		@Override
 		public Class<? extends Metadata> source() {
-			return DICOMFormat.Metadata.class;
+			return NRRDFormat.Metadata.class;
 		}
 
 		@Override
@@ -80,64 +77,33 @@ public class DICOMTranslator {
 		}
 
 		@Override
-		protected void translateOMEXML(final DICOMFormat.Metadata source,
+		protected void translateOMEXML(final NRRDFormat.Metadata source,
 			final OMEMetadata dest)
 		{
-			// The metadata store we're working with.
 
-			String stamp = null;
+			final String[] pixelSizes = source.getPixelSizes();
 
-			final OMEXMLMetadata store = dest.getRoot();
-
-			final String date = source.getDate();
-			final String time = source.getTime();
-			final String imageType = source.getImageType();
-			final String pixelSizeX = source.getPixelSizeX();
-			final String pixelSizeY = source.getPixelSizeY();
-			final Double pixelSizeZ = source.getPixelSizeZ();
-
-			if (date != null && time != null) {
-				stamp = date + " " + time;
-				stamp = DateTools.formatDate(stamp, "yyyy.MM.dd HH:mm:ss.SSSSSS");
-			}
-
-			if (stamp == null || stamp.trim().equals("")) stamp = null;
-
-			for (int i = 0; i < source.getImageCount(); i++) {
-				if (stamp != null) store.setImageAcquisitionDate(new Timestamp(stamp),
-					i);
-				store.setImageName("Series " + i, i);
-			}
-
-			for (int i = 0; i < source.getImageCount(); i++) {
-				store.setImageDescription(imageType, i);
-
-				if (pixelSizeX != null) {
-					final Double sizeX = new Double(pixelSizeX);
-					if (sizeX > 0) {
-						store.setPixelsPhysicalSizeX(new PositiveFloat(sizeX), i);
+			if (pixelSizes != null) {
+				for (int i = 0; i < pixelSizes.length; i++) {
+					if (pixelSizes[i] == null) continue;
+					try {
+						final Double d = new Double(pixelSizes[i].trim());
+						if (d > 0) {
+							if (i == 0) {
+								dest.getRoot().setPixelsPhysicalSizeX(new PositiveFloat(d), 0);
+							}
+							else if (i == 1) {
+								dest.getRoot().setPixelsPhysicalSizeY(new PositiveFloat(d), 0);
+							}
+							else if (i == 2) {
+								dest.getRoot().setPixelsPhysicalSizeZ(new PositiveFloat(d), 0);
+							}
+						}
+						else {
+							log().warn("Expected positive value for PhysicalSize; got " + d);
+						}
 					}
-					else {
-						log().warn(
-							"Expected positive value for PhysicalSizeX; got " + sizeX);
-					}
-				}
-				if (pixelSizeY != null) {
-					final Double sizeY = new Double(pixelSizeY);
-					if (sizeY > 0) {
-						store.setPixelsPhysicalSizeY(new PositiveFloat(sizeY), i);
-					}
-					else {
-						log().warn(
-							"Expected positive value for PhysicalSizeY; got " + sizeY);
-					}
-				}
-				if (pixelSizeZ != null && pixelSizeZ > 0) {
-					store.setPixelsPhysicalSizeZ(new PositiveFloat(pixelSizeZ), i);
-				}
-				else {
-					log().warn(
-						"Expected positive value for PhysicalSizeZ; got " + pixelSizeZ);
+					catch (final NumberFormatException e) {}
 				}
 			}
 		}

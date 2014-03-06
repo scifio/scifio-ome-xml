@@ -32,45 +32,80 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
 import io.scif.Metadata;
+import io.scif.formats.BMPFormat;
 import io.scif.ome.OMEMetadata;
-import io.scif.ome.xml.services.OMEXMLMetadataService;
+import ome.xml.model.primitives.PositiveFloat;
 
 import org.scijava.Priority;
-import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
 /**
- * Basic translator for OME Metadata. Uses ImageMetadata to populate a
- * MetadataStore.
+ * Container class for translators between OME and BMP formats.
  * 
  * @author Mark Hiner hinerm at gmail.com
  */
-@Plugin(type = ToOMETranslator.class, priority = Priority.NORMAL_PRIORITY)
-public class DefaultOMETranslator extends ToOMETranslator<Metadata> {
+public class BMPTranslator {
 
-	// -- Fields --
-
-	@Parameter
-	private OMEXMLMetadataService omexmlMetadataService;
-
-	// -- Translator API Methods --
-
-	@Override
-	public Class<? extends Metadata> source() {
-		return Metadata.class;
-	}
-
-	@Override
-	public Class<? extends Metadata> dest() {
-		return OMEMetadata.class;
-	}
-
-	@Override
-	protected void translateOMEXML(final Metadata source, final OMEMetadata dest)
+	/**
+	 * Translator class from {@link io.scif.formats.BMPFormat.Metadata} to
+	 * {@link OMEMetadata}
+	 * <p>
+	 * NB: Plugin priority is set to high to be selected over the base
+	 * {@link io.scif.Metadata} translator.
+	 * </p>
+	 * 
+	 * @author Mark Hiner
+	 */
+	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
+	public static class BMPOMETranslator extends
+		ToOMETranslator<BMPFormat.Metadata>
 	{
-		// No translation to perform. Handled by the ToOMETranslator layer.
+
+		// -- Translator API Methods --
+
+		@Override
+		public Class<? extends Metadata> source() {
+			return BMPFormat.Metadata.class;
+		}
+
+		@Override
+		public Class<? extends Metadata> dest() {
+			return OMEMetadata.class;
+		}
+
+		@Override
+		protected void translateOMEXML(final BMPFormat.Metadata source,
+			final OMEMetadata dest)
+		{
+			// resolution is stored as pixels per meter; we want to convert to
+			// microns per pixel
+
+			final Integer pixelSizeX = (Integer) source.getTable().get("X resolution");
+
+			final Integer pixelSizeY = (Integer) source.getTable().get("Y resolution");
+
+			final double correctedX =
+				pixelSizeX == null || pixelSizeX == 0 ? 0.0 : 1000000.0 / pixelSizeX;
+			final double correctedY =
+				pixelSizeY == null || pixelSizeY == 0 ? 0.0 : 1000000.0 / pixelSizeY;
+
+			if (correctedX > 0) {
+				dest.getRoot().setPixelsPhysicalSizeX(new PositiveFloat(correctedX), 0);
+			}
+			else {
+				log().warn(
+					"Expected positive value for PhysicalSizeX; got " + correctedX);
+			}
+			if (correctedY > 0) {
+				dest.getRoot().setPixelsPhysicalSizeY(new PositiveFloat(correctedY), 0);
+			}
+			else {
+				log().warn(
+					"Expected positive value for PhysicalSizeY; got " + correctedY);
+			}
+		}
 	}
 }

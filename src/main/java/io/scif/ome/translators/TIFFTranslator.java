@@ -32,7 +32,7 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
 import io.scif.Metadata;
 import io.scif.formats.TIFFFormat;

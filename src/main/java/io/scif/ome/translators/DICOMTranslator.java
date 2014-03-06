@@ -32,31 +32,29 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
-import io.scif.ImageMetadata;
 import io.scif.Metadata;
-import io.scif.formats.OBFFormat;
+import io.scif.common.DateTools;
+import io.scif.formats.DICOMFormat;
 import io.scif.ome.OMEMetadata;
-
-import java.util.List;
-
-import net.imglib2.meta.Axes;
+import loci.formats.ome.OMEXMLMetadata;
 import ome.xml.model.primitives.PositiveFloat;
+import ome.xml.model.primitives.Timestamp;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Plugin;
 
 /**
- * Container class for translators between OME and OBF formats.
+ * Container class for translators between OME and DICOM formats.
  * 
  * @author Mark Hiner hinerm at gmail.com
  */
-public class OBFTranslator {
+public class DICOMTranslator {
 
 	/**
-	 * Translator class from {@link io.scif.formats.OBFFormat.Metadata} to
-	 * {@link io.scif.ome.OMEMetadata}
+	 * Translator class from {@link io.scif.formats.DICOMFormat.Metadata} to
+	 * {@link OMEMetadata}
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -65,15 +63,15 @@ public class OBFTranslator {
 	 * @author Mark Hiner
 	 */
 	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
-	public static class OBFOMETranslator extends
-		ToOMETranslator<OBFFormat.Metadata>
+	public static class DICOMOMETranslator extends
+		ToOMETranslator<DICOMFormat.Metadata>
 	{
 
-		// -- Translator API methods --
+		// -- Translator API Methods --
 
 		@Override
 		public Class<? extends Metadata> source() {
-			return OBFFormat.Metadata.class;
+			return DICOMFormat.Metadata.class;
 		}
 
 		@Override
@@ -82,36 +80,64 @@ public class OBFTranslator {
 		}
 
 		@Override
-		protected void translateOMEXML(final OBFFormat.Metadata source,
+		protected void translateOMEXML(final DICOMFormat.Metadata source,
 			final OMEMetadata dest)
 		{
-			for (int image = 0; image != source.getImageCount(); ++image) {
-				final ImageMetadata obf = source.get(image);
+			// The metadata store we're working with.
 
-				final String name = obf.getTable().get("Name").toString();
-				dest.getRoot().setImageName(name, image);
+			String stamp = null;
 
-				@SuppressWarnings("unchecked")
-				final List<Double> lengths =
-					(List<Double>) obf.getTable().get("Lengths");
+			final OMEXMLMetadata store = dest.getRoot();
 
-				final double lengthX = Math.abs(lengths.get(0));
-				if (lengthX > 0) {
-					final PositiveFloat physicalSizeX =
-						new PositiveFloat(lengthX / obf.getAxisLength(Axes.X));
-					dest.getRoot().setPixelsPhysicalSizeX(physicalSizeX, image);
+			final String date = source.getDate();
+			final String time = source.getTime();
+			final String imageType = source.getImageType();
+			final String pixelSizeX = source.getPixelSizeX();
+			final String pixelSizeY = source.getPixelSizeY();
+			final Double pixelSizeZ = source.getPixelSizeZ();
+
+			if (date != null && time != null) {
+				stamp = date + " " + time;
+				stamp = DateTools.formatDate(stamp, "yyyy.MM.dd HH:mm:ss.SSSSSS");
+			}
+
+			if (stamp == null || stamp.trim().equals("")) stamp = null;
+
+			for (int i = 0; i < source.getImageCount(); i++) {
+				if (stamp != null) store.setImageAcquisitionDate(new Timestamp(stamp),
+					i);
+				store.setImageName("Series " + i, i);
+			}
+
+			for (int i = 0; i < source.getImageCount(); i++) {
+				store.setImageDescription(imageType, i);
+
+				if (pixelSizeX != null) {
+					final Double sizeX = new Double(pixelSizeX);
+					if (sizeX > 0) {
+						store.setPixelsPhysicalSizeX(new PositiveFloat(sizeX), i);
+					}
+					else {
+						log().warn(
+							"Expected positive value for PhysicalSizeX; got " + sizeX);
+					}
 				}
-				final double lengthY = Math.abs(lengths.get(1));
-				if (lengthY > 0) {
-					final PositiveFloat physicalSizeY =
-						new PositiveFloat(lengthY / obf.getAxisLength(Axes.Y));
-					dest.getRoot().setPixelsPhysicalSizeY(physicalSizeY, image);
+				if (pixelSizeY != null) {
+					final Double sizeY = new Double(pixelSizeY);
+					if (sizeY > 0) {
+						store.setPixelsPhysicalSizeY(new PositiveFloat(sizeY), i);
+					}
+					else {
+						log().warn(
+							"Expected positive value for PhysicalSizeY; got " + sizeY);
+					}
 				}
-				final double lengthZ = Math.abs(lengths.get(2));
-				if (lengthZ > 0) {
-					final PositiveFloat physicalSizeZ =
-						new PositiveFloat(lengthZ / obf.getAxisLength(Axes.Z));
-					dest.getRoot().setPixelsPhysicalSizeZ(physicalSizeZ, image);
+				if (pixelSizeZ != null && pixelSizeZ > 0) {
+					store.setPixelsPhysicalSizeZ(new PositiveFloat(pixelSizeZ), i);
+				}
+				else {
+					log().warn(
+						"Expected positive value for PhysicalSizeZ; got " + pixelSizeZ);
 				}
 			}
 		}

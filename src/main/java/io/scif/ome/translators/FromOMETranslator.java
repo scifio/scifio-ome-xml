@@ -32,38 +32,25 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
 import io.scif.Metadata;
 import io.scif.ome.OMEMetadata;
-import io.scif.ome.xml.services.OMEXMLMetadataService;
-
-import org.scijava.plugin.Parameter;
 
 /**
- * Abstract base class for all io.scif.Translators that translate to an
+ * Abstract base class for all io.scif.Translators that translate from an
  * OMEMetadata object.
  * 
  * @author Mark Hiner
  */
-public abstract class ToOMETranslator<M extends Metadata> extends
-	OMETranslator<M, OMEMetadata>
+public abstract class FromOMETranslator<M extends Metadata> extends
+	OMETranslator<OMEMetadata, M>
 {
-
-	// -- Fields --
-
-	@Parameter
-	private OMEXMLMetadataService omexmlMetadataService;
 
 	// -- Translator API Methods --
 
 	@Override
-	protected void typedTranslate(final M source, final OMEMetadata dest) {
-		for (int i = 0; i < source.getImageCount(); i++) {
-			omexmlMetadataService.populateMetadata(dest.getRoot(), 0, source
-				.getDatasetName(), source);
-		}
-
+	protected void typedTranslate(final OMEMetadata source, final M dest) {
 		translateOMEXML(source, dest);
 	}
 }

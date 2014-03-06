@@ -32,26 +32,24 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
 import io.scif.Metadata;
-import io.scif.formats.BMPFormat;
 import io.scif.ome.OMEMetadata;
-import ome.xml.model.primitives.PositiveFloat;
+import io.scif.ome.formats.OMETIFFFormat;
 
-import org.scijava.Priority;
 import org.scijava.plugin.Plugin;
 
 /**
- * Container class for translators between OME and BMP formats.
+ * Container class for translators between OME and OMETIFF formats.
  * 
  * @author Mark Hiner hinerm at gmail.com
  */
-public class BMPTranslator {
+public class OMETIFFTranslator {
 
 	/**
-	 * Translator class from {@link io.scif.formats.BMPFormat.Metadata} to
-	 * {@link OMEMetadata}
+	 * Translator class from {@link io.scif.ome.formats.OMETIFFFormat.Metadata}
+	 * to {@link OMEMetadata}
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -59,16 +57,16 @@ public class BMPTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
-	public static class BMPOMETranslator extends
-		ToOMETranslator<BMPFormat.Metadata>
+	@Plugin(type = ToOMETranslator.class, priority = TIFFTranslator.PRIORITY + 1)
+	public static class OMEtoOMETIFFTranslator extends
+		ToOMETranslator<OMETIFFFormat.Metadata>
 	{
 
 		// -- Translator API Methods --
 
 		@Override
 		public Class<? extends Metadata> source() {
-			return BMPFormat.Metadata.class;
+			return OMETIFFFormat.Metadata.class;
 		}
 
 		@Override
@@ -76,36 +74,56 @@ public class BMPTranslator {
 			return OMEMetadata.class;
 		}
 
+		// -- Translator API Methods --
+
 		@Override
-		protected void translateOMEXML(final BMPFormat.Metadata source,
+		protected void translateOMEXML(final OMETIFFFormat.Metadata source,
 			final OMEMetadata dest)
 		{
-			// resolution is stored as pixels per meter; we want to convert to
-			// microns per pixel
+			dest.setRoot(source.getOmeMeta().getRoot());
+		}
+	}
 
-			final Integer pixelSizeX = (Integer) source.getTable().get("X resolution");
+	/**
+	 * Translator class from {@link io.scif.ome.formats.OMETIFFFormat.Metadata}
+	 * to {@link OMEMetadata}.
+	 * <p>
+	 * NB: Plugin priority is set to high to be selected over the base
+	 * {@link io.scif.Metadata} translator.
+	 * </p>
+	 * 
+	 * @author Mark Hiner
+	 */
+	@Plugin(type = FromOMETranslator.class,
+		priority = TIFFTranslator.PRIORITY + 1)
+	public static class OMETIFFtoOMETranslator extends
+		FromOMETranslator<OMETIFFFormat.Metadata>
+	{
 
-			final Integer pixelSizeY = (Integer) source.getTable().get("Y resolution");
+		@Override
+		public Class<? extends Metadata> source() {
+			return OMEMetadata.class;
+		}
 
-			final double correctedX =
-				pixelSizeX == null || pixelSizeX == 0 ? 0.0 : 1000000.0 / pixelSizeX;
-			final double correctedY =
-				pixelSizeY == null || pixelSizeY == 0 ? 0.0 : 1000000.0 / pixelSizeY;
+		@Override
+		public Class<? extends Metadata> dest() {
+			return OMETIFFFormat.Metadata.class;
+		}
 
-			if (correctedX > 0) {
-				dest.getRoot().setPixelsPhysicalSizeX(new PositiveFloat(correctedX), 0);
+		/*
+		 * @see OMETranslator#typedTranslate(io.scif.Metadata, io.scif.Metadata)
+		 */
+		@Override
+		protected void translateOMEXML(final OMEMetadata source,
+			final OMETIFFFormat.Metadata dest)
+		{
+			OMEMetadata omeMeta = dest.getOmeMeta();
+
+			if (omeMeta == null) {
+				omeMeta = new OMEMetadata(getContext(), source.getRoot());
+				dest.setOmeMeta(omeMeta);
 			}
-			else {
-				log().warn(
-					"Expected positive value for PhysicalSizeX; got " + correctedX);
-			}
-			if (correctedY > 0) {
-				dest.getRoot().setPixelsPhysicalSizeY(new PositiveFloat(correctedY), 0);
-			}
-			else {
-				log().warn(
-					"Expected positive value for PhysicalSizeY; got " + correctedY);
-			}
+			else omeMeta.setRoot(source.getRoot());
 		}
 	}
 }
