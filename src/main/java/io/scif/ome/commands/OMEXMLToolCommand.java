@@ -145,8 +145,8 @@ public class OMEXMLToolCommand extends AbstractSCIFIOToolCommand {
 	}
 
 	/**
-	 * Generates a list of axes using the given Reader, such that {@link Axes.X}
-	 * and {@link Axes.Y} are first.
+	 * Generates a list of axes using the given Reader, such that {@link Axes#X}
+	 * and {@link Axes#Y} are first.
 	 */
 	private AxisType[] axesToSplit(final ReaderFilter r) {
 		final Set<AxisType> axes = new HashSet<AxisType>();
