@@ -44,232 +44,112 @@ import loci.formats.meta.MetadataRetrieve;
 import loci.formats.meta.MetadataStore;
 import loci.formats.ome.OMEXMLMetadata;
 
-/**
- * <dl>
- * <dt><b>Source code:</b></dt>
- * <dd><a href=
- * "http://trac.openmicroscopy.org.uk/ome/browser/bioformats.git/components/bio-formats/src/loci/formats/services/OMEXMLService.java"
- * >Trac</a>, <a href=
- * "http://git.openmicroscopy.org/?p=bioformats.git;a=blob;f=components/bio-formats/src/loci/formats/services/OMEXMLService.java;hb=HEAD"
- * >Gitweb</a></dd>
- * </dl>
- */
+/** SCIFIO service wrapper for {@link loci.formats.services.OMEXMLService}. */
 public interface OMEXMLService extends SCIFIOService {
 
-	/**
-	 * Retrieves the latest supported version of the OME-XML schema.
-	 */
+	/** @see loci.formats.services.OMEXMLService#getLatestVersion() */
 	public String getLatestVersion();
 
 	/**
-	 * Transforms the given OME-XML string to the latest supported version of of
-	 * the OME-XML schema.
+	 * @see loci.formats.services.OMEXMLService#transformToLatestVersion(String)
 	 */
 	public String transformToLatestVersion(String xml);
 
-	/**
-	 * Creates an OME-XML metadata object using reflection, to avoid direct
-	 * dependencies on the optional {@link loci.formats.ome} package.
-	 * 
-	 * @return A new instance of {@link loci.formats.ome.AbstractOMEXMLMetadata},
-	 *         or null if the class is not available.
-	 * @throws ServiceException If there is an error creating the OME-XML metadata
-	 *           object.
-	 */
+	/** @see loci.formats.services.OMEXMLService#createOMEXMLMetadata() */
 	public OMEXMLMetadata createOMEXMLMetadata() throws ServiceException;
 
-	/**
-	 * Creates an OME-XML metadata object using reflection, to avoid direct
-	 * dependencies on the optional {@link loci.formats.ome} package, wrapping a
-	 * DOM representation of the given OME-XML string.
-	 * 
-	 * @return A new instance of {@link loci.formats.ome.AbstractOMEXMLMetadata},
-	 *         or null if the class is not available.
-	 * @throws ServiceException If there is an error creating the OME-XML metadata
-	 *           object.
-	 */
+	/** @see loci.formats.services.OMEXMLService#createOMEXMLMetadata() */
 	public OMEXMLMetadata createOMEXMLMetadata(String xml)
 		throws ServiceException;
 
 	/**
-	 * Creates an OME-XML metadata object using reflection, to avoid direct
-	 * dependencies on the optional {@link loci.formats.ome} package, wrapping a
-	 * DOM representation of the given OME-XML string.
-	 * 
-	 * @param xml The OME-XML string to use for initial population of the metadata
-	 *          object.
-	 * @param version The OME-XML version to use (e.g., "2003-FC" or "2007-06").
-	 *          If the xml and version parameters are both null, the newest
-	 *          version is used.
-	 * @return A new instance of {@link loci.formats.ome.AbstractOMEXMLMetadata},
-	 *         or null if the class is not available.
-	 * @throws ServiceException If there is an error creating the OME-XML metadata
-	 *           object.
+	 * @see loci.formats.services.OMEXMLService#createOMEXMLMetadata(String,
+	 *      String)
 	 */
 	public OMEXMLMetadata createOMEXMLMetadata(String xml, String version)
 		throws ServiceException;
 
-	/**
-	 * Constructs an OME root node.
-	 * 
-	 * @param xml String of XML to create the root node from.
-	 * @return An ome.xml.OMEXMLNode subclass root node.
-	 * @throws ServiceException If there is an error creating the OME-XML metadata
-	 *           object.
-	 */
+	/** @see loci.formats.services.OMEXMLService#createOMEXMLRoot(String) */
 	public Object createOMEXMLRoot(String xml) throws ServiceException;
 
-	/**
-	 * Checks whether the given object is an OME-XML metadata object.
-	 * 
-	 * @return True if the object is an instance of
-	 *         {@link loci.formats.ome.AbstractOMEXMLMetadata}.
-	 */
+	/** @see loci.formats.services.OMEXMLService#isOMEXMLMetadata(Object) */
 	public boolean isOMEXMLMetadata(Object o);
 
-	/**
-	 * Checks whether the given object is an OME-XML root object.
-	 * 
-	 * @return True if the object is an instance of {@link ome.xml.OMEXMLNode}.
-	 */
+	/** @see loci.formats.services.OMEXMLService#isOMEXMLRoot(Object) */
 	public boolean isOMEXMLRoot(Object o);
 
-	/**
-	 * Gets the schema version for the given OME-XML metadata or root object
-	 * (e.g., "2007-06" or "2003-FC").
-	 * 
-	 * @return OME-XML schema version, or null if the object is not an instance of
-	 *         {@link loci.formats.ome.OMEXMLMetadata} or ome.xml.OMEXMLNode.
-	 */
+	/** @see loci.formats.services.OMEXMLService#getOMEXMLVersion(Object) */
 	public String getOMEXMLVersion(Object o);
 
-	/**
-	 * Returns a {@link loci.formats.ome.OMEXMLMetadata} object with the same
-	 * contents as the given MetadataRetrieve, converting it if necessary.
-	 * 
-	 * @throws ServiceException If there is an error creating the OME-XML metadata
-	 *           object.
-	 */
+	/** @see loci.formats.services.OMEXMLService#getOMEMetadata(MetadataRetrieve) */
 	public OMEXMLMetadata getOMEMetadata(MetadataRetrieve src)
 		throws ServiceException;
 
-	/**
-	 * Extracts an OME-XML metadata string from the given metadata object, by
-	 * converting to an OME-XML metadata object if necessary.
-	 * 
-	 * @throws ServiceException If there is an error creating the OME-XML metadata
-	 *           object.
-	 */
+	/** @see loci.formats.services.OMEXMLService#getOMEXML(MetadataRetrieve) */
 	public String getOMEXML(MetadataRetrieve src) throws ServiceException;
 
-	/**
-	 * Attempts to validate the given OME-XML string using Java's XML validation
-	 * facility. Requires Java 1.5+.
-	 * 
-	 * @param xml XML string to validate.
-	 * @return true if the XML successfully validates.
-	 */
+	/** @see loci.formats.services.OMEXMLService#validateOMEXML(String) */
 	public boolean validateOMEXML(String xml);
 
-	/**
-	 * Attempts to validate the given OME-XML string using Java's XML validation
-	 * facility. Requires Java 1.5+.
-	 * 
-	 * @param xml XML string to validate.
-	 * @param pixelsHack Whether to ignore validation errors due to childless
-	 *          Pixels elements
-	 * @return true if the XML successfully validates.
-	 */
+	/** @see loci.formats.services.OMEXMLService#validateOMEXML(String, boolean) */
 	public boolean validateOMEXML(String xml, boolean pixelsHack);
 
 	/**
-	 * Adds the key/value pairs in the specified Hashtable as new OriginalMetadata
-	 * annotations in the given OME-XML metadata object.
-	 * 
-	 * @param omexmlMeta An object of type {@link loci.formats.ome.OMEXMLMetadata}
-	 *          .
-	 * @param metadata A hashtable containing metadata key/value pairs.
+	 * @see loci.formats.services.OMEXMLService#populateOriginalMetadata(OMEXMLMetadata,
+	 *      Hashtable)
 	 */
 	public void populateOriginalMetadata(OMEMetadata omexmlMeta,
 		Hashtable<String, Object> metadata);
 
 	/**
-	 * Adds the specified key/value pair as a new OriginalMetadata node to the
-	 * given OME-XML metadata object.
-	 * 
-	 * @param omexmlMeta An object of type {@link loci.formats.ome.OMEXMLMetadata}
-	 *          .
-	 * @param key Metadata key to populate.
-	 * @param value Metadata value corresponding to the specified key.
+	 * @see loci.formats.services.OMEXMLService#populateOriginalMetadata(OMEXMLMetadata,
+	 *      String, String)
 	 */
 	public void populateOriginalMetadata(OMEMetadata omexmlMeta, String key,
 		String value);
 
-	/**
-	 * Parse any OriginalMetadata annotations from the given OME-XML metadata
-	 * object and store them in a Hashtable.
-	 * 
-	 * @param omexmlMeta An object of type {@link loci.formats.ome.OMEXMLMetadata}
-	 *          .
-	 */
+	/** @see loci.formats.services.OMEXMLService#getOriginalMetadata(OMEXMLMetadata) */
 	public Hashtable<String, Object>
 		getOriginalMetadata(OMEXMLMetadata omexmlMeta);
 
 	/**
-	 * Converts information from an OME-XML string (source) into a metadata store
-	 * (destination).
-	 * 
-	 * @throws ServiceException If there is an error creating the OME-XML metadata
-	 *           object.
+	 * @see loci.formats.services.OMEXMLService#convertMetadata(String,
+	 *      MetadataStore)
 	 */
 	public void convertMetadata(String xml, MetadataStore dest)
 		throws ServiceException;
 
 	/**
-	 * Copies information from a metadata retrieval object (source) into a
-	 * metadata store (destination).
+	 * @see loci.formats.services.OMEXMLService#convertMetadata(MetadataRetrieve,
+	 *      MetadataStore)
 	 */
 	public void convertMetadata(MetadataRetrieve src, MetadataStore dest);
 
-	/**
-	 * Remove all of the BinData elements from the given OME-XML metadata object.
-	 */
+	/** @see loci.formats.services.OMEXMLService#removeBinData(OMEXMLMetadata) */
 	public void removeBinData(OMEXMLMetadata omexmlMeta);
 
 	/**
-	 * Remove all but the first sizeC valid Channel elements from the given
-	 * OME-XML metadata object.
+	 * @see loci.formats.services.OMEXMLService#removeChannels(OMEXMLMetadata, int,
+	 *      int)
 	 */
 	public void removeChannels(OMEXMLMetadata omexmlMeta, int image, int sizeC);
 
 	/**
-	 * Insert a MetadataOnly element under the Image specified by 'index' in the
-	 * given OME-XML metadata object.
+	 * @see loci.formats.services.OMEXMLService#addMetadataOnly(OMEXMLMetadata,
+	 *      int)
 	 */
 	public void addMetadataOnly(OMEXMLMetadata omexmlMeta, int image);
 
 	/**
-	 * Determine whether or not two OMEXMLMetadata objects are equal. Equality is
-	 * defined as: * having the same object graph (without regard to specific ID
-	 * values) * having the exact same attribute values on every node (with the
-	 * exception of 'ID' attributes) Note that StructuredAnnotations are ignored,
-	 * i.e. the two OMEXMLMetadata objects may have wildly different things under
-	 * StructuredAnnotations and still be considered equal.
+	 * @see loci.formats.services.OMEXMLService#isEqual(OMEXMLMetadata,
+	 *      OMEXMLMetadata)
 	 */
 	public boolean isEqual(OMEXMLMetadata src1, OMEXMLMetadata src2);
 
-	// -- Utility methods - casting --
-
-	/**
-	 * Gets the given {@link MetadataRetrieve} object as a {@link MetadataStore}.
-	 * Returns null if the object is incompatible and cannot be casted.
-	 */
+	/** @see loci.formats.services.OMEXMLService#asStore(MetadataRetrieve) */
 	public MetadataStore asStore(MetadataRetrieve meta);
 
-	/**
-	 * Gets the given {@link MetadataStore} object as a {@link MetadataRetrieve}.
-	 * Returns null if the object is incompatible and cannot be casted.
-	 */
+	/** @see loci.formats.services.OMEXMLService#asRetrieve(MetadataStore) */
 	public MetadataRetrieve asRetrieve(MetadataStore meta);
 
 }
