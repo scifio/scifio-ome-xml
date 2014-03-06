@@ -1,13 +1,9 @@
 /*
  * #%L
- * SCIFIO support for the OME data model (OME-XML and OME-TIFF).
+ * SCIFIO support for the OME data model, including OME-XML and OME-TIFF.
  * %%
- * Copyright (C) 2013 - 2014 Open Microscopy Environment:
- *   - Massachusetts Institute of Technology
- *   - National Institutes of Health
- *   - University of Dundee
- *   - Board of Regents of the University of Wisconsin-Madison
- *   - Glencoe Software, Inc.
+ * Copyright (C) 2013 - 2014 Board of Regents of the University of
+ * Wisconsin-Madison
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,13 +28,13 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
 import io.scif.FormatException;
 import io.scif.Metadata;
 import io.scif.formats.APNGFormat;
-import io.scif.ome.xml.meta.OMEMetadata;
-import io.scif.ome.xml.services.OMEXMLMetadataService;
+import io.scif.ome.OMEMetadata;
+import io.scif.ome.services.OMEMetadataService;
 import io.scif.util.FormatTools;
 
 import org.scijava.Priority;
@@ -169,7 +165,7 @@ public class APNGTranslator {
 			// = sizeC / effectiveSizeC... just sizeC for APNG? #planes / Z * T
 			final String imageName = "";
 
-			getContext().getService(OMEXMLMetadataService.class).populateMetadata(
+			getContext().getService(OMEMetadataService.class).populateMetadata(
 				dest.getRoot(), series, imageName, littleEndian, dimOrder, pixelType,
 				sizeX, sizeY, sizeZ, sizeC, sizeT, 1.0, 1.0, 1.0, 1.0, 1.0,
 				samplesPerPixel);

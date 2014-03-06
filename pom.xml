@@ -18,7 +18,65 @@
 	<url>http://scif.io/</url>
 	<inceptionYear>2013</inceptionYear>
 
+	<properties>
+		<bio-formats.groupId>ome</bio-formats.groupId>
+		<bio-formats.version>5.0.0</bio-formats.version>
+	</properties>
+
 	<dependencies>
+		<dependency>
+			<groupId>${bio-formats.groupId}</groupId>
+			<artifactId>formats-api</artifactId>
+			<version>${bio-formats.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>${bio-formats.groupId}</groupId>
+					<artifactId>jai_imageio</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${bio-formats.groupId}</groupId>
+					<artifactId>lwf-stubs</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${bio-formats.groupId}</groupId>
+					<artifactId>specification</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${bio-formats.groupId}</groupId>
+					<artifactId>turbojpeg</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.esotericsoftware.kryo</groupId>
+					<artifactId>kryo</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.jgoodies</groupId>
+					<artifactId>forms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>joda-time</groupId>
+					<artifactId>joda-time</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.perf4j</groupId>
+					<artifactId>perf4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.scijava</groupId>
+					<artifactId>native-lib-loader</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>${bio-formats.groupId}</groupId>
+			<artifactId>formats-common</artifactId>
+			<version>${bio-formats.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${bio-formats.groupId}</groupId>
+			<artifactId>ome-xml</artifactId>
+			<version>${bio-formats.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>${scifio.groupId}</groupId>
 			<artifactId>scifio</artifactId>
@@ -28,16 +86,6 @@
 			<groupId>${scifio.groupId}</groupId>
 			<artifactId>scifio-tools</artifactId>
 			<version>${scifio.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${bio-formats.groupId}</groupId>
-			<artifactId>scifio</artifactId>
-			<version>${bio-formats.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${bio-formats.groupId}</groupId>
-			<artifactId>ome-xml</artifactId>
-			<version>${bio-formats.version}</version>
 		</dependency>
 
 		<dependency>
@@ -49,7 +97,7 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.5.10</version>
+			<version>1.7.2</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -61,12 +109,9 @@
 				<artifactId>license-maven-plugin</artifactId>
 				<configuration>
 					<licenseName>bsd_2</licenseName>
-					<organizationName>Open Microscopy Environment:
-  - Massachusetts Institute of Technology
-  - National Institutes of Health
-  - University of Dundee
-  - Board of Regents of the University of Wisconsin-Madison
-  - Glencoe Software, Inc.</organizationName>
+					<organizationName>Board of Regents of the University of
+Wisconsin-Madison</organizationName>
+					<projectName>SCIFIO support for the OME data model, including OME-XML and OME-TIFF.</projectName>
 				</configuration>
 			</plugin>
 		</plugins>

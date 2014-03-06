@@ -1,13 +1,9 @@
 /*
  * #%L
- * SCIFIO support for the OME data model (OME-XML and OME-TIFF).
+ * SCIFIO support for the OME data model, including OME-XML and OME-TIFF.
  * %%
- * Copyright (C) 2013 - 2014 Open Microscopy Environment:
- *   - Massachusetts Institute of Technology
- *   - National Institutes of Health
- *   - University of Dundee
- *   - Board of Regents of the University of Wisconsin-Madison
- *   - Glencoe Software, Inc.
+ * Copyright (C) 2013 - 2014 Board of Regents of the University of
+ * Wisconsin-Madison
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,13 +28,13 @@
  * #L%
  */
 
-package io.scif.ome.xml.meta;
+package io.scif.ome;
 
-import loci.formats.ome.OMEXMLMetadata;
 import io.scif.AbstractMetadata;
-import io.scif.ome.xml.services.OMEXMLMetadataService;
-import io.scif.ome.xml.services.OMEXMLService;
-import io.scif.services.ServiceException;
+import io.scif.ome.services.OMEMetadataService;
+import io.scif.ome.services.OMEXMLService;
+import loci.common.services.ServiceException;
+import loci.formats.ome.OMEXMLMetadata;
 
 import org.scijava.Context;
 import org.scijava.plugin.Parameter;
@@ -79,7 +75,7 @@ public class OMEMetadata extends AbstractMetadata {
 
 	@Override
 	public void populateImageMetadata() {
-		getContext().getService(OMEXMLMetadataService.class).populateMetadata(
+		getContext().getService(OMEMetadataService.class).populateMetadata(
 			getRoot(), this);
 	}
 

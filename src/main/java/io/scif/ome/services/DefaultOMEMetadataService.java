@@ -1,13 +1,9 @@
 /*
  * #%L
- * SCIFIO support for the OME data model (OME-XML and OME-TIFF).
+ * SCIFIO support for the OME data model, including OME-XML and OME-TIFF.
  * %%
- * Copyright (C) 2013 - 2014 Open Microscopy Environment:
- *   - Massachusetts Institute of Technology
- *   - National Institutes of Health
- *   - University of Dundee
- *   - Board of Regents of the University of Wisconsin-Madison
- *   - Glencoe Software, Inc.
+ * Copyright (C) 2013 - 2014 Board of Regents of the University of
+ * Wisconsin-Madison
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,20 +28,20 @@
  * #L%
  */
 
-package io.scif.ome.xml.services;
+package io.scif.ome.services;
 
 import io.scif.FormatException;
 import io.scif.ImageMetadata;
 import io.scif.Metadata;
 import io.scif.Reader;
-import io.scif.common.DateTools;
 import io.scif.io.Location;
 import io.scif.services.FormatService;
-import io.scif.services.ServiceException;
 import io.scif.util.FormatTools;
 
 import java.util.Arrays;
 
+import loci.common.services.ServiceException;
+import loci.formats.MetadataTools;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.meta.MetadataStore;
 import loci.formats.ome.OMEXMLMetadata;
@@ -53,18 +49,14 @@ import net.imglib2.meta.Axes;
 import net.imglib2.meta.AxisType;
 import net.imglib2.meta.CalibratedAxis;
 import net.imglib2.meta.axis.DefaultLinearAxis;
-import ome.xml.model.BinData;
-import ome.xml.model.OME;
 import ome.xml.model.enums.Binning;
 import ome.xml.model.enums.Correction;
 import ome.xml.model.enums.DetectorType;
-import ome.xml.model.enums.DimensionOrder;
 import ome.xml.model.enums.EnumerationException;
 import ome.xml.model.enums.ExperimentType;
 import ome.xml.model.enums.Immersion;
 import ome.xml.model.enums.LaserMedium;
 import ome.xml.model.enums.LaserType;
-import ome.xml.model.enums.PixelType;
 import ome.xml.model.enums.handlers.BinningEnumHandler;
 import ome.xml.model.enums.handlers.CorrectionEnumHandler;
 import ome.xml.model.enums.handlers.DetectorTypeEnumHandler;
@@ -73,10 +65,8 @@ import ome.xml.model.enums.handlers.ImmersionEnumHandler;
 import ome.xml.model.enums.handlers.LaserMediumEnumHandler;
 import ome.xml.model.enums.handlers.LaserTypeEnumHandler;
 import ome.xml.model.primitives.NonNegativeInteger;
-import ome.xml.model.primitives.NonNegativeLong;
 import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.PositiveInteger;
-import ome.xml.model.primitives.Timestamp;
 
 import org.scijava.log.LogService;
 import org.scijava.plugin.Parameter;
@@ -84,12 +74,10 @@ import org.scijava.plugin.Plugin;
 import org.scijava.service.AbstractService;
 import org.scijava.service.Service;
 
-/**
- * Default implementation of {@link OMEXMLMetadataService}.
- */
+/** Default implementation of {@link OMEMetadataService}. */
 @Plugin(type = Service.class)
-public class DefaultOMEXMLMetadataService extends AbstractService implements
-	OMEXMLMetadataService
+public class DefaultOMEMetadataService extends AbstractService implements
+	OMEMetadataService
 {
 
 	// -- Static fields --
@@ -100,6 +88,9 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 
 	@Parameter
 	private FormatService formatService;
+
+	@Parameter
+	private OMEXMLService omexmlService;
 
 	@Parameter
 	private LogService logService;
@@ -169,25 +160,19 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 				.isLittleEndian(), order, pixelType, xSize, ySize, zSize, cSize, tSize,
 				calX, calY, calZ, calC, calT, rgbCCount);
 
-			final OMEXMLService service =
-				formatService.getInstance(OMEXMLService.class);
-			if (service.isOMEXMLRoot(store.getRoot())) {
+			if (omexmlService.isOMEXMLRoot(store.getRoot())) {
 				// TODO any way or reason to access a base store?
-				if (service.isOMEXMLMetadata(store)) {
+				if (omexmlService.isOMEXMLMetadata(store)) {
 					OMEXMLMetadata omeMeta;
 					try {
-						omeMeta = service.getOMEMetadata(service.asRetrieve(store));
+						omeMeta =
+							omexmlService.getOMEMetadata(omexmlService.asRetrieve(store));
 						omeMeta.resolveReferences();
 					}
 					catch (final ServiceException e) {
 						logService.warn("Failed to resolve references", e);
 					}
 				}
-
-				final OME root = (OME) store.getRoot();
-				final BinData bin = root.getImage(i).getPixels().getBinData(0);
-				bin.setLength(new NonNegativeLong(0L));
-				store.setRoot(root);
 			}
 
 			if (doPlane) {
@@ -264,12 +249,10 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 		final double calX, final double calY, final double calZ, final double calC,
 		final double calT, final int samplesPerPixel)
 	{
-		store.setImageID(createLSID("Image", imageIndex), imageIndex);
-		setDefaultCreationDate(store, file, imageIndex);
-		if (imageName != null) store.setImageName(imageName, imageIndex);
-		populatePixelsOnly(store, imageIndex, littleEndian, dimensionOrder,
-			pixelType, sizeX, sizeY, sizeZ, sizeC, sizeT, calX, calY, calZ, calC,
-			calT, samplesPerPixel);
+		MetadataTools.populateMetadata(store, imageIndex, imageName, littleEndian,
+			dimensionOrder, pixelType, sizeX, sizeY, sizeZ, sizeC, sizeT,
+			samplesPerPixel);
+		populateCalibrations(store, imageIndex, calX, calY, calZ, calC, calT);
 	}
 
 	@Override
@@ -325,113 +308,45 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 		final double calX, final double calY, final double calZ, final double calC,
 		final double calT, final int samplesPerPixel)
 	{
-		store.setPixelsID(createLSID("Pixels", imageIndex), imageIndex);
-		store.setPixelsBinDataBigEndian(!littleEndian, imageIndex, 0);
-		try {
-			store.setPixelsDimensionOrder(DimensionOrder.fromString(dimensionOrder),
-				imageIndex);
-		}
-		catch (final EnumerationException e) {
-			logService.warn("Invalid dimension order: " + dimensionOrder, e);
-		}
-		try {
-			store.setPixelsType(PixelType.fromString(pixelType), imageIndex);
-		}
-		catch (final EnumerationException e) {
-			logService.warn("Invalid pixel type: " + pixelType, e);
-		}
-		store.setPixelsSizeX(new PositiveInteger(sizeX), imageIndex);
-		store.setPixelsSizeY(new PositiveInteger(sizeY), imageIndex);
-		store.setPixelsSizeZ(new PositiveInteger(sizeZ), imageIndex);
-		store.setPixelsSizeC(new PositiveInteger(sizeC), imageIndex);
-		store.setPixelsSizeT(new PositiveInteger(sizeT), imageIndex);
-		store.setPixelsPhysicalSizeX(new PositiveFloat(calX), imageIndex);
-		store.setPixelsPhysicalSizeY(new PositiveFloat(calY), imageIndex);
-		store.setPixelsPhysicalSizeZ(new PositiveFloat(calZ), imageIndex);
-		store.setPixelsTimeIncrement(calT, imageIndex);
-		final int effSizeC = sizeC / samplesPerPixel;
-		for (int i = 0; i < effSizeC; i++) {
-			store.setChannelID(createLSID("Channel", imageIndex, i), imageIndex, i);
-			store.setChannelSamplesPerPixel(new PositiveInteger(samplesPerPixel),
-				imageIndex, i);
-		}
+		MetadataTools.populatePixelsOnly(store, imageIndex,
+			littleEndian, dimensionOrder, pixelType, sizeX,
+			sizeY, sizeZ, sizeC, sizeT, samplesPerPixel);
+		populateCalibrations(store, imageIndex, calX, calY, calZ, calC, calT);
 	}
 
 	@Override
 	public void setDefaultDateEnabled(final boolean enabled) {
-		defaultDateEnabled = enabled;
+		MetadataTools.setDefaultDateEnabled(enabled);
 	}
 
 	@Override
 	public void setDefaultCreationDate(final MetadataStore store,
 		final String id, final int imageIndex)
 	{
-		if (!defaultDateEnabled) {
-			return;
-		}
-		final Location file =
-			id == null ? null : new Location(getContext(), id).getAbsoluteFile();
-		long time = System.currentTimeMillis();
-		if (file != null && file.exists()) time = file.lastModified();
-		store.setImageAcquisitionDate(new Timestamp(DateTools.convertDate(time,
-			DateTools.UNIX)), imageIndex);
+		MetadataTools.setDefaultCreationDate(store, id, imageIndex);
 	}
 
 	@Override
 	public void verifyMinimumPopulated(final MetadataRetrieve src)
 		throws FormatException
 	{
-		verifyMinimumPopulated(src, 0);
+		try {
+			MetadataTools.verifyMinimumPopulated(src);
+		}
+		catch (loci.formats.FormatException exc) {
+			throw new FormatException(exc);
+		}
 	}
 
 	@Override
 	public void verifyMinimumPopulated(final MetadataRetrieve src, final int n)
 		throws FormatException
 	{
-		if (src == null) {
-			throw new FormatException("Metadata object is null; "
-				+ "call IFormatWriter.setMetadataRetrieve() first");
+		try {
+			MetadataTools.verifyMinimumPopulated(src, n);
 		}
-		if (src instanceof MetadataStore && ((MetadataStore) src).getRoot() == null)
-		{
-			throw new FormatException("Metadata object has null root; "
-				+ "call IMetadata.createRoot() first");
-		}
-		if (src.getImageID(n) == null) {
-			throw new FormatException("Image ID #" + n + " is null");
-		}
-		if (src.getPixelsID(n) == null) {
-			throw new FormatException("Pixels ID #" + n + " is null");
-		}
-		for (int i = 0; i < src.getChannelCount(n); i++) {
-			if (src.getChannelID(n, i) == null) {
-				throw new FormatException("Channel ID #" + i + " in Image #" + n +
-					" is null");
-			}
-		}
-		if (src.getPixelsBinDataBigEndian(n, 0) == null) {
-			throw new FormatException("BigEndian #" + n + " is null");
-		}
-		if (src.getPixelsDimensionOrder(n) == null) {
-			throw new FormatException("DimensionOrder #" + n + " is null");
-		}
-		if (src.getPixelsType(n) == null) {
-			throw new FormatException("PixelType #" + n + " is null");
-		}
-		if (src.getPixelsSizeC(n) == null) {
-			throw new FormatException("SizeC #" + n + " is null");
-		}
-		if (src.getPixelsSizeT(n) == null) {
-			throw new FormatException("SizeT #" + n + " is null");
-		}
-		if (src.getPixelsSizeX(n) == null) {
-			throw new FormatException("SizeX #" + n + " is null");
-		}
-		if (src.getPixelsSizeY(n) == null) {
-			throw new FormatException("SizeY #" + n + " is null");
-		}
-		if (src.getPixelsSizeZ(n) == null) {
-			throw new FormatException("SizeZ #" + n + " is null");
+		catch (loci.formats.FormatException exc) {
+			throw new FormatException(exc);
 		}
 	}
 
@@ -503,26 +418,12 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 
 	@Override
 	public String makeSaneDimensionOrder(final String dimensionOrder) {
-		String order = dimensionOrder.toUpperCase();
-		order = order.replaceAll("[^XYZCT]", "");
-		final String[] axes = new String[] { "X", "Y", "C", "Z", "T" };
-		for (final String axis : axes) {
-			if (order.indexOf(axis) == -1) order += axis;
-			while (order.indexOf(axis) != order.lastIndexOf(axis)) {
-				order = order.replaceFirst(axis, "");
-			}
-		}
-		return order;
+		return MetadataTools.makeSaneDimensionOrder(dimensionOrder);
 	}
 
 	@Override
 	public String createLSID(final String type, final int... indices) {
-		final StringBuffer lsid = new StringBuffer(type);
-		for (final int index : indices) {
-			lsid.append(":");
-			lsid.append(index);
-		}
-		return lsid.toString();
+		return MetadataTools.createLSID(type, indices);
 	}
 
 	@Override
@@ -704,4 +605,17 @@ public class DefaultOMEXMLMetadataService extends AbstractService implements
 		iMeta.populate(Arrays.asList(axes), lengths, pType, FormatTools
 			.getBitsPerPixel(pType), true, little, false, false, true);
 	}
+
+	// -- Helper methods --
+
+	private void populateCalibrations(final MetadataStore store,
+		final int imageIndex, final double calX, final double calY,
+		final double calZ, final double calC, final double calT)
+	{
+		store.setPixelsPhysicalSizeX(new PositiveFloat(calX), imageIndex);
+		store.setPixelsPhysicalSizeY(new PositiveFloat(calY), imageIndex);
+		store.setPixelsPhysicalSizeZ(new PositiveFloat(calZ), imageIndex);
+		store.setPixelsTimeIncrement(calT, imageIndex);
+	}
+
 }

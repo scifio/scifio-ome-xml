@@ -1,13 +1,9 @@
 /*
  * #%L
- * SCIFIO support for the OME data model (OME-XML and OME-TIFF).
+ * SCIFIO support for the OME data model, including OME-XML and OME-TIFF.
  * %%
- * Copyright (C) 2013 - 2014 Open Microscopy Environment:
- *   - Massachusetts Institute of Technology
- *   - National Institutes of Health
- *   - University of Dundee
- *   - Board of Regents of the University of Wisconsin-Madison
- *   - Glencoe Software, Inc.
+ * Copyright (C) 2013 - 2014 Board of Regents of the University of
+ * Wisconsin-Madison
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,25 +28,45 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
 import io.scif.Metadata;
-import io.scif.ome.xml.meta.OMEMetadata;
+import io.scif.ome.OMEMetadata;
+import io.scif.ome.services.OMEMetadataService;
+
+import org.scijava.Priority;
+import org.scijava.plugin.Parameter;
+import org.scijava.plugin.Plugin;
 
 /**
- * Abstract base class for all io.scif.Translators that translate from an
- * OMEMetadata object.
+ * Basic translator for OME Metadata. Uses ImageMetadata to populate a
+ * MetadataStore.
  * 
- * @author Mark Hiner
+ * @author Mark Hiner hinerm at gmail.com
  */
-public abstract class FromOMETranslator<M extends Metadata> extends
-	OMETranslator<OMEMetadata, M>
-{
+@Plugin(type = ToOMETranslator.class, priority = Priority.NORMAL_PRIORITY)
+public class DefaultOMETranslator extends ToOMETranslator<Metadata> {
+
+	// -- Fields --
+
+	@Parameter
+	private OMEMetadataService omexmlMetadataService;
 
 	// -- Translator API Methods --
 
 	@Override
-	protected void typedTranslate(final OMEMetadata source, final M dest) {
-		translateOMEXML(source, dest);
+	public Class<? extends Metadata> source() {
+		return Metadata.class;
+	}
+
+	@Override
+	public Class<? extends Metadata> dest() {
+		return OMEMetadata.class;
+	}
+
+	@Override
+	protected void translateOMEXML(final Metadata source, final OMEMetadata dest)
+	{
+		// No translation to perform. Handled by the ToOMETranslator layer.
 	}
 }

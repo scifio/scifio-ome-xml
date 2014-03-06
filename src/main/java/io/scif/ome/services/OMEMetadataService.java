@@ -1,13 +1,9 @@
 /*
  * #%L
- * SCIFIO support for the OME data model (OME-XML and OME-TIFF).
+ * SCIFIO support for the OME data model, including OME-XML and OME-TIFF.
  * %%
- * Copyright (C) 2013 - 2014 Open Microscopy Environment:
- *   - Massachusetts Institute of Technology
- *   - National Institutes of Health
- *   - University of Dundee
- *   - Board of Regents of the University of Wisconsin-Madison
- *   - Glencoe Software, Inc.
+ * Copyright (C) 2013 - 2014 Board of Regents of the University of
+ * Wisconsin-Madison
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,7 +28,7 @@
  * #L%
  */
 
-package io.scif.ome.xml.services;
+package io.scif.ome.services;
 
 import io.scif.FormatException;
 import io.scif.ImageMetadata;
@@ -52,20 +48,10 @@ import ome.xml.model.enums.LaserMedium;
 import ome.xml.model.enums.LaserType;
 
 /**
- * A utility class for working with metadata objects, including
- * {@link MetadataStore}, {@link MetadataRetrieve}, and OME-XML strings. Most of
- * the methods require the optional {@link loci.formats.ome} package, and
- * optional ome-xml.jar library, to be present at runtime.
- * <dl>
- * <dt><b>Source code:</b></dt>
- * <dd><a href=
- * "http://trac.openmicroscopy.org.uk/ome/browser/bioformats.git/components/bio-formats/src/loci/formats/MetadataTools.java"
- * >Trac</a>, <a href=
- * "http://git.openmicroscopy.org/?p=bioformats.git;a=blob;f=components/bio-formats/src/loci/formats/MetadataTools.java;hb=HEAD"
- * >Gitweb</a></dd>
- * </dl>
+ * A utility class for working with OME metadata objects, including
+ * {@link MetadataStore} and {@link MetadataRetrieve}.
  */
-public interface OMEXMLMetadataService extends SCIFIOService {
+public interface OMEMetadataService extends SCIFIOService {
 
 	/**
 	 * Populates the 'pixels' element of the given metadata store, using core

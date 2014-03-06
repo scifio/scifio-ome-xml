@@ -1,13 +1,9 @@
 /*
  * #%L
- * SCIFIO support for the OME data model (OME-XML and OME-TIFF).
+ * SCIFIO support for the OME data model, including OME-XML and OME-TIFF.
  * %%
- * Copyright (C) 2013 - 2014 Open Microscopy Environment:
- *   - Massachusetts Institute of Technology
- *   - National Institutes of Health
- *   - University of Dundee
- *   - Board of Regents of the University of Wisconsin-Madison
- *   - Glencoe Software, Inc.
+ * Copyright (C) 2013 - 2014 Board of Regents of the University of
+ * Wisconsin-Madison
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,7 +28,7 @@
  * #L%
  */
 
-package io.scif.ome.xml.meta;
+package io.scif.ome.formats;
 
 import io.scif.AbstractChecker;
 import io.scif.AbstractFormat;
@@ -58,10 +54,10 @@ import io.scif.formats.tiff.TiffSaver;
 import io.scif.io.Location;
 import io.scif.io.RandomAccessInputStream;
 import io.scif.io.RandomAccessOutputStream;
-import io.scif.ome.xml.services.OMEXMLMetadataService;
-import io.scif.ome.xml.services.OMEXMLService;
+import io.scif.ome.OMEMetadata;
+import io.scif.ome.services.OMEMetadataService;
+import io.scif.ome.services.OMEXMLService;
 import io.scif.services.FormatService;
-import io.scif.services.ServiceException;
 import io.scif.services.TranslatorService;
 import io.scif.util.FormatTools;
 
@@ -78,6 +74,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.Vector;
 
+import loci.common.services.ServiceException;
 import loci.formats.meta.IMetadata;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.meta.MetadataStore;
@@ -109,8 +106,9 @@ public class OMETIFFFormat extends AbstractFormat {
 
 	// -- Fields --
 
+	// FIXME: These should not be static.
 	private static OMEXMLService service;
-	private static OMEXMLMetadataService metaService;
+	private static OMEMetadataService metaService;
 
 	// -- Format API Methods --
 
@@ -1438,7 +1436,7 @@ public class OMETIFFFormat extends AbstractFormat {
 
 	private static void setupServices(final Context ctx) {
 		service = ctx.getService(OMEXMLService.class);
-		metaService = ctx.getService(OMEXMLMetadataService.class);
+		metaService = ctx.getService(OMEMetadataService.class);
 	}
 
 	private static boolean isSingleFile(final Context context, final String id)

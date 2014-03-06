@@ -1,13 +1,9 @@
 /*
  * #%L
- * SCIFIO support for the OME data model (OME-XML and OME-TIFF).
+ * SCIFIO support for the OME data model, including OME-XML and OME-TIFF.
  * %%
- * Copyright (C) 2013 - 2014 Open Microscopy Environment:
- *   - Massachusetts Institute of Technology
- *   - National Institutes of Health
- *   - University of Dundee
- *   - Board of Regents of the University of Wisconsin-Madison
- *   - Glencoe Software, Inc.
+ * Copyright (C) 2013 - 2014 Board of Regents of the University of
+ * Wisconsin-Madison
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,13 +28,13 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
 import io.scif.FormatException;
 import io.scif.Metadata;
 import io.scif.formats.ICSFormat;
-import io.scif.ome.xml.meta.OMEMetadata;
-import io.scif.ome.xml.services.OMEXMLMetadataService;
+import io.scif.ome.OMEMetadata;
+import io.scif.ome.services.OMEMetadataService;
 import io.scif.util.FormatTools;
 
 import java.util.ArrayList;
@@ -292,7 +288,7 @@ public class ICSTranslator {
 
 			// FIXME: no more datasetmetadata
 
-			getContext().getService(OMEXMLMetadataService.class).populatePixels(
+			getContext().getService(OMEMetadataService.class).populatePixels(
 				filter, source, true);
 
 			store.setImageName(imageName, 0);
@@ -308,7 +304,7 @@ public class ICSTranslator {
 
 			// link Instrument and Image
 			final String instrumentID =
-				getContext().getService(OMEXMLMetadataService.class).createLSID(
+				getContext().getService(OMEMetadataService.class).createLSID(
 					"Instrument", 0);
 			store.setInstrumentID(instrumentID, 0);
 
@@ -321,7 +317,7 @@ public class ICSTranslator {
 			store.setImageInstrumentRef(instrumentID, 0);
 
 			store
-				.setExperimentID(getContext().getService(OMEXMLMetadataService.class)
+				.setExperimentID(getContext().getService(OMEMetadataService.class)
 					.createLSID("Experiment", 0), 0);
 
 			lifetime = source.getLifetime();
@@ -330,7 +326,7 @@ public class ICSTranslator {
 
 			try {
 				store.setExperimentType(getContext().getService(
-					OMEXMLMetadataService.class).getExperimentType(experimentType), 0);
+					OMEMetadataService.class).getExperimentType(experimentType), 0);
 			}
 			catch (final FormatException e) {
 				log().debug("Could not set experiment type", e);
@@ -450,8 +446,8 @@ public class ICSTranslator {
 							(source.get(imageIndex).getAxisLength(Axes.TIME) * source.get(
 								imageIndex).getAxisLength(Axes.Z));
 					// assign timestamp to all relevant planes
-					final OMEXMLMetadataService metaService =
-						getContext().getService(OMEXMLMetadataService.class);
+					final OMEMetadataService metaService =
+						getContext().getService(OMEMetadataService.class);
 					final String dimOrder =
 						metaService.findDimensionOrder(source, imageIndex);
 					for (int z = 0; z < source.get(imageIndex).getAxisLength(Axes.Z); z++)
@@ -539,7 +535,7 @@ public class ICSTranslator {
 			final Integer[] lasers = wavelengths.keySet().toArray(new Integer[0]);
 			Arrays.sort(lasers);
 			for (int i = 0; i < lasers.length; i++) {
-				store.setLaserID(getContext().getService(OMEXMLMetadataService.class)
+				store.setLaserID(getContext().getService(OMEMetadataService.class)
 					.createLSID("LightSource", 0, i), 0, i);
 				if (wavelengths.get(lasers[i]) > 0) {
 					store.setLaserWavelength(new PositiveInteger(wavelengths
@@ -553,7 +549,7 @@ public class ICSTranslator {
 
 				try {
 					store.setLaserType(getContext().getService(
-						OMEXMLMetadataService.class).getLaserType("Other"), 0, i);
+						OMEMetadataService.class).getLaserType("Other"), 0, i);
 				}
 				catch (final FormatException e) {
 					log().warn("Failed to set laser type", e);
@@ -561,7 +557,7 @@ public class ICSTranslator {
 
 				try {
 					store.setLaserLaserMedium(getContext().getService(
-						OMEXMLMetadataService.class).getLaserMedium("Other"), 0, i);
+						OMEMetadataService.class).getLaserMedium("Other"), 0, i);
 				}
 				catch (final FormatException e) {
 					log().warn("Failed to set laser medium", e);
@@ -574,19 +570,19 @@ public class ICSTranslator {
 			}
 
 			if (lasers.length == 0 && laserManufacturer != null) {
-				store.setLaserID(getContext().getService(OMEXMLMetadataService.class)
+				store.setLaserID(getContext().getService(OMEMetadataService.class)
 					.createLSID("LightSource", 0, 0), 0, 0);
 
 				try {
 					store.setLaserType(getContext().getService(
-						OMEXMLMetadataService.class).getLaserType("Other"), 0, 0);
+						OMEMetadataService.class).getLaserType("Other"), 0, 0);
 				}
 				catch (final FormatException e) {
 					log().warn("Failed to set laser type", e);
 				}
 				try {
 					store.setLaserLaserMedium(getContext().getService(
-						OMEXMLMetadataService.class).getLaserMedium("Other"), 0, 0);
+						OMEMetadataService.class).getLaserMedium("Other"), 0, 0);
 				}
 				catch (final FormatException e) {
 					log().warn("Failed to set laser medium", e);
@@ -609,17 +605,17 @@ public class ICSTranslator {
 
 			if (filterSetModel != null) {
 				store.setFilterSetID(getContext().getService(
-					OMEXMLMetadataService.class).createLSID("FilterSet", 0, 0), 0, 0);
+					OMEMetadataService.class).createLSID("FilterSet", 0, 0), 0, 0);
 				store.setFilterSetModel(filterSetModel, 0, 0);
 
 				final String dichroicID =
-					getContext().getService(OMEXMLMetadataService.class).createLSID(
+					getContext().getService(OMEMetadataService.class).createLSID(
 						"Dichroic", 0, 0);
 				final String emFilterID =
-					getContext().getService(OMEXMLMetadataService.class).createLSID(
+					getContext().getService(OMEMetadataService.class).createLSID(
 						"Filter", 0, 0);
 				final String exFilterID =
-					getContext().getService(OMEXMLMetadataService.class).createLSID(
+					getContext().getService(OMEMetadataService.class).createLSID(
 						"Filter", 0, 1);
 
 				store.setDichroicID(dichroicID, 0, 0);
@@ -651,7 +647,7 @@ public class ICSTranslator {
 			if (immersion == null) immersion = "Other";
 			try {
 				store.setObjectiveImmersion(getContext().getService(
-					OMEXMLMetadataService.class).getImmersion(immersion), 0, 0);
+					OMEMetadataService.class).getImmersion(immersion), 0, 0);
 			}
 			catch (final FormatException e) {
 				log().warn("failed to set objective immersion", e);
@@ -665,7 +661,7 @@ public class ICSTranslator {
 			}
 			try {
 				store.setObjectiveCorrection(getContext().getService(
-					OMEXMLMetadataService.class).getCorrection("Other"), 0, 0);
+					OMEMetadataService.class).getCorrection("Other"), 0, 0);
 			}
 			catch (final FormatException e) {
 				log().warn("Failed to store objective correction", e);
@@ -673,7 +669,7 @@ public class ICSTranslator {
 
 			// link Objective to Image
 			final String objectiveID =
-				getContext().getService(OMEXMLMetadataService.class).createLSID(
+				getContext().getService(OMEMetadataService.class).createLSID(
 					"Objective", 0, 0);
 			store.setObjectiveID(objectiveID, 0, 0);
 			store.setObjectiveSettingsID(objectiveID, 0);
@@ -685,14 +681,14 @@ public class ICSTranslator {
 			detectorModel = source.getDetectorModel();
 
 			final String detectorID =
-				getContext().getService(OMEXMLMetadataService.class).createLSID(
+				getContext().getService(OMEMetadataService.class).createLSID(
 					"Detector", 0, 0);
 			store.setDetectorID(detectorID, 0, 0);
 			store.setDetectorManufacturer(detectorManufacturer, 0, 0);
 			store.setDetectorModel(detectorModel, 0, 0);
 			try {
 				store.setDetectorType(getContext().getService(
-					OMEXMLMetadataService.class).getDetectorType("Other"), 0, 0);
+					OMEMetadataService.class).getDetectorType("Other"), 0, 0);
 			}
 			catch (final FormatException e) {
 				log().warn("Failed to store detector type", e);
@@ -714,7 +710,7 @@ public class ICSTranslator {
 
 			if (lastName != null) {
 				final String experimenterID =
-					getContext().getService(OMEXMLMetadataService.class).createLSID(
+					getContext().getService(OMEMetadataService.class).createLSID(
 						"Experimenter", 0);
 				store.setExperimenterID(experimenterID, 0);
 				store.setExperimenterLastName(lastName, 0);

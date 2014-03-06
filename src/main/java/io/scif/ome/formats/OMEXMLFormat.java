@@ -1,13 +1,9 @@
 /*
  * #%L
- * SCIFIO support for the OME data model (OME-XML and OME-TIFF).
+ * SCIFIO support for the OME data model, including OME-XML and OME-TIFF.
  * %%
- * Copyright (C) 2013 - 2014 Open Microscopy Environment:
- *   - Massachusetts Institute of Technology
- *   - National Institutes of Health
- *   - University of Dundee
- *   - Board of Regents of the University of Wisconsin-Madison
- *   - Glencoe Software, Inc.
+ * Copyright (C) 2013 - 2014 Board of Regents of the University of
+ * Wisconsin-Madison
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,7 +28,7 @@
  * #L%
  */
 
-package io.scif.ome.xml.meta;
+package io.scif.ome.formats;
 
 import io.scif.AbstractChecker;
 import io.scif.AbstractFormat;
@@ -44,7 +40,6 @@ import io.scif.ByteArrayPlane;
 import io.scif.ByteArrayReader;
 import io.scif.Format;
 import io.scif.FormatException;
-import io.scif.MissingLibraryException;
 import io.scif.Plane;
 import io.scif.Translator;
 import io.scif.codec.Base64Codec;
@@ -57,12 +52,11 @@ import io.scif.common.Constants;
 import io.scif.config.SCIFIOConfig;
 import io.scif.io.CBZip2InputStream;
 import io.scif.io.RandomAccessInputStream;
-import io.scif.ome.xml.services.OMEXMLMetadataService;
-import io.scif.ome.xml.services.OMEXMLService;
-import io.scif.ome.xml.services.OMEXMLServiceImpl;
-import io.scif.ome.xml.translation.FromOMETranslator;
+import io.scif.ome.OMEMetadata;
+import io.scif.ome.services.OMEMetadataService;
+import io.scif.ome.services.OMEXMLService;
+import io.scif.ome.translators.FromOMETranslator;
 import io.scif.services.FormatService;
-import io.scif.services.ServiceException;
 import io.scif.util.FormatTools;
 import io.scif.util.ImageTools;
 import io.scif.util.SCIFIOMetadataTools;
@@ -73,6 +67,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Vector;
 
+import loci.common.services.ServiceException;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.ome.OMEXMLMetadata;
 import loci.formats.ome.OMEXMLMetadataImpl;
@@ -94,24 +89,6 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 @Plugin(type = Format.class)
 public class OMEXMLFormat extends AbstractFormat {
-
-	// -- Static fields --
-
-	private static boolean noOME = false;
-
-	static {
-		// FIXME: Class.forName causes fatal ClassLoader woes.
-		try {
-			Class.forName("ome.xml.OMEXMLNode");
-		}
-		catch (final Throwable t) {
-			noOME = true;
-			// FIXME: no static log access
-//			log().debug(OMEXMLServiceImpl.NO_OME_XML_MSG, t);
-		}
-	}
-
-	// -- Fields --
 
 	// -- Format API Methods --
 
@@ -208,7 +185,7 @@ public class OMEXMLFormat extends AbstractFormat {
 
 		@Override
 		public void populateImageMetadata() {
-			getContext().getService(OMEXMLMetadataService.class).populateMetadata(
+			getContext().getService(OMEMetadataService.class).populateMetadata(
 				getOMEMeta().getRoot(), this);
 
 			for (int i = 0; i < getImageCount(); i++) {
@@ -273,10 +250,6 @@ public class OMEXMLFormat extends AbstractFormat {
 			final Metadata meta, final SCIFIOConfig config) throws IOException,
 			FormatException
 		{
-			if (noOME) {
-				throw new MissingLibraryException(OMEXMLServiceImpl.NO_OME_XML_MSG);
-			}
-
 			final Vector<BinData> binData = new Vector<BinData>();
 			final Vector<Long> binDataOffsets = new Vector<Long>();
 			final Vector<String> compression = new Vector<String>();
@@ -416,6 +389,7 @@ public class OMEXMLFormat extends AbstractFormat {
 				pixels = new byte[planeSize];
 				bzip.read(pixels, 0, pixels.length);
 				tempPixels = null;
+				bzip.close();
 				bais.close();
 				bais = null;
 				bzip = null;
@@ -662,7 +636,7 @@ public class OMEXMLFormat extends AbstractFormat {
 		// -- Fields --
 
 		@Parameter
-		private OMEXMLMetadataService omexmlMetadataService;
+		private OMEMetadataService omexmlMetadataService;
 
 		// -- Translator API --
 

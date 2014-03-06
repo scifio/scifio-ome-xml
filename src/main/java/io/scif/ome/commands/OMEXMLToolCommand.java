@@ -1,13 +1,9 @@
 /*
  * #%L
- * SCIFIO support for the OME data model (OME-XML and OME-TIFF).
+ * SCIFIO support for the OME data model, including OME-XML and OME-TIFF.
  * %%
- * Copyright (C) 2013 - 2014 Open Microscopy Environment:
- *   - Massachusetts Institute of Technology
- *   - National Institutes of Health
- *   - University of Dundee
- *   - Board of Regents of the University of Wisconsin-Madison
- *   - Glencoe Software, Inc.
+ * Copyright (C) 2013 - 2014 Board of Regents of the University of
+ * Wisconsin-Madison
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,7 +28,7 @@
  * #L%
  */
 
-package io.scif.ome.xml.commands;
+package io.scif.ome.commands;
 
 import io.scif.FormatException;
 import io.scif.Metadata;
@@ -40,7 +36,7 @@ import io.scif.SCIFIO;
 import io.scif.config.SCIFIOConfig;
 import io.scif.filters.PlaneSeparator;
 import io.scif.filters.ReaderFilter;
-import io.scif.ome.xml.meta.OMEMetadata;
+import io.scif.ome.OMEMetadata;
 import io.scif.services.InitializeService;
 import io.scif.tools.AbstractSCIFIOToolCommand;
 import io.scif.tools.SCIFIOToolCommand;
@@ -67,7 +63,7 @@ import org.scijava.plugin.Plugin;
  * @author Mark Hiner
  */
 @Plugin(type = SCIFIOToolCommand.class)
-public class OMEXML extends AbstractSCIFIOToolCommand {
+public class OMEXMLToolCommand extends AbstractSCIFIOToolCommand {
 
 	// -- Fields --
 
@@ -145,8 +141,8 @@ public class OMEXML extends AbstractSCIFIOToolCommand {
 	}
 
 	/**
-	 * Generates a list of axes using the given Reader, such that {@link Axes.X}
-	 * and {@link Axes.Y} are first.
+	 * Generates a list of axes using the given Reader, such that {@link Axes#X}
+	 * and {@link Axes#Y} are first.
 	 */
 	private AxisType[] axesToSplit(final ReaderFilter r) {
 		final Set<AxisType> axes = new HashSet<AxisType>();

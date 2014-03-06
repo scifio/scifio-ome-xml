@@ -1,13 +1,9 @@
 /*
  * #%L
- * SCIFIO support for the OME data model (OME-XML and OME-TIFF).
+ * SCIFIO support for the OME data model, including OME-XML and OME-TIFF.
  * %%
- * Copyright (C) 2013 - 2014 Open Microscopy Environment:
- *   - Massachusetts Institute of Technology
- *   - National Institutes of Health
- *   - University of Dundee
- *   - Board of Regents of the University of Wisconsin-Madison
- *   - Glencoe Software, Inc.
+ * Copyright (C) 2013 - 2014 Board of Regents of the University of
+ * Wisconsin-Madison
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,11 +28,11 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
 import io.scif.Metadata;
-import io.scif.ome.xml.meta.OMEMetadata;
-import io.scif.ome.xml.meta.OMETIFFFormat;
+import io.scif.ome.OMEMetadata;
+import io.scif.ome.formats.OMETIFFFormat;
 
 import org.scijava.plugin.Plugin;
 
@@ -48,7 +44,7 @@ import org.scijava.plugin.Plugin;
 public class OMETIFFTranslator {
 
 	/**
-	 * Translator class from {@link io.scif.ome.xml.meta.OMETIFFFormat.Metadata}
+	 * Translator class from {@link io.scif.ome.formats.OMETIFFFormat.Metadata}
 	 * to {@link OMEMetadata}
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
@@ -85,7 +81,7 @@ public class OMETIFFTranslator {
 	}
 
 	/**
-	 * Translator class from {@link io.scif.ome.xml.meta.OMETIFFFormat.Metadata}
+	 * Translator class from {@link io.scif.ome.formats.OMETIFFFormat.Metadata}
 	 * to {@link OMEMetadata}.
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base

@@ -1,13 +1,9 @@
 /*
  * #%L
- * SCIFIO support for the OME data model (OME-XML and OME-TIFF).
+ * SCIFIO support for the OME data model, including OME-XML and OME-TIFF.
  * %%
- * Copyright (C) 2013 - 2014 Open Microscopy Environment:
- *   - Massachusetts Institute of Technology
- *   - National Institutes of Health
- *   - University of Dundee
- *   - Board of Regents of the University of Wisconsin-Madison
- *   - Glencoe Software, Inc.
+ * Copyright (C) 2013 - 2014 Board of Regents of the University of
+ * Wisconsin-Madison
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,25 +28,25 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
 import io.scif.Metadata;
-import io.scif.formats.BMPFormat;
-import io.scif.ome.xml.meta.OMEMetadata;
+import io.scif.formats.NRRDFormat;
+import io.scif.ome.OMEMetadata;
 import ome.xml.model.primitives.PositiveFloat;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Plugin;
 
 /**
- * Container class for translators between OME and BMP formats.
+ * Container class for translators between OME and NRRD formats.
  * 
  * @author Mark Hiner hinerm at gmail.com
  */
-public class BMPTranslator {
+public class NRRDTranslator {
 
 	/**
-	 * Translator class from {@link io.scif.formats.BMPFormat.Metadata} to
+	 * Translator class from {@link io.scif.formats.NRRDFormat.Metadata} to
 	 * {@link OMEMetadata}
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
@@ -60,15 +56,15 @@ public class BMPTranslator {
 	 * @author Mark Hiner
 	 */
 	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
-	public static class BMPOMETranslator extends
-		ToOMETranslator<BMPFormat.Metadata>
+	public static class NRRDOMETranslator extends
+		ToOMETranslator<NRRDFormat.Metadata>
 	{
 
 		// -- Translator API Methods --
 
 		@Override
 		public Class<? extends Metadata> source() {
-			return BMPFormat.Metadata.class;
+			return NRRDFormat.Metadata.class;
 		}
 
 		@Override
@@ -77,34 +73,34 @@ public class BMPTranslator {
 		}
 
 		@Override
-		protected void translateOMEXML(final BMPFormat.Metadata source,
+		protected void translateOMEXML(final NRRDFormat.Metadata source,
 			final OMEMetadata dest)
 		{
-			// resolution is stored as pixels per meter; we want to convert to
-			// microns per pixel
 
-			final Integer pixelSizeX = (Integer) source.getTable().get("X resolution");
+			final String[] pixelSizes = source.getPixelSizes();
 
-			final Integer pixelSizeY = (Integer) source.getTable().get("Y resolution");
-
-			final double correctedX =
-				pixelSizeX == null || pixelSizeX == 0 ? 0.0 : 1000000.0 / pixelSizeX;
-			final double correctedY =
-				pixelSizeY == null || pixelSizeY == 0 ? 0.0 : 1000000.0 / pixelSizeY;
-
-			if (correctedX > 0) {
-				dest.getRoot().setPixelsPhysicalSizeX(new PositiveFloat(correctedX), 0);
-			}
-			else {
-				log().warn(
-					"Expected positive value for PhysicalSizeX; got " + correctedX);
-			}
-			if (correctedY > 0) {
-				dest.getRoot().setPixelsPhysicalSizeY(new PositiveFloat(correctedY), 0);
-			}
-			else {
-				log().warn(
-					"Expected positive value for PhysicalSizeY; got " + correctedY);
+			if (pixelSizes != null) {
+				for (int i = 0; i < pixelSizes.length; i++) {
+					if (pixelSizes[i] == null) continue;
+					try {
+						final Double d = new Double(pixelSizes[i].trim());
+						if (d > 0) {
+							if (i == 0) {
+								dest.getRoot().setPixelsPhysicalSizeX(new PositiveFloat(d), 0);
+							}
+							else if (i == 1) {
+								dest.getRoot().setPixelsPhysicalSizeY(new PositiveFloat(d), 0);
+							}
+							else if (i == 2) {
+								dest.getRoot().setPixelsPhysicalSizeZ(new PositiveFloat(d), 0);
+							}
+						}
+						else {
+							log().warn("Expected positive value for PhysicalSize; got " + d);
+						}
+					}
+					catch (final NumberFormatException e) {}
+				}
 			}
 		}
 	}

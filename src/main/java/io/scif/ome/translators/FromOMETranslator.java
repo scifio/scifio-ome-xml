@@ -1,13 +1,9 @@
 /*
  * #%L
- * SCIFIO support for the OME data model (OME-XML and OME-TIFF).
+ * SCIFIO support for the OME data model, including OME-XML and OME-TIFF.
  * %%
- * Copyright (C) 2013 - 2014 Open Microscopy Environment:
- *   - Massachusetts Institute of Technology
- *   - National Institutes of Health
- *   - University of Dundee
- *   - Board of Regents of the University of Wisconsin-Madison
- *   - Glencoe Software, Inc.
+ * Copyright (C) 2013 - 2014 Board of Regents of the University of
+ * Wisconsin-Madison
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,38 +28,25 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
 import io.scif.Metadata;
-import io.scif.ome.xml.meta.OMEMetadata;
-import io.scif.ome.xml.services.OMEXMLMetadataService;
-
-import org.scijava.plugin.Parameter;
+import io.scif.ome.OMEMetadata;
 
 /**
- * Abstract base class for all io.scif.Translators that translate to an
+ * Abstract base class for all io.scif.Translators that translate from an
  * OMEMetadata object.
  * 
  * @author Mark Hiner
  */
-public abstract class ToOMETranslator<M extends Metadata> extends
-	OMETranslator<M, OMEMetadata>
+public abstract class FromOMETranslator<M extends Metadata> extends
+	OMETranslator<OMEMetadata, M>
 {
-
-	// -- Fields --
-
-	@Parameter
-	private OMEXMLMetadataService omexmlMetadataService;
 
 	// -- Translator API Methods --
 
 	@Override
-	protected void typedTranslate(final M source, final OMEMetadata dest) {
-		for (int i = 0; i < source.getImageCount(); i++) {
-			omexmlMetadataService.populateMetadata(dest.getRoot(), 0, source
-				.getDatasetName(), source);
-		}
-
+	protected void typedTranslate(final OMEMetadata source, final M dest) {
 		translateOMEXML(source, dest);
 	}
 }

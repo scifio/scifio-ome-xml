@@ -1,13 +1,9 @@
 /*
  * #%L
- * SCIFIO support for the OME data model (OME-XML and OME-TIFF).
+ * SCIFIO support for the OME data model, including OME-XML and OME-TIFF.
  * %%
- * Copyright (C) 2013 - 2014 Open Microscopy Environment:
- *   - Massachusetts Institute of Technology
- *   - National Institutes of Health
- *   - University of Dundee
- *   - Board of Regents of the University of Wisconsin-Madison
- *   - Glencoe Software, Inc.
+ * Copyright (C) 2013 - 2014 Board of Regents of the University of
+ * Wisconsin-Madison
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,26 +28,31 @@
  * #L%
  */
 
-package io.scif.ome.xml.translation;
+package io.scif.ome.translators;
 
+import io.scif.ImageMetadata;
 import io.scif.Metadata;
-import io.scif.formats.NRRDFormat;
-import io.scif.ome.xml.meta.OMEMetadata;
+import io.scif.formats.OBFFormat;
+import io.scif.ome.OMEMetadata;
+
+import java.util.List;
+
+import net.imglib2.meta.Axes;
 import ome.xml.model.primitives.PositiveFloat;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Plugin;
 
 /**
- * Container class for translators between OME and NRRD formats.
+ * Container class for translators between OME and OBF formats.
  * 
  * @author Mark Hiner hinerm at gmail.com
  */
-public class NRRDTranslator {
+public class OBFTranslator {
 
 	/**
-	 * Translator class from {@link io.scif.formats.NRRDFormat.Metadata} to
-	 * {@link OMEMetadata}
+	 * Translator class from {@link io.scif.formats.OBFFormat.Metadata} to
+	 * {@link io.scif.ome.OMEMetadata}
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -60,15 +61,15 @@ public class NRRDTranslator {
 	 * @author Mark Hiner
 	 */
 	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
-	public static class NRRDOMETranslator extends
-		ToOMETranslator<NRRDFormat.Metadata>
+	public static class OBFOMETranslator extends
+		ToOMETranslator<OBFFormat.Metadata>
 	{
 
-		// -- Translator API Methods --
+		// -- Translator API methods --
 
 		@Override
 		public Class<? extends Metadata> source() {
-			return NRRDFormat.Metadata.class;
+			return OBFFormat.Metadata.class;
 		}
 
 		@Override
@@ -77,33 +78,36 @@ public class NRRDTranslator {
 		}
 
 		@Override
-		protected void translateOMEXML(final NRRDFormat.Metadata source,
+		protected void translateOMEXML(final OBFFormat.Metadata source,
 			final OMEMetadata dest)
 		{
+			for (int image = 0; image != source.getImageCount(); ++image) {
+				final ImageMetadata obf = source.get(image);
 
-			final String[] pixelSizes = source.getPixelSizes();
+				final String name = obf.getTable().get("Name").toString();
+				dest.getRoot().setImageName(name, image);
 
-			if (pixelSizes != null) {
-				for (int i = 0; i < pixelSizes.length; i++) {
-					if (pixelSizes[i] == null) continue;
-					try {
-						final Double d = new Double(pixelSizes[i].trim());
-						if (d > 0) {
-							if (i == 0) {
-								dest.getRoot().setPixelsPhysicalSizeX(new PositiveFloat(d), 0);
-							}
-							else if (i == 1) {
-								dest.getRoot().setPixelsPhysicalSizeY(new PositiveFloat(d), 0);
-							}
-							else if (i == 2) {
-								dest.getRoot().setPixelsPhysicalSizeZ(new PositiveFloat(d), 0);
-							}
-						}
-						else {
-							log().warn("Expected positive value for PhysicalSize; got " + d);
-						}
-					}
-					catch (final NumberFormatException e) {}
+				@SuppressWarnings("unchecked")
+				final List<Double> lengths =
+					(List<Double>) obf.getTable().get("Lengths");
+
+				final double lengthX = Math.abs(lengths.get(0));
+				if (lengthX > 0) {
+					final PositiveFloat physicalSizeX =
+						new PositiveFloat(lengthX / obf.getAxisLength(Axes.X));
+					dest.getRoot().setPixelsPhysicalSizeX(physicalSizeX, image);
+				}
+				final double lengthY = Math.abs(lengths.get(1));
+				if (lengthY > 0) {
+					final PositiveFloat physicalSizeY =
+						new PositiveFloat(lengthY / obf.getAxisLength(Axes.Y));
+					dest.getRoot().setPixelsPhysicalSizeY(physicalSizeY, image);
+				}
+				final double lengthZ = Math.abs(lengths.get(2));
+				if (lengthZ > 0) {
+					final PositiveFloat physicalSizeZ =
+						new PositiveFloat(lengthZ / obf.getAxisLength(Axes.Z));
+					dest.getRoot().setPixelsPhysicalSizeZ(physicalSizeZ, image);
 				}
 			}
 		}
