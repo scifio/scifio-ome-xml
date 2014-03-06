@@ -36,7 +36,7 @@ package io.scif.ome.translators;
 
 import io.scif.Metadata;
 import io.scif.ome.OMEMetadata;
-import io.scif.ome.xml.services.OMEXMLMetadataService;
+import io.scif.ome.services.OMEXMLMetadataService;
 
 import org.scijava.plugin.Parameter;
 

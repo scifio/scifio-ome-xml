@@ -41,7 +41,7 @@ import io.scif.formats.MicromanagerFormat.Metadata;
 import io.scif.formats.MicromanagerFormat.Position;
 import io.scif.io.Location;
 import io.scif.ome.OMEMetadata;
-import io.scif.ome.xml.services.OMEXMLMetadataService;
+import io.scif.ome.services.OMEXMLMetadataService;
 
 import java.util.Vector;
 

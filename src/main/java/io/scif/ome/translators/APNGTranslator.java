@@ -38,7 +38,7 @@ import io.scif.FormatException;
 import io.scif.Metadata;
 import io.scif.formats.APNGFormat;
 import io.scif.ome.OMEMetadata;
-import io.scif.ome.xml.services.OMEXMLMetadataService;
+import io.scif.ome.services.OMEXMLMetadataService;
 import io.scif.util.FormatTools;
 
 import org.scijava.Priority;

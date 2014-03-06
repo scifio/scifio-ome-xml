@@ -32,7 +32,7 @@
  * #L%
  */
 
-package io.scif.ome.xml.services;
+package io.scif.ome.services;
 
 import io.scif.ome.OMEMetadata;
 
