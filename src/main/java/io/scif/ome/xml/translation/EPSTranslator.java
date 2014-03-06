@@ -36,7 +36,7 @@ package io.scif.ome.xml.translation;
 
 import io.scif.Metadata;
 import io.scif.formats.EPSFormat;
-import io.scif.ome.xml.meta.OMEMetadata;
+import io.scif.ome.OMEMetadata;
 import loci.formats.ome.OMEXMLMetadata;
 import net.imglib2.meta.Axes;
 

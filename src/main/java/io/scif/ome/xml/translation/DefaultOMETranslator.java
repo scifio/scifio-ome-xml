@@ -35,7 +35,7 @@
 package io.scif.ome.xml.translation;
 
 import io.scif.Metadata;
-import io.scif.ome.xml.meta.OMEMetadata;
+import io.scif.ome.OMEMetadata;
 import io.scif.ome.xml.services.OMEXMLMetadataService;
 
 import org.scijava.Priority;

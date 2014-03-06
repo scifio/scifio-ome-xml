@@ -58,6 +58,7 @@ import io.scif.formats.tiff.TiffSaver;
 import io.scif.io.Location;
 import io.scif.io.RandomAccessInputStream;
 import io.scif.io.RandomAccessOutputStream;
+import io.scif.ome.OMEMetadata;
 import io.scif.ome.xml.services.OMEXMLMetadataService;
 import io.scif.ome.xml.services.OMEXMLService;
 import io.scif.services.FormatService;

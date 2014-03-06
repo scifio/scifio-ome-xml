@@ -34,7 +34,7 @@
 
 package io.scif.ome.xml.services;
 
-import io.scif.ome.xml.meta.OMEMetadata;
+import io.scif.ome.OMEMetadata;
 import io.scif.services.ServiceException;
 import io.scif.xml.XMLService;
 

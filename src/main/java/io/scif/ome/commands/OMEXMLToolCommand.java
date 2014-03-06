@@ -41,7 +41,6 @@ import io.scif.config.SCIFIOConfig;
 import io.scif.filters.PlaneSeparator;
 import io.scif.filters.ReaderFilter;
 import io.scif.ome.OMEMetadata;
-import io.scif.ome.xml.meta.OMEMetadata;
 import io.scif.services.InitializeService;
 import io.scif.tools.AbstractSCIFIOToolCommand;
 import io.scif.tools.SCIFIOToolCommand;

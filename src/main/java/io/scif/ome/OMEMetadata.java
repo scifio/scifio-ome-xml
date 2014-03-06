@@ -32,7 +32,7 @@
  * #L%
  */
 
-package io.scif.ome.xml.meta;
+package io.scif.ome;
 
 import loci.formats.ome.OMEXMLMetadata;
 import io.scif.AbstractMetadata;

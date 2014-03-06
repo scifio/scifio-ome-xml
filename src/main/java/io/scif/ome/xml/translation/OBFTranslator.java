@@ -37,7 +37,7 @@ package io.scif.ome.xml.translation;
 import io.scif.ImageMetadata;
 import io.scif.Metadata;
 import io.scif.formats.OBFFormat;
-import io.scif.ome.xml.meta.OMEMetadata;
+import io.scif.ome.OMEMetadata;
 
 import java.util.List;
 
@@ -56,7 +56,7 @@ public class OBFTranslator {
 
 	/**
 	 * Translator class from {@link io.scif.formats.OBFFormat.Metadata} to
-	 * {@link io.scif.ome.xml.meta.OMEMetadata}
+	 * {@link io.scif.ome.OMEMetadata}
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.

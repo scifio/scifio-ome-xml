@@ -37,7 +37,7 @@ package io.scif.ome.xml.translation;
 import io.scif.Metadata;
 import io.scif.common.DateTools;
 import io.scif.formats.DICOMFormat;
-import io.scif.ome.xml.meta.OMEMetadata;
+import io.scif.ome.OMEMetadata;
 import loci.formats.ome.OMEXMLMetadata;
 import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.Timestamp;

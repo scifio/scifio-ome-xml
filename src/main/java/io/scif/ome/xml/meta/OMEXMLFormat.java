@@ -57,6 +57,7 @@ import io.scif.common.Constants;
 import io.scif.config.SCIFIOConfig;
 import io.scif.io.CBZip2InputStream;
 import io.scif.io.RandomAccessInputStream;
+import io.scif.ome.OMEMetadata;
 import io.scif.ome.xml.services.OMEXMLMetadataService;
 import io.scif.ome.xml.services.OMEXMLService;
 import io.scif.ome.xml.services.OMEXMLServiceImpl;

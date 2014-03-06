@@ -35,7 +35,7 @@
 package io.scif.ome.xml.services;
 
 import io.scif.SCIFIOService;
-import io.scif.ome.xml.meta.OMEMetadata;
+import io.scif.ome.OMEMetadata;
 import io.scif.services.ServiceException;
 
 import java.util.Hashtable;

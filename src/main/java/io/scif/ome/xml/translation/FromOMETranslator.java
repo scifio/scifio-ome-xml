@@ -35,7 +35,7 @@
 package io.scif.ome.xml.translation;
 
 import io.scif.Metadata;
-import io.scif.ome.xml.meta.OMEMetadata;
+import io.scif.ome.OMEMetadata;
 
 /**
  * Abstract base class for all io.scif.Translators that translate from an
