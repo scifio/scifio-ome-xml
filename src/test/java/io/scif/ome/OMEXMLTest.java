@@ -72,9 +72,10 @@ public class OMEXMLTest {
 		assertTrue(omexml.length() > 0);
 
 		assertTrue(omexml
-			.contains("<Pixels DimensionOrder=\"XYCZT\" ID=\"Pixels:0\" "
+			.contains("<Pixels BigEndian=\"false\" DimensionOrder=\"XYCZT\" ID=\"Pixels:0\" "
 				+ "PhysicalSizeX=\"1.0\" PhysicalSizeY=\"1.0\" PhysicalSizeZ=\"1.0\""
 				+ " SizeC=\"1\" SizeT=\"1\" SizeX=\"512\" SizeY=\"512\" SizeZ=\"1\""
 				+ " TimeIncrement=\"1.0\" Type=\"uint8\">"));
+
 	}
 }

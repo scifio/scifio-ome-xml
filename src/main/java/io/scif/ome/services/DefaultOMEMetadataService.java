@@ -49,8 +49,6 @@ import net.imglib2.meta.Axes;
 import net.imglib2.meta.AxisType;
 import net.imglib2.meta.CalibratedAxis;
 import net.imglib2.meta.axis.DefaultLinearAxis;
-import ome.xml.model.BinData;
-import ome.xml.model.OME;
 import ome.xml.model.enums.Binning;
 import ome.xml.model.enums.Correction;
 import ome.xml.model.enums.DetectorType;
@@ -67,7 +65,6 @@ import ome.xml.model.enums.handlers.ImmersionEnumHandler;
 import ome.xml.model.enums.handlers.LaserMediumEnumHandler;
 import ome.xml.model.enums.handlers.LaserTypeEnumHandler;
 import ome.xml.model.primitives.NonNegativeInteger;
-import ome.xml.model.primitives.NonNegativeLong;
 import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.PositiveInteger;
 
@@ -176,11 +173,6 @@ public class DefaultOMEMetadataService extends AbstractService implements
 						logService.warn("Failed to resolve references", e);
 					}
 				}
-
-				final OME root = (OME) store.getRoot();
-				final BinData bin = root.getImage(i).getPixels().getBinData(0);
-				bin.setLength(new NonNegativeLong(0L));
-				store.setRoot(root);
 			}
 
 			if (doPlane) {
