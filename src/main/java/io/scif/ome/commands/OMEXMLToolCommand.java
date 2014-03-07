@@ -156,4 +156,11 @@ public class OMEXMLToolCommand extends AbstractSCIFIOToolCommand {
 		}
 		return axes.toArray(new AxisType[axes.size()]);
 	}
+
+	// -- SCIFIOToolCommand methods --
+
+	@Override
+	public String commandName() {
+		return "omexml";
+	}
 }
