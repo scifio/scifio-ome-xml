@@ -46,6 +46,7 @@ import io.scif.Translator;
 import io.scif.codec.Base64Codec;
 import io.scif.codec.Codec;
 import io.scif.codec.CodecOptions;
+import io.scif.codec.CodecService;
 import io.scif.codec.CompressionType;
 import io.scif.codec.JPEG2000Codec;
 import io.scif.codec.JPEGCodec;
@@ -322,6 +323,9 @@ public class OMEXMLFormat extends AbstractFormat {
 	 */
 	public static class Reader extends ByteArrayReader<Metadata> {
 
+		@Parameter
+		private CodecService codecService;
+
 		// -- Reader API Methods --
 
 		@Override
@@ -399,17 +403,16 @@ public class OMEXMLFormat extends AbstractFormat {
 				bzip = null;
 			}
 			else if (compress.equals("zlib")) {
-				codec = new ZlibCodec();
+				codec = codecService.getCodec(ZlibCodec.class);
 			}
 			else if (compress.equals("J2K")) {
-				codec = new JPEG2000Codec();
+				codec = codecService.getCodec(JPEG2000Codec.class);
 			}
 			else if (compress.equals("JPEG")) {
-				codec  = new JPEGCodec();
+				codec = codecService.getCodec(JPEGCodec.class);
 			}
 
 			if (codec != null) {
-				codec.setContext(getContext());
 				pixels = codec.decompress(pixels, options);
 			}
 
