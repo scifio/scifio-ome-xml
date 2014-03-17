@@ -44,6 +44,7 @@ import io.scif.ImageMetadata;
 import io.scif.Plane;
 import io.scif.Translator;
 import io.scif.codec.Base64Codec;
+import io.scif.codec.Codec;
 import io.scif.codec.CodecOptions;
 import io.scif.codec.CompressionType;
 import io.scif.codec.JPEG2000Codec;
@@ -380,6 +381,7 @@ public class OMEXMLFormat extends AbstractFormat {
 			}
 
 			// TODO: Create a method uncompress to handle all compression methods
+			Codec codec = null;
 			if (compress.equals("bzip2")) {
 				byte[] tempPixels = pixels;
 				pixels = new byte[tempPixels.length - 2];
@@ -397,13 +399,18 @@ public class OMEXMLFormat extends AbstractFormat {
 				bzip = null;
 			}
 			else if (compress.equals("zlib")) {
-				pixels = new ZlibCodec().decompress(pixels, options);
+				codec = new ZlibCodec();
 			}
 			else if (compress.equals("J2K")) {
-				pixels = new JPEG2000Codec().decompress(pixels, options);
+				codec = new JPEG2000Codec();
 			}
 			else if (compress.equals("JPEG")) {
-				pixels = new JPEGCodec().decompress(pixels, options);
+				codec  = new JPEGCodec();
+			}
+
+			if (codec != null) {
+				codec.setContext(getContext());
+				pixels = codec.decompress(pixels, options);
 			}
 
 			final int xIndex = meta.get(imageIndex).getAxisIndex(Axes.X), yIndex =
