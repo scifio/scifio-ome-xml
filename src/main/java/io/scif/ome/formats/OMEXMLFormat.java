@@ -294,7 +294,7 @@ public class OMEXMLFormat extends AbstractFormat {
 			OMEXMLMetadata omexmlMeta = null;
 			if (omeMeta != null) omexmlMeta = meta.getOMEMeta().getRoot();
 			final OMEXMLService service =
-				formatService.getInstance(OMEXMLService.class);
+				getContext().getService(OMEXMLService.class);
 
 			try {
 
