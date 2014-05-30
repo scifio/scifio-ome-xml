@@ -43,9 +43,10 @@ import loci.formats.ome.OMEXMLMetadata;
 
 import org.scijava.plugin.Plugin;
 import org.scijava.service.AbstractService;
+import org.scijava.service.Service;
 
 /** Default implementation of {@link OMEXMLService}. */
-@Plugin(type = OMEXMLService.class)
+@Plugin(type = Service.class)
 public class DefaultOMEXMLService extends AbstractService implements OMEXMLService
 {
 
