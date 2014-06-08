@@ -602,8 +602,8 @@ public class DefaultOMEMetadataService extends AbstractService implements
 		}
 
 		// populate the metadata
-		iMeta.populate(Arrays.asList(axes), lengths, pType, FormatTools
-			.getBitsPerPixel(pType), true, little, false, false, true);
+		iMeta.populate(iMeta.getName(), Arrays.asList(axes), lengths, pType,
+			FormatTools.getBitsPerPixel(pType), true, little, false, false, true);
 	}
 
 	// -- Helper methods --
