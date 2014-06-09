@@ -229,6 +229,7 @@ public class OMEXMLFormat extends AbstractFormat {
 			throws IOException
 		{
 			final int blockLen = 64;
+			if (!FormatTools.validStream(stream, blockLen, stream.isLittleEndian())) return false;
 			final String xml = stream.readString(blockLen);
 			return xml.startsWith("<?xml") && xml.indexOf("<OME") >= 0;
 		}
