@@ -105,14 +105,6 @@ public class OMETIFFFormat extends AbstractFormat {
 		"http://www.openmicroscopy.org/site/support/ome-model/ome-tiff/";
 	public static final double PRIORITY = TIFFFormat.PRIORITY + 1;
 
-	// -- Fields --
-
-	@Parameter
-	private static OMEXMLService service;
-
-	@Parameter
-	private static OMEMetadataService metaService;
-
 	// -- Format API Methods --
 
 	@Override
@@ -131,6 +123,12 @@ public class OMETIFFFormat extends AbstractFormat {
 	 * @author Mark Hiner hinerm at gmail.com
 	 */
 	public static class Metadata extends TIFFFormat.Metadata {
+
+		@Parameter
+		private OMEMetadataService metaService;
+
+		@Parameter
+		private OMEXMLService service;
 
 		// -- Fields --
 
@@ -467,6 +465,12 @@ public class OMETIFFFormat extends AbstractFormat {
 	 */
 	public static class Checker extends AbstractChecker {
 
+		@Parameter
+		private OMEXMLService service;
+
+		@Parameter
+		private OMEMetadataService metaService;
+
 		// -- Checker API Methods --
 
 		@Override
@@ -542,6 +546,12 @@ public class OMETIFFFormat extends AbstractFormat {
 	public static class Parser extends AbstractParser<Metadata> {
 
 		// -- Fields --
+
+		@Parameter
+		private OMEXMLService service;
+
+		@Parameter
+		private OMEMetadataService metaService;
 
 		@Parameter
 		private FormatService formatService;
@@ -1160,6 +1170,12 @@ public class OMETIFFFormat extends AbstractFormat {
 
 		// -- Fields --
 
+		@Parameter
+		private OMEXMLService service;
+
+		@Parameter
+		private OMEMetadataService metaService;
+
 		private List<Integer> imageMap;
 		private String[][] imageLocations;
 		private OMEXMLMetadata omeMeta;
@@ -1471,6 +1487,7 @@ public class OMETIFFFormat extends AbstractFormat {
 		final long[] ifdOffsets = tp.getIFDOffsets();
 		ras.close();
 		final String xml = ifd.getComment();
+		final OMEXMLService service = context.getService(OMEXMLService.class);
 
 		OMEXMLMetadata meta;
 		try {
