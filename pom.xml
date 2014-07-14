@@ -3,90 +3,44 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.scijava</groupId>
-		<artifactId>pom-scijava</artifactId>
-		<version>2.22</version>
+		<groupId>io.scif</groupId>
+		<artifactId>pom-scifio</artifactId>
+		<version>1.0</version>
 		<relativePath />
 	</parent>
 
-	<groupId>io.scif</groupId>
 	<artifactId>scifio-ome-xml</artifactId>
 	<version>0.9.1-SNAPSHOT</version>
 
 	<name>SCIFIO OME-XML Extension</name>
-	<description>SCIFIO support for the OME data model, including OME-XML and OME-TIFF file formats.</description>
-	<url>http://scif.io/</url>
+	<description>SCIFIO support for the OME data model, including OME-XML and OME-TIFF.</description>
 	<inceptionYear>2013</inceptionYear>
 
 	<dependencies>
 		<dependency>
 			<groupId>ome</groupId>
 			<artifactId>formats-api</artifactId>
-			<version>${bio-formats.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>ome</groupId>
-					<artifactId>jai_imageio</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>ome</groupId>
-					<artifactId>lwf-stubs</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>ome</groupId>
-					<artifactId>specification</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>ome</groupId>
-					<artifactId>turbojpeg</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.esotericsoftware.kryo</groupId>
-					<artifactId>kryo</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.jgoodies</groupId>
-					<artifactId>forms</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>joda-time</groupId>
-					<artifactId>joda-time</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.perf4j</groupId>
-					<artifactId>perf4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.scijava</groupId>
-					<artifactId>native-lib-loader</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>ome</groupId>
 			<artifactId>formats-common</artifactId>
-			<version>${bio-formats.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>ome</groupId>
 			<artifactId>ome-xml</artifactId>
-			<version>${bio-formats.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.scif</groupId>
 			<artifactId>scifio</artifactId>
-			<version>${scifio.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.scif</groupId>
-			<artifactId>scifio-tools</artifactId>
-			<version>${scifio.version}</version>
+			<artifactId>scifio-cli</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -97,61 +51,10 @@
 		</dependency>
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>license-maven-plugin</artifactId>
-				<configuration>
-					<licenseName>bsd_2</licenseName>
-					<organizationName>Board of Regents of the University of
-Wisconsin-Madison</organizationName>
-					<projectName>SCIFIO support for the OME data model, including OME-XML and OME-TIFF.</projectName>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
-	<licenses>
-		<license>
-			<name>Simplified BSD License</name>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-
 	<organization>
 		<name>SCIFIO</name>
 		<url>http://scif.io/</url>
 	</organization>
-
-	<developers>
-		<developer>
-			<id>hinerm</id>
-			<name>Mark Hiner</name>
-			<email>hiner@wisc.edu</email>
-			<url>http://developer.imagej.net/users/hinerm</url>
-			<organization>UW-Madison LOCI</organization>
-			<organizationUrl>http://loci.wisc.edu/</organizationUrl>
-			<roles>
-				<role>architect</role>
-				<role>developer</role>
-			</roles>
-			<timezone>-6</timezone>
-		</developer>
-		<developer>
-			<id>ctrueden</id>
-			<name>Curtis Rueden</name>
-			<email>ctrueden@wisc.edu</email>
-			<url>http://loci.wisc.edu/people/curtis-rueden</url>
-			<organization>UW-Madison LOCI</organization>
-			<organizationUrl>http://loci.wisc.edu/</organizationUrl>
-			<roles>
-				<role>architect</role>
-				<role>developer</role>
-			</roles>
-			<timezone>-6</timezone>
-		</developer>
-	</developers>
 
 	<issueManagement>
 		<system>GitHub Issues</system>
@@ -163,16 +66,6 @@ Wisconsin-Madison</organizationName>
 		<url>http://jenkins.imagej.net/job/SCIFIO-OME-XML/</url>
 	</ciManagement>
 
-	<mailingLists>
-		<mailingList>
-			<name>SCIFIO</name>
-			<subscribe>http://scif.io/mailman/listinfo/scifio</subscribe>
-			<unsubscribe>http://scif.io/mailman/listinfo/scifio</unsubscribe>
-			<post>scifio@scif.io</post>
-			<archive>http://scif.io/pipermail/scifio/</archive>
-		</mailingList>
-	</mailingLists>
-
 	<scm>
 		<connection>scm:git:git://github.com/scifio/scifio-ome-xml</connection>
 		<developerConnection>scm:git:git@github.com:scifio/scifio-ome-xml</developerConnection>
@@ -181,7 +74,6 @@ Wisconsin-Madison</organizationName>
 	</scm>
 
 	<repositories>
-		<!-- NB: for parent project -->
 		<repository>
 			<id>imagej.public</id>
 			<url>http://maven.imagej.net/content/groups/public</url>
