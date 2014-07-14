@@ -303,7 +303,6 @@ public class OMETIFFFormat extends AbstractFormat {
 								tiffPixelType);
 						m.setPixelType(tiffPixelType);
 					}
-					m.setBitsPerPixel(FormatTools.getBitsPerPixel(m.getPixelType()));
 
 					String dimensionOrder =
 						omexmlMeta.getPixelsDimensionOrder(s).toString();
