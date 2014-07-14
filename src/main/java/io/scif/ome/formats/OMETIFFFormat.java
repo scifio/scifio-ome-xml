@@ -258,18 +258,11 @@ public class OMETIFFFormat extends AbstractFormat {
 
 		// -- Metadata API Methods --
 
-		/*
-		 * @see io.scif.Metadata#populateImageMetadata()
-		 */
 		@Override
 		public void populateImageMetadata() {
-
-			// populate core metadata
-
 			final OMEXMLMetadata omexmlMeta = getOmeMeta().getRoot();
 
 			for (int s = 0; s < getImageCount(); s++) {
-
 				final ImageMetadata m = get(s);
 				try {
 					m.setPlanarAxisCount(2);
@@ -1186,7 +1179,6 @@ public class OMETIFFFormat extends AbstractFormat {
 
 		// -- Writer API Methods --
 
-		/* @see IFormatHandler#setId(String) */
 		@Override
 		public void setDest(RandomAccessOutputStream out, int imageIndex,
 			SCIFIOConfig config) throws FormatException, IOException
@@ -1219,7 +1211,6 @@ public class OMETIFFFormat extends AbstractFormat {
 				getMetadata().getDatasetName();
 		}
 
-		/* @see loci.formats.IFormatHandler#close() */
 		@Override
 		public void close() throws IOException {
 			try {
