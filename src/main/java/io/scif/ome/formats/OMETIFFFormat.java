@@ -266,40 +266,45 @@ public class OMETIFFFormat extends AbstractFormat {
 				final ImageMetadata m = get(s);
 				try {
 					m.setPlanarAxisCount(2);
-					m.setAxisLength(Axes.X, omexmlMeta.getPixelsSizeX(s).getValue()
-						.intValue());
+
+					// set image width
+					final int sizeX = omexmlMeta.getPixelsSizeX(s).getValue().intValue();
+					m.setAxisLength(Axes.X, sizeX);
 					final int tiffWidth = (int) firstIFD.getImageWidth();
-					if (m.getAxisLength(Axes.X) != tiffWidth && s == 0) {
-						log().warn(
-							"SizeX mismatch: OME=" + m.getAxisLength(Axes.X) + ", TIFF=" +
-								tiffWidth);
+					if (sizeX != tiffWidth && s == 0) {
+						log().warn("SizeX mismatch: OME=" + sizeX + ", TIFF=" + tiffWidth);
 					}
-					m.setAxisLength(Axes.Y, omexmlMeta.getPixelsSizeY(s).getValue()
-						.intValue());
+
+					// set image height
+					final int sizeY = omexmlMeta.getPixelsSizeY(s).getValue().intValue();
+					m.setAxisLength(Axes.Y, sizeY);
 					final int tiffHeight = (int) firstIFD.getImageLength();
-					if (m.getAxisLength(Axes.Y) != tiffHeight && s == 0) {
-						log().warn(
-							"SizeY mismatch: OME=" + m.getAxisLength(Axes.Y) + ", TIFF=" +
-								tiffHeight);
+					if (sizeY != tiffHeight && s == 0) {
+						log().warn("SizeY mismatch: OME=" + sizeY + ", TIFF=" + tiffHeight);
 					}
-					m.setAxisLength(Axes.Z, omexmlMeta.getPixelsSizeZ(s).getValue()
-						.intValue());
-					m.setAxisLength(Axes.CHANNEL, omexmlMeta.getPixelsSizeC(s).getValue()
-						.intValue());
-					m.setAxisLength(Axes.TIME, omexmlMeta.getPixelsSizeT(s).getValue()
-						.intValue());
-					m.setPixelType(FormatTools.pixelTypeFromString(omexmlMeta
-						.getPixelsType(s).toString()));
+
+					// set Z, C and T lengths
+					final int sizeZ = omexmlMeta.getPixelsSizeZ(s).getValue().intValue();
+					final int sizeC = omexmlMeta.getPixelsSizeC(s).getValue().intValue();
+					final int sizeT = omexmlMeta.getPixelsSizeT(s).getValue().intValue();
+					m.setAxisLength(Axes.Z, sizeZ);
+					m.setAxisLength(Axes.CHANNEL, sizeC);
+					m.setAxisLength(Axes.TIME, sizeT);
+
+					// set pixel type
+					final String pixelTypeString = omexmlMeta.getPixelsType(s).toString();
+					final int pixelType = FormatTools.pixelTypeFromString(pixelTypeString);
+					m.setPixelType(pixelType);
 					final int tiffPixelType = firstIFD.getPixelType();
-					if (m.getPixelType() != tiffPixelType &&
-						(s == 0 || adjustedSamples.get(s)))
+					if (pixelType != tiffPixelType && (s == 0 || adjustedSamples.get(s)))
 					{
 						log().warn(
-							"PixelType mismatch: OME=" + m.getPixelType() + ", TIFF=" +
+							"PixelType mismatch: OME=" + pixelType + ", TIFF=" +
 								tiffPixelType);
 						m.setPixelType(tiffPixelType);
 					}
 					m.setBitsPerPixel(FormatTools.getBitsPerPixel(m.getPixelType()));
+
 					String dimensionOrder =
 						omexmlMeta.getPixelsDimensionOrder(s).toString();
 
