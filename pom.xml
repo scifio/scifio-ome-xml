@@ -16,6 +16,28 @@
 	<description>SCIFIO support for the OME data model, including OME-XML and OME-TIFF.</description>
 	<inceptionYear>2013</inceptionYear>
 
+	<scm>
+		<connection>scm:git:git://github.com/scifio/scifio-ome-xml</connection>
+		<developerConnection>scm:git:git@github.com:scifio/scifio-ome-xml</developerConnection>
+		<tag>HEAD</tag>
+		<url>http://github.com/scifio/scifio-ome-xml</url>
+	</scm>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/scifio/scifio-ome-xml/issues</url>
+	</issueManagement>
+	<ciManagement>
+		<system>Jenkins</system>
+		<url>http://jenkins.imagej.net/job/SCIFIO-OME-XML/</url>
+	</ciManagement>
+
+	<repositories>
+		<repository>
+			<id>imagej.public</id>
+			<url>http://maven.imagej.net/content/groups/public</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>ome</groupId>
@@ -50,34 +72,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<organization>
-		<name>SCIFIO</name>
-		<url>http://scif.io/</url>
-	</organization>
-
-	<issueManagement>
-		<system>GitHub Issues</system>
-		<url>https://github.com/scifio/scifio-ome-xml/issues</url>
-	</issueManagement>
-
-	<ciManagement>
-		<system>Jenkins</system>
-		<url>http://jenkins.imagej.net/job/SCIFIO-OME-XML/</url>
-	</ciManagement>
-
-	<scm>
-		<connection>scm:git:git://github.com/scifio/scifio-ome-xml</connection>
-		<developerConnection>scm:git:git@github.com:scifio/scifio-ome-xml</developerConnection>
-		<tag>HEAD</tag>
-		<url>http://github.com/scifio/scifio-ome-xml</url>
-	</scm>
-
-	<repositories>
-		<repository>
-			<id>imagej.public</id>
-			<url>http://maven.imagej.net/content/groups/public</url>
-		</repository>
-	</repositories>
 
 </project>
