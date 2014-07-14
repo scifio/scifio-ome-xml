@@ -30,12 +30,12 @@
 
 package io.scif.ome.translators;
 
-import java.util.List;
-
 import io.scif.AbstractTranslator;
 import io.scif.ImageMetadata;
 import io.scif.Metadata;
 import io.scif.ome.OMEMetadata;
+
+import java.util.List;
 
 /**
  * Abstract base class for all {@link io.scif.Translator} implementations that
