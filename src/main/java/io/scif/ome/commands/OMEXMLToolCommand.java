@@ -33,13 +33,13 @@ package io.scif.ome.commands;
 import io.scif.FormatException;
 import io.scif.Metadata;
 import io.scif.SCIFIO;
+import io.scif.cli.AbstractSCIFIOToolCommand;
+import io.scif.cli.SCIFIOToolCommand;
 import io.scif.config.SCIFIOConfig;
 import io.scif.filters.PlaneSeparator;
 import io.scif.filters.ReaderFilter;
 import io.scif.ome.OMEMetadata;
 import io.scif.services.InitializeService;
-import io.scif.tools.AbstractSCIFIOToolCommand;
-import io.scif.tools.SCIFIOToolCommand;
 
 import java.io.IOException;
 import java.util.ArrayList;
