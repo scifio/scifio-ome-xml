@@ -81,6 +81,7 @@ import loci.formats.meta.MetadataStore;
 import loci.formats.ome.OMEXMLMetadata;
 import net.imglib2.display.ColorTable;
 import net.imglib2.meta.Axes;
+import net.imglib2.meta.CalibratedAxis;
 import ome.xml.model.primitives.NonNegativeInteger;
 import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.PositiveInteger;
@@ -375,12 +376,12 @@ public class OMETIFFFormat extends AbstractFormat {
 					log().error("Format exception when creating ImageMetadata", exc);
 				}
 				// Set the physical pixel sizes
-				FormatTools.calibrate(m.getAxis(Axes.X), getValue(omexmlMeta
-					.getPixelsPhysicalSizeX(s)), 0.0);
-				FormatTools.calibrate(m.getAxis(Axes.Y), getValue(omexmlMeta
-					.getPixelsPhysicalSizeY(s)), 0.0);
-				FormatTools.calibrate(m.getAxis(Axes.Z), getValue(omexmlMeta
-					.getPixelsPhysicalSizeZ(s)), 0.0);
+				calibrate(m.getAxis(Axes.X), getValue(omexmlMeta
+					.getPixelsPhysicalSizeX(s)));
+				calibrate(m.getAxis(Axes.Y), getValue(omexmlMeta
+					.getPixelsPhysicalSizeY(s)));
+				calibrate(m.getAxis(Axes.Z), getValue(omexmlMeta
+					.getPixelsPhysicalSizeZ(s)));
 			}
 
 //      if (getImageCount() == 1) {
@@ -454,6 +455,14 @@ public class OMETIFFFormat extends AbstractFormat {
 			Double physSize = pixelPhysicalSize.getValue();
 			if (physSize < 0) return 1.0;
 			return physSize;
+		}
+
+		/**
+		 * Helper method to calibrate an axis, using {@code 0.0} as the origin. Only
+		 * calibrates non-null {@link CalibratedAxis} inputs.
+		 */
+		private void calibrate(final CalibratedAxis axis, final double value) {
+			if (axis != null) FormatTools.calibrate(axis, value, 0.0);
 		}
 	}
 
