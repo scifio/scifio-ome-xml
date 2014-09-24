@@ -77,6 +77,7 @@ import loci.formats.ome.OMEXMLMetadata;
 import loci.formats.ome.OMEXMLMetadataImpl;
 import net.imglib2.meta.Axes;
 
+import org.scijava.Context;
 import org.scijava.Priority;
 import org.scijava.log.StderrLogService;
 import org.scijava.plugin.Parameter;
@@ -548,7 +549,7 @@ public class OMEXMLFormat extends AbstractFormat {
 
 			final OMEHandler handler =
 				new OMEHandler(new Vector<String>(),
-					"<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+					"<?xml version=\"1.0\" encoding=\"UTF-8\"?>", getContext());
 
 			try {
 				xmlService.parseXML(xml, handler);
@@ -696,11 +697,12 @@ public class OMEXMLFormat extends AbstractFormat {
 		// -- Constructor --
 
 		public OMEHandler(final Vector<String> xmlFragments,
-			final String currentFragment)
+			final String currentFragment, final Context context)
 		{
 			super(new StderrLogService());
 			this.xmlFragments = xmlFragments;
 			this.currentFragment = currentFragment;
+			context.inject(this);
 		}
 
 		// -- OMEHandler API methods --
