@@ -610,14 +610,16 @@ public class OMEXMLFormat extends AbstractFormat {
 				!r.getPixelsBinDataBigEndian(imageIndex, 0).booleanValue();
 			options.bitsPerSample = bytes * 8;
 
-			if (getCompression().equals("J2K")) {
-				b = new JPEG2000Codec().compress(b, options);
-			}
-			else if (getCompression().equals("JPEG")) {
-				b = new JPEGCodec().compress(b, options);
-			}
-			else if (getCompression().equals("zlib")) {
-				b = new ZlibCodec().compress(b, options);
+			if (getCompression() != null) {
+				if (getCompression().equals("J2K")) {
+					b = new JPEG2000Codec().compress(b, options);
+				}
+				else if (getCompression().equals("JPEG")) {
+					b = new JPEGCodec().compress(b, options);
+				}
+				else if (getCompression().equals("zlib")) {
+					b = new ZlibCodec().compress(b, options);
+				}
 			}
 			return new Base64Codec().compress(b, options);
 		}
