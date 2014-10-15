@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>scifio-ome-xml</artifactId>
-	<version>0.9.3-SNAPSHOT</version>
+	<version>0.9.4-SNAPSHOT</version>
 
 	<name>SCIFIO OME-XML Extension</name>
 	<description>SCIFIO support for the OME data model, including OME-XML and OME-TIFF.</description>
