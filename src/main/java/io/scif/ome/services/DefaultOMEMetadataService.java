@@ -39,6 +39,7 @@ import io.scif.services.FormatService;
 import io.scif.util.FormatTools;
 
 import java.util.Arrays;
+import java.util.List;
 
 import loci.common.services.ServiceException;
 import loci.formats.MetadataTools;
@@ -108,55 +109,62 @@ public class DefaultOMEMetadataService extends AbstractService implements
 	{
 		populatePixels(store, meta, doPlane, true);
 	}
-
 	@Override
 	public void populatePixels(final MetadataStore store, final Metadata meta,
 		final boolean doPlane, final boolean doImageName)
 	{
-		if (store == null || meta == null) return;
-		for (int i = 0; i < meta.getImageCount(); i++) {
+		populatePixels(store, meta.getAll(), doPlane, doImageName ? meta
+			.getDatasetName() : null);
+	}
 
-			String imageName = null;
-			if (doImageName) {
-				final Location f = new Location(getContext(), meta.getDatasetName());
+	@Override
+	public void populatePixels(final MetadataStore store,
+		final List<ImageMetadata> imageMeta, final boolean doPlane,
+		String imageName)
+	{
+		if (store == null || imageMeta == null) return;
+		for (int i = 0; i < imageMeta.size(); i++) {
+
+			if (imageName != null) {
+				final Location f = new Location(getContext(), imageName);
 				imageName = f.getName();
 			}
 			final String pixelType =
-				FormatTools.getPixelTypeString(meta.get(i).getPixelType());
-			final String order = findDimensionOrder(meta, i);
+				FormatTools.getPixelTypeString(imageMeta.get(i).getPixelType());
+			final String order = findDimensionOrder(imageMeta.get(i));
 
-			final int xSize = (int) meta.get(i).getAxisLength(Axes.X);
-			int ySize = (int) meta.get(i).getAxisLength(Axes.Y);
-			final int zSize = (int) meta.get(i).getAxisLength(Axes.Z);
-			final int cSize = (int) meta.get(i).getAxisLength(Axes.CHANNEL);
-			int tSize = (int) meta.get(i).getAxisLength(Axes.TIME);
-			final double calX = FormatTools.getScale(meta, i, Axes.X);
-			final double calY = FormatTools.getScale(meta, i, Axes.Y);
-			final double calZ = FormatTools.getScale(meta, i, Axes.Z);
-			final double calC = FormatTools.getScale(meta, i, Axes.CHANNEL);
-			final double calT = FormatTools.getScale(meta, i, Axes.TIME);
+			final int xSize = (int) imageMeta.get(i).getAxisLength(Axes.X);
+			int ySize = (int) imageMeta.get(i).getAxisLength(Axes.Y);
+			final int zSize = (int) imageMeta.get(i).getAxisLength(Axes.Z);
+			final int cSize = (int) imageMeta.get(i).getAxisLength(Axes.CHANNEL);
+			int tSize = (int) imageMeta.get(i).getAxisLength(Axes.TIME);
+			final double calX = FormatTools.getScale(imageMeta.get(i), Axes.X);
+			final double calY = FormatTools.getScale(imageMeta.get(i), Axes.Y);
+			final double calZ = FormatTools.getScale(imageMeta.get(i), Axes.Z);
+			final double calC = FormatTools.getScale(imageMeta.get(i), Axes.CHANNEL);
+			final double calT = FormatTools.getScale(imageMeta.get(i), Axes.TIME);
 			int rgbCCount = 1;
 
-			if (meta.get(i).isMultichannel()) {
+			if (imageMeta.get(i).isMultichannel()) {
 				rgbCCount = cSize;
 			}
 
 			// Compress planar axes to Y
-			for (final CalibratedAxis axis : meta.get(i).getAxesPlanar()) {
+			for (final CalibratedAxis axis : imageMeta.get(i).getAxesPlanar()) {
 				final AxisType type = axis.type();
 				if (type != Axes.X && type != Axes.Y && type != Axes.CHANNEL) {
-					ySize *= meta.get(i).getAxisLength(type);
+					ySize *= imageMeta.get(i).getAxisLength(type);
 				}
 			}
 			// Compress non-planar axes to Time
-			for (final CalibratedAxis axis : meta.get(i).getAxesNonPlanar()) {
+			for (final CalibratedAxis axis : imageMeta.get(i).getAxesNonPlanar()) {
 				final AxisType type = axis.type();
 				if (type != Axes.Z && type != Axes.TIME && type != Axes.CHANNEL) {
-					tSize *= meta.get(i).getAxisLength(type);
+					tSize *= imageMeta.get(i).getAxisLength(type);
 				}
 			}
 
-			populateMetadata(store, meta.getDatasetName(), i, imageName, meta.get(i)
+			populateMetadata(store, imageName, i, imageName, imageMeta.get(i)
 				.isLittleEndian(), order, pixelType, xSize, ySize, zSize, cSize, tSize,
 				calX, calY, calZ, calC, calT, rgbCCount);
 
@@ -176,8 +184,10 @@ public class DefaultOMEMetadataService extends AbstractService implements
 			}
 
 			if (doPlane) {
-				for (int q = 0; q < meta.get(i).getPlaneCount(); q++) {
-					final long[] coords = FormatTools.rasterToPosition(i, q, meta);
+				for (int q = 0; q < imageMeta.get(i).getPlaneCount(); q++) {
+					final long[] coords =
+						FormatTools.rasterToPosition(imageMeta.get(i)
+							.getAxesLengthsNonPlanar(), q);
 					store.setPlaneTheZ(new NonNegativeInteger((int) coords[0]), i, q);
 					store.setPlaneTheC(new NonNegativeInteger((int) coords[1]), i, q);
 					store.setPlaneTheT(new NonNegativeInteger((int) coords[2]), i, q);
@@ -352,9 +362,14 @@ public class DefaultOMEMetadataService extends AbstractService implements
 
 	@Override
 	public String findDimensionOrder(final Metadata meta, final int imageIndex) {
+		return findDimensionOrder(meta.get(imageIndex));
+	}
+
+	@Override
+	public String findDimensionOrder(final ImageMetadata imageMeta) {
 		String dimOrder = "";
 
-		for (final CalibratedAxis axis : meta.get(imageIndex).getAxes()) {
+		for (final CalibratedAxis axis : imageMeta.getAxes()) {
 			dimOrder += axis.type().getLabel().charAt(0);
 		}
 

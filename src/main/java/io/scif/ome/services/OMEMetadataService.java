@@ -30,6 +30,8 @@
 
 package io.scif.ome.services;
 
+import java.util.List;
+
 import io.scif.FormatException;
 import io.scif.ImageMetadata;
 import io.scif.Metadata;
@@ -68,13 +70,22 @@ public interface OMEMetadataService extends SCIFIOService {
 
 	/**
 	 * Populates the 'pixels' element of the given metadata store, using core
-	 * metadata from the given reader. If the 'doPlane' flag is set, then the
+	 * metadata from the given metadata. If the 'doPlane' flag is set, then the
 	 * 'plane' elements will be populated as well. If the 'doImageName' flag is
 	 * set, then the image name will be populated as well. By default,
 	 * 'doImageName' is true.
 	 */
 	void populatePixels(MetadataStore store, Metadata meta, boolean doPlane,
 		boolean doImageName);
+
+	/**
+	 * Populates the 'pixels' element of the given metadata store, using the
+	 * provided {@link ImageMetadata}. If the 'doPlane' flag is set, then the
+	 * 'plane' elements will be populated as well. If the 'imageName' field is
+	 * non-null, then the image name will be populated as well.
+	 */
+	void populatePixels(MetadataStore store, List<ImageMetadata> imageMeta,
+		boolean doPlane, String imageName);
 
 	/**
 	 * Populates the given {@link MetadataStore}, for the specified imageIndex,
@@ -163,6 +174,12 @@ public interface OMEMetadataService extends SCIFIOService {
 	 * object.
 	 */
 	String findDimensionOrder(Metadata meta, int imageIndex);
+
+	/**
+	 * Extracts a standard 5-D dimension order from an N-dimensional ImageMetadata
+	 * object.
+	 */
+	String findDimensionOrder(ImageMetadata imageMeta);
 
 	/**
 	 * Converts the given String to a list of AxisTypes suitable for Metadata
