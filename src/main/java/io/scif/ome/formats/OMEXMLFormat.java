@@ -670,17 +670,18 @@ public class OMEXMLFormat extends AbstractFormat {
 		protected void translateFormatMetadata(final io.scif.Metadata source,
 			final Metadata dest)
 		{
-			final OMEXMLMetadata root = new OMEXMLMetadataImpl();
-			final OMEMetadata meta = new OMEMetadata(getContext(), root);
-			omexmlMetadataService.populatePixels(root, source);
-			dest.setOMEMeta(meta);
+			// Nothing to do. See translateImageMetadata
 		}
 
 		@Override
 		protected void translateImageMetadata(final List<ImageMetadata> source,
 			final Metadata dest)
 		{
-			// No implementation necessary. See translateFormatMetadata
+			final OMEXMLMetadata root = new OMEXMLMetadataImpl();
+			final OMEMetadata meta = new OMEMetadata(getContext(), root);
+			omexmlMetadataService.populatePixels(root, source, false, null);
+			dest.setOMEMeta(meta);
+			// TODO may have lost dataset name..
 		}
 	}
 
