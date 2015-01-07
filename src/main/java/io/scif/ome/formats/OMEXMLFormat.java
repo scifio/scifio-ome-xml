@@ -75,7 +75,7 @@ import loci.common.services.ServiceException;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.ome.OMEXMLMetadata;
 import loci.formats.ome.OMEXMLMetadataImpl;
-import net.imglib2.meta.Axes;
+import net.imagej.axis.Axes;
 
 import org.scijava.Context;
 import org.scijava.Priority;

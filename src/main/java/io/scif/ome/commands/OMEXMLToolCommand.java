@@ -48,9 +48,9 @@ import java.util.List;
 import java.util.Set;
 
 import loci.common.xml.XMLTools;
-import net.imglib2.meta.Axes;
-import net.imglib2.meta.AxisType;
-import net.imglib2.meta.CalibratedAxis;
+import net.imagej.axis.Axes;
+import net.imagej.axis.AxisType;
+import net.imagej.axis.CalibratedAxis;
 
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;

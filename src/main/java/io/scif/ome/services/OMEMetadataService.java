@@ -30,17 +30,18 @@
 
 package io.scif.ome.services;
 
-import java.util.List;
-
 import io.scif.FormatException;
 import io.scif.ImageMetadata;
 import io.scif.Metadata;
 import io.scif.Reader;
 import io.scif.SCIFIOService;
+
+import java.util.List;
+
 import loci.formats.IFormatWriter;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.meta.MetadataStore;
-import net.imglib2.meta.AxisType;
+import net.imagej.axis.AxisType;
 import ome.xml.model.enums.Binning;
 import ome.xml.model.enums.Correction;
 import ome.xml.model.enums.DetectorType;

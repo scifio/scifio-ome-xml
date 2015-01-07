@@ -37,7 +37,7 @@ import io.scif.ome.OMEMetadata;
 
 import java.util.List;
 
-import net.imglib2.meta.Axes;
+import net.imagej.axis.Axes;
 import ome.xml.model.primitives.PositiveFloat;
 
 import org.scijava.Priority;

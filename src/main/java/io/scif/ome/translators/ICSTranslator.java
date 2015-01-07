@@ -45,7 +45,7 @@ import java.util.List;
 import loci.formats.meta.FilterMetadata;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.ome.OMEXMLMetadata;
-import net.imglib2.meta.Axes;
+import net.imagej.axis.Axes;
 import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.PositiveInteger;
 import ome.xml.model.primitives.Timestamp;

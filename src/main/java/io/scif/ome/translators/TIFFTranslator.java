@@ -35,8 +35,8 @@ import io.scif.formats.TIFFFormat;
 import io.scif.ome.OMEMetadata;
 import io.scif.util.FormatTools;
 import loci.formats.ome.OMEXMLMetadata;
-import net.imglib2.meta.Axes;
-import net.imglib2.meta.CalibratedAxis;
+import net.imagej.axis.Axes;
+import net.imagej.axis.CalibratedAxis;
 import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.Timestamp;
 

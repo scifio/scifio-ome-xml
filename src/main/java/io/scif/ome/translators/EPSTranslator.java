@@ -34,7 +34,7 @@ import io.scif.Metadata;
 import io.scif.formats.EPSFormat;
 import io.scif.ome.OMEMetadata;
 import loci.formats.ome.OMEXMLMetadata;
-import net.imglib2.meta.Axes;
+import net.imagej.axis.Axes;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Plugin;
