@@ -1461,8 +1461,10 @@ public class OMETIFFFormat extends AbstractFormat {
 
 		private int planeCount(final int imageIndex) {
 			final MetadataRetrieve r = getMetadata().getOmeMeta().getRoot();
-			final int z = r.getPixelsSizeZ(imageIndex).getValue().intValue();
-			final int t = r.getPixelsSizeT(imageIndex).getValue().intValue();
+			final int z =
+				Math.max(1, r.getPixelsSizeZ(imageIndex).getValue().intValue());
+			final int t =
+				Math.max(1, r.getPixelsSizeT(imageIndex).getValue().intValue());
 			int c = r.getChannelCount(imageIndex);
 			final String pixelType = r.getPixelsType(imageIndex).getValue();
 			final int bytes = FormatTools.getBytesPerPixel(pixelType);
@@ -1470,6 +1472,8 @@ public class OMETIFFFormat extends AbstractFormat {
 			if (bytes > 1 && c == 1) {
 				c = r.getChannelSamplesPerPixel(imageIndex, 0).getValue();
 			}
+
+			c = Math.max(1, c);
 
 			return z * c * t;
 		}
