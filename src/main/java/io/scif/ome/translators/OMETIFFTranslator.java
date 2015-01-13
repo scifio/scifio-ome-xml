@@ -33,7 +33,12 @@ package io.scif.ome.translators;
 import io.scif.Metadata;
 import io.scif.ome.OMEMetadata;
 import io.scif.ome.formats.OMETIFFFormat;
+import loci.common.services.ServiceException;
+import loci.formats.ome.OMEXMLMetadata;
+import loci.formats.services.OMEXMLServiceImpl;
 
+import org.scijava.log.LogService;
+import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
 /**
@@ -58,6 +63,9 @@ public class OMETIFFTranslator {
 		ToOMETranslator<OMETIFFFormat.Metadata>
 	{
 
+		@Parameter
+		private LogService logService;
+
 		// -- Translator API Methods --
 
 		@Override
@@ -76,7 +84,17 @@ public class OMETIFFTranslator {
 		protected void translateFormatMetadata(final OMETIFFFormat.Metadata source,
 			final OMEMetadata dest)
 		{
-			dest.setRoot(source.getOmeMeta().getRoot());
+			OMEXMLMetadata xmlMetadata;
+
+			try {
+				xmlMetadata =
+					new OMEXMLServiceImpl().createOMEXMLMetadata(source.getOmeMeta()
+						.getRoot().dumpXML());
+				dest.setRoot(xmlMetadata);
+			}
+			catch (final ServiceException e) {
+				logService.error(e);
+			}
 		}
 	}
 
@@ -95,6 +113,8 @@ public class OMETIFFTranslator {
 	public static class OMETIFFtoOMETranslator extends
 		FromOMETranslator<OMETIFFFormat.Metadata>
 	{
+		@Parameter
+		private LogService logService;
 
 		@Override
 		public Class<? extends Metadata> source() {
@@ -113,13 +133,25 @@ public class OMETIFFTranslator {
 		protected void translateFormatMetadata(final OMEMetadata source,
 			final OMETIFFFormat.Metadata dest)
 		{
-			OMEMetadata omeMeta = dest.getOmeMeta();
+			OMEXMLMetadata sourceXML;
 
-			if (omeMeta == null) {
-				omeMeta = new OMEMetadata(getContext(), source.getRoot());
-				dest.setOmeMeta(omeMeta);
+			try {
+				sourceXML =
+					new OMEXMLServiceImpl().createOMEXMLMetadata(source.getRoot()
+						.dumpXML());
+
+				OMEMetadata destOMEMeta = dest.getOmeMeta();
+				if (destOMEMeta == null) {
+					dest.setOmeMeta(new OMEMetadata(getContext(), sourceXML));
+				}
+				else {
+					destOMEMeta.setRoot(sourceXML);
+					destOMEMeta.populateImageMetadata();
+				}
 			}
-			else omeMeta.setRoot(source.getRoot());
+			catch (final ServiceException e) {
+				logService.error(e);
+			}
 		}
 	}
 }

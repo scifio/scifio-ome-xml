@@ -40,6 +40,7 @@ import io.scif.DefaultImageMetadata;
 import io.scif.Format;
 import io.scif.FormatException;
 import io.scif.ImageMetadata;
+import io.scif.Metadata;
 import io.scif.Plane;
 import io.scif.Translator;
 import io.scif.config.SCIFIOConfig;
@@ -1561,16 +1562,25 @@ public class OMETIFFFormat extends AbstractFormat {
 		}
 
 		@Override
-		public void translateFormatMetadata(final io.scif.Metadata source,
-			final Metadata dest)
+		protected void typedTranslate(final io.scif.Metadata source,
+			final List<ImageMetadata> sourceImgMeta, final Metadata dest)
 		{
-
+			// Need both Metadata and ImageMetadata to produce the OMEMetadata.
 			if (dest.getOmeMeta() == null) {
 				final OMEMetadata omeMeta = new OMEMetadata(getContext());
-				translatorService.translate(source, omeMeta, false);
+				final Translator t =
+					translatorService.findTranslator(source, omeMeta, false);
+				t.translate(source, sourceImgMeta, omeMeta);
 				dest.setOmeMeta(omeMeta);
 			}
 
+			super.typedTranslate(source, sourceImgMeta, dest);
+		}
+
+		@Override
+		protected void translateFormatMetadata(final io.scif.Metadata source,
+			final Metadata dest)
+		{
 			try {
 				final TIFFFormat.Metadata tiffMeta =
 					(TIFFFormat.Metadata) formatService.getFormatFromClass(
