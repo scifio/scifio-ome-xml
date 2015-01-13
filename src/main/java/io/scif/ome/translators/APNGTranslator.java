@@ -75,7 +75,7 @@ public class APNGTranslator {
 		}
 
 		@Override
-		protected void translateOMEXML(final OMEMetadata source,
+		protected void translateFormatMetadata(final OMEMetadata source,
 			final APNGFormat.Metadata dest)
 		{
 			if (dest.getFctl() != null && dest.getFctl().size() > 0) {
@@ -121,7 +121,7 @@ public class APNGTranslator {
 		}
 
 		@Override
-		protected void translateOMEXML(final APNGFormat.Metadata source,
+		protected void translateFormatMetadata(final APNGFormat.Metadata source,
 			final OMEMetadata dest)
 		{
 			int sizeC = 1;

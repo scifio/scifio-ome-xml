@@ -72,7 +72,7 @@ public class EPSTranslator {
 		}
 
 		@Override
-		protected void translateOMEXML(final OMEMetadata source,
+		protected void translateFormatMetadata(final OMEMetadata source,
 			final EPSFormat.Metadata dest)
 		{
 			final OMEXMLMetadata meta = source.getRoot();

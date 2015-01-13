@@ -82,7 +82,7 @@ public class TIFFTranslator {
 		}
 
 		@Override
-		protected void translateOMEXML(final TIFFFormat.Metadata source,
+		protected void translateFormatMetadata(final TIFFFormat.Metadata source,
 			final OMEMetadata dest)
 		{
 			final OMEXMLMetadata meta = dest.getRoot();
@@ -139,7 +139,7 @@ public class TIFFTranslator {
 		}
 
 		@Override
-		protected void translateOMEXML(final OMEMetadata source,
+		protected void translateFormatMetadata(final OMEMetadata source,
 			final TIFFFormat.Metadata dest)
 		{
 			final OMEXMLMetadata meta = source.getRoot();

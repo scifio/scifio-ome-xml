@@ -76,7 +76,7 @@ public class DICOMTranslator {
 		}
 
 		@Override
-		protected void translateOMEXML(final DICOMFormat.Metadata source,
+		protected void translateFormatMetadata(final DICOMFormat.Metadata source,
 			final OMEMetadata dest)
 		{
 			// The metadata store we're working with.

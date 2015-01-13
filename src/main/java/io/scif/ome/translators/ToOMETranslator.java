@@ -30,6 +30,9 @@
 
 package io.scif.ome.translators;
 
+import java.util.List;
+
+import io.scif.ImageMetadata;
 import io.scif.Metadata;
 import io.scif.ome.OMEMetadata;
 import io.scif.ome.services.OMEMetadataService;
@@ -54,14 +57,12 @@ public abstract class ToOMETranslator<M extends Metadata> extends
 	// -- Translator API Methods --
 
 	@Override
-	protected void
-		translateFormatMetadata(final M source, final OMEMetadata dest)
+	protected void translateImageMetadata(List<ImageMetadata> source,
+		OMEMetadata dest)
 	{
-		for (int i = 0; i < source.getImageCount(); i++) {
-			omexmlMetadataService.populateMetadata(dest.getRoot(), 0, source
-				.getDatasetName(), source);
+		for (int i = 0; i < source.size(); i++) {
+			omexmlMetadataService.populateMetadata(dest.getRoot(), i, dest
+				.getDatasetName(), source.get(i));
 		}
-
-		translateOMEXML(source, dest);
 	}
 }

@@ -86,7 +86,7 @@ public class ICSTranslator {
 		}
 
 		@Override
-		protected void translateOMEXML(final OMEMetadata source,
+		protected void translateFormatMetadata(final OMEMetadata source,
 			final ICSFormat.Metadata dest)
 		{
 			final MetadataRetrieve retrieve = source.getRoot();
@@ -256,7 +256,7 @@ public class ICSTranslator {
 		}
 
 		@Override
-		protected void translateOMEXML(final ICSFormat.Metadata source,
+		protected void translateFormatMetadata(final ICSFormat.Metadata source,
 			final OMEMetadata dest)
 		{
 			final OMEXMLMetadata store = dest.getRoot();

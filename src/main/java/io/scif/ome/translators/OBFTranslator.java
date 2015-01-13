@@ -78,7 +78,7 @@ public class OBFTranslator {
 		}
 
 		@Override
-		protected void translateOMEXML(final OBFFormat.Metadata source,
+		protected void translateFormatMetadata(final OBFFormat.Metadata source,
 			final OMEMetadata dest)
 		{
 			for (int image = 0; image != source.getImageCount(); ++image) {

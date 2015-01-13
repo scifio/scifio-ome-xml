@@ -32,10 +32,8 @@ package io.scif.ome.translators;
 
 import io.scif.Metadata;
 import io.scif.ome.OMEMetadata;
-import io.scif.ome.services.OMEMetadataService;
 
 import org.scijava.Priority;
-import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
 /**
@@ -47,11 +45,6 @@ import org.scijava.plugin.Plugin;
 @Plugin(type = ToOMETranslator.class, priority = Priority.NORMAL_PRIORITY)
 public class DefaultOMETranslator extends ToOMETranslator<Metadata> {
 
-	// -- Fields --
-
-	@Parameter
-	private OMEMetadataService omexmlMetadataService;
-
 	// -- Translator API Methods --
 
 	@Override
@@ -62,11 +55,5 @@ public class DefaultOMETranslator extends ToOMETranslator<Metadata> {
 	@Override
 	public Class<? extends Metadata> dest() {
 		return OMEMetadata.class;
-	}
-
-	@Override
-	protected void translateOMEXML(final Metadata source, final OMEMetadata dest)
-	{
-		// No translation to perform. Handled by the ToOMETranslator layer.
 	}
 }

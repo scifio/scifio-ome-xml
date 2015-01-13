@@ -73,7 +73,7 @@ public class BMPTranslator {
 		}
 
 		@Override
-		protected void translateOMEXML(final BMPFormat.Metadata source,
+		protected void translateFormatMetadata(final BMPFormat.Metadata source,
 			final OMEMetadata dest)
 		{
 			// resolution is stored as pixels per meter; we want to convert to

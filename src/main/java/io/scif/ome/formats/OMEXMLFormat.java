@@ -639,7 +639,7 @@ public class OMEXMLFormat extends AbstractFormat {
 		}
 
 		@Override
-		public void translateOMEXML(final OMEMetadata source, final Metadata dest) {
+		public void translateFormatMetadata(final OMEMetadata source, final Metadata dest) {
 			dest.setOMEMeta(source);
 		}
 	}

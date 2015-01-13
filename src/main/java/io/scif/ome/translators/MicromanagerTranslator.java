@@ -89,7 +89,7 @@ public class MicromanagerTranslator {
 		}
 
 		@Override
-		protected void translateOMEXML(final MicromanagerFormat.Metadata source,
+		protected void translateFormatMetadata(final MicromanagerFormat.Metadata source,
 			final OMEMetadata dest)
 		{
 			try {
