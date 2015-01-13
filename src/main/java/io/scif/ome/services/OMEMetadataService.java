@@ -116,6 +116,18 @@ public interface OMEMetadataService extends SCIFIOService {
 
 	/**
 	 * Populates the given {@link MetadataStore}, for the specified imageIndex,
+	 * using the values from the provided {@link ImageMetadata}.
+	 * <p>
+	 * After calling this method, the metadata store will be sufficiently
+	 * populated for use with an {@link IFormatWriter} (assuming it is also a
+	 * {@link MetadataRetrieve}).
+	 * </p>
+	 */
+	void populateMetadata(MetadataStore store, int imageIndex, String imageName,
+		ImageMetadata iMeta);
+
+	/**
+	 * Populates the given {@link MetadataStore}, for the specified imageIndex,
 	 * using the provided values.
 	 * <p>
 	 * After calling this method, the metadata store will be sufficiently

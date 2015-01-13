@@ -213,40 +213,46 @@ public class DefaultOMEMetadataService extends AbstractService implements
 	public void populateMetadata(final MetadataStore store, final int imageIndex,
 		final String imageName, final Metadata meta)
 	{
+		populateMetadata(store, imageIndex, imageName, meta.get(imageIndex));
+	}
 
-		final int sizeX = (int) meta.get(imageIndex).getAxisLength(Axes.X);
-		int sizeY = (int) meta.get(imageIndex).getAxisLength(Axes.Y);
-		final int sizeZ = (int) meta.get(imageIndex).getAxisLength(Axes.Z);
-		final int sizeC = (int) meta.get(imageIndex).getAxisLength(Axes.CHANNEL);
-		int sizeT = (int) meta.get(imageIndex).getAxisLength(Axes.TIME);
-		final double calX = FormatTools.getScale(meta, imageIndex, Axes.X);
-		final double calY = FormatTools.getScale(meta, imageIndex, Axes.Y);
-		final double calZ = FormatTools.getScale(meta, imageIndex, Axes.Z);
-		final double calC = FormatTools.getScale(meta, imageIndex, Axes.CHANNEL);
-		final double calT = FormatTools.getScale(meta, imageIndex, Axes.TIME);
+	@Override
+	public void populateMetadata(final MetadataStore store, final int imageIndex,
+		final String imageName, final ImageMetadata iMeta)
+	{
+		final int sizeX = (int) iMeta.getAxisLength(Axes.X);
+		int sizeY = (int) iMeta.getAxisLength(Axes.Y);
+		final int sizeZ = (int) iMeta.getAxisLength(Axes.Z);
+		final int sizeC = (int) iMeta.getAxisLength(Axes.CHANNEL);
+		int sizeT = (int) iMeta.getAxisLength(Axes.TIME);
+		final double calX = FormatTools.getScale(iMeta, Axes.X);
+		final double calY = FormatTools.getScale(iMeta, Axes.Y);
+		final double calZ = FormatTools.getScale(iMeta, Axes.Z);
+		final double calC = FormatTools.getScale(iMeta, Axes.CHANNEL);
+		final double calT = FormatTools.getScale(iMeta, Axes.TIME);
 
 		// Compress planar axes to Y
-		for (final CalibratedAxis axis : meta.get(imageIndex).getAxesPlanar()) {
+		for (final CalibratedAxis axis : iMeta.getAxesPlanar()) {
 			final AxisType type = axis.type();
 			if (type != Axes.X && type != Axes.Y && type != Axes.CHANNEL) {
-				sizeY *= meta.get(imageIndex).getAxisLength(type);
+				sizeY *= iMeta.getAxisLength(type);
 			}
 		}
 		// Compress non-planar axes to Time
-		for (final CalibratedAxis axis : meta.get(imageIndex).getAxesNonPlanar()) {
+		for (final CalibratedAxis axis : iMeta.getAxesNonPlanar()) {
 			final AxisType type = axis.type();
 			if (type != Axes.Z && type != Axes.TIME && type != Axes.CHANNEL) {
-				sizeT *= meta.get(imageIndex).getAxisLength(type);
+				sizeT *= iMeta.getAxisLength(type);
 			}
 		}
 
 		final String pixelType =
-			FormatTools.getPixelTypeString(meta.get(imageIndex).getPixelType());
+			FormatTools.getPixelTypeString(iMeta.getPixelType());
 		final int effSizeC =
-			(int) (meta.get(imageIndex).getPlaneCount() / sizeZ / sizeT);
+			(int) (iMeta.getPlaneCount() / sizeZ / sizeT);
 		final int samplesPerPixel = sizeC / effSizeC;
-		populateMetadata(store, null, imageIndex, imageName, meta.get(imageIndex)
-			.isLittleEndian(), findDimensionOrder(meta, imageIndex), pixelType,
+		populateMetadata(store, null, imageIndex, imageName, iMeta
+			.isLittleEndian(), findDimensionOrder(iMeta), pixelType,
 			sizeX, sizeY, sizeZ, sizeC, sizeT, calX, calY, calZ, calC, calT,
 			samplesPerPixel);
 	}
