@@ -67,4 +67,15 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<configuration>
+					<projectName>SCIFIO support for the OME data model, including OME-XML and OME-TIFF.</projectName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
