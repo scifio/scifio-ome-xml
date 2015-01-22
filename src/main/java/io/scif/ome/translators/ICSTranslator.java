@@ -2,7 +2,7 @@
  * #%L
  * SCIFIO support for the OME data model, including OME-XML and OME-TIFF.
  * %%
- * Copyright (C) 2013 - 2014 Board of Regents of the University of
+ * Copyright (C) 2013 - 2015 Board of Regents of the University of
  * Wisconsin-Madison
  * %%
  * Redistribution and use in source and binary forms, with or without
