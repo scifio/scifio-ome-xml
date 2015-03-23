@@ -42,7 +42,11 @@ import io.scif.ome.services.OMEMetadataService;
 import java.util.Vector;
 
 import loci.formats.ome.OMEXMLMetadata;
-import ome.xml.model.primitives.PositiveFloat;
+import ome.units.UNITS;
+import ome.units.quantity.ElectricPotential;
+import ome.units.quantity.Length;
+import ome.units.quantity.Temperature;
+import ome.units.quantity.Time;
 import ome.xml.model.primitives.Timestamp;
 
 import org.scijava.Priority;
@@ -135,15 +139,18 @@ public class MicromanagerTranslator {
 				}
 
 				if (p.pixelSize != null && p.pixelSize > 0) {
-					store.setPixelsPhysicalSizeX(new PositiveFloat(p.pixelSize), i);
-					store.setPixelsPhysicalSizeY(new PositiveFloat(p.pixelSize), i);
+					store
+						.setPixelsPhysicalSizeX(new Length(p.pixelSize, UNITS.MICROM), i);
+					store
+						.setPixelsPhysicalSizeY(new Length(p.pixelSize, UNITS.MICROM), i);
 				}
 				else {
 					log().warn(
 						"Expected positive value for PhysicalSizeX; got " + p.pixelSize);
 				}
 				if (p.sliceThickness != null && p.sliceThickness > 0) {
-					store.setPixelsPhysicalSizeZ(new PositiveFloat(p.sliceThickness), i);
+					store.setPixelsPhysicalSizeZ(new Length(p.sliceThickness,
+						UNITS.MICROM), i);
 				}
 				else {
 					log().warn(
@@ -153,12 +160,14 @@ public class MicromanagerTranslator {
 
 				int nextStamp = 0;
 				for (int q = 0; q < meta.get(i).getPlaneCount(); q++) {
-					store.setPlaneExposureTime(p.exposureTime, i, q);
+					store.setPlaneExposureTime(new Time(p.exposureTime, UNITS.SECOND), i,
+						q);
 					final String tiff = positions.get(i).getFile(meta, i, q);
 					if (tiff != null && new Location(getContext(), tiff).exists() &&
 						nextStamp < p.timestamps.length)
 					{
-						store.setPlaneDeltaT(p.timestamps[nextStamp++], i, q);
+						store.setPlaneDeltaT(new Time(p.timestamps[nextStamp++],
+							UNITS.SECOND), i, q);
 					}
 				}
 
@@ -170,7 +179,8 @@ public class MicromanagerTranslator {
 						.getBinning(p.binning), i, c);
 					store.setDetectorSettingsGain(new Double(p.gain), i, c);
 					if (c < p.voltage.size()) {
-						store.setDetectorSettingsVoltage(p.voltage.get(c), i, c);
+						store.setDetectorSettingsVoltage(new ElectricPotential(p.voltage
+							.get(c), UNITS.VOLT), i, c);
 					}
 					store.setDetectorSettingsID(p.detectorID, i, c);
 				}
@@ -191,7 +201,8 @@ public class MicromanagerTranslator {
 				if (p.cameraMode == null) p.cameraMode = "Other";
 				store.setDetectorType(omexmlMetadataService
 					.getDetectorType(p.cameraMode), 0, i);
-				store.setImagingEnvironmentTemperature(p.temperature, i);
+				store.setImagingEnvironmentTemperature(new Temperature(p.temperature,
+					UNITS.DEGREEC), i);
 			}
 		}
 

@@ -39,6 +39,8 @@ import io.scif.util.FormatTools;
 import java.io.IOException;
 
 import net.imagej.axis.Axes;
+import ome.units.quantity.Length;
+import ome.units.quantity.Time;
 
 import org.junit.Test;
 
@@ -73,13 +75,20 @@ public class CalibrationTest {
 		scifio.translator().translate(meta, omeMeta, false);
 
 		// Verify results
-		assertEquals(omeMeta.getRoot().getPixelsPhysicalSizeX(0).getValue(),
-			new Double(5.0));
-		assertEquals(omeMeta.getRoot().getPixelsPhysicalSizeY(0).getValue(),
-			new Double(6.0));
-		assertEquals(omeMeta.getRoot().getPixelsPhysicalSizeZ(0).getValue(),
-			new Double(7.0));
-		assertEquals(omeMeta.getRoot().getPixelsTimeIncrement(0), new Double(8.0));
+		assertQuantity(5.0, omeMeta.getRoot().getPixelsPhysicalSizeX(0));
+		assertQuantity(6.0, omeMeta.getRoot().getPixelsPhysicalSizeY(0));
+		assertQuantity(7.0, omeMeta.getRoot().getPixelsPhysicalSizeZ(0));
+		assertQuantity(8.0, omeMeta.getRoot().getPixelsTimeIncrement(0));
+	}
+
+	private void assertQuantity(final double expected, final Length actual) {
+		assertEquals(expected, actual.value().doubleValue(), 0.0);
+	}
+
+	// NB: Remove after openmicroscopy/bioformats #1684 is merged:
+	// https://github.com/openmicroscopy/bioformats/pull/1684
+	private void assertQuantity(final double expected, final Time actual) {
+		assertEquals(expected, actual.value().doubleValue(), 0.0);
 	}
 
 }

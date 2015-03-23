@@ -46,8 +46,12 @@ import loci.formats.meta.FilterMetadata;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.ome.OMEXMLMetadata;
 import net.imagej.axis.Axes;
+import ome.units.UNITS;
+import ome.units.quantity.Frequency;
+import ome.units.quantity.Length;
+import ome.units.quantity.Power;
+import ome.units.quantity.Time;
 import ome.xml.model.primitives.PositiveFloat;
-import ome.xml.model.primitives.PositiveInteger;
 import ome.xml.model.primitives.Timestamp;
 
 import org.scijava.Priority;
@@ -104,14 +108,14 @@ public class ICSTranslator {
 					new Hashtable<Integer, Integer>();
 
 				for (int i = 0; i < retrieve.getLightSourceCount(0); i++) {
-					laserWaves.put(i, retrieve.getLaserWavelength(0, i).getValue());
+					laserWaves.put(i, retrieve.getLaserWavelength(0, i).value().intValue());
 				}
 
 				dest.putWavelengths(laserWaves);
 				dest.putLaserManufacturer(retrieve.getLaserManufacturer(0, 0));
 				dest.putLaserModel(retrieve.getLaserModel(0, 0));
-				dest.putLaserPower(retrieve.getLaserPower(0, 0));
-				dest.putLaserRepetitionRate(retrieve.getLaserRepetitionRate(0, 0));
+				dest.putLaserPower(retrieve.getLaserPower(0, 0).value().doubleValue());
+				dest.putLaserRepetitionRate(retrieve.getLaserRepetitionRate(0, 0).value().doubleValue());
 
 				dest.putFilterSetModel(retrieve.getFilterSetModel(0, 0));
 				dest.putDichroicModel(retrieve.getDichroicModel(0, 0));
@@ -121,7 +125,7 @@ public class ICSTranslator {
 				dest.putObjectiveModel(retrieve.getObjectiveModel(0, 0));
 				dest.putImmersion(retrieve.getObjectiveImmersion(0, 0).getValue());
 				dest.putLensNA(retrieve.getObjectiveLensNA(0, 0));
-				dest.putWorkingDistance(retrieve.getObjectiveWorkingDistance(0, 0));
+				dest.putWorkingDistance(retrieve.getObjectiveWorkingDistance(0, 0).value().doubleValue());
 				dest.putMagnification(retrieve
 					.getObjectiveCalibratedMagnification(0, 0));
 
@@ -138,27 +142,27 @@ public class ICSTranslator {
 			final String[] units = new String[5];
 
 			final String order = retrieve.getPixelsDimensionOrder(0).getValue();
-			final PositiveFloat sizex = retrieve.getPixelsPhysicalSizeX(0), sizey =
-				retrieve.getPixelsPhysicalSizeY(0), sizez =
-				retrieve.getPixelsPhysicalSizeZ(0);
-			final Double sizet = retrieve.getPixelsTimeIncrement(0);
+			final Length sizex = retrieve.getPixelsPhysicalSizeX(0);
+			final Length sizey = retrieve.getPixelsPhysicalSizeY(0);
+			final Length sizez = retrieve.getPixelsPhysicalSizeZ(0);
+			final Time sizet = retrieve.getPixelsTimeIncrement(0);
 
 			for (int i = 0; i < order.length(); i++) {
 				switch (order.toUpperCase().charAt(i)) {
 					case 'X':
-						pixelSizes[i] = sizex == null ? 1.0 : sizex.getValue();
+						pixelSizes[i] = sizex == null ? 1.0 : sizex.value().doubleValue();
 						units[i] = "um";
 						break;
 					case 'Y':
-						pixelSizes[i] = sizey == null ? 1.0 : sizey.getValue();
+						pixelSizes[i] = sizey == null ? 1.0 : sizey.value().doubleValue();
 						units[i] = "um";
 						break;
 					case 'Z':
-						pixelSizes[i] = sizez == null ? 1.0 : sizez.getValue();
+						pixelSizes[i] = sizez == null ? 1.0 : sizez.value().doubleValue();
 						units[i] = "um";
 						break;
 					case 'T':
-						pixelSizes[i] = sizet == null ? 1.0 : sizet;
+						pixelSizes[i] = sizet == null ? 1.0 : sizet.value().doubleValue();
 						units[i] = "s";
 						break;
 					case 'C':
@@ -179,11 +183,11 @@ public class ICSTranslator {
 					new Double[(int) source.get(0).getAxisLength(Axes.TIME)];
 
 				for (int t = 0; t < timestamps.length; t++) {
-					timestamps[t] = retrieve.getPlaneDeltaT(0, t);
+					timestamps[t] = retrieve.getPlaneDeltaT(0, t).value().doubleValue();
 				}
 
 				dest.putTimestamps(timestamps);
-				dest.putExposureTime(retrieve.getPlaneExposureTime(0, 0));
+				dest.putExposureTime(retrieve.getPlaneExposureTime(0, 0).value().doubleValue());
 			}
 
 			final Hashtable<Integer, String> channelNames =
@@ -201,16 +205,14 @@ public class ICSTranslator {
 				final String cName = retrieve.getChannelName(0, i);
 				if (cName != null) channelNames.put(i, cName);
 
-				final Double pinSize = retrieve.getChannelPinholeSize(0, i);
-				if (pinSize != null) pinholes.put(i, pinSize);
+				final Length pinSize = retrieve.getChannelPinholeSize(0, i);
+				if (pinSize != null) pinholes.put(i, pinSize.value().doubleValue());
 
-				final PositiveInteger emWave =
-					retrieve.getChannelEmissionWavelength(0, i);
-				if (emWave != null) emWaves.add(emWave.getValue());
+				final Length emWave = retrieve.getChannelEmissionWavelength(0, i);
+				if (emWave != null) emWaves.add(emWave.value().intValue());
 
-				final PositiveInteger exWave =
-					retrieve.getChannelExcitationWavelength(0, i);
-				if (exWave != null) exWaves.add(exWave.getValue());
+				final Length exWave = retrieve.getChannelExcitationWavelength(0, i);
+				if (exWave != null) exWaves.add(exWave.value().intValue());
 
 				if (retrieve.getInstrumentCount() > 0 &&
 					retrieve.getDetectorCount(0) > 0)
@@ -370,7 +372,7 @@ public class ICSTranslator {
 						if (pixelSize > 0 &&
 							checkUnit(unit, "um", "microns", "micrometers"))
 						{
-							store.setPixelsPhysicalSizeX(new PositiveFloat(pixelSize), 0);
+							store.setPixelsPhysicalSizeX(new Length(pixelSize, UNITS.MICROM), 0);
 						}
 						else {
 							log().warn(
@@ -381,7 +383,7 @@ public class ICSTranslator {
 						if (pixelSize > 0 &&
 							checkUnit(unit, "um", "microns", "micrometers"))
 						{
-							store.setPixelsPhysicalSizeY(new PositiveFloat(pixelSize), 0);
+							store.setPixelsPhysicalSizeY(new Length(pixelSize, UNITS.MICROM), 0);
 						}
 						else {
 							log().warn(
@@ -392,7 +394,8 @@ public class ICSTranslator {
 						if (pixelSize > 0 &&
 							checkUnit(unit, "um", "microns", "micrometers"))
 						{
-							store.setPixelsPhysicalSizeZ(new PositiveFloat(pixelSize), 0);
+							store.setPixelsPhysicalSizeZ(new Length(pixelSize, UNITS.MICROM),
+								0);
 						}
 						else {
 							log().warn(
@@ -400,18 +403,21 @@ public class ICSTranslator {
 						}
 					}
 					else if (axis.equals("t")) {
+						// FIXME: Use the OME units API here, instead of hardcoding.
 						if (checkUnit(unit, "ms")) {
-							store.setPixelsTimeIncrement(1000 * pixelSize, 0);
+							store.setPixelsTimeIncrement(new Time(1000 * pixelSize,
+								UNITS.SECOND), 0);
 						}
 						else if (checkUnit(unit, "seconds") || checkUnit(unit, "s")) {
-							store.setPixelsTimeIncrement(pixelSize, 0);
+							store
+								.setPixelsTimeIncrement(new Time(pixelSize, UNITS.SECOND), 0);
 						}
 					}
 				}
 			}
 			else if (sizes != null) {
 				if (sizes.length > 0 && sizes[0] > 0) {
-					store.setPixelsPhysicalSizeX(new PositiveFloat(sizes[0]), 0);
+					store.setPixelsPhysicalSizeX(new Length(sizes[0], UNITS.MICROM), 0);
 				}
 				else {
 					log().warn(
@@ -420,7 +426,7 @@ public class ICSTranslator {
 				if (sizes.length > 1) {
 					sizes[1] /= source.get(imageIndex).getAxisLength(Axes.Y);
 					if (sizes[1] > 0) {
-						store.setPixelsPhysicalSizeY(new PositiveFloat(sizes[1]), 0);
+						store.setPixelsPhysicalSizeY(new Length(sizes[1], UNITS.MICROM), 0);
 					}
 					else {
 						log().warn(
@@ -459,7 +465,7 @@ public class ICSTranslator {
 									(int) effSizeC, (int) source.get(imageIndex).getAxisLength(
 										Axes.TIME)), metaService.zctToArray(dimOrder, z, c, t));
 
-							store.setPlaneDeltaT(deltaT, 0, index);
+							store.setPlaneDeltaT(new Time(deltaT, UNITS.SECOND), 0, index);
 						}
 					}
 				}
@@ -493,12 +499,13 @@ public class ICSTranslator {
 					store.setChannelName(channelNames.get(i), 0, i);
 				}
 				if (pinholes.containsKey(i)) {
-					store.setChannelPinholeSize(pinholes.get(i), 0, i);
+					store.setChannelPinholeSize(
+						new Length(pinholes.get(i), UNITS.MICROM), 0, i);
 				}
 				if (emWaves != null && i < emWaves.length) {
 					if (emWaves[i].intValue() > 0) {
-						store.setChannelEmissionWavelength(new PositiveInteger(emWaves[i]),
-							0, i);
+						store.setChannelEmissionWavelength(new Length(emWaves[i],
+							UNITS.MICROM), 0, i);
 					}
 					else {
 						log().warn(
@@ -508,8 +515,8 @@ public class ICSTranslator {
 				}
 				if (exWaves != null && i < exWaves.length) {
 					if (exWaves[i].intValue() > 0) {
-						store.setChannelExcitationWavelength(
-							new PositiveInteger(exWaves[i]), 0, i);
+						store.setChannelExcitationWavelength(new Length(exWaves[i],
+							UNITS.MICROM), 0, i);
 					}
 					else {
 						log().warn(
@@ -538,8 +545,8 @@ public class ICSTranslator {
 				store.setLaserID(getContext().getService(OMEMetadataService.class)
 					.createLSID("LightSource", 0, i), 0, i);
 				if (wavelengths.get(lasers[i]) > 0) {
-					store.setLaserWavelength(new PositiveInteger(wavelengths
-						.get(lasers[i])), 0, i);
+					store.setLaserWavelength(new Length(wavelengths.get(lasers[i]),
+						UNITS.MICROM), 0, i);
 				}
 				else {
 					log().warn(
@@ -565,8 +572,9 @@ public class ICSTranslator {
 
 				store.setLaserManufacturer(laserManufacturer, 0, i);
 				store.setLaserModel(laserModel, 0, i);
-				store.setLaserPower(laserPower, 0, i);
-				store.setLaserRepetitionRate(laserRepetitionRate, 0, i);
+				store.setLaserPower(new Power(laserPower, UNITS.MICROW), 0, i);
+				store.setLaserRepetitionRate(new Frequency(laserRepetitionRate,
+					UNITS.MEGAHZ), 0, i);
 			}
 
 			if (lasers.length == 0 && laserManufacturer != null) {
@@ -589,8 +597,9 @@ public class ICSTranslator {
 				}
 				store.setLaserManufacturer(laserManufacturer, 0, 0);
 				store.setLaserModel(laserModel, 0, 0);
-				store.setLaserPower(laserPower, 0, 0);
-				store.setLaserRepetitionRate(laserRepetitionRate, 0, 0);
+				store.setLaserPower(new Power(laserPower, UNITS.WATT), 0, 0);
+				store.setLaserRepetitionRate(new Frequency(laserRepetitionRate,
+					UNITS.MEGAHZ), 0, 0);
 			}
 
 			// populate FilterSet data
@@ -654,7 +663,8 @@ public class ICSTranslator {
 			}
 			if (lensNA != null) store.setObjectiveLensNA(lensNA, 0, 0);
 			if (workingDistance != null) {
-				store.setObjectiveWorkingDistance(workingDistance, 0, 0);
+				store.setObjectiveWorkingDistance(new Length(workingDistance,
+					UNITS.MICROM), 0, 0);
 			}
 			if (magnification != null) {
 				store.setObjectiveCalibratedMagnification(magnification, 0, 0);
@@ -736,7 +746,8 @@ public class ICSTranslator {
 
 			if (exposureTime != null) {
 				for (int i = 0; i < source.getImageCount(); i++) {
-					store.setPlaneExposureTime(exposureTime, 0, i);
+					store
+						.setPlaneExposureTime(new Time(exposureTime, UNITS.SECOND), 0, i);
 				}
 			}
 

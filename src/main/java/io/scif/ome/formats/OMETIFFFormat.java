@@ -82,6 +82,7 @@ import loci.formats.ome.OMEXMLMetadata;
 import net.imagej.axis.Axes;
 import net.imagej.axis.CalibratedAxis;
 import net.imglib2.display.ColorTable;
+import ome.units.quantity.Length;
 import ome.xml.model.primitives.NonNegativeInteger;
 import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.PositiveInteger;
@@ -450,11 +451,10 @@ public class OMETIFFFormat extends AbstractFormat {
 		 * physical pixel sizes (calibration values). Returns 1.0 if given a null or
 		 * invalid (< 0) calibration.
 		 */
-		private double getValue(PositiveFloat pixelPhysicalSize) {
+		private double getValue(Length pixelPhysicalSize) {
 			if (pixelPhysicalSize == null) return 1.0;
-			Double physSize = pixelPhysicalSize.getValue();
-			if (physSize < 0) return 1.0;
-			return physSize;
+			final Double physSize = pixelPhysicalSize.value().doubleValue();
+			return physSize < 0 ? 1.0 : physSize;
 		}
 
 		/**

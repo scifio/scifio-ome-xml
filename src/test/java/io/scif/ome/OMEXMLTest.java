@@ -73,9 +73,11 @@ public class OMEXMLTest {
 
 		assertTrue(omexml
 			.contains("<Pixels BigEndian=\"false\" DimensionOrder=\"XYCZT\" ID=\"Pixels:0\" "
-				+ "PhysicalSizeX=\"1.0\" PhysicalSizeY=\"1.0\" PhysicalSizeZ=\"1.0\""
-				+ " SizeC=\"1\" SizeT=\"1\" SizeX=\"512\" SizeY=\"512\" SizeZ=\"1\""
-				+ " TimeIncrement=\"1.0\" Type=\"uint8\">"));
+				+ "PhysicalSizeX=\"1.0\" PhysicalSizeXUnit=\"µm\" "
+				+ "PhysicalSizeY=\"1.0\" PhysicalSizeYUnit=\"µm\" "
+				+ "PhysicalSizeZ=\"1.0\" PhysicalSizeZUnit=\"µm\" "
+				+ "SizeC=\"1\" SizeT=\"1\" SizeX=\"512\" SizeY=\"512\" SizeZ=\"1\" "
+				+ "TimeIncrement=\"1.0\" TimeIncrementUnit=\"s\" Type=\"uint8\">"));
 
 	}
 }

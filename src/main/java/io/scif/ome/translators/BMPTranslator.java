@@ -33,7 +33,8 @@ package io.scif.ome.translators;
 import io.scif.Metadata;
 import io.scif.formats.BMPFormat;
 import io.scif.ome.OMEMetadata;
-import ome.xml.model.primitives.PositiveFloat;
+import ome.units.UNITS;
+import ome.units.quantity.Length;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Plugin;
@@ -89,14 +90,16 @@ public class BMPTranslator {
 				pixelSizeY == null || pixelSizeY == 0 ? 0.0 : 1000000.0 / pixelSizeY;
 
 			if (correctedX > 0) {
-				dest.getRoot().setPixelsPhysicalSizeX(new PositiveFloat(correctedX), 0);
+				dest.getRoot().setPixelsPhysicalSizeX(
+					new Length(correctedX, UNITS.MICROM), 0);
 			}
 			else {
 				log().warn(
 					"Expected positive value for PhysicalSizeX; got " + correctedX);
 			}
 			if (correctedY > 0) {
-				dest.getRoot().setPixelsPhysicalSizeY(new PositiveFloat(correctedY), 0);
+				dest.getRoot().setPixelsPhysicalSizeY(
+					new Length(correctedY, UNITS.MICROM), 0);
 			}
 			else {
 				log().warn(

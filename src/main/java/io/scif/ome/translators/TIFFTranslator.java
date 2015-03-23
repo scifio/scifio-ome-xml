@@ -37,7 +37,8 @@ import io.scif.util.FormatTools;
 import loci.formats.ome.OMEXMLMetadata;
 import net.imagej.axis.Axes;
 import net.imagej.axis.CalibratedAxis;
-import ome.xml.model.primitives.PositiveFloat;
+import ome.units.UNITS;
+import ome.units.quantity.Length;
 import ome.xml.model.primitives.Timestamp;
 
 import org.scijava.Priority;
@@ -95,12 +96,12 @@ public class TIFFTranslator {
 			final double physY = yAxis == null ? 1.0 : yAxis.averageScale(0.0, 1.0);
 			final double physZ = zAxis == null ? 1.0 : zAxis.averageScale(0.0, 1.0);
 
-			meta
-				.setPixelsPhysicalSizeX(new PositiveFloat(physX > 0 ? physX : 1.0), 0);
-			meta
-				.setPixelsPhysicalSizeY(new PositiveFloat(physY > 0 ? physY : 1.0), 0);
-			meta
-				.setPixelsPhysicalSizeZ(new PositiveFloat(physZ > 0 ? physZ : 1.0), 0);
+			meta.setPixelsPhysicalSizeX(new Length(physX > 0 ? physX : 1.0,
+				UNITS.MICROM), 0);
+			meta.setPixelsPhysicalSizeY(new Length(physY > 0 ? physY : 1.0,
+				UNITS.MICROM), 0);
+			meta.setPixelsPhysicalSizeZ(new Length(physZ > 0 ? physZ : 1.0,
+				UNITS.MICROM), 0);
 
 			meta.setImageDescription(source.getDescription(), 0);
 			meta.setExperimenterFirstName(source.getExperimenterFirstName(), 0);
@@ -164,9 +165,8 @@ public class TIFFTranslator {
 			}
 		}
 
-		private double checkValue(final PositiveFloat f) {
-			if (f == null) return 1.0;
-			return f.getValue();
+		private double checkValue(final Length l) {
+			return l == null ? 1.0 : l.value().doubleValue();
 		}
 	}
 }
