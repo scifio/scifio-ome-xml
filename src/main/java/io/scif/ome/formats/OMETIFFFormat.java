@@ -1321,9 +1321,7 @@ public class OMETIFFFormat extends AbstractFormat {
 			omeMeta = service.createOMEXMLMetadata(omexml);
 		}
 
-		private String getOMEXML(final String file) throws FormatException,
-			IOException
-		{
+		private String getOMEXML(final String file) throws FormatException {
 			// generate UUID and add to OME element
 			final String uuid =
 				"urn:uuid:" + getUUID(new Location(getContext(), file).getName());
