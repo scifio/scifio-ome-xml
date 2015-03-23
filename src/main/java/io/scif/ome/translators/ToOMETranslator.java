@@ -30,12 +30,12 @@
 
 package io.scif.ome.translators;
 
-import java.util.List;
-
 import io.scif.ImageMetadata;
 import io.scif.Metadata;
 import io.scif.ome.OMEMetadata;
 import io.scif.ome.services.OMEMetadataService;
+
+import java.util.List;
 
 import org.scijava.plugin.Parameter;
 

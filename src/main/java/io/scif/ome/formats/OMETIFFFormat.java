@@ -40,7 +40,6 @@ import io.scif.DefaultImageMetadata;
 import io.scif.Format;
 import io.scif.FormatException;
 import io.scif.ImageMetadata;
-import io.scif.Metadata;
 import io.scif.Plane;
 import io.scif.Translator;
 import io.scif.config.SCIFIOConfig;
