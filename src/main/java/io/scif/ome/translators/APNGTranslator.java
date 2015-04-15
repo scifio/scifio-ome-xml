@@ -36,6 +36,8 @@ import io.scif.formats.APNGFormat;
 import io.scif.ome.OMEMetadata;
 import io.scif.ome.services.OMEMetadataService;
 import io.scif.util.FormatTools;
+import ome.units.UNITS;
+import ome.units.quantity.Time;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Plugin;
@@ -79,12 +81,10 @@ public class APNGTranslator {
 			final APNGFormat.Metadata dest)
 		{
 			if (dest.getFctl() != null && dest.getFctl().size() > 0) {
-				final Double timeIncrement = source.getRoot().getPixelsTimeIncrement(0);
+				final Time timeIncrement = source.getRoot().getPixelsTimeIncrement(0);
 
-				final short tIncrement = 1;
-				if (timeIncrement != null && !timeIncrement.isNaN() &&
-					!timeIncrement.isInfinite()) Short.parseShort(Double
-					.toString(timeIncrement));
+				final short tIncrement =
+					timeIncrement == null ? 1 : timeIncrement.value().shortValue();
 
 				dest.getFctl().get(0).setDelayNum(tIncrement);
 				dest.getFctl().get(0).setDelayDen((short) 1);
@@ -170,10 +170,13 @@ public class APNGTranslator {
 				sizeX, sizeY, sizeZ, sizeC, sizeT, 1.0, 1.0, 1.0, 1.0, 1.0,
 				samplesPerPixel);
 
-			if (source.getFctl() != null && source.getFctl().size() > 0) dest
-				.getRoot().setPixelsTimeIncrement(
-					(double) source.getFctl().get(0).getDelayNum() /
-						source.getFctl().get(0).getDelayDen(), 0);
+			if (source.getFctl() != null && source.getFctl().size() > 0) {
+				final short delayNum = source.getFctl().get(0).getDelayNum();
+				final short delayDen = source.getFctl().get(0).getDelayDen();
+				final double timeIncrement = (double) delayNum / delayDen;
+				dest.getRoot().setPixelsTimeIncrement(
+					new Time(timeIncrement, UNITS.SECOND), 0);
+			}
 		}
 	}
 }

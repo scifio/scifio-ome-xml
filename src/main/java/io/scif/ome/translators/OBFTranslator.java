@@ -38,7 +38,8 @@ import io.scif.ome.OMEMetadata;
 import java.util.List;
 
 import net.imagej.axis.Axes;
-import ome.xml.model.primitives.PositiveFloat;
+import ome.units.UNITS;
+import ome.units.quantity.Length;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Plugin;
@@ -93,20 +94,20 @@ public class OBFTranslator {
 
 				final double lengthX = Math.abs(lengths.get(0));
 				if (lengthX > 0) {
-					final PositiveFloat physicalSizeX =
-						new PositiveFloat(lengthX / obf.getAxisLength(Axes.X));
+					final Length physicalSizeX =
+						new Length(lengthX / obf.getAxisLength(Axes.X), UNITS.MICROM);
 					dest.getRoot().setPixelsPhysicalSizeX(physicalSizeX, image);
 				}
 				final double lengthY = Math.abs(lengths.get(1));
 				if (lengthY > 0) {
-					final PositiveFloat physicalSizeY =
-						new PositiveFloat(lengthY / obf.getAxisLength(Axes.Y));
+					final Length physicalSizeY =
+						new Length(lengthY / obf.getAxisLength(Axes.Y), UNITS.MICROM);
 					dest.getRoot().setPixelsPhysicalSizeY(physicalSizeY, image);
 				}
 				final double lengthZ = Math.abs(lengths.get(2));
 				if (lengthZ > 0) {
-					final PositiveFloat physicalSizeZ =
-						new PositiveFloat(lengthZ / obf.getAxisLength(Axes.Z));
+					final Length physicalSizeZ =
+						new Length(lengthZ / obf.getAxisLength(Axes.Z), UNITS.MICROM);
 					dest.getRoot().setPixelsPhysicalSizeZ(physicalSizeZ, image);
 				}
 			}

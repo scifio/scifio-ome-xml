@@ -50,6 +50,9 @@ import net.imagej.axis.Axes;
 import net.imagej.axis.AxisType;
 import net.imagej.axis.CalibratedAxis;
 import net.imagej.axis.DefaultLinearAxis;
+import ome.units.UNITS;
+import ome.units.quantity.Length;
+import ome.units.quantity.Time;
 import ome.xml.model.enums.Binning;
 import ome.xml.model.enums.Correction;
 import ome.xml.model.enums.DetectorType;
@@ -66,7 +69,6 @@ import ome.xml.model.enums.handlers.ImmersionEnumHandler;
 import ome.xml.model.enums.handlers.LaserMediumEnumHandler;
 import ome.xml.model.enums.handlers.LaserTypeEnumHandler;
 import ome.xml.model.primitives.NonNegativeInteger;
-import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.PositiveInteger;
 
 import org.scijava.log.LogService;
@@ -554,14 +556,14 @@ public class DefaultOMEMetadataService extends AbstractService implements
 		final int sizeZ = retrieve.getPixelsSizeZ(imageIndex).getValue();
 		int sizeC = retrieve.getPixelsSizeC(imageIndex).getValue();
 		final int sizeT = retrieve.getPixelsSizeT(imageIndex).getValue();
-		final PositiveFloat physX = retrieve.getPixelsPhysicalSizeX(imageIndex);
-		final PositiveFloat physY = retrieve.getPixelsPhysicalSizeY(imageIndex);
-		final PositiveFloat physZ = retrieve.getPixelsPhysicalSizeZ(imageIndex);
-		final Double physT = retrieve.getPixelsTimeIncrement(imageIndex);
-		final double calX = physX == null ? 1.0 : physX.getValue();
-		final double calY = physY == null ? 1.0 : physY.getValue();
-		final double calZ = physZ == null ? 1.0 : physZ.getValue();
-		final double calT = physT == null ? 1.0 : physT;
+		final Length physX = retrieve.getPixelsPhysicalSizeX(imageIndex);
+		final Length physY = retrieve.getPixelsPhysicalSizeY(imageIndex);
+		final Length physZ = retrieve.getPixelsPhysicalSizeZ(imageIndex);
+		final Time physT = retrieve.getPixelsTimeIncrement(imageIndex);
+		final double calX = physX == null ? 1.0 : physX.value().doubleValue();
+		final double calY = physY == null ? 1.0 : physY.value().doubleValue();
+		final double calZ = physZ == null ? 1.0 : physZ.value().doubleValue();
+		final double calT = physT == null ? 1.0 : physT.value().doubleValue();
 
 		final String dimensionOrder =
 			retrieve.getPixelsDimensionOrder(imageIndex).getValue();
@@ -633,10 +635,10 @@ public class DefaultOMEMetadataService extends AbstractService implements
 		final int imageIndex, final double calX, final double calY,
 		final double calZ, final double calC, final double calT)
 	{
-		store.setPixelsPhysicalSizeX(new PositiveFloat(calX), imageIndex);
-		store.setPixelsPhysicalSizeY(new PositiveFloat(calY), imageIndex);
-		store.setPixelsPhysicalSizeZ(new PositiveFloat(calZ), imageIndex);
-		store.setPixelsTimeIncrement(calT, imageIndex);
+		store.setPixelsPhysicalSizeX(new Length(calX, UNITS.MICROM), imageIndex);
+		store.setPixelsPhysicalSizeY(new Length(calY, UNITS.MICROM), imageIndex);
+		store.setPixelsPhysicalSizeZ(new Length(calZ, UNITS.MICROM), imageIndex);
+		store.setPixelsTimeIncrement(new Time(calT, UNITS.SECOND), imageIndex);
 	}
 
 }

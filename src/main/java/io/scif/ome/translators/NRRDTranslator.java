@@ -33,7 +33,8 @@ package io.scif.ome.translators;
 import io.scif.Metadata;
 import io.scif.formats.NRRDFormat;
 import io.scif.ome.OMEMetadata;
-import ome.xml.model.primitives.PositiveFloat;
+import ome.units.UNITS;
+import ome.units.quantity.Length;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Plugin;
@@ -86,13 +87,16 @@ public class NRRDTranslator {
 						final Double d = new Double(pixelSizes[i].trim());
 						if (d > 0) {
 							if (i == 0) {
-								dest.getRoot().setPixelsPhysicalSizeX(new PositiveFloat(d), 0);
+								dest.getRoot().setPixelsPhysicalSizeX(
+									new Length(d, UNITS.MICROM), 0);
 							}
 							else if (i == 1) {
-								dest.getRoot().setPixelsPhysicalSizeY(new PositiveFloat(d), 0);
+								dest.getRoot().setPixelsPhysicalSizeY(
+									new Length(d, UNITS.MICROM), 0);
 							}
 							else if (i == 2) {
-								dest.getRoot().setPixelsPhysicalSizeZ(new PositiveFloat(d), 0);
+								dest.getRoot().setPixelsPhysicalSizeZ(
+									new Length(d, UNITS.MICROM), 0);
 							}
 						}
 						else {

@@ -35,7 +35,8 @@ import io.scif.common.DateTools;
 import io.scif.formats.DICOMFormat;
 import io.scif.ome.OMEMetadata;
 import loci.formats.ome.OMEXMLMetadata;
-import ome.xml.model.primitives.PositiveFloat;
+import ome.units.UNITS;
+import ome.units.quantity.Length;
 import ome.xml.model.primitives.Timestamp;
 
 import org.scijava.Priority;
@@ -111,7 +112,7 @@ public class DICOMTranslator {
 				if (pixelSizeX != null) {
 					final Double sizeX = new Double(pixelSizeX);
 					if (sizeX > 0) {
-						store.setPixelsPhysicalSizeX(new PositiveFloat(sizeX), i);
+						store.setPixelsPhysicalSizeX(new Length(sizeX, UNITS.MICROM), i);
 					}
 					else {
 						log().warn(
@@ -121,7 +122,7 @@ public class DICOMTranslator {
 				if (pixelSizeY != null) {
 					final Double sizeY = new Double(pixelSizeY);
 					if (sizeY > 0) {
-						store.setPixelsPhysicalSizeY(new PositiveFloat(sizeY), i);
+						store.setPixelsPhysicalSizeY(new Length(sizeY, UNITS.MICROM), i);
 					}
 					else {
 						log().warn(
@@ -129,7 +130,7 @@ public class DICOMTranslator {
 					}
 				}
 				if (pixelSizeZ != null && pixelSizeZ > 0) {
-					store.setPixelsPhysicalSizeZ(new PositiveFloat(pixelSizeZ), i);
+					store.setPixelsPhysicalSizeZ(new Length(pixelSizeZ, UNITS.MICROM), i);
 				}
 				else {
 					log().warn(
