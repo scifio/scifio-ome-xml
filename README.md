@@ -1,3 +1,5 @@
+![](http://jenkins.imagej.net/job/SCIFIO-OME-XML/lastBuild/badge/icon)
+
 SCIFIO OME-XML support
 ======================
 
