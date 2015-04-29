@@ -1,4 +1,4 @@
-![](http://jenkins.imagej.net/job/SCIFIO-OME-XML/lastBuild/badge/icon)
+[![](http://jenkins.imagej.net/job/SCIFIO-OME-XML/lastBuild/badge/icon)](http://jenkins.imagej.net/job/SCIFIO-OME-XML/)
 
 SCIFIO OME-XML support
 ======================
