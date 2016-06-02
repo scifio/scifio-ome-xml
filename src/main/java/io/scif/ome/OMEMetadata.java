@@ -48,10 +48,6 @@ import org.scijava.plugin.Parameter;
  */
 public class OMEMetadata extends AbstractMetadata {
 
-	// -- Constants --
-
-	public static final String CNAME = "io.scif.ome.xml.meta.OMEMetadata";
-
 	// -- Fields --
 
 	/** OME core */

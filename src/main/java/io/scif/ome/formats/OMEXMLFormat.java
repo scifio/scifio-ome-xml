@@ -118,11 +118,6 @@ public class OMEXMLFormat extends AbstractFormat {
 	 */
 	public static class Metadata extends AbstractMetadata {
 
-		// -- Constants --
-
-		public static final String CNAME =
-			"io.scif.ome.xml.meta.OMEXMLFormat$Metadata";
-
 		// -- Fields --
 
 		/** OME core */
