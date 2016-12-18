@@ -39,6 +39,8 @@ import io.scif.ome.formats.OMEXMLFormat;
 
 import java.io.IOException;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -48,7 +50,17 @@ import org.junit.Test;
  */
 public class OMEXMLTest {
 
-	private final SCIFIO scifio = new SCIFIO();
+	private SCIFIO scifio = new SCIFIO();
+
+	@Before
+	public void setUp() {
+		scifio = new SCIFIO();
+	}
+
+	@After
+	public void tearDown() {
+		scifio.context().dispose();
+	}
 
 	@Test
 	public void extractOMEXML() throws FormatException, IOException {

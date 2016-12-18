@@ -41,6 +41,8 @@ import java.io.IOException;
 
 import net.imagej.axis.Axes;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import ome.units.quantity.Length;
@@ -54,9 +56,20 @@ import ome.units.quantity.Time;
  */
 public class CalibrationTest {
 
-	private final SCIFIO scifio = new SCIFIO();
 	private final String id =
 		"testImg&lengths=512,512,2,3,4&axes=X,Y,Z,Time,Channel.fake";
+
+	private SCIFIO scifio = new SCIFIO();
+
+	@Before
+	public void setUp() {
+		scifio = new SCIFIO();
+	}
+
+	@After
+	public void tearDown() {
+		scifio.context().dispose();
+	}
 
 	// Try setting calibration values, translate to OMEMetadata and
 	// verify they persisted
