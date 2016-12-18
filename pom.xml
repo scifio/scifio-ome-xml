@@ -3,18 +3,30 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>io.scif</groupId>
-		<artifactId>pom-scifio</artifactId>
+		<groupId>org.scijava</groupId>
+		<artifactId>pom-scijava</artifactId>
 		<version>12.0.0</version>
 		<relativePath />
 	</parent>
 
+	<groupId>io.scif</groupId>
 	<artifactId>scifio-ome-xml</artifactId>
 	<version>0.14.1-SNAPSHOT</version>
 
 	<name>SCIFIO OME-XML Extension</name>
 	<description>SCIFIO support for the OME data model, including OME-XML and OME-TIFF.</description>
+	<url>http://imagej.net/SCIFIO-OME-XML</url>
 	<inceptionYear>2013</inceptionYear>
+	<organization>
+		<name>SCIFIO</name>
+		<url>http://scif.io/</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>Simplified BSD License</name>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<developers>
 		<developer>
@@ -50,6 +62,13 @@
 		</contributor>
 	</contributors>
 
+	<mailingLists>
+		<mailingList>
+			<name>ImageJ Forum</name>
+			<archive>http://forum.imagej.net/</archive>
+		</mailingList>
+	</mailingLists>
+
 	<scm>
 		<connection>scm:git:git://github.com/scifio/scifio-ome-xml</connection>
 		<developerConnection>scm:git:git@github.com:scifio/scifio-ome-xml</developerConnection>
@@ -64,6 +83,15 @@
 		<system>Jenkins</system>
 		<url>http://jenkins.imagej.net/job/SCIFIO-OME-XML/</url>
 	</ciManagement>
+
+	<properties>
+		<package-name>io.scif.ome</package-name>
+		<license.licenseName>bsd_2</license.licenseName>
+		<license.copyrightOwners>Board of Regents of the University of
+Wisconsin-Madison</license.copyrightOwners>
+		<license.projectName>SCIFIO support for the OME data model, including OME-XML and OME-TIFF.</license.projectName>
+		<bio-formats.version>5.1.10</bio-formats.version>
+	</properties>
 
 	<repositories>
 		<repository>
@@ -100,16 +128,4 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>license-maven-plugin</artifactId>
-				<configuration>
-					<projectName>SCIFIO support for the OME data model, including OME-XML and OME-TIFF.</projectName>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>
