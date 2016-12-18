@@ -1228,7 +1228,7 @@ public class OMETIFFFormat extends AbstractFormat {
 					service.removeBinData(omeMeta);
 
 					for (int series = 0; series < omeMeta.getImageCount(); series++) {
-						populateImage(omeMeta, series);
+						populateImage(series);
 					}
 
 					final List<String> files = new ArrayList<>();
@@ -1361,9 +1361,8 @@ public class OMETIFFFormat extends AbstractFormat {
 			}
 		}
 
-		private void populateTiffData(final OMEXMLMetadata omeMeta,
-			final String dimensionOrder, final long[] zct, final int ifd,
-			final int series, final int plane)
+		private void populateTiffData(final String dimensionOrder, final long[] zct,
+			final int ifd, final int series, final int plane)
 		{
 			int zIndex = 0;
 			int tIndex = 0;
@@ -1395,9 +1394,7 @@ public class OMETIFFFormat extends AbstractFormat {
 			omeMeta.setTiffDataPlaneCount(new NonNegativeInteger(1), series, plane);
 		}
 
-		private void populateImage(final OMEXMLMetadata omeMeta,
-			final int imageIndex)
-		{
+		private void populateImage(final int imageIndex) {
 			final String dimensionOrder = //
 				omeMeta.getPixelsDimensionOrder(imageIndex).toString();
 			final int sizeZ = //
@@ -1444,8 +1441,7 @@ public class OMETIFFFormat extends AbstractFormat {
 					omeMeta.setUUIDValue(uuid, imageIndex, nextPlane);
 
 					// fill in any non-default TiffData attributes
-					populateTiffData(omeMeta, dimensionOrder, zct, ifd, imageIndex,
-						nextPlane);
+					populateTiffData(dimensionOrder, zct, ifd, imageIndex, nextPlane);
 					ifdCounts.put(filename, ifd + 1);
 					nextPlane++;
 				}
