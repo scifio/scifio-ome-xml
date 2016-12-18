@@ -105,7 +105,7 @@ public class ICSTranslator {
 				dest.putMicroscopeModel(retrieve.getMicroscopeModel(0));
 				dest.putMicroscopeManufacturer(retrieve.getMicroscopeManufacturer(0));
 				final Hashtable<Integer, Integer> laserWaves =
-					new Hashtable<Integer, Integer>();
+					new Hashtable<>();
 
 				for (int i = 0; i < retrieve.getLightSourceCount(0); i++) {
 					laserWaves.put(i, retrieve.getLaserWavelength(0, i).value().intValue());
@@ -191,12 +191,12 @@ public class ICSTranslator {
 			}
 
 			final Hashtable<Integer, String> channelNames =
-				new Hashtable<Integer, String>();
+				new Hashtable<>();
 			final Hashtable<Integer, Double> pinholes =
-				new Hashtable<Integer, Double>();
-			final Hashtable<Integer, Double> gains = new Hashtable<Integer, Double>();
-			final List<Integer> emWaves = new ArrayList<Integer>();
-			final List<Integer> exWaves = new ArrayList<Integer>();
+				new Hashtable<>();
+			final Hashtable<Integer, Double> gains = new Hashtable<>();
+			final List<Integer> emWaves = new ArrayList<>();
+			final List<Integer> exWaves = new ArrayList<>();
 			final long effSizeC =
 				source.get(0).getPlaneCount() /
 					(source.get(0).getAxisLength(Axes.TIME) * source.get(0)
@@ -277,12 +277,12 @@ public class ICSTranslator {
 				null, emissionModel = null, objectiveModel = null, immersion = null, detectorManufacturer =
 				null, detectorModel = null, lastName = null;
 
-			Hashtable<Integer, Double> gains = new Hashtable<Integer, Double>();
+			Hashtable<Integer, Double> gains = new Hashtable<>();
 			Hashtable<Integer, String> channelNames =
-				new Hashtable<Integer, String>();
-			Hashtable<Integer, Double> pinholes = new Hashtable<Integer, Double>();
+				new Hashtable<>();
+			Hashtable<Integer, Double> pinholes = new Hashtable<>();
 			Hashtable<Integer, Integer> wavelengths =
-				new Hashtable<Integer, Integer>();
+				new Hashtable<>();
 
 			final FilterMetadata filter =
 				new FilterMetadata(store, source.isFiltered());
@@ -348,7 +348,7 @@ public class ICSTranslator {
 				if (units != null && units.length == pixelSizes.length - 1) {
 					// correct for missing units
 					// sometimes, the units for the C axis are missing entirely
-					final ArrayList<String> realUnits = new ArrayList<String>();
+					final ArrayList<String> realUnits = new ArrayList<>();
 					int unitIndex = 0;
 					for (int i = 0; i < axes.length; i++) {
 						if (axes[i].toLowerCase().equals("ch")) {
@@ -773,7 +773,7 @@ public class ICSTranslator {
 		 * would work.
 		 */
 		private String[] tokenize(final String line) {
-			final List<String> tokens = new ArrayList<String>();
+			final List<String> tokens = new ArrayList<>();
 			boolean inWhiteSpace = true;
 			boolean withinQuotes = false;
 			StringBuffer token = null;

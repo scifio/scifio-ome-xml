@@ -571,7 +571,7 @@ public class OMETIFFFormat extends AbstractFormat {
 		{
 			FormatTools.assertId(getMetadata().getDatasetName(), true, 1);
 			if (noPixels) return null;
-			final Vector<String> usedFiles = new Vector<String>();
+			final Vector<String> usedFiles = new Vector<>();
 			for (int i = 0; i < getMetadata().info[imageIndex].length; i++) {
 				if (!usedFiles.contains(getMetadata().info[imageIndex][i].id)) {
 					usedFiles.add(getMetadata().info[imageIndex][i].id);
@@ -732,7 +732,7 @@ public class OMETIFFFormat extends AbstractFormat {
 			meta.setTileHeight(tileHeight);
 
 			// compile list of file/UUID mappings
-			final Hashtable<String, String> files = new Hashtable<String, String>();
+			final Hashtable<String, String> files = new Hashtable<>();
 			boolean needSearch = false;
 			for (int i = 0; i < imageCount; i++) {
 				final int tiffDataCount = omexmlMeta.getTiffDataCount(i);
@@ -791,7 +791,7 @@ public class OMETIFFFormat extends AbstractFormat {
 			// build list of used files
 			final Enumeration<String> en = files.keys();
 			final int numUUIDs = files.size();
-			final HashSet<String> fileSet = new HashSet<String>(); // ensure no
+			final HashSet<String> fileSet = new HashSet<>(); // ensure no
 																															// duplicate
 																															// filenames
 			for (int i = 0; i < numUUIDs; i++) {
@@ -808,9 +808,9 @@ public class OMETIFFFormat extends AbstractFormat {
 
 			// process TiffData elements
 			final Hashtable<String, MinimalTIFFFormat.Reader<?>> readers =
-				new Hashtable<String, MinimalTIFFFormat.Reader<?>>();
-			final List<Boolean> adjustedSamples = new ArrayList<Boolean>();
-			final List<Integer> samples = new ArrayList<Integer>();
+				new Hashtable<>();
+			final List<Boolean> adjustedSamples = new ArrayList<>();
+			final List<Integer> samples = new ArrayList<>();
 			meta.adjustedSamples = adjustedSamples;
 			meta.samples = samples;
 
@@ -1052,7 +1052,7 @@ public class OMETIFFFormat extends AbstractFormat {
 
 			// remove null CoreMetadata entries
 
-			final Vector<OMETIFFPlane[]> planeInfo = new Vector<OMETIFFPlane[]>();
+			final Vector<OMETIFFPlane[]> planeInfo = new Vector<>();
 			for (int i = meta.getImageCount() - 1; i >= 0; i--) {
 				if (meta.get(i) == null) {
 					meta.getAll().remove(i);
@@ -1187,9 +1187,9 @@ public class OMETIFFFormat extends AbstractFormat {
 		private String[][] imageLocations;
 		private OMEXMLMetadata omeMeta;
 		private final Map<String, Integer> ifdCounts =
-			new HashMap<String, Integer>();
+			new HashMap<>();
 
-		private final Map<String, String> uuids = new HashMap<String, String>();
+		private final Map<String, String> uuids = new HashMap<>();
 
 		// -- Writer API Methods --
 
@@ -1213,7 +1213,7 @@ public class OMETIFFFormat extends AbstractFormat {
 			final Plane plane, final IFD ifd, final long[] offsets,
 			final long[] lengths) throws io.scif.FormatException, IOException
 		{
-			if (imageMap == null) imageMap = new ArrayList<Integer>();
+			if (imageMap == null) imageMap = new ArrayList<>();
 			if (!imageMap.contains(imageIndex)) {
 				imageMap.add(new Integer(imageIndex));
 			}
@@ -1238,7 +1238,7 @@ public class OMETIFFFormat extends AbstractFormat {
 						populateImage(omeMeta, series);
 					}
 
-					final List<String> files = new ArrayList<String>();
+					final List<String> files = new ArrayList<>();
 					for (final String[] s : imageLocations) {
 						for (final String f : s) {
 							if (!files.contains(f) && f != null) {
@@ -1596,8 +1596,8 @@ public class OMETIFFFormat extends AbstractFormat {
 			final OMETIFFPlane[][] info = new OMETIFFPlane[source.getImageCount()][];
 			dest.setPlaneInfo(info);
 
-			final List<Integer> samples = new ArrayList<Integer>();
-			final List<Boolean> adjustedSamples = new ArrayList<Boolean>();
+			final List<Integer> samples = new ArrayList<>();
+			final List<Boolean> adjustedSamples = new ArrayList<>();
 
 			dest.samples = samples;
 			dest.adjustedSamples = adjustedSamples;

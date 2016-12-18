@@ -81,7 +81,7 @@ public class OMEXMLToolCommand extends AbstractSCIFIOToolCommand {
 	private final Integer xmlIndent = 3;
 
 	@Argument(index = 2, multiValued = true)
-	private final List<String> arguments = new ArrayList<String>();
+	private final List<String> arguments = new ArrayList<>();
 
 	// -- AbstractSCIFIOToolCommand API --
 
@@ -146,7 +146,7 @@ public class OMEXMLToolCommand extends AbstractSCIFIOToolCommand {
 	 * and {@link Axes#Y} are first.
 	 */
 	private AxisType[] axesToSplit(final ReaderFilter r) {
-		final Set<AxisType> axes = new HashSet<AxisType>();
+		final Set<AxisType> axes = new HashSet<>();
 		final Metadata meta = r.getTail().getMetadata();
 		// Split any non-X,Y axis
 		for (final CalibratedAxis t : meta.get(0).getAxesPlanar()) {

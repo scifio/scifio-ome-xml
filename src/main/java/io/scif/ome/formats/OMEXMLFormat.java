@@ -252,9 +252,9 @@ public class OMEXMLFormat extends AbstractFormat {
 			final Metadata meta, final SCIFIOConfig config) throws IOException,
 			FormatException
 		{
-			final Vector<BinData> binData = new Vector<BinData>();
-			final Vector<Long> binDataOffsets = new Vector<Long>();
-			final Vector<String> compression = new Vector<String>();
+			final Vector<BinData> binData = new Vector<>();
+			final Vector<Long> binDataOffsets = new Vector<>();
+			final Vector<String> compression = new Vector<>();
 			meta.setBinData(binData);
 			meta.setBinDataOffsets(binDataOffsets);
 			meta.setCompression(compression);
