@@ -263,7 +263,6 @@ public class ICSTranslator {
 			final OMEMetadata dest)
 		{
 			final OMEXMLMetadata store = dest.getRoot();
-			boolean lifetime = false;
 			final int imageIndex = 0; // TODO correct index?
 			Double[] pixelSizes = null, timestamps = null, stagePos = null;
 			Double laserPower = null, laserRepetitionRate = null, lensNA = null;
@@ -319,8 +318,6 @@ public class ICSTranslator {
 			store.setImageInstrumentRef(instrumentID, 0);
 
 			store.setExperimentID(omeMetaService.createLSID("Experiment", 0), 0);
-
-			lifetime = source.getLifetime();
 
 			experimentType = source.getExperimentType();
 
@@ -733,64 +730,6 @@ public class ICSTranslator {
 		}
 
 		// -- Helper methods --
-
-		/*
-		 * String tokenizer for parsing metadata. Splits on any white-space
-		 * characters. Tabs and spaces are often used interchangeably in real-life ICS
-		 * files.
-		 *
-		 * Also splits on 0x04 character which appears in "paul/csarseven.ics" and
-		 * "paul/gci/time resolved_1.ics".
-		 *
-		 * Also respects double quote marks, so that
-		 *   Modules("Confocal C1 Grabber").BarrierFilter(2)
-		 * is just one token.
-		 *
-		 * If not for the last requirement, the one line
-		 *   String[] tokens = line.split("[\\s\\x04]+");
-		 * would work.
-		 */
-		private String[] tokenize(final String line) {
-			final List<String> tokens = new ArrayList<>();
-			boolean inWhiteSpace = true;
-			boolean withinQuotes = false;
-			StringBuffer token = null;
-			for (int i = 0; i < line.length(); ++i) {
-				final char c = line.charAt(i);
-				if (Character.isWhitespace(c) || c == 0x04) {
-					if (withinQuotes) {
-						// retain white space within quotes
-						token.append(c);
-					}
-					else if (!inWhiteSpace) {
-						// put out pending token string
-						inWhiteSpace = true;
-						if (token.length() > 0) {
-							tokens.add(token.toString());
-							token = null;
-						}
-					}
-				}
-				else {
-					if ('"' == c) {
-						// toggle quotes
-						withinQuotes = !withinQuotes;
-					}
-					if (inWhiteSpace) {
-						inWhiteSpace = false;
-						// start a new token string
-						token = new StringBuffer();
-					}
-					// build token string
-					token.append(c);
-				}
-			}
-			// put out any pending token strings
-			if (null != token && token.length() > 0) {
-				tokens.add(token.toString());
-			}
-			return tokens.toArray(new String[0]);
-		}
 
 		/** Verifies that a unit matches the expected value. */
 		private boolean checkUnit(final String actual, final String... expected) {

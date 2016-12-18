@@ -1407,8 +1407,6 @@ public class OMETIFFFormat extends AbstractFormat {
 				omeMeta.getPixelsSizeT(imageIndex).getValue().intValue();
 
 			final long planeCount = getMetadata().get(imageIndex).getPlaneCount();
-			final int ifdCount = imageMap.size();
-
 			if (planeCount == 0) {
 				omeMeta.setTiffDataPlaneCount(new NonNegativeInteger(0), imageIndex, 0);
 				return;

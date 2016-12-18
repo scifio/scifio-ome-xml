@@ -84,10 +84,6 @@ public class DefaultOMEMetadataService extends AbstractService implements
 	OMEMetadataService
 {
 
-	// -- Static fields --
-
-	private final boolean defaultDateEnabled = true;
-
 	// -- Parameters --
 
 	@Parameter
