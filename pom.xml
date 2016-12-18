@@ -90,7 +90,6 @@
 		<license.copyrightOwners>Board of Regents of the University of
 Wisconsin-Madison</license.copyrightOwners>
 		<license.projectName>SCIFIO support for the OME data model, including OME-XML and OME-TIFF.</license.projectName>
-		<bio-formats.version>5.1.10</bio-formats.version>
 	</properties>
 
 	<repositories>

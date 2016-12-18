@@ -572,7 +572,7 @@ public class DefaultOMEMetadataService extends AbstractService implements
 			retrieve.getChannelCount(imageIndex) <= 0 ? null : retrieve
 				.getChannelSamplesPerPixel(imageIndex, 0);
 
-		final boolean little = !retrieve.getPixelsBinDataBigEndian(imageIndex, 0);
+		final boolean little = !retrieve.getPixelsBigEndian(imageIndex);
 		final int pType =
 			FormatTools.pixelTypeFromString(retrieve.getPixelsType(imageIndex)
 				.getValue());
