@@ -74,23 +74,24 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.Vector;
 
+import net.imagej.axis.Axes;
+import net.imagej.axis.CalibratedAxis;
+import net.imglib2.display.ColorTable;
+
+import org.scijava.Context;
+import org.scijava.plugin.Parameter;
+import org.scijava.plugin.Plugin;
+
 import loci.common.services.ServiceException;
 import loci.formats.meta.IMetadata;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.meta.MetadataStore;
 import loci.formats.ome.OMEXMLMetadata;
-import net.imagej.axis.Axes;
-import net.imagej.axis.CalibratedAxis;
-import net.imglib2.display.ColorTable;
 import ome.units.quantity.Length;
 import ome.xml.model.primitives.NonNegativeInteger;
 import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.PositiveInteger;
 import ome.xml.model.primitives.Timestamp;
-
-import org.scijava.Context;
-import org.scijava.plugin.Parameter;
-import org.scijava.plugin.Plugin;
 
 /**
  * OMETiffReader is the file format reader for <a

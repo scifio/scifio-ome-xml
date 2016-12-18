@@ -38,10 +38,11 @@ import io.scif.SCIFIOService;
 
 import java.util.List;
 
+import net.imagej.axis.AxisType;
+
 import loci.formats.IFormatWriter;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.meta.MetadataStore;
-import net.imagej.axis.AxisType;
 import ome.xml.model.enums.Binning;
 import ome.xml.model.enums.Correction;
 import ome.xml.model.enums.DetectorType;

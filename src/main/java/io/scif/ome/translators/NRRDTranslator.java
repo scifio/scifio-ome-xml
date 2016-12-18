@@ -33,11 +33,12 @@ package io.scif.ome.translators;
 import io.scif.Metadata;
 import io.scif.formats.NRRDFormat;
 import io.scif.ome.OMEMetadata;
-import ome.units.UNITS;
-import ome.units.quantity.Length;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Plugin;
+
+import ome.units.UNITS;
+import ome.units.quantity.Length;
 
 /**
  * Container class for translators between OME and NRRD formats.

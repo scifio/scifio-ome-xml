@@ -33,11 +33,13 @@ package io.scif.ome.translators;
 import io.scif.Metadata;
 import io.scif.formats.EPSFormat;
 import io.scif.ome.OMEMetadata;
-import loci.formats.ome.OMEXMLMetadata;
+
 import net.imagej.axis.Axes;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Plugin;
+
+import loci.formats.ome.OMEXMLMetadata;
 
 /**
  * Container class for translators between OME and EPS formats.

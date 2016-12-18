@@ -38,11 +38,12 @@ import io.scif.ome.OMEMetadata;
 import java.util.List;
 
 import net.imagej.axis.Axes;
-import ome.units.UNITS;
-import ome.units.quantity.Length;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Plugin;
+
+import ome.units.UNITS;
+import ome.units.quantity.Length;
 
 /**
  * Container class for translators between OME and OBF formats.

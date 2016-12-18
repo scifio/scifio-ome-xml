@@ -42,20 +42,20 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 
+import net.imagej.axis.Axes;
+
+import org.scijava.Priority;
+import org.scijava.plugin.Plugin;
+
 import loci.formats.meta.FilterMetadata;
 import loci.formats.meta.MetadataRetrieve;
 import loci.formats.ome.OMEXMLMetadata;
-import net.imagej.axis.Axes;
 import ome.units.UNITS;
 import ome.units.quantity.Frequency;
 import ome.units.quantity.Length;
 import ome.units.quantity.Power;
 import ome.units.quantity.Time;
-import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.Timestamp;
-
-import org.scijava.Priority;
-import org.scijava.plugin.Plugin;
 
 /**
  * Container class for to and from ICS/OME formats

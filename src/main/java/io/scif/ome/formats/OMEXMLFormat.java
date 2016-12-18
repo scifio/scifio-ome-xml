@@ -71,10 +71,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
 
-import loci.common.services.ServiceException;
-import loci.formats.meta.MetadataRetrieve;
-import loci.formats.ome.OMEXMLMetadata;
-import loci.formats.ome.OMEXMLMetadataImpl;
 import net.imagej.axis.Axes;
 
 import org.scijava.Context;
@@ -85,6 +81,11 @@ import org.scijava.plugin.Plugin;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.helpers.DefaultHandler;
+
+import loci.common.services.ServiceException;
+import loci.formats.meta.MetadataRetrieve;
+import loci.formats.ome.OMEXMLMetadata;
+import loci.formats.ome.OMEXMLMetadataImpl;
 
 /**
  * Format for OME-XML files.

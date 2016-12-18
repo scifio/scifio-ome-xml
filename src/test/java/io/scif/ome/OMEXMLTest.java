@@ -31,6 +31,7 @@
 package io.scif.ome;
 
 import static org.junit.Assert.assertTrue;
+
 import io.scif.FormatException;
 import io.scif.Metadata;
 import io.scif.SCIFIO;

@@ -41,6 +41,10 @@ import io.scif.ome.services.OMEMetadataService;
 
 import java.util.Vector;
 
+import org.scijava.Priority;
+import org.scijava.plugin.Parameter;
+import org.scijava.plugin.Plugin;
+
 import loci.formats.ome.OMEXMLMetadata;
 import ome.units.UNITS;
 import ome.units.quantity.ElectricPotential;
@@ -48,10 +52,6 @@ import ome.units.quantity.Length;
 import ome.units.quantity.Temperature;
 import ome.units.quantity.Time;
 import ome.xml.model.primitives.Timestamp;
-
-import org.scijava.Priority;
-import org.scijava.plugin.Parameter;
-import org.scijava.plugin.Plugin;
 
 /**
  * Container class for translators between OME and Micromanager formats.

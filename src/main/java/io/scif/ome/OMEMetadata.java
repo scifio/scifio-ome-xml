@@ -33,11 +33,12 @@ package io.scif.ome;
 import io.scif.AbstractMetadata;
 import io.scif.ome.services.OMEMetadataService;
 import io.scif.ome.services.OMEXMLService;
-import loci.common.services.ServiceException;
-import loci.formats.ome.OMEXMLMetadata;
 
 import org.scijava.Context;
 import org.scijava.plugin.Parameter;
+
+import loci.common.services.ServiceException;
+import loci.formats.ome.OMEXMLMetadata;
 
 /**
  * io.scif.Metadata class wrapping an OME-XML root.

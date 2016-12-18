@@ -47,7 +47,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import loci.common.xml.XMLTools;
 import net.imagej.axis.Axes;
 import net.imagej.axis.AxisType;
 import net.imagej.axis.CalibratedAxis;
@@ -56,6 +55,8 @@ import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
+
+import loci.common.xml.XMLTools;
 
 /**
  * {@link SCIFIOToolCommand} plugin for printing OME-XML.

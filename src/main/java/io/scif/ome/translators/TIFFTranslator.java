@@ -34,15 +34,17 @@ import io.scif.Metadata;
 import io.scif.formats.TIFFFormat;
 import io.scif.ome.OMEMetadata;
 import io.scif.util.FormatTools;
-import loci.formats.ome.OMEXMLMetadata;
+
 import net.imagej.axis.Axes;
 import net.imagej.axis.CalibratedAxis;
-import ome.units.UNITS;
-import ome.units.quantity.Length;
-import ome.xml.model.primitives.Timestamp;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Plugin;
+
+import loci.formats.ome.OMEXMLMetadata;
+import ome.units.UNITS;
+import ome.units.quantity.Length;
+import ome.xml.model.primitives.Timestamp;
 
 /**
  * Container class for translators between OME and TIFF formats.

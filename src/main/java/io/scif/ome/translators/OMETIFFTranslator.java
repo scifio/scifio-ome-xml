@@ -33,13 +33,14 @@ package io.scif.ome.translators;
 import io.scif.Metadata;
 import io.scif.ome.OMEMetadata;
 import io.scif.ome.formats.OMETIFFFormat;
-import loci.common.services.ServiceException;
-import loci.formats.ome.OMEXMLMetadata;
-import loci.formats.services.OMEXMLServiceImpl;
 
 import org.scijava.log.LogService;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
+
+import loci.common.services.ServiceException;
+import loci.formats.ome.OMEXMLMetadata;
+import loci.formats.services.OMEXMLServiceImpl;
 
 /**
  * Container class for translators between OME and OMETIFF formats.

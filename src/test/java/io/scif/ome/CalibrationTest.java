@@ -31,6 +31,7 @@
 package io.scif.ome;
 
 import static org.junit.Assert.assertEquals;
+
 import io.scif.FormatException;
 import io.scif.Metadata;
 import io.scif.SCIFIO;
@@ -39,10 +40,11 @@ import io.scif.util.FormatTools;
 import java.io.IOException;
 
 import net.imagej.axis.Axes;
-import ome.units.quantity.Length;
-import ome.units.quantity.Time;
 
 import org.junit.Test;
+
+import ome.units.quantity.Length;
+import ome.units.quantity.Time;
 
 /**
  * Unit tests to ensure calibration values are preserved properly when

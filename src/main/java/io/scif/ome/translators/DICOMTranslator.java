@@ -34,13 +34,14 @@ import io.scif.Metadata;
 import io.scif.common.DateTools;
 import io.scif.formats.DICOMFormat;
 import io.scif.ome.OMEMetadata;
+
+import org.scijava.Priority;
+import org.scijava.plugin.Plugin;
+
 import loci.formats.ome.OMEXMLMetadata;
 import ome.units.UNITS;
 import ome.units.quantity.Length;
 import ome.xml.model.primitives.Timestamp;
-
-import org.scijava.Priority;
-import org.scijava.plugin.Plugin;
 
 /**
  * Container class for translators between OME and DICOM formats.

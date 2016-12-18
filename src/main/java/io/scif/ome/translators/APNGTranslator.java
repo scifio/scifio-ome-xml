@@ -36,11 +36,12 @@ import io.scif.formats.APNGFormat;
 import io.scif.ome.OMEMetadata;
 import io.scif.ome.services.OMEMetadataService;
 import io.scif.util.FormatTools;
-import ome.units.UNITS;
-import ome.units.quantity.Time;
 
 import org.scijava.Priority;
 import org.scijava.plugin.Plugin;
+
+import ome.units.UNITS;
+import ome.units.quantity.Time;
 
 /**
  * Container class for translators between OME and APNG formats.
