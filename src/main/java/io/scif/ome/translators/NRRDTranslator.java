@@ -89,15 +89,15 @@ public class NRRDTranslator {
 						if (d > 0) {
 							if (i == 0) {
 								dest.getRoot().setPixelsPhysicalSizeX(//
-									new Length(d, UNITS.MICROM), 0);
+									new Length(d, UNITS.MICROMETER), 0);
 							}
 							else if (i == 1) {
 								dest.getRoot().setPixelsPhysicalSizeY(//
-									new Length(d, UNITS.MICROM), 0);
+									new Length(d, UNITS.MICROMETER), 0);
 							}
 							else if (i == 2) {
 								dest.getRoot().setPixelsPhysicalSizeZ(//
-									new Length(d, UNITS.MICROM), 0);
+									new Length(d, UNITS.MICROMETER), 0);
 							}
 						}
 						else {

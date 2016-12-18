@@ -626,9 +626,12 @@ public class DefaultOMEMetadataService extends AbstractService implements
 		final int imageIndex, final double calX, final double calY,
 		final double calZ, final double calC, final double calT)
 	{
-		store.setPixelsPhysicalSizeX(new Length(calX, UNITS.MICROM), imageIndex);
-		store.setPixelsPhysicalSizeY(new Length(calY, UNITS.MICROM), imageIndex);
-		store.setPixelsPhysicalSizeZ(new Length(calZ, UNITS.MICROM), imageIndex);
+		store.setPixelsPhysicalSizeX(//
+			new Length(calX, UNITS.MICROMETER), imageIndex);
+		store.setPixelsPhysicalSizeY(//
+			new Length(calY, UNITS.MICROMETER), imageIndex);
+		store.setPixelsPhysicalSizeZ(//
+			new Length(calZ, UNITS.MICROMETER), imageIndex);
 		store.setPixelsTimeIncrement(new Time(calT, UNITS.SECOND), imageIndex);
 	}
 

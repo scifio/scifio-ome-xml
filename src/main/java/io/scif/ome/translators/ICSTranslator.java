@@ -367,8 +367,8 @@ public class ICSTranslator {
 						if (pixelSize > 0 && checkUnit(unit, "um", "microns",
 							"micrometers"))
 						{
-							store.setPixelsPhysicalSizeX(new Length(pixelSize, UNITS.MICROM),
-								0);
+							store.setPixelsPhysicalSizeX(//
+								new Length(pixelSize, UNITS.MICROMETER), 0);
 						}
 						else {
 							log().warn("Expected positive value for PhysicalSizeX; got " +
@@ -379,8 +379,8 @@ public class ICSTranslator {
 						if (pixelSize > 0 && checkUnit(unit, "um", "microns",
 							"micrometers"))
 						{
-							store.setPixelsPhysicalSizeY(new Length(pixelSize, UNITS.MICROM),
-								0);
+							store.setPixelsPhysicalSizeY(//
+								new Length(pixelSize, UNITS.MICROMETER), 0);
 						}
 						else {
 							log().warn("Expected positive value for PhysicalSizeY; got " +
@@ -391,8 +391,8 @@ public class ICSTranslator {
 						if (pixelSize > 0 && checkUnit(unit, "um", "microns",
 							"micrometers"))
 						{
-							store.setPixelsPhysicalSizeZ(new Length(pixelSize, UNITS.MICROM),
-								0);
+							store.setPixelsPhysicalSizeZ(//
+								new Length(pixelSize, UNITS.MICROMETER), 0);
 						}
 						else {
 							log().warn("Expected positive value for PhysicalSizeZ; got " +
@@ -414,7 +414,8 @@ public class ICSTranslator {
 			}
 			else if (sizes != null) {
 				if (sizes.length > 0 && sizes[0] > 0) {
-					store.setPixelsPhysicalSizeX(new Length(sizes[0], UNITS.MICROM), 0);
+					store.setPixelsPhysicalSizeX(//
+						new Length(sizes[0], UNITS.MICROMETER), 0);
 				}
 				else {
 					log().warn("Expected positive value for PhysicalSizeX; got " +
@@ -423,7 +424,8 @@ public class ICSTranslator {
 				if (sizes.length > 1) {
 					sizes[1] /= source.get(imageIndex).getAxisLength(Axes.Y);
 					if (sizes[1] > 0) {
-						store.setPixelsPhysicalSizeY(new Length(sizes[1], UNITS.MICROM), 0);
+						store.setPixelsPhysicalSizeY(//
+							new Length(sizes[1], UNITS.MICROMETER), 0);
 					}
 					else {
 						log().warn("Expected positive value for PhysicalSizeY; got " +
@@ -493,12 +495,12 @@ public class ICSTranslator {
 				}
 				if (pinholes.containsKey(i)) {
 					store.setChannelPinholeSize(//
-						new Length(pinholes.get(i), UNITS.MICROM), 0, i);
+						new Length(pinholes.get(i), UNITS.MICROMETER), 0, i);
 				}
 				if (emWaves != null && i < emWaves.length) {
 					if (emWaves[i].intValue() > 0) {
-						store.setChannelEmissionWavelength(new Length(emWaves[i],
-							UNITS.MICROM), 0, i);
+						store.setChannelEmissionWavelength(//
+							new Length(emWaves[i], UNITS.MICROMETER), 0, i);
 					}
 					else {
 						log().warn("Expected positive value for EmissionWavelength; got " +
@@ -507,8 +509,8 @@ public class ICSTranslator {
 				}
 				if (exWaves != null && i < exWaves.length) {
 					if (exWaves[i].intValue() > 0) {
-						store.setChannelExcitationWavelength(new Length(exWaves[i],
-							UNITS.MICROM), 0, i);
+						store.setChannelExcitationWavelength(//
+							new Length(exWaves[i], UNITS.MICROMETER), 0, i);
 					}
 					else {
 						log().warn(
@@ -536,8 +538,8 @@ public class ICSTranslator {
 			for (int i = 0; i < lasers.length; i++) {
 				store.setLaserID(omeMetaService.createLSID("LightSource", 0, i), 0, i);
 				if (wavelengths.get(lasers[i]) > 0) {
-					store.setLaserWavelength(new Length(wavelengths.get(lasers[i]),
-						UNITS.MICROM), 0, i);
+					store.setLaserWavelength(//
+						new Length(wavelengths.get(lasers[i]), UNITS.MICROMETER), 0, i);
 				}
 				else {
 					log().warn("Expected positive value for wavelength; got " +
@@ -561,9 +563,10 @@ public class ICSTranslator {
 
 				store.setLaserManufacturer(laserManufacturer, 0, i);
 				store.setLaserModel(laserModel, 0, i);
-				store.setLaserPower(new Power(laserPower, UNITS.MICROW), 0, i);
-				store.setLaserRepetitionRate(new Frequency(laserRepetitionRate,
-					UNITS.MEGAHZ), 0, i);
+				store.setLaserPower(//
+					new Power(laserPower, UNITS.MICROWATT), 0, i);
+				store.setLaserRepetitionRate(//
+					new Frequency(laserRepetitionRate, UNITS.MEGAHERTZ), 0, i);
 			}
 
 			if (lasers.length == 0 && laserManufacturer != null) {
@@ -585,8 +588,8 @@ public class ICSTranslator {
 				store.setLaserManufacturer(laserManufacturer, 0, 0);
 				store.setLaserModel(laserModel, 0, 0);
 				store.setLaserPower(new Power(laserPower, UNITS.WATT), 0, 0);
-				store.setLaserRepetitionRate(new Frequency(laserRepetitionRate,
-					UNITS.MEGAHZ), 0, 0);
+				store.setLaserRepetitionRate(//
+					new Frequency(laserRepetitionRate, UNITS.MEGAHERTZ), 0, 0);
 			}
 
 			// populate FilterSet data
@@ -644,8 +647,8 @@ public class ICSTranslator {
 			}
 			if (lensNA != null) store.setObjectiveLensNA(lensNA, 0, 0);
 			if (workingDistance != null) {
-				store.setObjectiveWorkingDistance(new Length(workingDistance,
-					UNITS.MICROM), 0, 0);
+				store.setObjectiveWorkingDistance(//
+					new Length(workingDistance, UNITS.MICROMETER), 0, 0);
 			}
 			if (magnification != null) {
 				store.setObjectiveCalibratedMagnification(magnification, 0, 0);

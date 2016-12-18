@@ -94,7 +94,7 @@ public class BMPTranslator {
 
 			if (correctedX > 0) {
 				dest.getRoot().setPixelsPhysicalSizeX(//
-					new Length(correctedX, UNITS.MICROM), 0);
+					new Length(correctedX, UNITS.MICROMETER), 0);
 			}
 			else {
 				log().warn("Expected positive value for PhysicalSizeX; got " +
@@ -102,7 +102,7 @@ public class BMPTranslator {
 			}
 			if (correctedY > 0) {
 				dest.getRoot().setPixelsPhysicalSizeY(//
-					new Length(correctedY, UNITS.MICROM), 0);
+					new Length(correctedY, UNITS.MICROMETER), 0);
 			}
 			else {
 				log().warn("Expected positive value for PhysicalSizeY; got " +

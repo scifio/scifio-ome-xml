@@ -140,17 +140,17 @@ public class MicromanagerTranslator {
 
 				if (p.pixelSize != null && p.pixelSize > 0) {
 					store.setPixelsPhysicalSizeX(//
-						new Length(p.pixelSize, UNITS.MICROM), i);
+						new Length(p.pixelSize, UNITS.MICROMETER), i);
 					store.setPixelsPhysicalSizeY(//
-						new Length(p.pixelSize, UNITS.MICROM), i);
+						new Length(p.pixelSize, UNITS.MICROMETER), i);
 				}
 				else {
 					log().warn("Expected positive value for PhysicalSizeX; got " +
 						p.pixelSize);
 				}
 				if (p.sliceThickness != null && p.sliceThickness > 0) {
-					store.setPixelsPhysicalSizeZ(new Length(p.sliceThickness,
-						UNITS.MICROM), i);
+					store.setPixelsPhysicalSizeZ(//
+						new Length(p.sliceThickness, UNITS.MICROMETER), i);
 				}
 				else {
 					log().warn("Expected positive value for PhysicalSizeZ; got " +
@@ -200,8 +200,8 @@ public class MicromanagerTranslator {
 				if (p.cameraMode == null) p.cameraMode = "Other";
 				store.setDetectorType(//
 					omexmlMetadataService.getDetectorType(p.cameraMode), 0, i);
-				store.setImagingEnvironmentTemperature(new Temperature(p.temperature,
-					UNITS.DEGREEC), i);
+				store.setImagingEnvironmentTemperature(//
+					new Temperature(p.temperature, UNITS.CELSIUS), i);
 			}
 		}
 

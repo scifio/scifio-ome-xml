@@ -96,19 +96,19 @@ public class OBFTranslator {
 				final double lengthX = Math.abs(lengths.get(0));
 				if (lengthX > 0) {
 					final Length physicalSizeX = //
-						new Length(lengthX / obf.getAxisLength(Axes.X), UNITS.MICROM);
+						new Length(lengthX / obf.getAxisLength(Axes.X), UNITS.MICROMETER);
 					dest.getRoot().setPixelsPhysicalSizeX(physicalSizeX, image);
 				}
 				final double lengthY = Math.abs(lengths.get(1));
 				if (lengthY > 0) {
 					final Length physicalSizeY = //
-						new Length(lengthY / obf.getAxisLength(Axes.Y), UNITS.MICROM);
+						new Length(lengthY / obf.getAxisLength(Axes.Y), UNITS.MICROMETER);
 					dest.getRoot().setPixelsPhysicalSizeY(physicalSizeY, image);
 				}
 				final double lengthZ = Math.abs(lengths.get(2));
 				if (lengthZ > 0) {
 					final Length physicalSizeZ = //
-						new Length(lengthZ / obf.getAxisLength(Axes.Z), UNITS.MICROM);
+						new Length(lengthZ / obf.getAxisLength(Axes.Z), UNITS.MICROMETER);
 					dest.getRoot().setPixelsPhysicalSizeZ(physicalSizeZ, image);
 				}
 			}
