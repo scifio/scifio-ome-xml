@@ -65,32 +65,31 @@ public class OMEXMLTest {
 	@Test
 	public void extractOMEXML() throws FormatException, IOException {
 		// Get Metadata describing a .fake image
-		final String fakeId =
-			"testImg&lengths=512,512&axes=X,Y.fake";
+		final String fakeId = "testImg&lengths=512,512&axes=X,Y.fake";
 
-		final Metadata fakeMeta =
+		final Metadata fakeMeta = //
 			scifio.initializer().initializeReader(fakeId).getMetadata();
 
 		// Create omexmlformat metadata
-		final Metadata omexmlMeta =
+		final Metadata omexmlMeta = //
 			scifio.format().getFormatFromClass(OMEXMLFormat.class).createMetadata();
 
 		// Translate fake metadata to omexmlmetadata
 		assertTrue(scifio.translator().translate(fakeMeta, omexmlMeta, false));
 
 		// verify we have omexml
-		final String omexml =
+		final String omexml = //
 			((OMEXMLFormat.Metadata) omexmlMeta).getOMEMeta().getRoot().dumpXML();
 
 		assertTrue(omexml.length() > 0);
 
-		assertTrue(omexml
-			.contains("<Pixels BigEndian=\"false\" DimensionOrder=\"XYCZT\" ID=\"Pixels:0\" "
-				+ "PhysicalSizeX=\"1.0\" PhysicalSizeXUnit=\"µm\" "
-				+ "PhysicalSizeY=\"1.0\" PhysicalSizeYUnit=\"µm\" "
-				+ "PhysicalSizeZ=\"1.0\" PhysicalSizeZUnit=\"µm\" "
-				+ "SizeC=\"1\" SizeT=\"1\" SizeX=\"512\" SizeY=\"512\" SizeZ=\"1\" "
-				+ "TimeIncrement=\"1.0\" TimeIncrementUnit=\"s\" Type=\"uint8\">"));
+		assertTrue(omexml.contains(
+			"<Pixels BigEndian=\"false\" DimensionOrder=\"XYCZT\" ID=\"Pixels:0\" " +
+				"PhysicalSizeX=\"1.0\" PhysicalSizeXUnit=\"µm\" " +
+				"PhysicalSizeY=\"1.0\" PhysicalSizeYUnit=\"µm\" " +
+				"PhysicalSizeZ=\"1.0\" PhysicalSizeZUnit=\"µm\" " +
+				"SizeC=\"1\" SizeT=\"1\" SizeX=\"512\" SizeY=\"512\" SizeZ=\"1\" " +
+				"TimeIncrement=\"1.0\" TimeIncrementUnit=\"s\" Type=\"uint8\">"));
 
 	}
 }

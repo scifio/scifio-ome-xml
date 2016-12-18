@@ -86,7 +86,7 @@ public class DefaultOMEMetadataService extends AbstractService implements
 
 	// -- Static fields --
 
-	private boolean defaultDateEnabled = true;
+	private final boolean defaultDateEnabled = true;
 
 	// -- Parameters --
 
@@ -112,6 +112,7 @@ public class DefaultOMEMetadataService extends AbstractService implements
 	{
 		populatePixels(store, meta, doPlane, true);
 	}
+
 	@Override
 	public void populatePixels(final MetadataStore store, final Metadata meta,
 		final boolean doPlane, final boolean doImageName)
@@ -132,7 +133,7 @@ public class DefaultOMEMetadataService extends AbstractService implements
 				final Location f = new Location(getContext(), imageName);
 				imageName = f.getName();
 			}
-			final String pixelType =
+			final String pixelType = //
 				FormatTools.getPixelTypeString(imageMeta.get(i).getPixelType());
 			final String order = findDimensionOrder(imageMeta.get(i));
 
@@ -176,7 +177,7 @@ public class DefaultOMEMetadataService extends AbstractService implements
 				if (omexmlService.isOMEXMLMetadata(store)) {
 					OMEXMLMetadata omeMeta;
 					try {
-						omeMeta =
+						omeMeta = //
 							omexmlService.getOMEMetadata(omexmlService.asRetrieve(store));
 						omeMeta.resolveReferences();
 					}
@@ -188,9 +189,8 @@ public class DefaultOMEMetadataService extends AbstractService implements
 
 			if (doPlane) {
 				for (int q = 0; q < imageMeta.get(i).getPlaneCount(); q++) {
-					final long[] coords =
-						FormatTools.rasterToPosition(imageMeta.get(i)
-							.getAxesLengthsNonPlanar(), q);
+					final long[] coords = FormatTools.rasterToPosition(//
+						imageMeta.get(i).getAxesLengthsNonPlanar(), q);
 					store.setPlaneTheZ(new NonNegativeInteger((int) coords[0]), i, q);
 					store.setPlaneTheC(new NonNegativeInteger((int) coords[1]), i, q);
 					store.setPlaneTheT(new NonNegativeInteger((int) coords[2]), i, q);
@@ -249,15 +249,13 @@ public class DefaultOMEMetadataService extends AbstractService implements
 			}
 		}
 
-		final String pixelType =
+		final String pixelType = //
 			FormatTools.getPixelTypeString(iMeta.getPixelType());
-		final int effSizeC =
-			(int) (iMeta.getPlaneCount() / sizeZ / sizeT);
+		final int effSizeC = (int) (iMeta.getPlaneCount() / sizeZ / sizeT);
 		final int samplesPerPixel = sizeC / effSizeC;
-		populateMetadata(store, null, imageIndex, imageName, iMeta
-			.isLittleEndian(), findDimensionOrder(iMeta), pixelType,
-			sizeX, sizeY, sizeZ, sizeC, sizeT, calX, calY, calZ, calC, calT,
-			samplesPerPixel);
+		populateMetadata(store, null, imageIndex, imageName, iMeta.isLittleEndian(),
+			findDimensionOrder(iMeta), pixelType, sizeX, sizeY, sizeZ, sizeC, sizeT,
+			calX, calY, calZ, calC, calT, samplesPerPixel);
 	}
 
 	@Override
@@ -279,13 +277,15 @@ public class DefaultOMEMetadataService extends AbstractService implements
 		final Metadata meta = r.getMetadata();
 
 		for (int imageIndex = 0; imageIndex < r.getImageCount(); imageIndex++) {
-			final String pixelType =
-				FormatTools.getPixelTypeString(meta.get(imageIndex).getPixelType());
-			final int xSize = (int) meta.get(imageIndex).getAxisLength(Axes.X);
-			int ySize = (int) meta.get(imageIndex).getAxisLength(Axes.Y);
-			final int zSize = (int) meta.get(imageIndex).getAxisLength(Axes.Z);
-			final int cSize = (int) meta.get(imageIndex).getAxisLength(Axes.CHANNEL);
-			int tSize = (int) meta.get(imageIndex).getAxisLength(Axes.TIME);
+			final ImageMetadata imageMeta = meta.get(imageIndex);
+
+			final String pixelType = //
+				FormatTools.getPixelTypeString(imageMeta.getPixelType());
+			final int xSize = (int) imageMeta.getAxisLength(Axes.X);
+			int ySize = (int) imageMeta.getAxisLength(Axes.Y);
+			final int zSize = (int) imageMeta.getAxisLength(Axes.Z);
+			final int cSize = (int) imageMeta.getAxisLength(Axes.CHANNEL);
+			int tSize = (int) imageMeta.getAxisLength(Axes.TIME);
 			final double calX = FormatTools.getScale(meta, imageIndex, Axes.X);
 			final double calY = FormatTools.getScale(meta, imageIndex, Axes.Y);
 			final double calZ = FormatTools.getScale(meta, imageIndex, Axes.Z);
@@ -293,29 +293,25 @@ public class DefaultOMEMetadataService extends AbstractService implements
 			final double calT = FormatTools.getScale(meta, imageIndex, Axes.TIME);
 			int rgbCCount = 1;
 
-			if (meta.get(imageIndex).isMultichannel()) {
-				rgbCCount = cSize;
-			}
+			if (imageMeta.isMultichannel()) rgbCCount = cSize;
 
 			// Compress planar axes to Y
-			for (final CalibratedAxis axis : meta.get(imageIndex).getAxesPlanar()) {
+			for (final CalibratedAxis axis : imageMeta.getAxesPlanar()) {
 				final AxisType type = axis.type();
 				if (type != Axes.X && type != Axes.Y && type != Axes.CHANNEL) {
-					ySize *= meta.get(imageIndex).getAxisLength(type);
+					ySize *= imageMeta.getAxisLength(type);
 				}
 			}
 			// Compress non-planar axes to Time
-			for (final CalibratedAxis axis : meta.get(imageIndex).getAxesNonPlanar())
-			{
+			for (final CalibratedAxis axis : imageMeta.getAxesNonPlanar()) {
 				final AxisType type = axis.type();
 				if (type != Axes.Z && type != Axes.TIME && type != Axes.CHANNEL) {
-					tSize *= meta.get(imageIndex).getAxisLength(type);
+					tSize *= imageMeta.getAxisLength(type);
 				}
 			}
-			populatePixelsOnly(store, imageIndex, meta.get(imageIndex)
-				.isLittleEndian(), findDimensionOrder(meta, imageIndex), pixelType,
-				xSize, ySize, zSize, cSize, tSize, calX, calY, calZ, calC, calT,
-				rgbCCount);
+			populatePixelsOnly(store, imageIndex, imageMeta.isLittleEndian(),
+				findDimensionOrder(meta, imageIndex), pixelType, xSize, ySize, zSize,
+				cSize, tSize, calX, calY, calZ, calC, calT, rgbCCount);
 		}
 	}
 
@@ -327,9 +323,9 @@ public class DefaultOMEMetadataService extends AbstractService implements
 		final double calX, final double calY, final double calZ, final double calC,
 		final double calT, final int samplesPerPixel)
 	{
-		MetadataTools.populatePixelsOnly(store, imageIndex,
-			littleEndian, dimensionOrder, pixelType, sizeX,
-			sizeY, sizeZ, sizeC, sizeT, samplesPerPixel);
+		MetadataTools.populatePixelsOnly(store, imageIndex, littleEndian,
+			dimensionOrder, pixelType, sizeX, sizeY, sizeZ, sizeC, sizeT,
+			samplesPerPixel);
 		populateCalibrations(store, imageIndex, calX, calY, calZ, calC, calT);
 	}
 
@@ -339,8 +335,8 @@ public class DefaultOMEMetadataService extends AbstractService implements
 	}
 
 	@Override
-	public void setDefaultCreationDate(final MetadataStore store,
-		final String id, final int imageIndex)
+	public void setDefaultCreationDate(final MetadataStore store, final String id,
+		final int imageIndex)
 	{
 		MetadataTools.setDefaultCreationDate(store, id, imageIndex);
 	}
@@ -352,7 +348,7 @@ public class DefaultOMEMetadataService extends AbstractService implements
 		try {
 			MetadataTools.verifyMinimumPopulated(src);
 		}
-		catch (loci.formats.FormatException exc) {
+		catch (final loci.formats.FormatException exc) {
 			throw new FormatException(exc);
 		}
 	}
@@ -364,7 +360,7 @@ public class DefaultOMEMetadataService extends AbstractService implements
 		try {
 			MetadataTools.verifyMinimumPopulated(src, n);
 		}
-		catch (loci.formats.FormatException exc) {
+		catch (final loci.formats.FormatException exc) {
 			throw new FormatException(exc);
 		}
 	}
@@ -566,18 +562,16 @@ public class DefaultOMEMetadataService extends AbstractService implements
 		final double calZ = physZ == null ? 1.0 : physZ.value().doubleValue();
 		final double calT = physT == null ? 1.0 : physT.value().doubleValue();
 
-		final String dimensionOrder =
+		final String dimensionOrder = //
 			retrieve.getPixelsDimensionOrder(imageIndex).getValue();
-		final PositiveInteger spp =
-			retrieve.getChannelCount(imageIndex) <= 0 ? null : retrieve
-				.getChannelSamplesPerPixel(imageIndex, 0);
+		final PositiveInteger spp = retrieve.getChannelCount(imageIndex) <= 0 ? //
+			null : retrieve.getChannelSamplesPerPixel(imageIndex, 0);
 
 		final boolean little = !retrieve.getPixelsBigEndian(imageIndex);
-		final int pType =
-			FormatTools.pixelTypeFromString(retrieve.getPixelsType(imageIndex)
-				.getValue());
+		final int pType = FormatTools.pixelTypeFromString(//
+			retrieve.getPixelsType(imageIndex).getValue());
 		final int rgbCCount = spp == null ? 1 : spp.getValue();
-		// if we have RGB planes, there are really two "chnanel" axes
+		// if we have RGB planes, there are really two "channel" axes
 		final int axisCount = rgbCCount == 1 ? 5 : 6;
 
 		final long[] lengths = new long[axisCount];

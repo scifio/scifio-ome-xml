@@ -90,9 +90,8 @@ public class OMEXMLToolCommand extends AbstractSCIFIOToolCommand {
 		try {
 			// OMEXML uses a fixed-5D XY[ZCT] data model. Thus we need to adjust the
 			// axis order to best match the OME model.
-			final ReaderFilter reader =
-				initializeService.initializeReader(file, new SCIFIOConfig()
-					.checkerSetOpen(true));
+			final ReaderFilter reader = initializeService.initializeReader(file,
+				new SCIFIOConfig().checkerSetOpen(true));
 			reader.enable(PlaneSeparator.class).separate(axesToSplit(reader));
 			final Metadata meta = reader.getMetadata();
 

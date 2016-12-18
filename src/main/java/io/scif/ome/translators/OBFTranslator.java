@@ -90,24 +90,24 @@ public class OBFTranslator {
 				dest.getRoot().setImageName(name, image);
 
 				@SuppressWarnings("unchecked")
-				final List<Double> lengths =
+				final List<Double> lengths = //
 					(List<Double>) obf.getTable().get("Lengths");
 
 				final double lengthX = Math.abs(lengths.get(0));
 				if (lengthX > 0) {
-					final Length physicalSizeX =
+					final Length physicalSizeX = //
 						new Length(lengthX / obf.getAxisLength(Axes.X), UNITS.MICROM);
 					dest.getRoot().setPixelsPhysicalSizeX(physicalSizeX, image);
 				}
 				final double lengthY = Math.abs(lengths.get(1));
 				if (lengthY > 0) {
-					final Length physicalSizeY =
+					final Length physicalSizeY = //
 						new Length(lengthY / obf.getAxisLength(Axes.Y), UNITS.MICROM);
 					dest.getRoot().setPixelsPhysicalSizeY(physicalSizeY, image);
 				}
 				final double lengthZ = Math.abs(lengths.get(2));
 				if (lengthZ > 0) {
-					final Length physicalSizeZ =
+					final Length physicalSizeZ = //
 						new Length(lengthZ / obf.getAxisLength(Axes.Z), UNITS.MICROM);
 					dest.getRoot().setPixelsPhysicalSizeZ(physicalSizeZ, image);
 				}

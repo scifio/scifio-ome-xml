@@ -49,7 +49,8 @@ public abstract class FromOMETranslator<M extends Metadata> extends
 	// -- Translator API Methods --
 
 	@Override
-	protected void translateImageMetadata(List<ImageMetadata> source, M dest)
+	protected void translateImageMetadata(final List<ImageMetadata> source,
+		final M dest)
 	{
 		// Nothing to do in general. An OMEMetadata's ImageMetadata should be
 		// fully generated from its XML

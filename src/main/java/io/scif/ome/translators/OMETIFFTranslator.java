@@ -50,8 +50,8 @@ import loci.formats.services.OMEXMLServiceImpl;
 public class OMETIFFTranslator {
 
 	/**
-	 * Translator class from {@link io.scif.ome.formats.OMETIFFFormat.Metadata}
-	 * to {@link OMEMetadata}
+	 * Translator class from {@link io.scif.ome.formats.OMETIFFFormat.Metadata} to
+	 * {@link OMEMetadata}.
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -88,9 +88,8 @@ public class OMETIFFTranslator {
 			OMEXMLMetadata xmlMetadata;
 
 			try {
-				xmlMetadata =
-					new OMEXMLServiceImpl().createOMEXMLMetadata(source.getOmeMeta()
-						.getRoot().dumpXML());
+				xmlMetadata = new OMEXMLServiceImpl().createOMEXMLMetadata(//
+					source.getOmeMeta().getRoot().dumpXML());
 				dest.setRoot(xmlMetadata);
 			}
 			catch (final ServiceException e) {
@@ -100,8 +99,8 @@ public class OMETIFFTranslator {
 	}
 
 	/**
-	 * Translator class from {@link io.scif.ome.formats.OMETIFFFormat.Metadata}
-	 * to {@link OMEMetadata}.
+	 * Translator class from {@link io.scif.ome.formats.OMETIFFFormat.Metadata} to
+	 * {@link OMEMetadata}.
 	 * <p>
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
@@ -109,11 +108,12 @@ public class OMETIFFTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = FromOMETranslator.class,
+	@Plugin(type = FromOMETranslator.class, //
 		priority = TIFFTranslator.PRIORITY + 1)
 	public static class OMETIFFtoOMETranslator extends
 		FromOMETranslator<OMETIFFFormat.Metadata>
 	{
+
 		@Parameter
 		private LogService logService;
 
@@ -137,11 +137,10 @@ public class OMETIFFTranslator {
 			OMEXMLMetadata sourceXML;
 
 			try {
-				sourceXML =
-					new OMEXMLServiceImpl().createOMEXMLMetadata(source.getRoot()
-						.dumpXML());
+				sourceXML = new OMEXMLServiceImpl().createOMEXMLMetadata(//
+					source.getRoot().dumpXML());
 
-				OMEMetadata destOMEMeta = dest.getOmeMeta();
+				final OMEMetadata destOMEMeta = dest.getOmeMeta();
 				if (destOMEMeta == null) {
 					dest.setOmeMeta(new OMEMetadata(getContext(), sourceXML));
 				}

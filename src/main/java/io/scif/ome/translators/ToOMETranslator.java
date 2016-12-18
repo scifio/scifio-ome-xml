@@ -57,8 +57,8 @@ public abstract class ToOMETranslator<M extends Metadata> extends
 	// -- Translator API Methods --
 
 	@Override
-	protected void translateImageMetadata(List<ImageMetadata> source,
-		OMEMetadata dest)
+	protected void translateImageMetadata(final List<ImageMetadata> source,
+		final OMEMetadata dest)
 	{
 		for (int i = 0; i < source.size(); i++) {
 			omexmlMetadataService.populateMetadata(dest.getRoot(), i, dest

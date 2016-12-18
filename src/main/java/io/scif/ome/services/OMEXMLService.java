@@ -87,7 +87,9 @@ public interface OMEXMLService extends SCIFIOService {
 	/** @see loci.formats.services.OMEXMLService#validateOMEXML(String) */
 	public boolean validateOMEXML(String xml);
 
-	/** @see loci.formats.services.OMEXMLService#validateOMEXML(String, boolean) */
+	/**
+	 * @see loci.formats.services.OMEXMLService#validateOMEXML(String, boolean)
+	 */
 	public boolean validateOMEXML(String xml, boolean pixelsHack);
 
 	/**
@@ -105,8 +107,8 @@ public interface OMEXMLService extends SCIFIOService {
 		String value);
 
 	/** @see loci.formats.services.OMEXMLService#getOriginalMetadata(OMEXMLMetadata) */
-	public Hashtable<String, Object>
-		getOriginalMetadata(OMEXMLMetadata omexmlMeta);
+	public Hashtable<String, Object> getOriginalMetadata(
+		OMEXMLMetadata omexmlMeta);
 
 	/**
 	 * @see loci.formats.services.OMEXMLService#convertMetadata(String,
@@ -125,8 +127,8 @@ public interface OMEXMLService extends SCIFIOService {
 	public void removeBinData(OMEXMLMetadata omexmlMeta);
 
 	/**
-	 * @see loci.formats.services.OMEXMLService#removeChannels(OMEXMLMetadata, int,
-	 *      int)
+	 * @see loci.formats.services.OMEXMLService#removeChannels(OMEXMLMetadata,
+	 *      int, int)
 	 */
 	public void removeChannels(OMEXMLMetadata omexmlMeta, int image, int sizeC);
 

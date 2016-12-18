@@ -84,7 +84,7 @@ public class APNGTranslator {
 			if (dest.getFctl() != null && dest.getFctl().size() > 0) {
 				final Time timeIncrement = source.getRoot().getPixelsTimeIncrement(0);
 
-				final short tIncrement =
+				final short tIncrement = //
 					timeIncrement == null ? 1 : timeIncrement.value().shortValue();
 
 				dest.getFctl().get(0).setDelayNum(tIncrement);
@@ -144,19 +144,18 @@ public class APNGTranslator {
 			final String dimOrder = "XYCTZ";
 			final int sizeX = source.getIhdr().getWidth();
 			final int sizeY = source.getIhdr().getHeight();
-			final int sizeT =
+			final int sizeT = //
 				source.getActl() == null ? 1 : source.getActl().getNumFrames();
 			final int sizeZ = 1;
 			String pixelType = null;
 			try {
-				pixelType =
-					FormatTools.getPixelTypeString(FormatTools.pixelTypeFromBytes(source
-						.getIhdr().getBitDepth() / 8, false, false));
+				pixelType = FormatTools.getPixelTypeString(//
+					FormatTools.pixelTypeFromBytes(source.getIhdr().getBitDepth() / 8,
+						false, false));
 			}
 			catch (final FormatException e) {
-				log().debug(
-					"Failed to find pixel type from bytes: " +
-						(source.getIhdr().getBitDepth() / 8), e);
+				log().debug("Failed to find pixel type from bytes: " + //
+					(source.getIhdr().getBitDepth() / 8), e);
 			}
 			final boolean littleEndian = false;
 			final int series = 0;
@@ -166,7 +165,7 @@ public class APNGTranslator {
 			// = sizeC / effectiveSizeC... just sizeC for APNG? #planes / Z * T
 			final String imageName = "";
 
-			getContext().getService(OMEMetadataService.class).populateMetadata(
+			getContext().getService(OMEMetadataService.class).populateMetadata(//
 				dest.getRoot(), series, imageName, littleEndian, dimOrder, pixelType,
 				sizeX, sizeY, sizeZ, sizeC, sizeT, 1.0, 1.0, 1.0, 1.0, 1.0,
 				samplesPerPixel);
@@ -175,7 +174,7 @@ public class APNGTranslator {
 				final short delayNum = source.getFctl().get(0).getDelayNum();
 				final short delayDen = source.getFctl().get(0).getDelayDen();
 				final double timeIncrement = (double) delayNum / delayDen;
-				dest.getRoot().setPixelsTimeIncrement(
+				dest.getRoot().setPixelsTimeIncrement(//
 					new Time(timeIncrement, UNITS.SECOND), 0);
 			}
 		}

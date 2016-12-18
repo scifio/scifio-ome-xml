@@ -88,15 +88,15 @@ public class NRRDTranslator {
 						final Double d = new Double(pixelSizes[i].trim());
 						if (d > 0) {
 							if (i == 0) {
-								dest.getRoot().setPixelsPhysicalSizeX(
+								dest.getRoot().setPixelsPhysicalSizeX(//
 									new Length(d, UNITS.MICROM), 0);
 							}
 							else if (i == 1) {
-								dest.getRoot().setPixelsPhysicalSizeY(
+								dest.getRoot().setPixelsPhysicalSizeY(//
 									new Length(d, UNITS.MICROM), 0);
 							}
 							else if (i == 2) {
-								dest.getRoot().setPixelsPhysicalSizeZ(
+								dest.getRoot().setPixelsPhysicalSizeZ(//
 									new Length(d, UNITS.MICROM), 0);
 							}
 						}

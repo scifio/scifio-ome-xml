@@ -116,8 +116,8 @@ public class DICOMTranslator {
 						store.setPixelsPhysicalSizeX(new Length(sizeX, UNITS.MICROM), i);
 					}
 					else {
-						log().warn(
-							"Expected positive value for PhysicalSizeX; got " + sizeX);
+						log().warn("Expected positive value for PhysicalSizeX; got " +
+							sizeX);
 					}
 				}
 				if (pixelSizeY != null) {
@@ -126,16 +126,16 @@ public class DICOMTranslator {
 						store.setPixelsPhysicalSizeY(new Length(sizeY, UNITS.MICROM), i);
 					}
 					else {
-						log().warn(
-							"Expected positive value for PhysicalSizeY; got " + sizeY);
+						log().warn("Expected positive value for PhysicalSizeY; got " +
+							sizeY);
 					}
 				}
 				if (pixelSizeZ != null && pixelSizeZ > 0) {
 					store.setPixelsPhysicalSizeZ(new Length(pixelSizeZ, UNITS.MICROM), i);
 				}
 				else {
-					log().warn(
-						"Expected positive value for PhysicalSizeZ; got " + pixelSizeZ);
+					log().warn("Expected positive value for PhysicalSizeZ; got " +
+						pixelSizeZ);
 				}
 			}
 		}

@@ -78,8 +78,8 @@ public class DefaultOMEXMLService extends AbstractService implements
 	}
 
 	@Override
-	public OMEXMLMetadata createOMEXMLMetadata(String xml, final String version)
-		throws ServiceException
+	public OMEXMLMetadata createOMEXMLMetadata(final String xml,
+		final String version) throws ServiceException
 	{
 		return omexmlService().createOMEXMLMetadata(xml, version);
 	}
@@ -122,7 +122,7 @@ public class DefaultOMEXMLService extends AbstractService implements
 	}
 
 	@Override
-	public boolean validateOMEXML(String xml, final boolean pixelsHack) {
+	public boolean validateOMEXML(final String xml, final boolean pixelsHack) {
 		return omexmlService().validateOMEXML(xml, pixelsHack);
 	}
 
@@ -145,7 +145,7 @@ public class DefaultOMEXMLService extends AbstractService implements
 		final OMEXMLMetadata omexmlMeta)
 	{
 		@SuppressWarnings("unchecked")
-		final Hashtable<String, Object> originalMetadata =
+		final Hashtable<String, Object> originalMetadata = //
 			omexmlService().getOriginalMetadata(omexmlMeta);
 		return originalMetadata;
 	}
@@ -177,7 +177,8 @@ public class DefaultOMEXMLService extends AbstractService implements
 	}
 
 	@Override
-	public void addMetadataOnly(final OMEXMLMetadata omexmlMeta, final int image)
+	public void addMetadataOnly(final OMEXMLMetadata omexmlMeta,
+		final int image)
 	{
 		omexmlService().addMetadataOnly(omexmlMeta, image);
 	}
@@ -208,7 +209,7 @@ public class DefaultOMEXMLService extends AbstractService implements
 		if (omexmlService != null) return;
 		try {
 			final ServiceFactory serviceFactory = new ServiceFactory();
-			omexmlService =
+			omexmlService = //
 				serviceFactory.getInstance(loci.formats.services.OMEXMLService.class);
 		}
 		catch (final DependencyException exc) {

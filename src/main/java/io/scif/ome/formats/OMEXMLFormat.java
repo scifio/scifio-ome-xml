@@ -226,7 +226,8 @@ public class OMEXMLFormat extends AbstractFormat {
 			throws IOException
 		{
 			final int blockLen = 64;
-			if (!FormatTools.validStream(stream, blockLen, stream.isLittleEndian())) return false;
+			if (!FormatTools.validStream(stream, blockLen, stream.isLittleEndian()))
+				return false;
 			final String xml = stream.readString(blockLen);
 			return xml.startsWith("<?xml") && xml.indexOf("<OME") >= 0;
 		}
@@ -261,7 +262,7 @@ public class OMEXMLFormat extends AbstractFormat {
 
 			final DefaultHandler handler = new OMEXMLHandler(meta);
 			try {
-				final RandomAccessInputStream s =
+				final RandomAccessInputStream s = //
 					new RandomAccessInputStream(getContext(), stream.getFileName());
 				xmlService.parseXML(s, handler);
 				s.close();
@@ -291,7 +292,7 @@ public class OMEXMLFormat extends AbstractFormat {
 			final OMEMetadata omeMeta = meta.getOMEMeta();
 			OMEXMLMetadata omexmlMeta = null;
 			if (omeMeta != null) omexmlMeta = meta.getOMEMeta().getRoot();
-			final OMEXMLService service =
+			final OMEXMLService service = //
 				getContext().getService(OMEXMLService.class);
 
 			try {
@@ -332,15 +333,14 @@ public class OMEXMLFormat extends AbstractFormat {
 		}
 
 		@Override
-		public ByteArrayPlane openPlane(final int imageIndex,
-			final long planeIndex, final ByteArrayPlane plane, final long[] offsets,
-			final long[] lengths, final SCIFIOConfig config) throws FormatException,
-			IOException
+		public ByteArrayPlane openPlane(final int imageIndex, final long planeIndex,
+			final ByteArrayPlane plane, final long[] offsets, final long[] lengths,
+			final SCIFIOConfig config) throws FormatException, IOException
 		{
 			final byte[] buf = plane.getBytes();
 			final Metadata meta = getMetadata();
 
-			FormatTools.checkPlaneForReading(meta, imageIndex, planeIndex,
+			FormatTools.checkPlaneForReading(meta, imageIndex, planeIndex, //
 				buf.length, offsets, lengths);
 
 			int index = (int) planeIndex;
@@ -357,19 +357,17 @@ public class OMEXMLFormat extends AbstractFormat {
 
 			getStream().seek(offset);
 
-			final int depth =
-				FormatTools.getBytesPerPixel(meta.get(imageIndex).getPixelType());
-			final int planeSize =
-				(int) (meta.get(imageIndex).getAxisLength(Axes.X) *
-					meta.get(imageIndex).getAxisLength(Axes.Y) * depth);
+			final int depth = FormatTools.getBytesPerPixel(//
+				meta.get(imageIndex).getPixelType());
+			final int planeSize = (int) (meta.get(imageIndex).getAxisLength(Axes.X) *
+				meta.get(imageIndex).getAxisLength(Axes.Y) * depth);
 
 			final CodecOptions options = new CodecOptions();
 			options.width = (int) meta.get(imageIndex).getAxisLength(Axes.X);
 			options.height = (int) meta.get(imageIndex).getAxisLength(Axes.Y);
 			options.bitsPerSample = depth * 8;
-			options.channels =
-				(int) (meta.get(imageIndex).isMultichannel() ? meta.get(imageIndex)
-					.getAxisLength(Axes.CHANNEL) : 1);
+			options.channels = (int) (meta.get(imageIndex).isMultichannel() ? //
+				meta.get(imageIndex).getAxisLength(Axes.CHANNEL) : 1);
 			options.maxBytes = planeSize;
 			options.littleEndian = meta.get(imageIndex).isLittleEndian();
 			options.interleaved = meta.get(imageIndex).getInterleavedAxisCount() > 0;
@@ -390,7 +388,7 @@ public class OMEXMLFormat extends AbstractFormat {
 				System.arraycopy(tempPixels, 2, pixels, 0, pixels.length);
 
 				ByteArrayInputStream bais = new ByteArrayInputStream(pixels);
-				CBZip2InputStream bzip =
+				CBZip2InputStream bzip = //
 					new CBZip2InputStream(bais, new StderrLogService());
 				pixels = new byte[planeSize];
 				bzip.read(pixels, 0, pixels.length);
@@ -414,14 +412,15 @@ public class OMEXMLFormat extends AbstractFormat {
 				pixels = codec.decompress(pixels, options);
 			}
 
-			final int xIndex = meta.get(imageIndex).getAxisIndex(Axes.X), yIndex =
-				meta.get(imageIndex).getAxisIndex(Axes.Y);
-			final int x = (int) offsets[xIndex], y = (int) offsets[yIndex], w =
-				(int) lengths[xIndex], h = (int) lengths[yIndex];
+			final int xIndex = meta.get(imageIndex).getAxisIndex(Axes.X);
+			final int yIndex = meta.get(imageIndex).getAxisIndex(Axes.Y);
+			final int x = (int) offsets[xIndex];
+			final int y = (int) offsets[yIndex];
+			final int w = (int) lengths[xIndex];
+			final int h = (int) lengths[yIndex];
 			for (int row = 0; row < h; row++) {
-				final int off =
-					(int) ((row + y) * meta.get(imageIndex).getAxisLength(Axes.X) * depth + x *
-						depth);
+				final int off = (int) ((row + y) * //
+					meta.get(imageIndex).getAxisLength(Axes.X) * depth + x * depth);
 				System.arraycopy(pixels, off, buf, row * w * depth, w * depth);
 			}
 
@@ -469,7 +468,7 @@ public class OMEXMLFormat extends AbstractFormat {
 		{
 			final Metadata meta = getMetadata();
 			final byte[] buf = plane.getBytes();
-			final boolean interleaved =
+			final boolean interleaved = //
 				meta.get(imageIndex).getInterleavedAxisCount() > 1;
 
 			checkParams(imageIndex, planeIndex, buf, offsets, lengths);
@@ -486,15 +485,14 @@ public class OMEXMLFormat extends AbstractFormat {
 			final String type = retrieve.getPixelsType(imageIndex).toString();
 			final int pixelType = FormatTools.pixelTypeFromString(type);
 			final int bytes = FormatTools.getBytesPerPixel(pixelType);
-			final int nChannels =
-				(int) (meta.get(imageIndex).isMultichannel() ? meta.get(imageIndex)
-					.getAxisLength(Axes.CHANNEL) : 1);
-			final int sizeX =
+			final int nChannels = (int) (meta.get(imageIndex).isMultichannel() ? //
+				meta.get(imageIndex).getAxisLength(Axes.CHANNEL) : 1);
+			final int sizeX = //
 				retrieve.getPixelsSizeX(imageIndex).getValue().intValue();
-			final int sizeY =
+			final int sizeY = //
 				retrieve.getPixelsSizeY(imageIndex).getValue().intValue();
 			final int planeSize = sizeX * sizeY * bytes;
-			final boolean bigEndian =
+			final boolean bigEndian = //
 				retrieve.getPixelsBinDataBigEndian(imageIndex, 0);
 
 			final String namespace =
@@ -502,9 +500,8 @@ public class OMEXMLFormat extends AbstractFormat {
 					omexmlService.getLatestVersion() + "\"";
 
 			for (int i = 0; i < nChannels; i++) {
-				final byte[] b =
-					ImageTools.splitChannels(buf, new long[] { i },
-						new long[] { nChannels }, bytes, false, interleaved);
+				final byte[] b = ImageTools.splitChannels(buf, new long[] { i },
+					new long[] { nChannels }, bytes, false, interleaved);
 				final byte[] encodedPix = compress(b, imageIndex);
 
 				final StringBuffer omePlane = new StringBuffer("\n<BinData ");
@@ -515,7 +512,9 @@ public class OMEXMLFormat extends AbstractFormat {
 				omePlane.append(" BigEndian=\"");
 				omePlane.append(bigEndian);
 				omePlane.append("\"");
-				if (getCompression() != null && !getCompression().equals("Uncompressed")) {
+				if (getCompression() != null && //
+					!getCompression().equals("Uncompressed"))
+				{
 					omePlane.append(" Compression=\"");
 					omePlane.append(getCompression());
 					omePlane.append("\"");
@@ -543,9 +542,8 @@ public class OMEXMLFormat extends AbstractFormat {
 				throw new FormatException(se);
 			}
 
-			final OMEHandler handler =
-				new OMEHandler(new Vector<String>(),
-					"<?xml version=\"1.0\" encoding=\"UTF-8\"?>", getContext());
+			final OMEHandler handler = new OMEHandler(new Vector<String>(),
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>", getContext());
 
 			try {
 				xmlService.parseXML(xml, handler);
@@ -602,7 +600,7 @@ public class OMEXMLFormat extends AbstractFormat {
 			options.channels = 1;
 			options.interleaved = false;
 			options.signed = FormatTools.isSigned(pixelType);
-			options.littleEndian =
+			options.littleEndian = //
 				!r.getPixelsBinDataBigEndian(imageIndex, 0).booleanValue();
 			options.bitsPerSample = bytes * 8;
 
@@ -635,7 +633,9 @@ public class OMEXMLFormat extends AbstractFormat {
 		}
 
 		@Override
-		public void translateFormatMetadata(final OMEMetadata source, final Metadata dest) {
+		public void translateFormatMetadata(final OMEMetadata source,
+			final Metadata dest)
+		{
 			dest.setOMEMeta(source);
 		}
 	}
@@ -812,7 +812,7 @@ public class OMEXMLFormat extends AbstractFormat {
 				xmlBuffer.append(">");
 			}
 			else {
-				meta.getBinData().add(
+				meta.getBinData().add(//
 					new BinData(locator.getLineNumber(), locator.getColumnNumber()));
 				final String compress = attributes.getValue("Compression");
 				meta.getCompression().add(compress == null ? "" : compress);

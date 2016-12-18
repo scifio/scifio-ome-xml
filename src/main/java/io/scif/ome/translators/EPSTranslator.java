@@ -81,7 +81,7 @@ public class EPSTranslator {
 
 			final int sizeX = meta.getPixelsSizeX(0).getValue().intValue();
 			final int sizeY = meta.getPixelsSizeY(0).getValue().intValue();
-			final int sizeC =
+			final int sizeC = //
 				meta.getChannelSamplesPerPixel(0, 0).getValue().intValue();
 
 			dest.get(0).setAxisLength(Axes.X, sizeX);

@@ -93,8 +93,8 @@ public class MicromanagerTranslator {
 		}
 
 		@Override
-		protected void translateFormatMetadata(final MicromanagerFormat.Metadata source,
-			final OMEMetadata dest)
+		protected void translateFormatMetadata(
+			final MicromanagerFormat.Metadata source, final OMEMetadata dest)
 		{
 			try {
 				populateMetadata(source, dest.getRoot());
@@ -108,7 +108,7 @@ public class MicromanagerTranslator {
 		private void populateMetadata(final Metadata meta,
 			final OMEXMLMetadata store) throws FormatException
 		{
-			final String instrumentID =
+			final String instrumentID = //
 				omexmlMetadataService.createLSID("Instrument", 0);
 			store.setInstrumentID(instrumentID, 0);
 			final Vector<Position> positions = meta.getPositions();
@@ -116,7 +116,7 @@ public class MicromanagerTranslator {
 			for (int i = 0; i < positions.size(); i++) {
 				final Position p = positions.get(i);
 				if (p.time != null) {
-					final String date =
+					final String date = //
 						DateTools.formatDate(p.time, MicromanagerFormat.Parser.DATE_FORMAT);
 					if (date != null) {
 						store.setImageAcquisitionDate(new Timestamp(date), i);
@@ -124,7 +124,7 @@ public class MicromanagerTranslator {
 				}
 
 				if (positions.size() > 1) {
-					final Location parent =
+					final Location parent = //
 						new Location(getContext(), p.metadataFile).getParentFile();
 					store.setImageName(parent.getName(), i);
 				}
@@ -139,23 +139,22 @@ public class MicromanagerTranslator {
 				}
 
 				if (p.pixelSize != null && p.pixelSize > 0) {
-					store
-						.setPixelsPhysicalSizeX(new Length(p.pixelSize, UNITS.MICROM), i);
-					store
-						.setPixelsPhysicalSizeY(new Length(p.pixelSize, UNITS.MICROM), i);
+					store.setPixelsPhysicalSizeX(//
+						new Length(p.pixelSize, UNITS.MICROM), i);
+					store.setPixelsPhysicalSizeY(//
+						new Length(p.pixelSize, UNITS.MICROM), i);
 				}
 				else {
-					log().warn(
-						"Expected positive value for PhysicalSizeX; got " + p.pixelSize);
+					log().warn("Expected positive value for PhysicalSizeX; got " +
+						p.pixelSize);
 				}
 				if (p.sliceThickness != null && p.sliceThickness > 0) {
 					store.setPixelsPhysicalSizeZ(new Length(p.sliceThickness,
 						UNITS.MICROM), i);
 				}
 				else {
-					log().warn(
-						"Expected positive value for PhysicalSizeZ; got " +
-							p.sliceThickness);
+					log().warn("Expected positive value for PhysicalSizeZ; got " +
+						p.sliceThickness);
 				}
 
 				int nextStamp = 0;
@@ -175,8 +174,8 @@ public class MicromanagerTranslator {
 				p.detectorID = omexmlMetadataService.createLSID("Detector", 0, i);
 
 				for (int c = 0; c < p.channels.length; c++) {
-					store.setDetectorSettingsBinning(omexmlMetadataService
-						.getBinning(p.binning), i, c);
+					store.setDetectorSettingsBinning(//
+						omexmlMetadataService.getBinning(p.binning), i, c);
 					store.setDetectorSettingsGain(new Double(p.gain), i, c);
 					if (c < p.voltage.size()) {
 						store.setDetectorSettingsVoltage(new ElectricPotential(p.voltage
@@ -199,8 +198,8 @@ public class MicromanagerTranslator {
 				}
 
 				if (p.cameraMode == null) p.cameraMode = "Other";
-				store.setDetectorType(omexmlMetadataService
-					.getDetectorType(p.cameraMode), 0, i);
+				store.setDetectorType(//
+					omexmlMetadataService.getDetectorType(p.cameraMode), 0, i);
 				store.setImagingEnvironmentTemperature(new Temperature(p.temperature,
 					UNITS.DEGREEC), i);
 			}

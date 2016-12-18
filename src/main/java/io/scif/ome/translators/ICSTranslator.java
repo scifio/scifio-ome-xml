@@ -104,18 +104,19 @@ public class ICSTranslator {
 			if (retrieve.getInstrumentCount() > 0) {
 				dest.putMicroscopeModel(retrieve.getMicroscopeModel(0));
 				dest.putMicroscopeManufacturer(retrieve.getMicroscopeManufacturer(0));
-				final Hashtable<Integer, Integer> laserWaves =
-					new Hashtable<>();
+				final Hashtable<Integer, Integer> laserWaves = new Hashtable<>();
 
 				for (int i = 0; i < retrieve.getLightSourceCount(0); i++) {
-					laserWaves.put(i, retrieve.getLaserWavelength(0, i).value().intValue());
+					laserWaves.put(i, //
+						retrieve.getLaserWavelength(0, i).value().intValue());
 				}
 
 				dest.putWavelengths(laserWaves);
 				dest.putLaserManufacturer(retrieve.getLaserManufacturer(0, 0));
 				dest.putLaserModel(retrieve.getLaserModel(0, 0));
 				dest.putLaserPower(retrieve.getLaserPower(0, 0).value().doubleValue());
-				dest.putLaserRepetitionRate(retrieve.getLaserRepetitionRate(0, 0).value().doubleValue());
+				dest.putLaserRepetitionRate(//
+					retrieve.getLaserRepetitionRate(0, 0).value().doubleValue());
 
 				dest.putFilterSetModel(retrieve.getFilterSetModel(0, 0));
 				dest.putDichroicModel(retrieve.getDichroicModel(0, 0));
@@ -125,9 +126,10 @@ public class ICSTranslator {
 				dest.putObjectiveModel(retrieve.getObjectiveModel(0, 0));
 				dest.putImmersion(retrieve.getObjectiveImmersion(0, 0).getValue());
 				dest.putLensNA(retrieve.getObjectiveLensNA(0, 0));
-				dest.putWorkingDistance(retrieve.getObjectiveWorkingDistance(0, 0).value().doubleValue());
-				dest.putMagnification(retrieve
-					.getObjectiveCalibratedMagnification(0, 0));
+				dest.putWorkingDistance(//
+					retrieve.getObjectiveWorkingDistance(0, 0).value().doubleValue());
+				dest.putMagnification(//
+					retrieve.getObjectiveCalibratedMagnification(0, 0));
 
 				dest.putDetectorManufacturer(retrieve.getDetectorManufacturer(0, 0));
 				dest.putDetectorModel(retrieve.getDetectorModel(0, 0));
@@ -179,7 +181,7 @@ public class ICSTranslator {
 			dest.putUnits(units);
 
 			if (retrieve.getPlaneCount(0) > 0) {
-				final Double[] timestamps =
+				final Double[] timestamps = //
 					new Double[(int) source.get(0).getAxisLength(Axes.TIME)];
 
 				for (int t = 0; t < timestamps.length; t++) {
@@ -187,20 +189,19 @@ public class ICSTranslator {
 				}
 
 				dest.putTimestamps(timestamps);
-				dest.putExposureTime(retrieve.getPlaneExposureTime(0, 0).value().doubleValue());
+				dest.putExposureTime(//
+					retrieve.getPlaneExposureTime(0, 0).value().doubleValue());
 			}
 
-			final Hashtable<Integer, String> channelNames =
-				new Hashtable<>();
-			final Hashtable<Integer, Double> pinholes =
-				new Hashtable<>();
+			final Hashtable<Integer, String> channelNames = new Hashtable<>();
+			final Hashtable<Integer, Double> pinholes = new Hashtable<>();
 			final Hashtable<Integer, Double> gains = new Hashtable<>();
 			final List<Integer> emWaves = new ArrayList<>();
 			final List<Integer> exWaves = new ArrayList<>();
-			final long effSizeC =
-				source.get(0).getPlaneCount() /
-					(source.get(0).getAxisLength(Axes.TIME) * source.get(0)
-						.getAxisLength(Axes.Z));
+			final long planeCount = source.get(0).getPlaneCount();
+			final long tLen = source.get(0).getAxisLength(Axes.TIME);
+			final long zLen = source.get(0).getAxisLength(Axes.Z);
+			final long effSizeC = planeCount / (tLen * zLen);
 			for (int i = 0; i < effSizeC; i++) {
 				final String cName = retrieve.getChannelName(0, i);
 				if (cName != null) channelNames.put(i, cName);
@@ -214,7 +215,7 @@ public class ICSTranslator {
 				final Length exWave = retrieve.getChannelExcitationWavelength(0, i);
 				if (exWave != null) exWaves.add(exWave.value().intValue());
 
-				if (retrieve.getInstrumentCount() > 0 &&
+				if (retrieve.getInstrumentCount() > 0 && //
 					retrieve.getDetectorCount(0) > 0)
 				{
 					final Double chGain = retrieve.getDetectorSettingsGain(0, i);
@@ -265,33 +266,34 @@ public class ICSTranslator {
 			boolean lifetime = false;
 			final int imageIndex = 0; // TODO correct index?
 			Double[] pixelSizes = null, timestamps = null, stagePos = null;
-			Double laserPower = null, laserRepetitionRate = null, lensNA = null, workingDistance =
-				null, magnification = null, exposureTime = null;
+			Double laserPower = null, laserRepetitionRate = null, lensNA = null;
+			Double workingDistance = null, magnification = null, exposureTime = null;
 			Integer[] emWaves = null, exWaves = null;
 			double[] sizes = null;
 			String[] units = null, axes = null;
 			final String imageName = source.getSource().getFileName();
-			String date = null, description = null, microscopeModel = null, microscopeManufacturer =
-				null, experimentType = null, laserManufacturer = null, laserModel =
-				null, filterSetModel = null, dichroicModel = null, excitationModel =
-				null, emissionModel = null, objectiveModel = null, immersion = null, detectorManufacturer =
-				null, detectorModel = null, lastName = null;
+			String date = null, description = null, microscopeModel = null,
+					microscopeManufacturer = null, experimentType = null,
+					laserManufacturer = null, laserModel = null, filterSetModel = null,
+					dichroicModel = null, excitationModel = null, emissionModel = null,
+					objectiveModel = null, immersion = null, detectorManufacturer = null,
+					detectorModel = null, lastName = null;
 
 			Hashtable<Integer, Double> gains = new Hashtable<>();
-			Hashtable<Integer, String> channelNames =
-				new Hashtable<>();
+			Hashtable<Integer, String> channelNames = new Hashtable<>();
 			Hashtable<Integer, Double> pinholes = new Hashtable<>();
-			Hashtable<Integer, Integer> wavelengths =
-				new Hashtable<>();
+			Hashtable<Integer, Integer> wavelengths = new Hashtable<>();
 
-			final FilterMetadata filter =
+			final FilterMetadata filter = //
 				new FilterMetadata(store, source.isFiltered());
 			filter.createRoot();
 
 			// FIXME: no more datasetmetadata
 
-			getContext().getService(OMEMetadataService.class).populatePixels(
-				filter, source, true);
+			final OMEMetadataService omeMetaService = //
+				getContext().service(OMEMetadataService.class);
+
+			omeMetaService.populatePixels(filter, source, true);
 
 			store.setImageName(imageName, 0);
 
@@ -305,9 +307,7 @@ public class ICSTranslator {
 			store.setImageDescription(description, 0);
 
 			// link Instrument and Image
-			final String instrumentID =
-				getContext().getService(OMEMetadataService.class).createLSID(
-					"Instrument", 0);
+			final String instrumentID = omeMetaService.createLSID("Instrument", 0);
 			store.setInstrumentID(instrumentID, 0);
 
 			microscopeModel = source.getMicroscopeModel();
@@ -318,17 +318,15 @@ public class ICSTranslator {
 
 			store.setImageInstrumentRef(instrumentID, 0);
 
-			store
-				.setExperimentID(getContext().getService(OMEMetadataService.class)
-					.createLSID("Experiment", 0), 0);
+			store.setExperimentID(omeMetaService.createLSID("Experiment", 0), 0);
 
 			lifetime = source.getLifetime();
 
 			experimentType = source.getExperimentType();
 
 			try {
-				store.setExperimentType(getContext().getService(
-					OMEMetadataService.class).getExperimentType(experimentType), 0);
+				store.setExperimentType(//
+					omeMetaService.getExperimentType(experimentType), 0);
 			}
 			catch (final FormatException e) {
 				log().debug("Could not set experiment type", e);
@@ -369,48 +367,50 @@ public class ICSTranslator {
 					final String axis = axes != null && axes.length > i ? axes[i] : "";
 					final String unit = units != null && units.length > i ? units[i] : "";
 					if (axis.equals("x")) {
-						if (pixelSize > 0 &&
-							checkUnit(unit, "um", "microns", "micrometers"))
+						if (pixelSize > 0 && checkUnit(unit, "um", "microns",
+							"micrometers"))
 						{
-							store.setPixelsPhysicalSizeX(new Length(pixelSize, UNITS.MICROM), 0);
+							store.setPixelsPhysicalSizeX(new Length(pixelSize, UNITS.MICROM),
+								0);
 						}
 						else {
-							log().warn(
-								"Expected positive value for PhysicalSizeX; got " + pixelSize);
+							log().warn("Expected positive value for PhysicalSizeX; got " +
+								pixelSize);
 						}
 					}
 					else if (axis.equals("y")) {
-						if (pixelSize > 0 &&
-							checkUnit(unit, "um", "microns", "micrometers"))
+						if (pixelSize > 0 && checkUnit(unit, "um", "microns",
+							"micrometers"))
 						{
-							store.setPixelsPhysicalSizeY(new Length(pixelSize, UNITS.MICROM), 0);
+							store.setPixelsPhysicalSizeY(new Length(pixelSize, UNITS.MICROM),
+								0);
 						}
 						else {
-							log().warn(
-								"Expected positive value for PhysicalSizeY; got " + pixelSize);
+							log().warn("Expected positive value for PhysicalSizeY; got " +
+								pixelSize);
 						}
 					}
 					else if (axis.equals("z")) {
-						if (pixelSize > 0 &&
-							checkUnit(unit, "um", "microns", "micrometers"))
+						if (pixelSize > 0 && checkUnit(unit, "um", "microns",
+							"micrometers"))
 						{
 							store.setPixelsPhysicalSizeZ(new Length(pixelSize, UNITS.MICROM),
 								0);
 						}
 						else {
-							log().warn(
-								"Expected positive value for PhysicalSizeZ; got " + pixelSize);
+							log().warn("Expected positive value for PhysicalSizeZ; got " +
+								pixelSize);
 						}
 					}
 					else if (axis.equals("t")) {
 						// FIXME: Use the OME units API here, instead of hardcoding.
 						if (checkUnit(unit, "ms")) {
-							store.setPixelsTimeIncrement(new Time(1000 * pixelSize,
-								UNITS.SECOND), 0);
+							store.setPixelsTimeIncrement(//
+								new Time(1000 * pixelSize, UNITS.SECOND), 0);
 						}
 						else if (checkUnit(unit, "seconds") || checkUnit(unit, "s")) {
-							store
-								.setPixelsTimeIncrement(new Time(pixelSize, UNITS.SECOND), 0);
+							store.setPixelsTimeIncrement(//
+								new Time(pixelSize, UNITS.SECOND), 0);
 						}
 					}
 				}
@@ -420,8 +420,8 @@ public class ICSTranslator {
 					store.setPixelsPhysicalSizeX(new Length(sizes[0], UNITS.MICROM), 0);
 				}
 				else {
-					log().warn(
-						"Expected positive value for PhysicalSizeX; got " + sizes[0]);
+					log().warn("Expected positive value for PhysicalSizeX; got " +
+						sizes[0]);
 				}
 				if (sizes.length > 1) {
 					sizes[1] /= source.get(imageIndex).getAxisLength(Axes.Y);
@@ -429,8 +429,8 @@ public class ICSTranslator {
 						store.setPixelsPhysicalSizeY(new Length(sizes[1], UNITS.MICROM), 0);
 					}
 					else {
-						log().warn(
-							"Expected positive value for PhysicalSizeY; got " + sizes[1]);
+						log().warn("Expected positive value for PhysicalSizeY; got " +
+							sizes[1]);
 					}
 				}
 			}
@@ -447,23 +447,19 @@ public class ICSTranslator {
 					if (timestamps[t] == null) continue; // ignore missing timestamp
 					final double deltaT = timestamps[t];
 					if (Double.isNaN(deltaT)) continue; // ignore invalid timestamp
-					final long effSizeC =
-						source.get(imageIndex).getPlaneCount() /
-							(source.get(imageIndex).getAxisLength(Axes.TIME) * source.get(
-								imageIndex).getAxisLength(Axes.Z));
+					final long planeCount = source.get(imageIndex).getPlaneCount();
+					final long tLen = source.get(imageIndex).getAxisLength(Axes.TIME);
+					final long zLen = source.get(imageIndex).getAxisLength(Axes.Z);
+					final long effSizeC = planeCount / (tLen * zLen);
 					// assign timestamp to all relevant planes
-					final OMEMetadataService metaService =
-						getContext().getService(OMEMetadataService.class);
-					final String dimOrder =
-						metaService.findDimensionOrder(source, imageIndex);
-					for (int z = 0; z < source.get(imageIndex).getAxisLength(Axes.Z); z++)
-					{
+					final String dimOrder = //
+						omeMetaService.findDimensionOrder(source, imageIndex);
+					for (int z = 0; z < zLen; z++) {
 						for (int c = 0; c < effSizeC; c++) {
-							final int index =
-								(int) FormatTools.positionToRaster(metaService.zctToArray(
-									dimOrder, (int) source.get(imageIndex).getAxisLength(Axes.Z),
-									(int) effSizeC, (int) source.get(imageIndex).getAxisLength(
-										Axes.TIME)), metaService.zctToArray(dimOrder, z, c, t));
+							final long[] lengths = omeMetaService.zctToArray(dimOrder,
+								(int) zLen, (int) effSizeC, (int) tLen);
+							final int index = (int) FormatTools.positionToRaster(//
+								lengths, omeMetaService.zctToArray(dimOrder, z, c, t));
 
 							store.setPlaneDeltaT(new Time(deltaT, UNITS.SECOND), 0, index);
 						}
@@ -490,16 +486,16 @@ public class ICSTranslator {
 			if (exWaves == null) {
 				exWaves = source.getEXSingleton();
 			}
-			final long effSizeC =
-				source.get(imageIndex).getPlaneCount() /
-					(source.get(imageIndex).getAxisLength(Axes.TIME) * source.get(
-						imageIndex).getAxisLength(Axes.Z));
+			final long planeCount = source.get(imageIndex).getPlaneCount();
+			final long tLen = source.get(imageIndex).getAxisLength(Axes.TIME);
+			final long zLen = source.get(imageIndex).getAxisLength(Axes.Z);
+			final long effSizeC = planeCount / (tLen * zLen);
 			for (int i = 0; i < effSizeC; i++) {
 				if (channelNames.containsKey(i)) {
 					store.setChannelName(channelNames.get(i), 0, i);
 				}
 				if (pinholes.containsKey(i)) {
-					store.setChannelPinholeSize(
+					store.setChannelPinholeSize(//
 						new Length(pinholes.get(i), UNITS.MICROM), 0, i);
 				}
 				if (emWaves != null && i < emWaves.length) {
@@ -508,9 +504,8 @@ public class ICSTranslator {
 							UNITS.MICROM), 0, i);
 					}
 					else {
-						log().warn(
-							"Expected positive value for EmissionWavelength; got " +
-								emWaves[i]);
+						log().warn("Expected positive value for EmissionWavelength; got " +
+							emWaves[i]);
 					}
 				}
 				if (exWaves != null && i < exWaves.length) {
@@ -542,29 +537,26 @@ public class ICSTranslator {
 			final Integer[] lasers = wavelengths.keySet().toArray(new Integer[0]);
 			Arrays.sort(lasers);
 			for (int i = 0; i < lasers.length; i++) {
-				store.setLaserID(getContext().getService(OMEMetadataService.class)
-					.createLSID("LightSource", 0, i), 0, i);
+				store.setLaserID(omeMetaService.createLSID("LightSource", 0, i), 0, i);
 				if (wavelengths.get(lasers[i]) > 0) {
 					store.setLaserWavelength(new Length(wavelengths.get(lasers[i]),
 						UNITS.MICROM), 0, i);
 				}
 				else {
-					log().warn(
-						"Expected positive value for wavelength; got " +
-							wavelengths.get(lasers[i]));
+					log().warn("Expected positive value for wavelength; got " +
+						wavelengths.get(lasers[i]));
 				}
 
 				try {
-					store.setLaserType(getContext().getService(
-						OMEMetadataService.class).getLaserType("Other"), 0, i);
+					store.setLaserType(omeMetaService.getLaserType("Other"), 0, i);
 				}
 				catch (final FormatException e) {
 					log().warn("Failed to set laser type", e);
 				}
 
 				try {
-					store.setLaserLaserMedium(getContext().getService(
-						OMEMetadataService.class).getLaserMedium("Other"), 0, i);
+					store.setLaserLaserMedium(//
+						omeMetaService.getLaserMedium("Other"), 0, i);
 				}
 				catch (final FormatException e) {
 					log().warn("Failed to set laser medium", e);
@@ -578,19 +570,17 @@ public class ICSTranslator {
 			}
 
 			if (lasers.length == 0 && laserManufacturer != null) {
-				store.setLaserID(getContext().getService(OMEMetadataService.class)
-					.createLSID("LightSource", 0, 0), 0, 0);
+				store.setLaserID(omeMetaService.createLSID("LightSource", 0, 0), 0, 0);
 
 				try {
-					store.setLaserType(getContext().getService(
-						OMEMetadataService.class).getLaserType("Other"), 0, 0);
+					store.setLaserType(omeMetaService.getLaserType("Other"), 0, 0);
 				}
 				catch (final FormatException e) {
 					log().warn("Failed to set laser type", e);
 				}
 				try {
-					store.setLaserLaserMedium(getContext().getService(
-						OMEMetadataService.class).getLaserMedium("Other"), 0, 0);
+					store.setLaserLaserMedium(//
+						omeMetaService.getLaserMedium("Other"), 0, 0);
 				}
 				catch (final FormatException e) {
 					log().warn("Failed to set laser medium", e);
@@ -613,19 +603,13 @@ public class ICSTranslator {
 			emissionModel = source.getEmissionModel();
 
 			if (filterSetModel != null) {
-				store.setFilterSetID(getContext().getService(
-					OMEMetadataService.class).createLSID("FilterSet", 0, 0), 0, 0);
+				store.setFilterSetID(//
+					omeMetaService.createLSID("FilterSet", 0, 0), 0, 0);
 				store.setFilterSetModel(filterSetModel, 0, 0);
 
-				final String dichroicID =
-					getContext().getService(OMEMetadataService.class).createLSID(
-						"Dichroic", 0, 0);
-				final String emFilterID =
-					getContext().getService(OMEMetadataService.class).createLSID(
-						"Filter", 0, 0);
-				final String exFilterID =
-					getContext().getService(OMEMetadataService.class).createLSID(
-						"Filter", 0, 1);
+				final String dichroicID = omeMetaService.createLSID("Dichroic", 0, 0);
+				final String emFilterID = omeMetaService.createLSID("Filter", 0, 0);
+				final String exFilterID = omeMetaService.createLSID("Filter", 0, 1);
 
 				store.setDichroicID(dichroicID, 0, 0);
 				store.setDichroicModel(dichroicModel, 0, 0);
@@ -655,8 +639,8 @@ public class ICSTranslator {
 			if (objectiveModel != null) store.setObjectiveModel(objectiveModel, 0, 0);
 			if (immersion == null) immersion = "Other";
 			try {
-				store.setObjectiveImmersion(getContext().getService(
-					OMEMetadataService.class).getImmersion(immersion), 0, 0);
+				store.setObjectiveImmersion(//
+					omeMetaService.getImmersion(immersion), 0, 0);
 			}
 			catch (final FormatException e) {
 				log().warn("failed to set objective immersion", e);
@@ -670,17 +654,15 @@ public class ICSTranslator {
 				store.setObjectiveCalibratedMagnification(magnification, 0, 0);
 			}
 			try {
-				store.setObjectiveCorrection(getContext().getService(
-					OMEMetadataService.class).getCorrection("Other"), 0, 0);
+				store.setObjectiveCorrection(//
+					omeMetaService.getCorrection("Other"), 0, 0);
 			}
 			catch (final FormatException e) {
 				log().warn("Failed to store objective correction", e);
 			}
 
 			// link Objective to Image
-			final String objectiveID =
-				getContext().getService(OMEMetadataService.class).createLSID(
-					"Objective", 0, 0);
+			final String objectiveID = omeMetaService.createLSID("Objective", 0, 0);
 			store.setObjectiveID(objectiveID, 0, 0);
 			store.setObjectiveSettingsID(objectiveID, 0);
 
@@ -690,15 +672,12 @@ public class ICSTranslator {
 
 			detectorModel = source.getDetectorModel();
 
-			final String detectorID =
-				getContext().getService(OMEMetadataService.class).createLSID(
-					"Detector", 0, 0);
+			final String detectorID = omeMetaService.createLSID("Detector", 0, 0);
 			store.setDetectorID(detectorID, 0, 0);
 			store.setDetectorManufacturer(detectorManufacturer, 0, 0);
 			store.setDetectorModel(detectorModel, 0, 0);
 			try {
-				store.setDetectorType(getContext().getService(
-					OMEMetadataService.class).getDetectorType("Other"), 0, 0);
+				store.setDetectorType(omeMetaService.getDetectorType("Other"), 0, 0);
 			}
 			catch (final FormatException e) {
 				log().warn("Failed to store detector type", e);
@@ -719,9 +698,8 @@ public class ICSTranslator {
 			lastName = source.getAuthorLastName();
 
 			if (lastName != null) {
-				final String experimenterID =
-					getContext().getService(OMEMetadataService.class).createLSID(
-						"Experimenter", 0);
+				final String experimenterID = //
+					omeMetaService.createLSID("Experimenter", 0);
 				store.setExperimenterID(experimenterID, 0);
 				store.setExperimenterLastName(lastName, 0);
 			}
@@ -746,8 +724,8 @@ public class ICSTranslator {
 
 			if (exposureTime != null) {
 				for (int i = 0; i < source.getImageCount(); i++) {
-					store
-						.setPlaneExposureTime(new Time(exposureTime, UNITS.SECOND), 0, i);
+					store.setPlaneExposureTime(//
+						new Time(exposureTime, UNITS.SECOND), 0, i);
 				}
 			}
 
@@ -820,8 +798,8 @@ public class ICSTranslator {
 			for (final String exp : expected) {
 				if (actual.equals(exp)) return true; // unit matches expected value
 			}
-			log().debug(
-				"Unexpected unit '" + actual + "'; expected '" + expected + "'");
+			log().debug("Unexpected unit '" + actual + //
+				"'; expected '" + expected + "'");
 			return false;
 		}
 	}
