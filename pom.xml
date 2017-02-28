@@ -80,8 +80,8 @@
 		<url>https://github.com/scifio/scifio-ome-xml/issues</url>
 	</issueManagement>
 	<ciManagement>
-		<system>Jenkins</system>
-		<url>http://jenkins.imagej.net/job/SCIFIO-OME-XML/</url>
+		<system>Travis CI</system>
+		<url>https://travis-ci.org/scifio/scifio-ome-xml</url>
 	</ciManagement>
 
 	<properties>

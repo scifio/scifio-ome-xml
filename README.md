@@ -1,4 +1,4 @@
-[![](http://jenkins.imagej.net/job/SCIFIO-OME-XML/lastBuild/badge/icon)](http://jenkins.imagej.net/job/SCIFIO-OME-XML/)
+[![](https://travis-ci.org/scifio/scifio-ome-xml.svg?branch=master)](https://travis-ci.org/scifio/scifio-ome-xml)
 
 SCIFIO OME-XML support
 ======================
