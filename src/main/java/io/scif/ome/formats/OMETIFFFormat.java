@@ -74,19 +74,21 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.Vector;
 
+import loci.common.services.ServiceException;
+import loci.formats.meta.IMetadata;
+import loci.formats.meta.MetadataRetrieve;
+import loci.formats.meta.MetadataStore;
+import loci.formats.ome.OMEXMLMetadata;
+
 import net.imagej.axis.Axes;
 import net.imagej.axis.CalibratedAxis;
+import net.imglib2.Interval;
 import net.imglib2.display.ColorTable;
 
 import org.scijava.Context;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
-import loci.common.services.ServiceException;
-import loci.formats.meta.IMetadata;
-import loci.formats.meta.MetadataRetrieve;
-import loci.formats.meta.MetadataStore;
-import loci.formats.ome.OMEXMLMetadata;
 import ome.units.quantity.Length;
 import ome.xml.model.primitives.NonNegativeInteger;
 import ome.xml.model.primitives.PositiveFloat;
@@ -1098,7 +1100,7 @@ public class OMETIFFFormat extends AbstractFormat {
 
 		@Override
 		public ByteArrayPlane openPlane(final int imageIndex, final long planeIndex,
-			final ByteArrayPlane plane, final long[] offsets, final long[] lengths,
+			final ByteArrayPlane plane, final Interval bounds,
 			final SCIFIOConfig config) throws io.scif.FormatException, IOException
 		{
 			final Metadata meta = getMetadata();
@@ -1106,7 +1108,7 @@ public class OMETIFFFormat extends AbstractFormat {
 			final OMETIFFPlane[][] info = meta.getPlaneInfo();
 
 			FormatTools.checkPlaneForReading(meta, imageIndex, planeIndex, buf.length,
-				offsets, lengths);
+				bounds);
 			meta.setLastPlane(planeIndex);
 			final int i = info[imageIndex][(int) planeIndex].ifd;
 			final MinimalTIFFFormat.Reader<?> r =
@@ -1126,8 +1128,8 @@ public class OMETIFFFormat extends AbstractFormat {
 			final TiffParser p = new TiffParser(getContext(), s);
 			final int xIndex = meta.get(imageIndex).getAxisIndex(Axes.X), yIndex =
 				meta.get(imageIndex).getAxisIndex(Axes.Y);
-			final int x = (int) offsets[xIndex], y = (int) offsets[yIndex], w =
-				(int) lengths[xIndex], h = (int) lengths[yIndex];
+			final int x = (int) bounds.min(xIndex), y = (int) bounds.min(yIndex), //
+					w = (int) bounds.dimension(xIndex), h = (int) bounds.dimension(yIndex);
 			p.getSamples(ifd, buf, x, y, w, h);
 			s.close();
 			return plane;
@@ -1203,15 +1205,15 @@ public class OMETIFFFormat extends AbstractFormat {
 
 		@Override
 		public void savePlane(final int imageIndex, final long planeIndex,
-			final Plane plane, final IFD ifd, final long[] offsets,
-			final long[] lengths) throws io.scif.FormatException, IOException
+			final Plane plane, final IFD ifd, final Interval bounds)
+			throws io.scif.FormatException, IOException
 		{
 			if (imageMap == null) imageMap = new ArrayList<>();
 			if (!imageMap.contains(imageIndex)) {
 				imageMap.add(new Integer(imageIndex));
 			}
 
-			super.savePlane(imageIndex, planeIndex, plane, ifd, offsets, lengths);
+			super.savePlane(imageIndex, planeIndex, plane, ifd, bounds);
 
 			// TODO should this be the output id?
 			imageLocations[imageIndex][(int) planeIndex] = //

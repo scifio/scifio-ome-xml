@@ -71,7 +71,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
 
+import loci.common.services.ServiceException;
+import loci.formats.meta.MetadataRetrieve;
+import loci.formats.ome.OMEXMLMetadata;
+import loci.formats.ome.OMEXMLMetadataImpl;
+
 import net.imagej.axis.Axes;
+import net.imglib2.Interval;
 
 import org.scijava.Context;
 import org.scijava.Priority;
@@ -81,11 +87,6 @@ import org.scijava.plugin.Plugin;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.helpers.DefaultHandler;
-
-import loci.common.services.ServiceException;
-import loci.formats.meta.MetadataRetrieve;
-import loci.formats.ome.OMEXMLMetadata;
-import loci.formats.ome.OMEXMLMetadataImpl;
 
 /**
  * Format for OME-XML files.
@@ -334,14 +335,14 @@ public class OMEXMLFormat extends AbstractFormat {
 
 		@Override
 		public ByteArrayPlane openPlane(final int imageIndex, final long planeIndex,
-			final ByteArrayPlane plane, final long[] offsets, final long[] lengths,
+			final ByteArrayPlane plane, final Interval bounds,
 			final SCIFIOConfig config) throws FormatException, IOException
 		{
 			final byte[] buf = plane.getBytes();
 			final Metadata meta = getMetadata();
 
 			FormatTools.checkPlaneForReading(meta, imageIndex, planeIndex, //
-				buf.length, offsets, lengths);
+				buf.length, bounds);
 
 			int index = (int) planeIndex;
 
@@ -414,10 +415,10 @@ public class OMEXMLFormat extends AbstractFormat {
 
 			final int xIndex = meta.get(imageIndex).getAxisIndex(Axes.X);
 			final int yIndex = meta.get(imageIndex).getAxisIndex(Axes.Y);
-			final int x = (int) offsets[xIndex];
-			final int y = (int) offsets[yIndex];
-			final int w = (int) lengths[xIndex];
-			final int h = (int) lengths[yIndex];
+			final int x = (int) bounds.min(xIndex);
+			final int y = (int) bounds.min(yIndex);
+			final int w = (int) bounds.dimension(xIndex);
+			final int h = (int) bounds.dimension(yIndex);
 			for (int row = 0; row < h; row++) {
 				final int off = (int) ((row + y) * //
 					meta.get(imageIndex).getAxisLength(Axes.X) * depth + x * depth);
@@ -463,16 +464,16 @@ public class OMEXMLFormat extends AbstractFormat {
 
 		@Override
 		public void writePlane(final int imageIndex, final long planeIndex,
-			final Plane plane, final long[] offsets, final long[] lengths)
-			throws FormatException, IOException
+			final Plane plane, final Interval bounds) throws FormatException,
+			IOException
 		{
 			final Metadata meta = getMetadata();
 			final byte[] buf = plane.getBytes();
 			final boolean interleaved = //
 				meta.get(imageIndex).getInterleavedAxisCount() > 1;
 
-			checkParams(imageIndex, planeIndex, buf, offsets, lengths);
-			if (!SCIFIOMetadataTools.wholePlane(imageIndex, meta, offsets, lengths)) {
+			checkParams(imageIndex, planeIndex, buf, bounds);
+			if (!SCIFIOMetadataTools.wholePlane(imageIndex, meta, bounds)) {
 				throw new FormatException(
 					"OMEXMLWriter does not yet support saving image tiles.");
 			}
