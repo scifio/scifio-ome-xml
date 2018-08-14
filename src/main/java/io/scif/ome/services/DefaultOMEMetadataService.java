@@ -34,7 +34,6 @@ import io.scif.FormatException;
 import io.scif.ImageMetadata;
 import io.scif.Metadata;
 import io.scif.Reader;
-import io.scif.io.Location;
 import io.scif.services.FormatService;
 import io.scif.util.FormatTools;
 
@@ -120,14 +119,13 @@ public class DefaultOMEMetadataService extends AbstractService implements
 	@Override
 	public void populatePixels(final MetadataStore store,
 		final List<ImageMetadata> imageMeta, final boolean doPlane,
-		String imageName)
+		final String imageName)
 	{
 		if (store == null || imageMeta == null) return;
 		for (int i = 0; i < imageMeta.size(); i++) {
 
 			if (imageName != null) {
-				final Location f = new Location(getContext(), imageName);
-				imageName = f.getName();
+				// TODO ???
 			}
 			final String pixelType = //
 				FormatTools.getPixelTypeString(imageMeta.get(i).getPixelType());

@@ -60,7 +60,7 @@ public class APNGTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH_PRIORITY)
+	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH)
 	public static class OMEAPNGTranslator extends
 		FromOMETranslator<APNGFormat.Metadata>
 	{
@@ -81,7 +81,7 @@ public class APNGTranslator {
 		protected void translateFormatMetadata(final OMEMetadata source,
 			final APNGFormat.Metadata dest)
 		{
-			if (dest.getFctl() != null && dest.getFctl().size() > 0) {
+			if (dest.getFctl() != null && !dest.getFctl().isEmpty()) {
 				final Time timeIncrement = source.getRoot().getPixelsTimeIncrement(0);
 
 				final short tIncrement = //
@@ -104,7 +104,7 @@ public class APNGTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
+	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH)
 	public static class APNGOMETranslator extends
 		ToOMETranslator<APNGFormat.Metadata>
 	{
@@ -170,7 +170,7 @@ public class APNGTranslator {
 				sizeX, sizeY, sizeZ, sizeC, sizeT, 1.0, 1.0, 1.0, 1.0, 1.0,
 				samplesPerPixel);
 
-			if (source.getFctl() != null && source.getFctl().size() > 0) {
+			if (source.getFctl() != null && !source.getFctl().isEmpty()) {
 				final short delayNum = source.getFctl().get(0).getDelayNum();
 				final short delayDen = source.getFctl().get(0).getDelayDen();
 				final double timeIncrement = (double) delayNum / delayDen;

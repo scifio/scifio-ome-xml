@@ -7,13 +7,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -42,6 +42,7 @@ import io.scif.ome.OMEMetadata;
 import io.scif.services.InitializeService;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -53,6 +54,8 @@ import net.imagej.axis.CalibratedAxis;
 
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
+import org.scijava.io.location.Location;
+import org.scijava.io.location.LocationService;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
@@ -60,7 +63,7 @@ import loci.common.xml.XMLTools;
 
 /**
  * {@link SCIFIOToolCommand} plugin for printing OME-XML.
- * 
+ *
  * @author Mark Hiner
  */
 @Plugin(type = SCIFIOToolCommand.class)
@@ -78,10 +81,13 @@ public class OMEXMLToolCommand extends AbstractSCIFIOToolCommand {
 
 	@Argument(metaVar = "indent", index = 1, required = false,
 		usage = "indentation for xml nesting")
-	private final Integer xmlIndent = 3;
+	private Integer xmlIndent = 3;
 
 	@Argument(index = 2, multiValued = true)
 	private final List<String> arguments = new ArrayList<>();
+
+	@Parameter
+	private LocationService locationService;
 
 	// -- AbstractSCIFIOToolCommand API --
 
@@ -90,7 +96,8 @@ public class OMEXMLToolCommand extends AbstractSCIFIOToolCommand {
 		try {
 			// OMEXML uses a fixed-5D XY[ZCT] data model. Thus we need to adjust the
 			// axis order to best match the OME model.
-			final ReaderFilter reader = initializeService.initializeReader(file,
+			final Location loc = locationService.resolve(file);
+			final ReaderFilter reader = initializeService.initializeReader(loc,
 				new SCIFIOConfig().checkerSetOpen(true));
 			reader.enable(PlaneSeparator.class).separate(axesToSplit(reader));
 			final Metadata meta = reader.getMetadata();
@@ -98,10 +105,7 @@ public class OMEXMLToolCommand extends AbstractSCIFIOToolCommand {
 			// Print the metadata
 			printOMEXML(meta);
 		}
-		catch (final FormatException e) {
-			throw new CmdLineException(null, e.getMessage());
-		}
-		catch (final IOException e) {
+		catch (FormatException | IOException | URISyntaxException e) {
 			throw new CmdLineException(null, e.getMessage());
 		}
 	}

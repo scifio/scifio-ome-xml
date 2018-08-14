@@ -42,7 +42,7 @@ import org.scijava.plugin.Plugin;
  * 
  * @author Mark Hiner hinerm at gmail.com
  */
-@Plugin(type = ToOMETranslator.class, priority = Priority.NORMAL_PRIORITY)
+@Plugin(type = ToOMETranslator.class, priority = Priority.NORMAL)
 public class DefaultOMETranslator extends ToOMETranslator<Metadata> {
 
 	// -- Translator API Methods --

@@ -55,7 +55,7 @@ public class TIFFTranslator {
 
 	// -- Constants --
 
-	public static final double PRIORITY = Priority.HIGH_PRIORITY;
+	public static final double PRIORITY = Priority.HIGH;
 
 	/**
 	 * Translator class from {@link io.scif.formats.TIFFFormat.Metadata} to

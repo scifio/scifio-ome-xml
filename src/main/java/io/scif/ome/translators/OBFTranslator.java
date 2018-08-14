@@ -62,7 +62,7 @@ public class OBFTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
+	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH)
 	public static class OBFOMETranslator extends
 		ToOMETranslator<OBFFormat.Metadata>
 	{

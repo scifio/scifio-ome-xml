@@ -57,7 +57,7 @@ public class BMPTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
+	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH)
 	public static class BMPOMETranslator extends
 		ToOMETranslator<BMPFormat.Metadata>
 	{

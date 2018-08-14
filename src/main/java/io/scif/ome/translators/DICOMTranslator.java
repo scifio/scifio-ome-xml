@@ -60,7 +60,7 @@ public class DICOMTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
+	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH)
 	public static class DICOMOMETranslator extends
 		ToOMETranslator<DICOMFormat.Metadata>
 	{
