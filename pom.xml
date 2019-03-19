@@ -93,6 +93,8 @@ Wisconsin-Madison</license.copyrightOwners>
 
 		<!-- NB: Deploy releases to the ImageJ Maven repository. -->
 		<releaseProfiles>deploy-to-imagej</releaseProfiles>
+
+		<args4j.version>2.0.25</args4j.version>
 	</properties>
 
 	<repositories>
@@ -149,7 +151,7 @@ Wisconsin-Madison</license.copyrightOwners>
 		<dependency>
 			<groupId>args4j</groupId>
 			<artifactId>args4j</artifactId>
-			<version>2.0.25</version>
+			<version>${args4j.version}</version>
 		</dependency>
 
 		<!-- Test scope dependencies -->
