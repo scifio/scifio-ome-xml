@@ -7,13 +7,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -42,7 +42,7 @@ import ome.units.quantity.Length;
 
 /**
  * Container class for translators between OME and NRRD formats.
- * 
+ *
  * @author Mark Hiner hinerm at gmail.com
  */
 public class NRRDTranslator {
@@ -54,10 +54,10 @@ public class NRRDTranslator {
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
 	 * </p>
-	 * 
+	 *
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
+	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH)
 	public static class NRRDOMETranslator extends
 		ToOMETranslator<NRRDFormat.Metadata>
 	{

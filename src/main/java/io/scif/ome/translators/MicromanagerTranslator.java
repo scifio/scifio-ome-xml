@@ -7,13 +7,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -35,13 +35,15 @@ import io.scif.common.DateTools;
 import io.scif.formats.MicromanagerFormat;
 import io.scif.formats.MicromanagerFormat.Metadata;
 import io.scif.formats.MicromanagerFormat.Position;
-import io.scif.io.Location;
 import io.scif.ome.OMEMetadata;
 import io.scif.ome.services.OMEMetadataService;
 
-import java.util.Vector;
+import java.io.IOException;
+import java.util.List;
 
 import org.scijava.Priority;
+import org.scijava.io.handle.DataHandleService;
+import org.scijava.io.location.Location;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
@@ -55,7 +57,7 @@ import ome.xml.model.primitives.Timestamp;
 
 /**
  * Container class for translators between OME and Micromanager formats.
- * 
+ *
  * @author Mark Hiner hinerm at gmail.com
  */
 public class MicromanagerTranslator {
@@ -67,10 +69,10 @@ public class MicromanagerTranslator {
 	 * NB: Plugin priority is set to high to be selected over the base
 	 * {@link io.scif.Metadata} translator.
 	 * </p>
-	 * 
+	 *
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH_PRIORITY)
+	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH)
 	public static class MicromanagerOMETranslator extends
 		ToOMETranslator<MicromanagerFormat.Metadata>
 	{
@@ -79,6 +81,9 @@ public class MicromanagerTranslator {
 
 		@Parameter
 		private OMEMetadataService omexmlMetadataService;
+
+		@Parameter
+		private DataHandleService dataHandleService;
 
 		// -- Translator API --
 
@@ -99,19 +104,19 @@ public class MicromanagerTranslator {
 			try {
 				populateMetadata(source, dest.getRoot());
 			}
-			catch (final FormatException e) {
+			catch (final FormatException | IOException e) {
 				log().error(
 					"Error populating Metadata store with Micromanager metadata", e);
 			}
 		}
 
 		private void populateMetadata(final Metadata meta,
-			final OMEXMLMetadata store) throws FormatException
+			final OMEXMLMetadata store) throws FormatException, IOException
 		{
 			final String instrumentID = //
 				omexmlMetadataService.createLSID("Instrument", 0);
 			store.setInstrumentID(instrumentID, 0);
-			final Vector<Position> positions = meta.getPositions();
+			final List<Position> positions = meta.getPositions();
 
 			for (int i = 0; i < positions.size(); i++) {
 				final Position p = positions.get(i);
@@ -124,8 +129,7 @@ public class MicromanagerTranslator {
 				}
 
 				if (positions.size() > 1) {
-					final Location parent = //
-						new Location(getContext(), p.metadataFile).getParentFile();
+					final Location parent = p.metadataFile.parent();
 					store.setImageName(parent.getName(), i);
 				}
 
@@ -161,8 +165,9 @@ public class MicromanagerTranslator {
 				for (int q = 0; q < meta.get(i).getPlaneCount(); q++) {
 					store.setPlaneExposureTime(new Time(p.exposureTime, UNITS.SECOND), i,
 						q);
-					final String tiff = positions.get(i).getFile(meta, i, q);
-					if (tiff != null && new Location(getContext(), tiff).exists() &&
+
+					final Location tiff = positions.get(i).getLocation(meta, i, q);
+					if (tiff != null && dataHandleService.exists(tiff) &&
 						nextStamp < p.timestamps.length)
 					{
 						store.setPlaneDeltaT(new Time(p.timestamps[nextStamp++],

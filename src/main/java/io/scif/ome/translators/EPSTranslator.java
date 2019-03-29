@@ -58,7 +58,7 @@ public class EPSTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH_PRIORITY)
+	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH)
 	public static class OMEEPSTranslator extends
 		FromOMETranslator<EPSFormat.Metadata>
 	{

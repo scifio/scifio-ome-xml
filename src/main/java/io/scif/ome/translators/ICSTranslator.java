@@ -39,8 +39,9 @@ import io.scif.util.FormatTools;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.imagej.axis.Axes;
 
@@ -74,7 +75,7 @@ public class ICSTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH_PRIORITY)
+	@Plugin(type = FromOMETranslator.class, priority = Priority.HIGH)
 	public static class OMEICSTranslator extends
 		FromOMETranslator<ICSFormat.Metadata>
 	{
@@ -104,7 +105,7 @@ public class ICSTranslator {
 			if (retrieve.getInstrumentCount() > 0) {
 				dest.putMicroscopeModel(retrieve.getMicroscopeModel(0));
 				dest.putMicroscopeManufacturer(retrieve.getMicroscopeManufacturer(0));
-				final Hashtable<Integer, Integer> laserWaves = new Hashtable<>();
+				final Map<Integer, Integer> laserWaves = new HashMap<>();
 
 				for (int i = 0; i < retrieve.getLightSourceCount(0); i++) {
 					laserWaves.put(i, //
@@ -193,9 +194,9 @@ public class ICSTranslator {
 					retrieve.getPlaneExposureTime(0, 0).value().doubleValue());
 			}
 
-			final Hashtable<Integer, String> channelNames = new Hashtable<>();
-			final Hashtable<Integer, Double> pinholes = new Hashtable<>();
-			final Hashtable<Integer, Double> gains = new Hashtable<>();
+			final Map<Integer, String> channelNames = new HashMap<>();
+			final Map<Integer, Double> pinholes = new HashMap<>();
+			final Map<Integer, Double> gains = new HashMap<>();
 			final List<Integer> emWaves = new ArrayList<>();
 			final List<Integer> exWaves = new ArrayList<>();
 			final long planeCount = source.get(0).getPlaneCount();
@@ -241,7 +242,7 @@ public class ICSTranslator {
 	 * 
 	 * @author Mark Hiner
 	 */
-	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH_PRIORITY)
+	@Plugin(type = ToOMETranslator.class, priority = Priority.HIGH)
 	public static class ICSOMETranslator extends
 		ToOMETranslator<ICSFormat.Metadata>
 	{
@@ -270,7 +271,7 @@ public class ICSTranslator {
 			Integer[] emWaves = null, exWaves = null;
 			double[] sizes = null;
 			String[] units = null, axes = null;
-			final String imageName = source.getSource().getFileName();
+			final String imageName = source.getSourceLocation().getName();
 			String date = null, description = null, microscopeModel = null,
 					microscopeManufacturer = null, experimentType = null,
 					laserManufacturer = null, laserModel = null, filterSetModel = null,
@@ -278,10 +279,10 @@ public class ICSTranslator {
 					objectiveModel = null, immersion = null, detectorManufacturer = null,
 					detectorModel = null, lastName = null;
 
-			Hashtable<Integer, Double> gains = new Hashtable<>();
-			Hashtable<Integer, String> channelNames = new Hashtable<>();
-			Hashtable<Integer, Double> pinholes = new Hashtable<>();
-			Hashtable<Integer, Integer> wavelengths = new Hashtable<>();
+			Map<Integer, Double> gains = new HashMap<>();
+			Map<Integer, String> channelNames = new HashMap<>();
+			Map<Integer, Double> pinholes = new HashMap<>();
+			Map<Integer, Integer> wavelengths = new HashMap<>();
 
 			final FilterMetadata filter = //
 				new FilterMetadata(store, source.isFiltered());
@@ -346,7 +347,7 @@ public class ICSTranslator {
 					final ArrayList<String> realUnits = new ArrayList<>();
 					int unitIndex = 0;
 					for (int i = 0; i < axes.length; i++) {
-						if (axes[i].toLowerCase().equals("ch")) {
+						if (axes[i].equalsIgnoreCase("ch")) {
 							realUnits.add("nm");
 						}
 						else {
@@ -685,13 +686,13 @@ public class ICSTranslator {
 
 			gains = source.getGains();
 
-			for (final Integer key : gains.keySet()) {
+			gains.forEach((key, value) -> {
 				final int index = key.intValue();
 				if (index < effSizeC) {
-					store.setDetectorSettingsGain(gains.get(key), 0, index);
+					store.setDetectorSettingsGain(value, 0, index);
 					store.setDetectorSettingsID(detectorID, 0, index);
 				}
-			}
+			});
 
 			// populate Experimenter data
 
