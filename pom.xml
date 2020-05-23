@@ -19,7 +19,7 @@
 	<inceptionYear>2013</inceptionYear>
 	<organization>
 		<name>SCIFIO</name>
-		<url>http://scif.io/</url>
+		<url>https://scif.io/</url>
 	</organization>
 	<licenses>
 		<license>
@@ -65,7 +65,7 @@
 	<mailingLists>
 		<mailingList>
 			<name>Image.sc Forum</name>
-			<archive>https://forum.image.sc/tags/scifio</archive>
+			<archive>https://forum.image.sc/tag/scifio</archive>
 		</mailingList>
 	</mailingLists>
 
@@ -87,15 +87,14 @@
 	<properties>
 		<package-name>io.scif.ome</package-name>
 		<license.licenseName>bsd_2</license.licenseName>
-		<license.copyrightOwners>Board of Regents of the University of
-Wisconsin-Madison</license.copyrightOwners>
+		<license.copyrightOwners>SCIFIO developers.</license.copyrightOwners>
 		<license.projectName>SCIFIO support for the OME data model, including OME-XML and OME-TIFF.</license.projectName>
 
 		<!-- NB: Deploy releases to the SciJava Maven repository. -->
 		<releaseProfiles>deploy-to-scijava</releaseProfiles>
 
 		<args4j.version>2.0.25</args4j.version>
-		<scifio.version>0.38.0</scifio.version>
+		<scifio.version>0.39.1</scifio.version>
 	</properties>
 
 	<repositories>
