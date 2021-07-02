@@ -1,4 +1,4 @@
-[![](https://travis-ci.org/scifio/scifio-ome-xml.svg?branch=master)](https://travis-ci.org/scifio/scifio-ome-xml)
+[![](https://github.com/scifio/scifio-ome-xml/actions/workflows/build-main.yml/badge.svg)](https://github.com/scifio/scifio-ome-xml/actions/workflows/build-main.yml)
 
 SCIFIO OME-XML support
 ======================

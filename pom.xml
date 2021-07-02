@@ -80,8 +80,8 @@
 		<url>https://github.com/scifio/scifio-ome-xml/issues</url>
 	</issueManagement>
 	<ciManagement>
-		<system>Travis CI</system>
-		<url>https://travis-ci.org/scifio/scifio-ome-xml</url>
+		<system>GitHub Actions</system>
+		<url>https://github.com/scifio/scifio-ome-xml/actions</url>
 	</ciManagement>
 
 	<properties>
@@ -91,7 +91,7 @@
 		<license.projectName>SCIFIO support for the OME data model, including OME-XML and OME-TIFF.</license.projectName>
 
 		<!-- NB: Deploy releases to the SciJava Maven repository. -->
-		<releaseProfiles>deploy-to-scijava</releaseProfiles>
+		<releaseProfiles>sign,deploy-to-scijava</releaseProfiles>
 
 		<args4j.version>2.0.25</args4j.version>
 		<scifio.version>0.39.1</scifio.version>
