@@ -73,7 +73,7 @@
 		<connection>scm:git:git://github.com/scifio/scifio-ome-xml</connection>
 		<developerConnection>scm:git:git@github.com:scifio/scifio-ome-xml</developerConnection>
 		<tag>HEAD</tag>
-		<url>http://github.com/scifio/scifio-ome-xml</url>
+		<url>https://github.com/scifio/scifio-ome-xml</url>
 	</scm>
 	<issueManagement>
 		<system>GitHub Issues</system>
