@@ -15,7 +15,7 @@
 
 	<name>SCIFIO OME-XML Extension</name>
 	<description>SCIFIO support for the OME data model, including OME-XML and OME-TIFF.</description>
-	<url>https://imagej.net/SCIFIO-OME-XML</url>
+	<url>https://github.com/scifio/scifio-ome-xml</url>
 	<inceptionYear>2013</inceptionYear>
 	<organization>
 		<name>SCIFIO</name>
