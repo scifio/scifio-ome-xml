@@ -70,7 +70,7 @@
 	</mailingLists>
 
 	<scm>
-		<connection>scm:git:git://github.com/scifio/scifio-ome-xml</connection>
+		<connection>scm:git:https://github.com/scifio/scifio-ome-xml</connection>
 		<developerConnection>scm:git:git@github.com:scifio/scifio-ome-xml</developerConnection>
 		<tag>HEAD</tag>
 		<url>https://github.com/scifio/scifio-ome-xml</url>
