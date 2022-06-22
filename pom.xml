@@ -11,7 +11,7 @@
 
 	<groupId>io.scif</groupId>
 	<artifactId>scifio-ome-xml</artifactId>
-	<version>0.16.3-SNAPSHOT</version>
+	<version>0.17.0-SNAPSHOT</version>
 
 	<name>SCIFIO OME-XML Extension</name>
 	<description>SCIFIO support for the OME data model, including OME-XML and OME-TIFF.</description>
