@@ -268,7 +268,7 @@ public class ICSTranslator {
 			Double laserPower = null, laserRepetitionRate = null, lensNA = null;
 			Double workingDistance = null, magnification = null, exposureTime = null;
 			Integer[] emWaves = null, exWaves = null;
-			double[] sizes = null;
+			int[] sizes = null;
 			String[] units = null, axes = null;
 			final String imageName = source.getSourceLocation().getName();
 			String date = null, description = null, microscopeModel = null,
@@ -331,9 +331,9 @@ public class ICSTranslator {
 
 			// populate Dimensions data
 
-			pixelSizes = source.getPixelSizes();
+			pixelSizes = source.getParameterScales();
 
-			units = source.getUnits();
+			units = source.getParameterUnits();
 
 			axes = source.getAxes();
 

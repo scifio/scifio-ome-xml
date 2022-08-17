@@ -94,7 +94,6 @@
 		<releaseProfiles>sign,deploy-to-scijava</releaseProfiles>
 
 		<args4j.version>2.0.25</args4j.version>
-		<scifio.version>0.39.1</scifio.version>
 	</properties>
 
 	<repositories>
