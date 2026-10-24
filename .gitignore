@@ -1,6 +1,7 @@
 .classpath
 .project
 .settings
+.factorypath
 .DS_Store
 build
 emailable-report.html
@@ -9,3 +10,4 @@ target
 test-output
 *.log
 bin/
+.idea/
